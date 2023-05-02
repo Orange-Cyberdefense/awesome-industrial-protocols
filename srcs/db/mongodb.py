@@ -13,13 +13,20 @@ Each document contains varying fields with values.
 """
 
 from pymongo import MongoClient
+from pymongo.errors import ConnectionFailure
 from re import sub
 # Internal
-from config import MONGODB_HOST, MONGODB_PORT, MONGODB_DATABASE
+from config import mongodb, LEVENSHTEIN_THRESHOLD
+from . import levenshtein
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
 #-----------------------------------------------------------------------------#
+
+# Errors
+ERR_DBCONNECT = "Connection to database failed."
+ERR_UNKPROTO = "Protocol '{0}' not found."
+ERR_MULTIPROTO = "Multiple match found, please choose between {0}."
 
 def FORMAT(value: str) -> str:
     """Standardize input to make case and character independent match."""
@@ -45,12 +52,17 @@ class MongoDB(object):
         if not hasattr(cls, 'instance'):
             cls.instance = super(MongoDB, cls).__new__(cls)
             # Setting only one MongoDB Client
-            cls.instance.client = MongoClient(MONGODB_HOST, MONGODB_PORT)
-            cls.instance.db = cls.instance.client[MONGODB_DATABASE]
+            cls.instance.client = MongoClient(mongodb.host, mongodb.port,
+                                              serverSelectionTimeoutMS=mongodb.timeout)
+            cls.instance.db = cls.instance.client[mongodb.database]
         return cls.instance
 
+    def __init__(self):
+        # We want to check that the connection is OK every time.
+        self.__check_connection()
+    
     #-------------------------------------------------------------------------#
-    # Public                                                                 #
+    # Public                                                                  #
     #-------------------------------------------------------------------------#
     
     def get_protocol(self, name: str=None) -> dict:
@@ -64,19 +76,37 @@ class MongoDB(object):
         if not name:
             return [x for x in self.protocols.find()]
         # We cannot just use find_one() / find(): we want case insensitive search
+        match = []
         for proto in self.protocols.find():
-            names = [FORMAT(x) for x in self.__get_all_names(proto)]
-            if name in names:
-                return proto
-        raise DBException("Protocol '{0}' not found.".format(name))
+            all_names = [FORMAT(x) for x in self.__get_all_names(proto)]
+            for entry in all_names:
+                if levenshtein(entry, name) <= LEVENSHTEIN_THRESHOLD:
+                    match.append(proto)
+                    break
+        if len(match) == 1:
+            return match[0]
+        if len(match) > 1:
+            match = [x["name"] for x in match]
+            raise DBException(ERR_MULTIPROTO.format(", ".join(match)))
+        raise DBException(ERR_UNKPROTO.format(name))
 
     @property
     def protocols(self):
-        return self.db["protocols"]
+        return self.db[mongodb.protocols]
+
+    @property
+    def links(self):
+        return self.db[mongodb.links]
     
     #-------------------------------------------------------------------------#
     # Private                                                                 #
     #-------------------------------------------------------------------------#
+
+    def __check_connection(self):
+        try:
+            self.client.admin.command('ping')
+        except ConnectionFailure:
+            raise DBException(ERR_DBCONNECT)
     
     def __get_all_names(self, protocol: dict) -> list:
         names = [protocol["name"]]

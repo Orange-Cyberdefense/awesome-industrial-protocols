@@ -16,6 +16,6 @@ In this repository:
 
 %list%
 
-**awesome-industrial** protocols is licensed under
+**awesome-industrial-protocols** is licensed under
 [CC0](https://creativecommons.org/publicdomain/zero/1.0/). **Turn/IP** is
 licensed under [GPL-v3](https://www.gnu.org/licenses/gpl-3.0.en.html).

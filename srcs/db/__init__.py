@@ -7,4 +7,5 @@
 Turn/IP currently relies on MongoDB using the library pymongo.
 """
 
+from .search import *
 from .mongodb import *
