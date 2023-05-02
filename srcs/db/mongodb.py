@@ -25,7 +25,8 @@ from . import search
 # Errors
 ERR_DBCONNECT = "Connection to database failed."
 ERR_UNKPROTO = "Protocol '{0}' not found."
-ERR_MULTIPROTO = "Multiple match found, please choose between {0}."
+ERR_UNKFIELD = "Protocol {0} has no field '{1}'."
+ERR_MULTIMATCH = "Multiple match found, please choose between {0}."
 
 #-----------------------------------------------------------------------------#
 # MongoDB classes                                                             #
@@ -78,8 +79,35 @@ class MongoDB(object):
             return match[0]
         if len(match) > 1:
             match = [x[p.name] for x in match]
-            raise DBException(ERR_MULTIPROTO.format(", ".join(match)))
+            raise DBException(ERR_MULTIMATCH.format(", ".join(match)))
         raise DBException(ERR_UNKPROTO.format(name))
+
+    def get_protocol_field(self, protocol: str, field: str) -> tuple:
+        """Return the field in the document associated to protocol as a dict.
+
+        The research is case-insensitive. The protocol can also be an alias.
+
+        :raises DBException: if the protocol or field does not exist.
+        """
+        protocol = self.get_protocol(protocol)
+        # If no protocol, an exception is raised and we don't catch it.
+        match = search(field, list(protocol.keys()), threshold=0)
+        if len(match) == 1:
+            return (match[0], protocol[match[0]])
+        if len(match) > 1:
+            raise DBException(ERR_MULTIMATCH.format(", ".join(match)))
+        raise DBException(ERR_UNKFIELD.format(protocol[p.name], field))
+
+    def set_protocol_field(self, protocol: str, field: str, value: str) -> None:
+        """Set value to field in document where name is protocol.
+
+        We don't allow to rename protocols.
+
+        :raises DBException: if either protocol or field is invalid."""
+        field, oldval = self.get_protocol_field(protocol, field)
+        document = {p.name: protocol}
+        newvalue = {field: value}
+        self.protocols.update_one(document, {"$set": newvalue})
 
     @property
     def protocols(self):
@@ -88,6 +116,14 @@ class MongoDB(object):
     @property
     def links(self):
         return self.db[mongodb.links]
+
+    @property
+    def protocols_count(self):
+        return self.db[mongodb.protocols].count_documents({})
+
+    @property
+    def links_count(self):
+        return self.db[mongodb.links].count_documents({})
     
     #-------------------------------------------------------------------------#
     # Private                                                                 #

@@ -42,4 +42,4 @@ p.alias = "alias"
 
 # Sensitivity for search, relying on the Levenshtein distance
 # Higher threshold means less sensitivity and less precise matches
-LEVENSHTEIN_THRESHOLD = 4
+LEVENSHTEIN_THRESHOLD = 2

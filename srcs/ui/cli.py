@@ -27,12 +27,17 @@ OPTIONS = (
     ("-f", "--force", "do not ask for confirmation (with -W)", False, None)
 )
 
+MSG_PROTO_COUNT = "[*] Total number of protocols: {0}"
+MSG_LINKS_COUNT = "[*] Total number of links: {0}"
+
 MSG_CONFIRM_ADD = "Do you want to add protocol '{0}'?"
-MSG_CONFIRM_WRITE = "Do you want to store {0} to {1}?"
+MSG_CONFIRM_WRITE = "Do you want to write '{0}: {1}' to {2} (previous value: {3})?"
 
 ERR_ACTION = "No is action defined. Choose between {0} (-h for help)."
 ERR_WRITE = "Write requires data (-d) OR link (-l) (-h for help)."
+ERR_BADDATA = "Data to write is invalid (-h for help)."
 ERR_UNKPROTO = "Protocol '{0}' does not exist."
+ERR_UNKFIELD = "Protocol {0} has no field '{1}'."
 
 def ERROR(msg: str, will_exit: bool=False):
     print("ERROR:", msg, file=stderr)
@@ -72,10 +77,7 @@ class CLI(object):
                 continue
             if option in self.functions:
                 is_function = True
-                try:
-                    self.functions[option]()
-                except DBException as dbe:
-                    ERROR(dbe)
+                self.functions[option]()
         if not is_function:
             ERROR(ERR_ACTION.format(", ".join(self.functions)), will_exit=True)
 
@@ -97,13 +99,20 @@ class CLI(object):
     #--- Commands ------------------------------------------------------------#
     
     def __cmd_list(self) -> None:
-        ct = 0
+        pdict = {}
         for protocol in self.db.get_protocol():
-            print("[{0}] {1}".format(ct, protocol["name"]))
-            ct += 1
+            pdict[protocol["name"]] = protocol["keywords"]
+            # print("| {0:16}".format(protocol["name"]))
+        self.__print_table(pdict)
+        print(MSG_PROTO_COUNT.format(self.db.protocols_count))
+        print(MSG_LINKS_COUNT.format(self.db.links_count))
 
-    def __cmd_read(self) -> None:
-        self.__print_protocol(self.db.get_protocol(self.options.read))
+    def __cmd_read(self, protocol: str=None) -> None:
+        try:
+            protocol = protocol if protocol else self.options.read
+            self.__print_table(self.db.get_protocol(protocol))
+        except DBException as dbe:
+            ERROR(str(dbe), will_exit=False)
 
     def __cmd_write(self) -> None:
         # Check what kind of data needs to be written
@@ -112,21 +121,18 @@ class CLI(object):
             ERROR(ERR_WRITE, will_exit=True)
         # Does protocol exist?
         try:
-            self.db.get_protocol(self.options.write)
+            protocol = self.db.get_protocol(self.options.write)
         except DBException:
             ERROR(ERR_UNKPROTO.format(self.options.write), will_exit=False)
             # Protocol does not exist but can be added
-            if not self.__cmd_add(self.options.write):
-                return # Protocol was not created, leaving.
+            if self.__cmd_add(self.options.write):
+                self.__cmd_write() # We call the function again 8D
+            return # Protocol was not created, leaving.
         # Now we need to parse the data or link to be stored.
-        # TODO
-        # And then we prepare for write to db
-        # TODO
-        # Ask for confirmation
-        if self.__confirm(MSG_CONFIRM_WRITE.format("poulet", self.options.write),
-                          self.options.force):
-            # Actually write
-            pass
+        if self.options.data:
+            self.__write_data(protocol, self.options.data)
+        elif self.options.link:
+            self.__write_link(protocol, self.options.link)
 
     def __cmd_add(self, new: str=None) -> None:
         # Do something here
@@ -138,19 +144,55 @@ class CLI(object):
     def __cmd_check(self) -> None:
         print("uijeverifi")
 
+    #--- Handle data ---------------------------------------------------------#
+
+    def __write_data(self, protocol:dict, data:str):
+        """Write data with format field:value to protocol."""
+        field, value = self.__parse_data(data)
+        try:
+            field, oldval = self.db.get_protocol_field(protocol["name"], field) # tmp
+        except DBException:
+            ERROR(ERR_UNKFIELD.format(protocol["name"], field), will_exit=True) # tmp
+        if self.__confirm(MSG_CONFIRM_WRITE.format(field, value, protocol["name"], oldval), # tmp
+                          self.options.force):
+            self.db.set_protocol_field(protocol["name"], field, value)
+            self.__cmd_read(protocol["name"])
+
+    def __write_link(self, protocol:dict, link:str):
+        """Write link information with format name:url to protocol.
+        We must first create the link in the Link connection.
+        """
+        name, url = self.__parse_data(link)
+        if self.__confirm(MSG_CONFIRM_WRITE.format(name, url, protocol),
+                          self.options.force):
+            pass
+        
     #--- Helpers -------------------------------------------------------------#
         
-    def __print_protocol(self, protocol: dict) -> None:
-        table_size = get_terminal_size().columns - 16 - 8
+    def __print_table(self, protocol: dict) -> None:
+        """Displays the protocol table on terminal."""
+        full_table_size = get_terminal_size().columns
+        table_size = full_table_size - 16 - 8
         table_format = "| {0: <16} | {1: <" + str(table_size) + "} |"
+        print("-" * (full_table_size - 1))
         for k, v in protocol.items():
             if k == "_id":
                 continue
             v = ", ".join(v) if isinstance(v, list) else str(v)
             v = v if len(v) < table_size else v[:table_size-3]+"..."
-            print(table_format.format(k.capitalize(), v))
+            print(table_format.format(k, v))
+        print("-" * (full_table_size - 1))
+
+    def __parse_data(self, data) -> tuple:
+        """Translates from str field:value to tuple (field, value)."""
+        field = data[:data.find(":")].strip()
+        value = data[data.find(":")+1:].strip()
+        if data.find(":") < 0 or not field or not value:
+            ERROR(ERR_BADDATA, will_exit=True)
+        return field, value
 
     def __confirm(self, msg, force):
+        """Interactively ask for confirmation from the user."""
         confirm = True if force else False
         if not force:
             res = input("{0} [y/n]: ".format(msg))
