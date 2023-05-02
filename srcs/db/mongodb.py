@@ -14,10 +14,9 @@ Each document contains varying fields with values.
 
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure
-from re import sub
 # Internal
-from config import mongodb, LEVENSHTEIN_THRESHOLD
-from . import levenshtein
+from config import mongodb, p
+from . import search
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -28,14 +27,8 @@ ERR_DBCONNECT = "Connection to database failed."
 ERR_UNKPROTO = "Protocol '{0}' not found."
 ERR_MULTIPROTO = "Multiple match found, please choose between {0}."
 
-def FORMAT(value: str) -> str:
-    """Standardize input to make case and character independent match."""
-    if isinstance(value, str):
-        return sub('[^0-9a-zA-Z]+', '', value.lower().strip())
-    return value
-
 #-----------------------------------------------------------------------------#
-# MongoDB class                                                               #
+# MongoDB classes                                                             #
 #-----------------------------------------------------------------------------#
 
 # Error handling
@@ -78,15 +71,13 @@ class MongoDB(object):
         # We cannot just use find_one() / find(): we want case insensitive search
         match = []
         for proto in self.protocols.find():
-            all_names = [FORMAT(x) for x in self.__get_all_names(proto)]
-            for entry in all_names:
-                if levenshtein(entry, name) <= LEVENSHTEIN_THRESHOLD:
-                    match.append(proto)
-                    break
+            all_names = [x for x in self.__get_all_names(proto)]
+            if len(search(name, all_names)):
+                match.append(proto)
         if len(match) == 1:
             return match[0]
         if len(match) > 1:
-            match = [x["name"] for x in match]
+            match = [x[p.name] for x in match]
             raise DBException(ERR_MULTIPROTO.format(", ".join(match)))
         raise DBException(ERR_UNKPROTO.format(name))
 
@@ -109,9 +100,9 @@ class MongoDB(object):
             raise DBException(ERR_DBCONNECT)
     
     def __get_all_names(self, protocol: dict) -> list:
-        names = [protocol["name"]]
-        names += protocol["alias"] if isinstance(protocol["alias"], list) else \
-                 [protocol["alias"]]
+        names = [protocol[p.name]]
+        names += protocol[p.alias] if isinstance(protocol[p.alias], list) else \
+                 [protocol[p.alias]]
         return list(filter(None, names)) # Removing empty items
 
         
