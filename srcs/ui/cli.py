@@ -27,10 +27,12 @@ OPTIONS = (
     ("-f", "--force", "do not ask for confirmation (with -W)", False, None)
 )
 
-MSG_CONFIRM_WRITE = "Are you sure you want to store {0} to {1}? [y/n]: "
+MSG_CONFIRM_ADD = "Do you want to add protocol '{0}'?"
+MSG_CONFIRM_WRITE = "Do you want to store {0} to {1}?"
 
 ERR_ACTION = "No is action defined. Choose between {0} (-h for help)."
 ERR_WRITE = "Write requires data (-d) OR link (-l) (-h for help)."
+ERR_UNKPROTO = "Protocol '{0}' does not exist."
 
 def ERROR(msg: str, will_exit: bool=False):
     print("ERROR:", msg, file=stderr)
@@ -42,7 +44,8 @@ def ERROR(msg: str, will_exit: bool=False):
 #-----------------------------------------------------------------------------#
 
 class CLI(object):
-    """TODO"""
+    """Parse and run commands gathered from the command-line interface."""
+    db = None
     options = None
     functions = None
 
@@ -55,7 +58,11 @@ class CLI(object):
             "check": self.__cmd_check
         }
         self.options = self.__init_options()
-
+        try:
+            self.db = MongoDB()
+        except DBException as dbe:
+            ERROR(dbe)
+            
     def run(self, argv: list=None):
         """Use arguments for command line to launch commands."""
         is_function = False
@@ -65,7 +72,10 @@ class CLI(object):
                 continue
             if option in self.functions:
                 is_function = True
-                self.functions[option]()
+                try:
+                    self.functions[option]()
+                except DBException as dbe:
+                    ERROR(dbe)
         if not is_function:
             ERROR(ERR_ACTION.format(", ".join(self.functions)), will_exit=True)
 
@@ -84,45 +94,52 @@ class CLI(object):
                                      metavar=opt[4], default=opt[3])
         return options.parse_args()
 
+    #--- Commands ------------------------------------------------------------#
+    
     def __cmd_list(self) -> None:
-        try:
-            db = MongoDB()
-            ct = 0
-            for protocol in db.get_protocol():
-                print("[{0}] {1}".format(ct, protocol["name"]))
-                ct += 1
-        except DBException as dbe:
-            ERROR(dbe)
+        ct = 0
+        for protocol in self.db.get_protocol():
+            print("[{0}] {1}".format(ct, protocol["name"]))
+            ct += 1
 
     def __cmd_read(self) -> None:
-        try:
-            db = MongoDB()
-            self.__print_protocol(db.get_protocol(self.options.read))
-        except DBException as dbe:
-            ERROR(dbe)
+        self.__print_protocol(self.db.get_protocol(self.options.read))
 
     def __cmd_write(self) -> None:
-        def confirm_write(force):
-            confirm_write = True if force else False
-            if not force:
-                res = input(MSG_CONFIRM_WRITE.format("poulet", "roti"))
-                confirm_write = True if res in ("y","Y") else False
-            return confirm_write
         # Check what kind of data needs to be written
         # We use "is not" because we want one or the other, not both
         if (self.options.data != None) is (self.options.link != None):
             ERROR(ERR_WRITE, will_exit=True)
+        # Does protocol exist?
+        try:
+            self.db.get_protocol(self.options.write)
+        except DBException:
+            ERROR(ERR_UNKPROTO.format(self.options.write), will_exit=False)
+            # Protocol does not exist but can be added
+            if not self.__cmd_add(self.options.write):
+                return # Protocol was not created, leaving.
+        # Now we need to parse the data or link to be stored.
+        # TODO
+        # And then we prepare for write to db
+        # TODO
         # Ask for confirmation
-        if confirm_write(self.options.force):
-            # WRITE HERE
+        if self.__confirm(MSG_CONFIRM_WRITE.format("poulet", self.options.write),
+                          self.options.force):
+            # Actually write
             pass
 
+    def __cmd_add(self, new: str=None) -> None:
+        # Do something here
+        return self.__confirm(MSG_CONFIRM_ADD.format(new), self.options.force)
+        
     def __cmd_gen(self) -> None:
         print("elyeneratorrrr")
 
     def __cmd_check(self) -> None:
         print("uijeverifi")
 
+    #--- Helpers -------------------------------------------------------------#
+        
     def __print_protocol(self, protocol: dict) -> None:
         table_size = get_terminal_size().columns - 16 - 8
         table_format = "| {0: <16} | {1: <" + str(table_size) + "} |"
@@ -132,3 +149,10 @@ class CLI(object):
             v = ", ".join(v) if isinstance(v, list) else str(v)
             v = v if len(v) < table_size else v[:table_size-3]+"..."
             print(table_format.format(k.capitalize(), v))
+
+    def __confirm(self, msg, force):
+        confirm = True if force else False
+        if not force:
+            res = input("{0} [y/n]: ".format(msg))
+            confirm = True if res in ("y","Y") else False
+        return confirm
