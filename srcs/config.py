@@ -49,11 +49,6 @@ protocols.MANDATORY_FIELDS = (
     "scapy"
 )
 
-# Protocol collection default entries
-p = SimpleNamespace()
-p.name = "name"
-p.alias = "alias"
-
 # Sensitivity for search, relying on the Levenshtein distance
 # Higher threshold means less sensitivity and less precise matches
 LEVENSHTEIN_THRESHOLD = 2

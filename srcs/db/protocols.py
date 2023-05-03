@@ -14,6 +14,7 @@ from config import protocols, mongodb
 
 ERR_MANDFIELD = "Missing mandatory field '{0}' for {1}."
 ERR_UNKPROTO = "Protocol '{0}' not found."
+ERR_UNKFIELD = "Protocol {0} has no field '{1}'."
 ERR_MULTIMATCH = "Multiple match found, please choose between {0}."
 
 #-----------------------------------------------------------------------------#
@@ -22,14 +23,61 @@ ERR_MULTIMATCH = "Multiple match found, please choose between {0}."
 
 class Protocol(object):
     """Class representing a single protocol document."""
+    __db = None
     name = None
 
     def __init__(self, **kwargs):
         """All entries from dictionary kwargs is converted to an attribute."""
+        try:
+            self.__db = MongoDB()
+        except DBException as dbe:
+            ERROR(dbe)
         for k, v in kwargs.items():
             setattr(self, k, v)
         self.__check()
 
+    def get(self, field:str) -> tuple:
+        """Get the exact name and value associated to field.
+
+        The research is case-insensitive.
+
+        :raises DBException: if the field does not exist.
+        """
+        match = search(field, self.fields, threshold=0)
+        if len(match) == 1:
+            return match[0], getattr(self, match[0])
+        if len(match) > 1:
+            raise DBException(ERR_MULTIMATCH.format(", ".join(match)))
+        raise DBException(ERR_UNKFIELD.format(self.name, field)) from None            
+
+    def set(self, field:str, value) -> None:
+        """Update protocol object and document in db."""
+        field, _ = self.get(field)
+        document = {"name": self.name}
+        newvalue = {field: value}
+        self.__db.protocols.update_one(document, {"$set": newvalue})
+        
+    def to_dict(self, exclude_id: bool=True) -> dict:
+        """Convert protocol object's content to dictionary."""
+        pdict = {}
+        for item in self.fields:
+            if exclude_id and item == mongodb.id:
+                continue
+            pdict[item] = getattr(self, item)
+        return pdict
+        
+    @property
+    def names(self) -> list:
+        """Return all names, including aliases."""
+        alias = self.alias if isinstance(self.alias, list) \
+            else [self.alias]
+        return [self.name] + alias
+
+    @property
+    def fields(self) -> list:
+        """Return fields in protocol object (public class attributes)."""
+        return [x for x in self.__dict__.keys() if not x.startswith("_Protocol_")]
+   
     def __check(self):
         """Check that all mandatory fields are set for protocol objects."""
         try:
@@ -37,31 +85,15 @@ class Protocol(object):
                 getattr(self, attr)
         except AttributeError:
             raise DBException(ERR_MANDFIELD.format(attr, self.name)) from None
-
-    def to_dict(self, exclude_id=True):
-        """Convert protocol object's content to dictionary."""
-        pdict = {}
-        for item in self.__dict__:
-            if exclude_id and item == mongodb.id:
-                continue
-            pdict[item] = getattr(self, item)
-        return pdict
-
-    @property
-    def names(self):
-        """Return all names, including aliases."""
-        alias = self.alias if isinstance(self.alias, list) \
-            else [self.alias]
-        return [self.name] + alias
-        
+            
     
 class Protocols(object):
     """Interface with database to handle the protocols' collection."""
-    db = None
+    __db = None
     
     def __init__(self):
         try:
-            self.db = MongoDB()
+            self.__db = MongoDB()
         except DBException as dbe:
             ERROR(dbe)
             
@@ -81,7 +113,7 @@ class Protocols(object):
         if len(match) > 1:
             match = [x.name for x in match]
             raise DBException(ERR_MULTIMATCH.format(", ".join(match)))
-        raise DBException(ERR_UNKPROTO.format(name))
+        raise DBException(ERR_UNKPROTO.format(protocol_name))
 
     def set(self, protocol:Protocol) -> bool:
         """Update or add a protocol (as a Protocol object) to the database.
@@ -94,14 +126,14 @@ class Protocols(object):
     @property
     def all(self) -> list:
         """Return the complete list of protocols as Protocol objects."""
-        return [Protocol(**x) for x in self.db.protocols_all]
+        return [Protocol(**x) for x in self.__db.protocols_all]
         
     @property
     def list(self) -> list:
         """Return the list of protocol names."""
-        pass
+        return [x["name"] for x in self.__db.protocols_all]
 
     @property
     def count(self) -> int:
         """Return the total number of protocols."""
-        return self.db.protocols_count
+        return self.__db.protocols_count

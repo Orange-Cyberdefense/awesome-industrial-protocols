@@ -10,7 +10,7 @@ from os import get_terminal_size
 from sys import stderr
 # Internal
 from config import TOOL_DESCRIPTION
-from db import MongoDB, DBException, Protocols
+from db import MongoDB, DBException, Protocols, Protocol
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -36,8 +36,6 @@ MSG_CONFIRM_WRITE = "Do you want to write '{0}: {1}' to {2} (previous value: {3}
 ERR_ACTION = "No is action defined. Choose between {0} (-h for help)."
 ERR_WRITE = "Write requires data (-d) OR link (-l) (-h for help)."
 ERR_BADDATA = "Data to write is invalid (-h for help)."
-ERR_UNKPROTO = "Protocol '{0}' does not exist."
-ERR_UNKFIELD = "Protocol {0} has no field '{1}'."
 
 def ERROR(msg: str, will_exit: bool=False):
     print("ERROR:", msg, file=stderr)
@@ -121,9 +119,9 @@ class CLI(object):
             ERROR(ERR_WRITE, will_exit=True)
         # Does protocol exist?
         try:
-            protocol = self.db.get_protocol(self.options.write)
-        except DBException:
-            ERROR(ERR_UNKPROTO.format(self.options.write), will_exit=False)
+            protocol = self.protocols.get(self.options.write)
+        except DBException as dbe:
+            ERROR(str(dbe), will_exit=False)
             # Protocol does not exist but can be added
             if self.__cmd_add(self.options.write):
                 self.__cmd_write() # We call the function again 8D
@@ -146,19 +144,19 @@ class CLI(object):
 
     #--- Handle data ---------------------------------------------------------#
 
-    def __write_data(self, protocol:dict, data:str):
+    def __write_data(self, protocol:Protocol, data:str):
         """Write data with format field:value to protocol."""
         field, value = self.__parse_data(data)
         try:
-            field, oldval = self.db.get_protocol_field(protocol["name"], field) # tmp
-        except DBException:
-            ERROR(ERR_UNKFIELD.format(protocol["name"], field), will_exit=True) # tmp
-        if self.__confirm(MSG_CONFIRM_WRITE.format(field, value, protocol["name"], oldval), # tmp
+            _, oldval = protocol.get(field)
+        except DBException as dbe:
+            ERROR(str(dbe), will_exit=True) # tmp
+        if self.__confirm(MSG_CONFIRM_WRITE.format(field, value, protocol.name, oldval),
                           self.options.force):
-            self.db.set_protocol_field(protocol["name"], field, value)
-            self.__cmd_read(protocol["name"])
+            protocol.set(field, value)
+            self.__cmd_read(protocol.name)
 
-    def __write_link(self, protocol:dict, link:str):
+    def __write_link(self, protocol:Protocol, link:str):
         """Write link information with format name:url to protocol.
         We must first create the link in the Link connection.
         """
