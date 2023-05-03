@@ -14,6 +14,7 @@ from config import protocols, mongodb
 
 ERR_MANDFIELD = "Missing mandatory field '{0}' for {1}."
 ERR_UNKPROTO = "Protocol '{0}' not found."
+ERR_EXIPROTO = "Protocol '{0}' already exists."
 ERR_UNKFIELD = "Protocol {0} has no field '{1}'."
 ERR_MULTIMATCH = "Multiple match found, please choose between {0}."
 
@@ -34,6 +35,7 @@ class Protocol(object):
             ERROR(dbe)
         for k, v in kwargs.items():
             setattr(self, k, v)
+        self.__fill() # Add mandatory field to the object if missing
         self.__check()
 
     def get(self, field:str) -> tuple:
@@ -51,11 +53,16 @@ class Protocol(object):
         raise DBException(ERR_UNKFIELD.format(self.name, field)) from None            
 
     def set(self, field:str, value) -> None:
-        """Update protocol object and document in db."""
+        """Update existing field in protocol."""
         field, _ = self.get(field)
         document = {"name": self.name}
         newvalue = {field: value}
         self.__db.protocols.update_one(document, {"$set": newvalue})
+
+    def add(self, field:str, value) -> None:
+        """Add a new field to protocol."""
+        setattr(self, field, value)
+        self.set(field, value)
         
     def to_dict(self, exclude_id: bool=True) -> dict:
         """Convert protocol object's content to dictionary."""
@@ -77,7 +84,15 @@ class Protocol(object):
     def fields(self) -> list:
         """Return fields in protocol object (public class attributes)."""
         return [x for x in self.__dict__.keys() if not x.startswith("_Protocol_")]
-   
+
+    def __fill(self):
+        """Check that all mandatory fields are set for protocol objects."""
+        for attr in protocols.MANDATORY_FIELDS:
+            try:
+                getattr(self, attr)
+            except AttributeError:
+                setattr(self, attr, "")
+    
     def __check(self):
         """Check that all mandatory fields are set for protocol objects."""
         try:
@@ -115,14 +130,16 @@ class Protocols(object):
             raise DBException(ERR_MULTIMATCH.format(", ".join(match)))
         raise DBException(ERR_UNKPROTO.format(protocol_name))
 
-    def set(self, protocol:Protocol) -> bool:
-        """Update or add a protocol (as a Protocol object) to the database.
-
-        Note: It's safer to update directly fields inside protocols than
-        updating a complete protocol at once.
-        """
-        pass
-
+    def add(self, protocol:Protocol):
+        """Add a new protocol."""
+        try:
+            self.get(protocol.name)
+        except DBException:
+            pass # The protocol does not exist, we can continue
+        else:
+            raise DBException(ERR_EXIPROTO.format(protocol.name))
+        self.__db.protocols.insert_one(protocol.to_dict())
+    
     @property
     def all(self) -> list:
         """Return the complete list of protocols as Protocol objects."""

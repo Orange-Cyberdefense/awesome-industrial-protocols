@@ -18,6 +18,7 @@ from db import MongoDB, DBException, Protocols, Protocol
 
 OPTIONS = (
     ("-L", "--list", "list all protocols", None, None),
+    ("-A", "--add", "Add a new protocol", None, "protocol"),
     ("-R", "--read", "read data of a protocol", None, "protocol"),
     ("-W", "--write", "write data to a protocol", None, "protocol"),
     ("-G", "--gen", "generate Markdown files with protocols' data", None, None),
@@ -30,7 +31,8 @@ OPTIONS = (
 MSG_PROTO_COUNT = "[*] Total number of protocols: {0}"
 MSG_LINKS_COUNT = "[*] Total number of links: {0}"
 
-MSG_CONFIRM_ADD = "Do you want to add protocol '{0}'?"
+MSG_CONFIRM_ADD_PROTO = "Do you want to add protocol '{0}'?"
+MSG_CONFIRM_ADD_FIELD = "Do you want to add field '{0}' protocol {1}?"
 MSG_CONFIRM_WRITE = "Do you want to write '{0}: {1}' to {2} (previous value: {3})?"
 
 ERR_ACTION = "No is action defined. Choose between {0} (-h for help)."
@@ -56,6 +58,7 @@ class CLI(object):
     def __init__(self):
         self.functions = {
             "list": self.__cmd_list,
+            "add": self.__cmd_add,
             "read": self.__cmd_read,
             "write": self.__cmd_write,
             "gen": self.__cmd_gen,
@@ -132,9 +135,14 @@ class CLI(object):
         elif self.options.link:
             self.__write_link(protocol, self.options.link)
 
-    def __cmd_add(self, new: str=None) -> None:
-        # Do something here
-        return self.__confirm(MSG_CONFIRM_ADD.format(new), self.options.force)
+    def __cmd_add(self, new: str=None) -> bool:
+        new = new if new else self.options.add
+        if not self.__confirm(MSG_CONFIRM_ADD_PROTO.format(new), self.options.force):
+            return False
+        protocol = Protocol(name=new)
+        self.protocols.add(protocol)
+        self.__cmd_read(new)
+        return True
         
     def __cmd_gen(self) -> None:
         print("elyeneratorrrr")
@@ -144,15 +152,26 @@ class CLI(object):
 
     #--- Handle data ---------------------------------------------------------#
 
+    def __add_field(self, protocol:Protocol, field, value) -> bool:
+        if not self.__confirm(MSG_CONFIRM_ADD_FIELD.format(field,
+                                                           protocol.name), self.options.force):
+            return False
+        protocol.add(field, value)
+        return True
+    
     def __write_data(self, protocol:Protocol, data:str):
         """Write data with format field:value to protocol."""
         field, value = self.__parse_data(data)
         try:
             _, oldval = protocol.get(field)
-        except DBException as dbe:
-            ERROR(str(dbe), will_exit=True) # tmp
-        if self.__confirm(MSG_CONFIRM_WRITE.format(field, value, protocol.name, oldval),
-                          self.options.force):
+        except DBException as dbe: # Field does not exist
+            ERROR(str(dbe), will_exit=False)
+            if self.__add_field(protocol, field, value):
+                self.__cmd_read(protocol.name)                
+            return
+        # Field exists
+        if self.__confirm(MSG_CONFIRM_WRITE.format(field, value, protocol.name,
+                                                   oldval), self.options.force):
             protocol.set(field, value)
             self.__cmd_read(protocol.name)
 
