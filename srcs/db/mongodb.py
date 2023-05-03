@@ -77,7 +77,7 @@ class MongoDB(object):
 
     @property
     def links_all(self) -> list:
-        return [x for x in self.db[mongodb.protocols].find()]
+        return [x for x in self.db[mongodb.links].find()]
     
     #-------------------------------------------------------------------------#
     # Private                                                                 #

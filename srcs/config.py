@@ -46,8 +46,13 @@ protocols.MANDATORY_FIELDS = (
     "specs",
     "nmap",
     "wireshark",
-    "scapy"
+    "scapy",
+    "resources"
 )
+
+links = SimpleNamespace()
+links.TYPES = ("conference, paper, tool, other")
+links.DEFAULT_TYPE = "other"
 
 # Sensitivity for search, relying on the Levenshtein distance
 # Higher threshold means less sensitivity and less precise matches

@@ -19,7 +19,7 @@ ERR_UNKFIELD = "Protocol {0} has no field '{1}'."
 ERR_MULTIMATCH = "Multiple match found, please choose between {0}."
 
 #-----------------------------------------------------------------------------#
-# Protocol classes                                                            #
+# Protocol class                                                              #
 #-----------------------------------------------------------------------------#
 
 class Protocol(object):
@@ -35,9 +35,16 @@ class Protocol(object):
             ERROR(dbe)
         for k, v in kwargs.items():
             setattr(self, k, v)
-        self.__fill() # Add mandatory field to the object if missing
-        self.__check()
 
+    #--- Public --------------------------------------------------------------#
+            
+    def create(self, **kwargs):
+        """Create a new protocol object."""
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+        self.__fill() # Add mandatory field to the object if missing
+
+        
     def get(self, field:str) -> tuple:
         """Get the exact name and value associated to field.
 
@@ -45,6 +52,7 @@ class Protocol(object):
 
         :raises DBException: if the field does not exist.
         """
+        self.__check()
         match = search(field, self.fields, threshold=0)
         if len(match) == 1:
             return match[0], getattr(self, match[0])
@@ -54,6 +62,7 @@ class Protocol(object):
 
     def set(self, field:str, value) -> None:
         """Update existing field in protocol."""
+        self.__check()
         field, _ = self.get(field)
         document = {"name": self.name}
         newvalue = {field: value}
@@ -72,7 +81,7 @@ class Protocol(object):
                 continue
             pdict[item] = getattr(self, item)
         return pdict
-        
+    
     @property
     def names(self) -> list:
         """Return all names, including aliases."""
@@ -92,7 +101,9 @@ class Protocol(object):
                 getattr(self, attr)
             except AttributeError:
                 setattr(self, attr, "")
-    
+
+    #--- Private -------------------------------------------------------------#
+                
     def __check(self):
         """Check that all mandatory fields are set for protocol objects."""
         try:
@@ -101,7 +112,10 @@ class Protocol(object):
         except AttributeError:
             raise DBException(ERR_MANDFIELD.format(attr, self.name)) from None
             
-    
+#-----------------------------------------------------------------------------#
+# Protocols class                                                             #
+#-----------------------------------------------------------------------------#
+        
 class Protocols(object):
     """Interface with database to handle the protocols' collection."""
     __db = None
