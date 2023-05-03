@@ -10,7 +10,7 @@ from os import get_terminal_size
 from sys import stderr
 # Internal
 from config import TOOL_DESCRIPTION
-from db import MongoDB, DBException
+from db import MongoDB, DBException, Protocols
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -53,6 +53,7 @@ class CLI(object):
     db = None
     options = None
     functions = None
+    protocols = None
 
     def __init__(self):
         self.functions = {
@@ -67,6 +68,7 @@ class CLI(object):
             self.db = MongoDB()
         except DBException as dbe:
             ERROR(dbe)
+        self.protocols = Protocols()
             
     def run(self, argv: list=None):
         """Use arguments for command line to launch commands."""
@@ -99,18 +101,16 @@ class CLI(object):
     #--- Commands ------------------------------------------------------------#
     
     def __cmd_list(self) -> None:
-        pdict = {}
-        for protocol in self.db.get_protocol():
-            pdict[protocol["name"]] = protocol["keywords"]
-            # print("| {0:16}".format(protocol["name"]))
+        pdict = {x.name: x.keywords for x in self.protocols.all}
         self.__print_table(pdict)
-        print(MSG_PROTO_COUNT.format(self.db.protocols_count))
+        # Stats
+        print(MSG_PROTO_COUNT.format(self.protocols.count))
         print(MSG_LINKS_COUNT.format(self.db.links_count))
 
     def __cmd_read(self, protocol: str=None) -> None:
         try:
             protocol = protocol if protocol else self.options.read
-            self.__print_table(self.db.get_protocol(protocol))
+            self.__print_table(self.protocols.get(protocol).to_dict())
         except DBException as dbe:
             ERROR(str(dbe), will_exit=False)
 

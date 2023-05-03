@@ -31,9 +31,23 @@ mongodb.host = "127.0.0.1"
 mongodb.port = 27017
 mongodb.timeout = 1000
 mongodb.database = "netindusdb"
+mongodb.id = "_id"
 # Collections
 mongodb.protocols = "protocols"
 mongodb.links = "links"
+
+protocols = SimpleNamespace()
+protocols.MANDATORY_FIELDS = (
+    "name",
+    "alias",
+    "keywords",
+    "port",
+    "website",
+    "specs",
+    "nmap",
+    "wireshark",
+    "scapy"
+)
 
 # Protocol collection default entries
 p = SimpleNamespace()

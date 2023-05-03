@@ -24,9 +24,7 @@ from . import search
 
 # Errors
 ERR_DBCONNECT = "Connection to database failed."
-ERR_UNKPROTO = "Protocol '{0}' not found."
 ERR_UNKFIELD = "Protocol {0} has no field '{1}'."
-ERR_MULTIMATCH = "Multiple match found, please choose between {0}."
 
 #-----------------------------------------------------------------------------#
 # MongoDB classes                                                             #
@@ -58,29 +56,6 @@ class MongoDB(object):
     #-------------------------------------------------------------------------#
     # Public                                                                  #
     #-------------------------------------------------------------------------#
-    
-    def get_protocol(self, name: str=None) -> dict:
-        """Return the document associated to the protocol "name" as a dict.
-
-        The research is case-insensitive. The name also be one of the aliases.
-
-        :raises DBException: If the protocol does not exist.
-        """
-        # No argument == return all protocols :)
-        if not name:
-            return [x for x in self.protocols.find()]
-        # We cannot just use find_one() / find(): we want case insensitive search
-        match = []
-        for proto in self.protocols.find():
-            all_names = [x for x in self.__get_all_names(proto)]
-            if len(search(name, all_names)):
-                match.append(proto)
-        if len(match) == 1:
-            return match[0]
-        if len(match) > 1:
-            match = [x[p.name] for x in match]
-            raise DBException(ERR_MULTIMATCH.format(", ".join(match)))
-        raise DBException(ERR_UNKPROTO.format(name))
 
     def get_protocol_field(self, protocol: str, field: str) -> tuple:
         """Return the field in the document associated to protocol as a dict.
@@ -114,12 +89,16 @@ class MongoDB(object):
         return self.db[mongodb.protocols]
 
     @property
-    def links(self):
-        return self.db[mongodb.links]
-
-    @property
     def protocols_count(self):
         return self.db[mongodb.protocols].count_documents({})
+
+    @property
+    def protocols_all(self) -> list:
+        return [x for x in self.db[mongodb.protocols].find()]
+    
+    @property
+    def links(self):
+        return self.db[mongodb.links]
 
     @property
     def links_count(self):
