@@ -72,6 +72,16 @@ class Protocol(object):
         """Add a new field to protocol."""
         setattr(self, field, value)
         self.set(field, value)
+
+    def add_link(self, link_id) -> None:
+        """A a link using the ID from the link document in db."""
+        # First make sure that resources is a list
+        if not isinstance(self.resources, list):
+            self.resources = []
+        # Check duplicate id and add link :)
+        if link_id not in self.resources:
+            self.resources.append(link_id)
+            self.set(protocols.resources, self.resources)
         
     def to_dict(self, exclude_id: bool=True) -> dict:
         """Convert protocol object's content to dictionary."""
@@ -153,7 +163,7 @@ class Protocols(object):
         else:
             raise DBException(ERR_EXIPROTO.format(protocol.name))
         self.__db.protocols.insert_one(protocol.to_dict())
-    
+        
     @property
     def all(self) -> list:
         """Return the complete list of protocols as Protocol objects."""

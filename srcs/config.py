@@ -37,6 +37,7 @@ mongodb.protocols = "protocols"
 mongodb.links = "links"
 
 protocols = SimpleNamespace()
+protocols.resources = "resources"
 protocols.MANDATORY_FIELDS = (
     "name",
     "alias",
@@ -47,7 +48,7 @@ protocols.MANDATORY_FIELDS = (
     "nmap",
     "wireshark",
     "scapy",
-    "resources"
+    protocols.resources
 )
 
 links = SimpleNamespace()

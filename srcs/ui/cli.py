@@ -9,8 +9,8 @@ from argparse import ArgumentParser
 from os import get_terminal_size
 from sys import stderr
 # Internal
-from config import TOOL_DESCRIPTION
-from db import MongoDB, DBException, Protocols, Protocol
+from config import TOOL_DESCRIPTION, mongodb, protocols
+from db import MongoDB, DBException, Protocols, Protocol, Links, Link
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -24,7 +24,7 @@ OPTIONS = (
     ("-G", "--gen", "generate Markdown files with protocols' data", None, None),
     ("-C", "--check", "check the database's content", None, None),
     ("-d", "--data", "values to change with format field:value (with -W)", None, "field:value"),
-    ("-l", "--link", "link to add with format name:url (with -W)", None, "name:url"),
+    ("-l", "--link", "link to add with format name:url (with -W)", None, "description:url"),
     ("-f", "--force", "do not ask for confirmation (with -W)", False, None)
 )
 
@@ -33,6 +33,7 @@ MSG_LINKS_COUNT = "[*] Total number of links: {0}"
 
 MSG_CONFIRM_ADD_PROTO = "Do you want to add protocol '{0}'?"
 MSG_CONFIRM_ADD_FIELD = "Do you want to add field '{0}' protocol {1}?"
+MSG_CONFIRM_ADD_LINK_PROTO = "Do you want to add link '{0}: {1}' to protocol {2}?"
 MSG_CONFIRM_WRITE = "Do you want to write '{0}: {1}' to {2} (previous value: {3})?"
 
 ERR_ACTION = "No is action defined. Choose between {0} (-h for help)."
@@ -54,6 +55,7 @@ class CLI(object):
     options = None
     functions = None
     protocols = None
+    links = None
 
     def __init__(self):
         self.functions = {
@@ -70,7 +72,8 @@ class CLI(object):
         except DBException as dbe:
             ERROR(dbe)
         self.protocols = Protocols()
-            
+        self.links = Links()
+
     def run(self, argv: list=None):
         """Use arguments for command line to launch commands."""
         is_function = False
@@ -100,14 +103,26 @@ class CLI(object):
         return options.parse_args()
 
     #--- Commands ------------------------------------------------------------#
-    
+
+    # -L / --list
     def __cmd_list(self) -> None:
         pdict = {x.name: x.keywords for x in self.protocols.all}
         self.__print_table(pdict)
         # Stats
         print(MSG_PROTO_COUNT.format(self.protocols.count))
-        print(MSG_LINKS_COUNT.format(self.db.links_count))
+        print(MSG_LINKS_COUNT.format(self.links.count))
 
+    # -A / --add
+    def __cmd_add(self, new: str=None) -> bool:
+        new = new if new else self.options.add
+        if not self.__confirm(MSG_CONFIRM_ADD_PROTO.format(new), self.options.force):
+            return False
+        protocol = Protocol().create(name=new)
+        self.protocols.add(protocol)
+        self.__cmd_read(new)
+        return True
+        
+    # -R / --read
     def __cmd_read(self, protocol: str=None) -> None:
         try:
             protocol = protocol if protocol else self.options.read
@@ -115,6 +130,7 @@ class CLI(object):
         except DBException as dbe:
             ERROR(str(dbe), will_exit=False)
 
+    # -W / --write
     def __cmd_write(self) -> None:
         # Check what kind of data needs to be written
         # We use "is not" because we want one or the other, not both
@@ -135,18 +151,11 @@ class CLI(object):
         elif self.options.link:
             self.__write_link(protocol, self.options.link)
 
-    def __cmd_add(self, new: str=None) -> bool:
-        new = new if new else self.options.add
-        if not self.__confirm(MSG_CONFIRM_ADD_PROTO.format(new), self.options.force):
-            return False
-        protocol = Protocol(name=new)
-        self.protocols.add(protocol)
-        self.__cmd_read(new)
-        return True
-        
+    # -G / --gen
     def __cmd_gen(self) -> None:
         print("elyeneratorrrr")
 
+    # -C / --check
     def __cmd_check(self) -> None:
         print("uijeverifi")
 
@@ -154,7 +163,8 @@ class CLI(object):
 
     def __add_field(self, protocol:Protocol, field, value) -> bool:
         if not self.__confirm(MSG_CONFIRM_ADD_FIELD.format(field,
-                                                           protocol.name), self.options.force):
+                                                           protocol.name),
+                              self.options.force):
             return False
         protocol.add(field, value)
         return True
@@ -174,18 +184,37 @@ class CLI(object):
                                                    oldval), self.options.force):
             protocol.set(field, value)
             self.__cmd_read(protocol.name)
-
+            
     def __write_link(self, protocol:Protocol, link:str):
         """Write link information with format name:url to protocol.
         We must first create the link in the Link connection.
         """
-        name, url = self.__parse_data(link)
-        if self.__confirm(MSG_CONFIRM_WRITE.format(name, url, protocol),
+        description, url = self.__parse_data(link)
+        # Check if link already exists, create it if not
+        try:
+            link = self.links.get(url)
+        except DBException: # Link does not exist, we create it
+            link = None
+        # Actually create and associate the link
+        if self.__confirm(MSG_CONFIRM_ADD_LINK_PROTO.format(url, description,
+                                                            protocol.name),
                           self.options.force):
-            pass
+            link = link if link else self.links.add(url, description)
+            protocol.add_link(link.id)
+            # Add to protocol link list
         
     #--- Helpers -------------------------------------------------------------#
-        
+
+    def __print_links(self, table_format, key, link_ids: list) -> None:
+        """Print links from ID."""
+        for id in link_ids:
+            try:
+                link = str(self.links.get_id(id))
+            except DBException as dbe:
+                link = str(dbe)
+            print(table_format.format(key, link))
+            key = "" # We only want to print the key for the first line
+    
     def __print_table(self, protocol: dict) -> None:
         """Displays the protocol table on terminal."""
         full_table_size = get_terminal_size().columns
@@ -193,11 +222,14 @@ class CLI(object):
         table_format = "| {0: <16} | {1: <" + str(table_size) + "} |"
         print("-" * (full_table_size - 1))
         for k, v in protocol.items():
-            if k == "_id":
+            if k == mongodb.id:
                 continue
-            v = ", ".join(v) if isinstance(v, list) else str(v)
-            v = v if len(v) < table_size else v[:table_size-3]+"..."
-            print(table_format.format(k, v))
+            elif k == protocols.resources:
+                self.__print_links(table_format, k, v)
+            else:
+                v = ", ".join(v) if isinstance(v, list) else str(v)
+                v = v if len(v) < table_size else v[:table_size-3]+"..."
+                print(table_format.format(k, v))
         print("-" * (full_table_size - 1))
 
     def __parse_data(self, data) -> tuple:
