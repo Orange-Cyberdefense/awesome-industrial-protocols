@@ -7,6 +7,8 @@ from sys import argv
 from ui import CLI, TUI
 from db import MongoDB
 
+from config import ai
+
 if len(argv) < 2:
     interface = TUI()
 else:

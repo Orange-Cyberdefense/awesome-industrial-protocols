@@ -9,7 +9,7 @@ from argparse import ArgumentParser
 from os import get_terminal_size
 from sys import stderr
 # Internal
-from config import TOOL_DESCRIPTION, mongodb, protocols
+from config import TOOL_DESCRIPTION, mongodb, protocols, AI_WARNING
 from db import MongoDB, DBException, Protocols, Protocol, Links, Link
 
 #-----------------------------------------------------------------------------#
@@ -23,7 +23,7 @@ OPTIONS = (
     ("-R", "--read", "read data of a protocol", None, "protocol"),
     ("-W", "--write", "write data to a protocol", None, "protocol"),
     ("-D", "--delete", "delete a protocol", None, "protocol"),
-    ("-S", "--search", "run automated data search for a protocol", None, "protocol"),
+    ("-AI", "--ask_ai", "search data for a protocol using IA", None, "protocol"),
     ("-N", "--note", "add personal notes for a protocol", None, "protocol"),
     ("-LL", "--list-links", "list all links", None, None),
     ("-AL", "--add-link", "add a new link", None, "description:url"),
@@ -76,7 +76,7 @@ class CLI(object):
             "read": self.__cmd_read,
             "write": self.__cmd_write,
             "delete": self.__cmd_delete,
-            "search": self.__cmd_search,
+            "ask_ai": self.__cmd_ask_ai,
             "note": self.__cmd_note,
             "list_links": self.__cmd_list_links,
             "add_link": self.__cmd_add_link,
@@ -185,9 +185,20 @@ class CLI(object):
                           self.options.force):
             self.protocols.delete(protocol)
 
-    def __cmd_search(self) -> None:
-        """-S / --search"""
-        raise NotImplementedError("CLI: search")
+    def __cmd_ask_ai(self) -> None:
+        """-AI / --ask-ai"""
+        try:
+            from auto import AI
+        except ImportError:
+            ERROR("OpenAI not found (pip install openai)", will_exit=True)
+        print(AI_WARNING)
+        # Check if protocol exists, if not create it.
+        try:
+            ai = AI()
+            # TODO : replace with scenario
+            print(ai.request("write a 4 lines poem about seagulls"))
+        except AIError as aie:
+            ERROR(str(aie), will_exit=True)
             
     def __cmd_note(self) -> None:
         """-N / --note"""
