@@ -43,7 +43,7 @@ class Protocol(object):
         for k, v in kwargs.items():
             setattr(self, k, v)
         self.__fill() # Add mandatory field to the object if missing
-
+        return self
         
     def get(self, field:str) -> tuple:
         """Get the exact name and value associated to field.
@@ -163,6 +163,11 @@ class Protocols(object):
         else:
             raise DBException(ERR_EXIPROTO.format(protocol.name))
         self.__db.protocols.insert_one(protocol.to_dict())
+        
+    def delete(self, protocol:Protocol):
+        """Delete an existing protocol."""
+        self.get(protocol.name) # Will raise if unknown
+        self.__db.protocols.delete_one({protocols.name: protocol.name})
         
     @property
     def all(self) -> list:

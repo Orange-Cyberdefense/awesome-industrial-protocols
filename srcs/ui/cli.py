@@ -21,6 +21,12 @@ OPTIONS = (
     ("-A", "--add", "Add a new protocol", None, "protocol"),
     ("-R", "--read", "read data of a protocol", None, "protocol"),
     ("-W", "--write", "write data to a protocol", None, "protocol"),
+    ("-D", "--delete", "delete a protocol", None, "protocol"),
+    ("-LL", "--list-links", "list all links", None, None),
+    ("-AL", "--add-link", "Add a new link", None, "description:url"),
+    ("-RL", "--read-link", "read data of a link", None, "url"),
+    ("-WL", "--write-link", "change data of a link", None, "url"),
+    ("-DL", "--delete-link", "delete a link", None, "url"),
     ("-G", "--gen", "generate Markdown files with protocols' data", None, None),
     ("-C", "--check", "check the database's content", None, None),
     ("-d", "--data", "values to change with format field:value (with -W)", None, "field:value"),
@@ -33,8 +39,10 @@ MSG_LINKS_COUNT = "[*] Total number of links: {0}"
 
 MSG_CONFIRM_ADD_PROTO = "Do you want to add protocol '{0}'?"
 MSG_CONFIRM_ADD_FIELD = "Do you want to add field '{0}' protocol {1}?"
+MSG_CONFIRM_ADD_LINK = "Do you want to add link '{0}'?"
 MSG_CONFIRM_ADD_LINK_PROTO = "Do you want to add link '{0}: {1}' to protocol {2}?"
 MSG_CONFIRM_WRITE = "Do you want to write '{0}: {1}' to {2} (previous value: {3})?"
+MSG_CONFIRM_DELETE = "Do you really want to delete protocol {0}? (ALL DATA WILL BE LOST)"
 
 ERR_ACTION = "No is action defined. Choose between {0} (-h for help)."
 ERR_WRITE = "Write requires data (-d) OR link (-l) (-h for help)."
@@ -63,6 +71,11 @@ class CLI(object):
             "add": self.__cmd_add,
             "read": self.__cmd_read,
             "write": self.__cmd_write,
+            "delete": self.__cmd_delete,
+            "list_links": self.__cmd_list_links,
+            "add_link": self.__cmd_add_link,
+            "write_link": self.__cmd_write_link,
+            "delete_link": self.__cmd_delete_link,
             "gen": self.__cmd_gen,
             "check": self.__cmd_check
         }
@@ -111,13 +124,14 @@ class CLI(object):
         # Stats
         print(MSG_PROTO_COUNT.format(self.protocols.count))
         print(MSG_LINKS_COUNT.format(self.links.count))
-
+        
     # -A / --add
     def __cmd_add(self, new: str=None) -> bool:
         new = new if new else self.options.add
         if not self.__confirm(MSG_CONFIRM_ADD_PROTO.format(new), self.options.force):
             return False
         protocol = Protocol().create(name=new)
+        print(protocol)
         self.protocols.add(protocol)
         self.__cmd_read(new)
         return True
@@ -151,6 +165,44 @@ class CLI(object):
         elif self.options.link:
             self.__write_link(protocol, self.options.link)
 
+    # -D / --delete
+    def __cmd_delete(self) -> None:
+        try:
+            protocol = self.protocols.get(self.options.delete) # Will raise if unknown
+        except DBException as dbe:
+            ERROR(str(dbe), will_exit=True)
+        if self.__confirm(MSG_CONFIRM_DELETE.format(protocol.name),
+                          self.options.force):
+            self.protocols.delete(protocol)
+            
+    # -LL / --links
+    def __cmd_list_links(self) -> None:
+        for links in self.links.all:
+            print(links)
+
+    # -AL / --add-link
+    def __cmd_add_link(self, new: str=None) -> None:
+        new = new if new else self.options.add_link
+        description, url = self.__parse_data(new)
+        try:
+            self.links.get(new)
+        except DBException: # Link does not exist, we can continue
+            pass
+        if self.__confirm(MSG_CONFIRM_ADD_LINK.format(new), self.options.force):
+            link = self.links.add(url, description)
+
+    # -RL / --read-link
+    def __cmd_read_link(self) -> None:
+        print("read link")
+
+    # -WL / --write-link
+    def __cmd_write_link(self) -> None:
+        print("write link")
+
+    # -DL / --delete-link
+    def __cmd_delete_link(self) -> None:
+        print("delete link")
+        
     # -G / --gen
     def __cmd_gen(self) -> None:
         print("elyeneratorrrr")

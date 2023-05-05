@@ -37,9 +37,10 @@ mongodb.protocols = "protocols"
 mongodb.links = "links"
 
 protocols = SimpleNamespace()
+protocols.name = "name"
 protocols.resources = "resources"
 protocols.MANDATORY_FIELDS = (
-    "name",
+    protocols.name,
     "alias",
     "keywords",
     "port",
