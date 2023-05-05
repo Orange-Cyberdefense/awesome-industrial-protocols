@@ -18,12 +18,15 @@ from db import MongoDB, DBException, Protocols, Protocol, Links, Link
 
 OPTIONS = (
     ("-L", "--list", "list all protocols", None, None),
-    ("-A", "--add", "Add a new protocol", None, "protocol"),
+    ("-F", "--filter", "list protocols according to filter", None, "filter"),
+    ("-A", "--add", "add a new protocol", None, "protocol"),
     ("-R", "--read", "read data of a protocol", None, "protocol"),
     ("-W", "--write", "write data to a protocol", None, "protocol"),
     ("-D", "--delete", "delete a protocol", None, "protocol"),
+    ("-S", "--search", "run automated data search for a protocol", None, "protocol"),
+    ("-N", "--note", "add personal notes for a protocol", None, "protocol"),
     ("-LL", "--list-links", "list all links", None, None),
-    ("-AL", "--add-link", "Add a new link", None, "description:url"),
+    ("-AL", "--add-link", "add a new link", None, "description:url"),
     ("-RL", "--read-link", "read data of a link", None, "url"),
     ("-WL", "--write-link", "change data of a link", None, "url"),
     ("-DL", "--delete-link", "delete a link", None, "url"),
@@ -68,10 +71,13 @@ class CLI(object):
     def __init__(self):
         self.functions = {
             "list": self.__cmd_list,
+            "filter": self.__cmd_filter,
             "add": self.__cmd_add,
             "read": self.__cmd_read,
             "write": self.__cmd_write,
             "delete": self.__cmd_delete,
+            "search": self.__cmd_search,
+            "note": self.__cmd_note,
             "list_links": self.__cmd_list_links,
             "add_link": self.__cmd_add_link,
             "write_link": self.__cmd_write_link,
@@ -117,16 +123,20 @@ class CLI(object):
 
     #--- Commands ------------------------------------------------------------#
 
-    # -L / --list
     def __cmd_list(self) -> None:
-        pdict = {x.name: x.keywords for x in self.protocols.all}
+        """-L / --list"""
+        pdict = {x.name: x.keywords for x in self.protocols.all_as_objects}
         self.__print_table(pdict)
         # Stats
         print(MSG_PROTO_COUNT.format(self.protocols.count))
         print(MSG_LINKS_COUNT.format(self.links.count))
+
+    def __cmd_filter(self) -> None:
+        """-F / --filter"""
+        raise NotImplementedError("CLI: filter")
         
-    # -A / --add
     def __cmd_add(self, new: str=None) -> bool:
+        """-A / --add"""
         new = new if new else self.options.add
         if not self.__confirm(MSG_CONFIRM_ADD_PROTO.format(new), self.options.force):
             return False
@@ -136,16 +146,16 @@ class CLI(object):
         self.__cmd_read(new)
         return True
         
-    # -R / --read
     def __cmd_read(self, protocol: str=None) -> None:
+        """-R / --read"""
         try:
             protocol = protocol if protocol else self.options.read
             self.__print_table(self.protocols.get(protocol).to_dict())
         except DBException as dbe:
             ERROR(str(dbe), will_exit=False)
 
-    # -W / --write
     def __cmd_write(self) -> None:
+        """-W / --write"""
         # Check what kind of data needs to be written
         # We use "is not" because we want one or the other, not both
         if (self.options.data != None) is (self.options.link != None):
@@ -165,8 +175,8 @@ class CLI(object):
         elif self.options.link:
             self.__write_link(protocol, self.options.link)
 
-    # -D / --delete
     def __cmd_delete(self) -> None:
+        """-D / --delete"""
         try:
             protocol = self.protocols.get(self.options.delete) # Will raise if unknown
         except DBException as dbe:
@@ -174,53 +184,54 @@ class CLI(object):
         if self.__confirm(MSG_CONFIRM_DELETE.format(protocol.name),
                           self.options.force):
             self.protocols.delete(protocol)
+
+    def __cmd_search(self) -> None:
+        """-S / --search"""
+        raise NotImplementedError("CLI: search")
             
-    # -LL / --links
+    def __cmd_note(self) -> None:
+        """-N / --note"""
+        raise NotImplementedError("CLI: note")
+            
     def __cmd_list_links(self) -> None:
+        """-LL / --links"""
         for links in self.links.all:
             print(links)
 
-    # -AL / --add-link
     def __cmd_add_link(self, new: str=None) -> None:
+        """-AL / --add-link"""
         new = new if new else self.options.add_link
         description, url = self.__parse_data(new)
         try:
+            # links.add checks that too but we need to do that before confirmation
             self.links.get(new)
         except DBException: # Link does not exist, we can continue
             pass
         if self.__confirm(MSG_CONFIRM_ADD_LINK.format(new), self.options.force):
             link = self.links.add(url, description)
 
-    # -RL / --read-link
     def __cmd_read_link(self) -> None:
-        print("read link")
+        """-RL / --read-link"""
+        raise NotImplementedError("CLI: read link")
 
-    # -WL / --write-link
     def __cmd_write_link(self) -> None:
-        print("write link")
+        """-WL / --write-link"""
+        raise NotImplementedError("CLI: write link")
 
-    # -DL / --delete-link
     def __cmd_delete_link(self) -> None:
-        print("delete link")
+        """-DL / --delete-link"""
+        raise NotImplementedError("CLI: delete link")
         
-    # -G / --gen
     def __cmd_gen(self) -> None:
-        print("elyeneratorrrr")
+        """-G / --gen"""
+        raise NotImplementedError("CLI: generate files")
 
-    # -C / --check
     def __cmd_check(self) -> None:
-        print("uijeverifi")
+        """-C / --check"""
+        raise NotImplementedError("CLI: check database")
 
     #--- Handle data ---------------------------------------------------------#
 
-    def __add_field(self, protocol:Protocol, field, value) -> bool:
-        if not self.__confirm(MSG_CONFIRM_ADD_FIELD.format(field,
-                                                           protocol.name),
-                              self.options.force):
-            return False
-        protocol.add(field, value)
-        return True
-    
     def __write_data(self, protocol:Protocol, data:str):
         """Write data with format field:value to protocol."""
         field, value = self.__parse_data(data)
@@ -228,14 +239,16 @@ class CLI(object):
             _, oldval = protocol.get(field)
         except DBException as dbe: # Field does not exist
             ERROR(str(dbe), will_exit=False)
-            if self.__add_field(protocol, field, value):
+            if self.__confirm(MSG_CONFIRM_ADD_FIELD.format(field,
+                                                           protocol.name),
+                                  self.options.force):
+                protocol.add(field, value)
                 self.__cmd_read(protocol.name)                
-            return
-        # Field exists
-        if self.__confirm(MSG_CONFIRM_WRITE.format(field, value, protocol.name,
-                                                   oldval), self.options.force):
-            protocol.set(field, value)
-            self.__cmd_read(protocol.name)
+        else: # Field exists
+            if self.__confirm(MSG_CONFIRM_WRITE.format(field, value, protocol.name,
+                                                       oldval), self.options.force):
+                protocol.set(field, value)
+                self.__cmd_read(protocol.name)
             
     def __write_link(self, protocol:Protocol, link:str):
         """Write link information with format name:url to protocol.

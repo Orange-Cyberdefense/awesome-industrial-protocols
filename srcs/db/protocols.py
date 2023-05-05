@@ -6,7 +6,7 @@
 """
 
 from . import MongoDB, DBException, search
-from config import protocols, mongodb
+from config import protocols as p, mongodb
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -81,7 +81,7 @@ class Protocol(object):
         # Check duplicate id and add link :)
         if link_id not in self.resources:
             self.resources.append(link_id)
-            self.set(protocols.resources, self.resources)
+            self.set(p.resources, self.resources)
         
     def to_dict(self, exclude_id: bool=True) -> dict:
         """Convert protocol object's content to dictionary."""
@@ -106,7 +106,7 @@ class Protocol(object):
 
     def __fill(self):
         """Check that all mandatory fields are set for protocol objects."""
-        for attr in protocols.MANDATORY_FIELDS:
+        for attr in p.MANDATORY_FIELDS:
             try:
                 getattr(self, attr)
             except AttributeError:
@@ -117,7 +117,7 @@ class Protocol(object):
     def __check(self):
         """Check that all mandatory fields are set for protocol objects."""
         try:
-            for attr in protocols.MANDATORY_FIELDS:
+            for attr in p.MANDATORY_FIELDS:
                 getattr(self, attr)
         except AttributeError:
             raise DBException(ERR_MANDFIELD.format(attr, self.name)) from None
@@ -143,10 +143,16 @@ class Protocols(object):
 
         :raises DBException: If the protocol does not exist.
         """
+        def all_names(protocol:dict):
+            alias = protocol[p.alias] if isinstance(protocol[p.alias], list) \
+                    else [protocol[p.alias]]
+            return [protocol[p.name]] + alias
+        
         match = []
+        # We do that all the time (I know it sucks) to be up to date with db
         for protocol in self.all:
-            if len(search(protocol_name, protocol.names)):
-                match.append(protocol)
+            if len(search(protocol_name, all_names(protocol))):
+                match.append(Protocol(**protocol))
         if len(match) == 1:
             return match[0]
         if len(match) > 1:
@@ -167,11 +173,15 @@ class Protocols(object):
     def delete(self, protocol:Protocol):
         """Delete an existing protocol."""
         self.get(protocol.name) # Will raise if unknown
-        self.__db.protocols.delete_one({protocols.name: protocol.name})
+        self.__db.protocols.delete_one({p.name: protocol.name})
         
     @property
     def all(self) -> list:
         """Return the complete list of protocols as Protocol objects."""
+        return [x for x in self.__db.protocols_all]
+
+    @property
+    def all_as_objects(self) -> list:
         return [Protocol(**x) for x in self.__db.protocols_all]
         
     @property
