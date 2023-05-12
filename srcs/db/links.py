@@ -11,7 +11,7 @@ from socket import timeout as socket_timeout
 from re import match as re_match
 # Internal
 from . import MongoDB, DBException, search
-from config import mongodb, links
+from config import mongodb, links as l
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -24,6 +24,7 @@ ERR_UNKURL = "URL '{0}' not found."
 ERR_EXIURL = "URL '{0}' already exists."
 ERR_UNKID = "This link ID does not match with any existing link ({0})."
 ERR_MULTIMATCH = "Multiple match found, please choose between {0}."
+ERR_UNKFIELD = "Field '{0}' not found."
 
 #-----------------------------------------------------------------------------#
 # Link class                                                              #
@@ -43,15 +44,41 @@ class Link(object):
         except DBException as dbe:
             ERROR(dbe)
         self.id = kwargs[mongodb.id] if mongodb.id in kwargs else None
-        self.__url = self.__set_url(kwargs["url"]) if "url" in kwargs else None
-        self.type = kwargs["type"] if "type" in kwargs else links.DEFAULT_TYPE
-        self.description = kwargs["description"] if "description" in kwargs else None
+        self.__url = self.__set_url(kwargs[l.url]) if l.url in kwargs else None
+        self.type = kwargs[l.type] if l.type in kwargs else l.DEFAULT_TYPE
+        self.description = kwargs[l.description] if l.description in kwargs else None
+        self.fields_dict = {
+            l.url: self.url,
+            l.description: self.description,
+            l.type: self.type
+        }
         self.__check()
 
     def __str__(self):
         return "[{0}] {1}: {2}".format(self.type.capitalize(), self.description,
                                        self.url)
-        
+
+    def get(self, field: str) -> str:
+        """Return value associated to field."""
+        field = field.lower()
+        if field not in self.fields_dict.keys():
+            raise DBException(ERR_UNKFIELD.format(field))
+        return self.fields_dict[field]
+
+    def set(self, field: str, value: str) -> None:
+        """Set value to field."""
+        field = field.lower()
+        if field not in self.fields_dict.keys():
+            raise DBException(ERR_UNKFIELD.format(field))
+        if field == l.type:
+            value = value.lower()
+            if value not in l.TYPES:
+                raise DBException(ERR_LINKTYPE.format(", ".join(l.TYPES)))
+        self.fields_dict[field] = value
+        document = {"url": self.url}
+        newvalue = {field: value}
+        self.__db.links.update_one(document, {"$set": newvalue})
+    
     @staticmethod
     def to_url(url: str) -> str:
         """Format URL string to match Link.url, to detect duplicates."""
@@ -79,19 +106,18 @@ class Link(object):
     def __check(self):
         if not self.__url or not self.description:
             raise DBException(ERR_EMPTY)
-        if self.type not in links.TYPES:
-            print(self.type)
-            raise DBException(ERR_LINKTYPE.format(", ".join(links.TYPES)))
+        if self.type not in l.TYPES:
+            raise DBException(ERR_LINKTYPE.format(", ".join(l.TYPES)))
 
     def to_dict(self, exclude_id: bool=True) -> dict:
         """Convert link object's content to dictionary."""
         ldict = {
-            "url": self.url,
-            "type": self.type,
-            "description": self.description
+            l.url: self.url,
+            l.description: self.description,
+            l.type: self.type
         }
         if not exclude_id:
-            ldict["_id"] = self._id
+            ldict[l.id] = self._id
         return ldict
 
     @property
@@ -135,11 +161,11 @@ class Links(object):
         """Get a link object by its ID in database."""
         # TMP: replace with filter
         for link in self.all:
-            if link[links.id] == id:
+            if link[l.id] == id:
                 return Link(**link)
         raise DBException(ERR_UNKID.format(id))
     
-    def add(self, url, description, type=links.DEFAULT_TYPE) -> Link:
+    def add(self, url, description, type=l.DEFAULT_TYPE) -> Link:
         """Add a link to link collection."""
         try:
             self.get(url)
@@ -154,7 +180,12 @@ class Links(object):
         # We don't return link directly because we need the updated _id after db
         # insert, so we read it again from the db
         return self.get(link.url)
-    
+
+    def delete(self, link: Link) -> None:
+        """Delete an existing link."""
+        self.get(link.url) # Will raise if unknown
+        self.__db.links.delete_one({l.url: link.url})
+        
     @property
     def all(self) -> list:
         return [x for x in self.__db.links_all]

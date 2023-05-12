@@ -176,7 +176,7 @@ class Protocols(object):
             raise DBException(ERR_EXIPROTO.format(proto2.name))
         self.__db.protocols.insert_one(protocol.to_dict())
         
-    def delete(self, protocol:Protocol):
+    def delete(self, protocol:Protocol) -> None:
         """Delete an existing protocol."""
         self.get(protocol.name) # Will raise if unknown
         self.__db.protocols.delete_one({p.name: protocol.name})

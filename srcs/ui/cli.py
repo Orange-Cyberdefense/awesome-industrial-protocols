@@ -42,8 +42,10 @@ MSG_CONFIRM_ADD_PROTO = "Do you want to add protocol '{0}'?"
 MSG_CONFIRM_ADD_FIELD = "Do you want to add field '{0}' to protocol '{1}'?"
 MSG_CONFIRM_ADD_LINK = "Do you want to add link '{0}'?"
 MSG_CONFIRM_WRITE = "Do you want to write '{0}: {1}' to '{2}' (previous value: '{3}')?"
+MSG_CONFIRM_WRITE_LINK = "Do you want to write '{0}: {1}' to '{2}' (previous value: '{3}')?"
 MSG_CONFIRM_APPEND = "Do you want to append '{0}' to field '{1}'?"
 MSG_CONFIRM_DELETE = "Do you really want to delete protocol '{0}'? (ALL DATA WILL BE LOST)"
+MSG_CONFIRM_DELETE_LINK = "Do you really want to delete '{0}'?"
 
 ERR_ACTION = "No action is defined. Choose between {0} (-h for help)."
 ERR_WRITE = "Write requires data (-d) OR link (-l) (-h for help)."
@@ -267,13 +269,32 @@ class CLI(object):
         except DBException as dbe:
             ERROR(str(dbe), will_exit=False)
 
-    def __cmd_write_link(self) -> None:
+            
+    def __cmd_write_link(self, url: str=None, field: str=None, value:
+                         str=None) -> None:
         """-WL / --write-link"""
-        raise NotImplementedError("CLI: write link")
+        if self.options.write_link:
+            url, field, value = self.options.write_link
+        try:
+            link = self.links.get(url)
+            oldvalue = link.get(field)
+            if self.__confirm(MSG_CONFIRM_WRITE_LINK.format(field, value, link.url, oldvalue),
+                              self.options.force):
+                link.set(field, value)
+                self.__cmd_read_link(link.url)
+        except DBException as dbe:
+            ERROR(dbe, will_exit=True)
 
+            
     def __cmd_delete_link(self) -> None:
         """-DL / --delete-link"""
-        raise NotImplementedError("CLI: delete link")
+        try:
+            link = self.links.get(self.options.delete_link) # Will raise if unknown
+        except DBException as dbe:
+            ERROR(str(dbe), will_exit=True)
+        if self.__confirm(MSG_CONFIRM_DELETE_LINK.format(link.url),
+                          self.options.force):
+            self.links.delete(link)
         
     def __cmd_gen(self) -> None:
         """-G / --gen"""

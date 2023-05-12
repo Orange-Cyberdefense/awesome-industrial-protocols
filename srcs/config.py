@@ -80,6 +80,9 @@ protocols.TYPE = lambda x: protocols.FIELDS[x][1] if x in protocols.FIELDS else 
 
 links = SimpleNamespace()
 links.id = "_id"
+links.url = "url"
+links.description = "description"
+links.type = "type"
 links.TYPES = ("conference", "paper", "tool", "other", protocols.specs,
                protocols.nmap, protocols.wireshark, protocols.scapy,
                protocols.pcap, protocols.cve)
