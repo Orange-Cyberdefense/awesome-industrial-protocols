@@ -302,7 +302,10 @@ class CLI(object):
 
     def __cmd_check(self) -> None:
         """-C / --check"""
-        raise NotImplementedError("CLI: check database")
+        for issue in self.protocols.check():
+            print(issue)
+        for issue in self.links.check():
+            print(issue)
 
     #--- Helpers -------------------------------------------------------------#
 

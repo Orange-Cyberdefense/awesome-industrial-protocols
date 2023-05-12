@@ -91,24 +91,11 @@ class Link(object):
             urlopen(url, timeout=1)
         except (URLError, socket_timeout):
             raise DBException(ERR_BADURL.format(url)) from None
-                
-    #--- Private -------------------------------------------------------------#
 
-    @staticmethod
-    def __set_url(url) -> ParseResult:
-        """Convert url passed as argument to a parsed url (uses urllib)."""
-        url = url if re_match(r'http.*://.*', url) else "https://" + url
-        url = urlparse(url)
-        if not url.scheme :
-            url._replace(scheme="https")
-        return url
+    def check(self):
+        """Check visitor."""
+        self.__check()
         
-    def __check(self):
-        if not self.__url or not self.description:
-            raise DBException(ERR_EMPTY)
-        if self.type not in l.TYPES:
-            raise DBException(ERR_LINKTYPE.format(", ".join(l.TYPES)))
-
     def to_dict(self, exclude_id: bool=True) -> dict:
         """Convert link object's content to dictionary."""
         ldict = {
@@ -129,6 +116,24 @@ class Link(object):
     def fields(self) -> list:
         """Return fields in protocol object (public class attributes)."""
         return (self.url, self.description, self.type)
+
+        
+    #--- Private -------------------------------------------------------------#
+
+    @staticmethod
+    def __set_url(url) -> ParseResult:
+        """Convert url passed as argument to a parsed url (uses urllib)."""
+        url = url if re_match(r'http.*://.*', url) else "https://" + url
+        url = urlparse(url)
+        if not url.scheme :
+            url._replace(scheme="https")
+        return url
+        
+    def __check(self):
+        if not self.__url or not self.description:
+            raise DBException(ERR_EMPTY)
+        if self.type not in l.TYPES:
+            raise DBException(ERR_LINKTYPE.format(", ".join(l.TYPES)))
     
 #-----------------------------------------------------------------------------#
 # Links class                                                                 #
@@ -185,6 +190,14 @@ class Links(object):
         """Delete an existing link."""
         self.get(link.url) # Will raise if unknown
         self.__db.links.delete_one({l.url: link.url})
+
+    def check(self):
+        """Check generator."""
+        for link in self.all_as_objects:
+            try:
+                link.check()
+            except DBException as dbe:
+                yield str(dbe)
         
     @property
     def all(self) -> list:

@@ -90,6 +90,10 @@ class Protocol(object):
             self.set(field, [x for x in oldvalue + value if x != ''])
         else:
             raise DBException(ERR_EXIVALUE.format(p.NAME(field)))
+
+    def check(self):
+        """Check visitor."""
+        self.__check()
         
     def to_dict(self, exclude_id: bool=True) -> dict:
         """Convert protocol object's content to dictionary."""
@@ -180,6 +184,14 @@ class Protocols(object):
         """Delete an existing protocol."""
         self.get(protocol.name) # Will raise if unknown
         self.__db.protocols.delete_one({p.name: protocol.name})
+
+    def check(self):
+        """Check generator."""
+        for protocol in self.all_as_objects:
+            try:
+                protocol.check()
+            except DBException as dbe:
+                yield str(dbe)
         
     @property
     def all(self) -> list:
