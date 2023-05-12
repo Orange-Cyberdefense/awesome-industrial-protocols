@@ -9,7 +9,7 @@ from argparse import ArgumentParser
 from os import get_terminal_size
 from sys import stderr
 # Internal
-from config import TOOL_DESCRIPTION, mongodb, protocols, AI_WARNING
+from config import TOOL_DESCRIPTION, mongodb, protocols as p, links, types, AI_WARNING
 from db import MongoDB, DBException, Protocols, Protocol, Links, Link
 
 #-----------------------------------------------------------------------------#
@@ -21,19 +21,17 @@ OPTIONS = (
     ("-F", "--filter", "list protocols according to filter", None, "filter"),
     ("-A", "--add", "add a new protocol", None, "protocol"),
     ("-R", "--read", "read data of a protocol", None, "protocol"),
-    ("-W", "--write", "write data to a protocol", None, "protocol"),
+    ("-W", "--write", "write data to a protocol", None, "protocol field value", 3),
     ("-D", "--delete", "delete a protocol", None, "protocol"),
     ("-AI", "--ask_ai", "search data for a protocol using IA", None, "protocol"),
     ("-N", "--note", "add personal notes for a protocol", None, "protocol"),
     ("-LL", "--list-links", "list all links", None, None),
-    ("-AL", "--add-link", "add a new link", None, "description:url"),
+    ("-AL", "--add-link", "add a new link", None, "description url", 2),
     ("-RL", "--read-link", "read data of a link", None, "url"),
-    ("-WL", "--write-link", "change data of a link", None, "url"),
+    ("-WL", "--write-link", "change data of a link", None, "url field value", 3),
     ("-DL", "--delete-link", "delete a link", None, "url"),
     ("-G", "--gen", "generate Markdown files with protocols' data", None, None),
     ("-C", "--check", "check the database's content", None, None),
-    ("-d", "--data", "values to change with format field:value (with -W)", None, "field:value"),
-    ("-l", "--link", "link to add with format name:url (with -W)", None, "description:url"),
     ("-f", "--force", "do not ask for confirmation (with -W)", False, None)
 )
 
@@ -41,15 +39,16 @@ MSG_PROTO_COUNT = "[*] Total number of protocols: {0}"
 MSG_LINKS_COUNT = "[*] Total number of links: {0}"
 
 MSG_CONFIRM_ADD_PROTO = "Do you want to add protocol '{0}'?"
-MSG_CONFIRM_ADD_FIELD = "Do you want to add field '{0}' protocol {1}?"
+MSG_CONFIRM_ADD_FIELD = "Do you want to add field '{0}' to protocol '{1}'?"
 MSG_CONFIRM_ADD_LINK = "Do you want to add link '{0}'?"
-MSG_CONFIRM_ADD_LINK_PROTO = "Do you want to add link '{0}: {1}' to protocol {2}?"
-MSG_CONFIRM_WRITE = "Do you want to write '{0}: {1}' to {2} (previous value: {3})?"
-MSG_CONFIRM_DELETE = "Do you really want to delete protocol {0}? (ALL DATA WILL BE LOST)"
+MSG_CONFIRM_WRITE = "Do you want to write '{0}: {1}' to '{2}' (previous value: '{3}')?"
+MSG_CONFIRM_APPEND = "Do you want to append '{0}' to field '{1}'?"
+MSG_CONFIRM_DELETE = "Do you really want to delete protocol '{0}'? (ALL DATA WILL BE LOST)"
 
-ERR_ACTION = "No is action defined. Choose between {0} (-h for help)."
+ERR_ACTION = "No action is defined. Choose between {0} (-h for help)."
 ERR_WRITE = "Write requires data (-d) OR link (-l) (-h for help)."
 ERR_BADDATA = "Data to write is invalid (-h for help)."
+ERR_BADLINK = "Link is invalid."
 
 def ERROR(msg: str, will_exit: bool=False):
     print("ERROR:", msg, file=stderr)
@@ -80,6 +79,7 @@ class CLI(object):
             "note": self.__cmd_note,
             "list_links": self.__cmd_list_links,
             "add_link": self.__cmd_add_link,
+            "read_link": self.__cmd_read_link,
             "write_link": self.__cmd_write_link,
             "delete_link": self.__cmd_delete_link,
             "gen": self.__cmd_gen,
@@ -89,7 +89,7 @@ class CLI(object):
         try:
             self.db = MongoDB()
         except DBException as dbe:
-            ERROR(dbe)
+            ERROR(dbe, will_exit=True)
         self.protocols = Protocols()
         self.links = Links()
 
@@ -116,6 +116,9 @@ class CLI(object):
             if not opt[4]: # Options takes no argument (so no meta)
                 options.add_argument(opt[0], opt[1], help=opt[2],
                                      action="store_true", default=opt[3])
+            elif len(opt) == 6:
+                options.add_argument(opt[0], opt[1], help=opt[2], nargs=opt[5],
+                                     metavar=opt[4], default=opt[3])                
             else:
                 options.add_argument(opt[0], opt[1], help=opt[2],
                                      metavar=opt[4], default=opt[3])
@@ -126,7 +129,7 @@ class CLI(object):
     def __cmd_list(self) -> None:
         """-L / --list"""
         pdict = {x.name: x.keywords for x in self.protocols.all_as_objects}
-        self.__print_table(pdict)
+        self.__print_table(pdict, nocap=True)
         # Stats
         print(MSG_PROTO_COUNT.format(self.protocols.count))
         print(MSG_LINKS_COUNT.format(self.links.count))
@@ -141,8 +144,10 @@ class CLI(object):
         if not self.__confirm(MSG_CONFIRM_ADD_PROTO.format(new), self.options.force):
             return False
         protocol = Protocol().create(name=new)
-        print(protocol)
-        self.protocols.add(protocol)
+        try:
+            self.protocols.add(protocol)
+        except DBException as dbe:
+            ERROR(dbe, will_exit=True)
         self.__cmd_read(new)
         return True
         
@@ -154,26 +159,51 @@ class CLI(object):
         except DBException as dbe:
             ERROR(str(dbe), will_exit=False)
 
+    def __write_field(self, protocol: Protocol, field: str, value: str,
+                      oldvalue: str):
+        """Used by -W"""
+        try:
+            if p.TYPE(field) in (types.LIST, types.LINKLIST):
+                # If it's a link, we need a link object
+                if self.__confirm(MSG_CONFIRM_APPEND.format(value, p.NAME(field)),
+                                  self.options.force):
+                    if p.TYPE(field) == types.LINKLIST:
+                        link = self.__cmd_add_link(value, value)
+                        value = link.id
+                        protocol.append(field, value)
+            else:
+                if self.__confirm(MSG_CONFIRM_WRITE.format(p.NAME(field), value,
+                                                           protocol.name,
+                                                           oldvalue),
+                                  self.options.force):
+                    protocol.set(field, value)
+        except DBException as dbe:
+            ERROR(dbe, will_exit=True)
+
+            
     def __cmd_write(self) -> None:
         """-W / --write"""
-        # Check what kind of data needs to be written
-        # We use "is not" because we want one or the other, not both
-        if (self.options.data != None) is (self.options.link != None):
-            ERROR(ERR_WRITE, will_exit=True)
+        protocol, field, value = self.options.write
         # Does protocol exist?
         try:
-            protocol = self.protocols.get(self.options.write)
+            protocol = self.protocols.get(protocol)
         except DBException as dbe:
             ERROR(str(dbe), will_exit=False)
             # Protocol does not exist but can be added
-            if self.__cmd_add(self.options.write):
+            if self.__cmd_add(protocol):
                 self.__cmd_write() # We call the function again 8D
             return # Protocol was not created, leaving.
-        # Now we need to parse the data or link to be stored.
-        if self.options.data:
-            self.__write_data(protocol, self.options.data)
-        elif self.options.link:
-            self.__write_link(protocol, self.options.link)
+        # Now we need to know what kind of data to write
+        try:
+            field, oldvalue = protocol.get(field)
+        except DBException as dbe: # Field does not exist
+            if self.__confirm(MSG_CONFIRM_ADD_FIELD.format(field,
+                                                           protocol.name),
+                                  self.options.force):
+                protocol.add(field, value)
+        else: # Field exists, should we append or replace ?
+            self.__write_field(protocol, field, value, oldvalue)
+        self.__cmd_read(protocol.name)
 
     def __cmd_delete(self) -> None:
         """-D / --delete"""
@@ -206,24 +236,36 @@ class CLI(object):
             
     def __cmd_list_links(self) -> None:
         """-LL / --links"""
-        for links in self.links.all:
+        for links in self.links.all_as_objects:
             print(links)
 
-    def __cmd_add_link(self, new: str=None) -> None:
+    def __cmd_add_link(self, url: str=None, description: str=None,
+                       type: str=None) -> Link:
         """-AL / --add-link"""
-        new = new if new else self.options.add_link
-        description, url = self.__parse_data(new)
+        if self.options.add_link:
+            description, url = self.options.add_link
         try:
             # links.add checks that too but we need to do that before confirmation
-            self.links.get(new)
+            link = self.links.get(url)
+            return link
         except DBException: # Link does not exist, we can continue
             pass
-        if self.__confirm(MSG_CONFIRM_ADD_LINK.format(new), self.options.force):
-            link = self.links.add(url, description)
+        if self.__confirm(MSG_CONFIRM_ADD_LINK.format(url), self.options.force):
+            try:
+                link = self.links.add(url, description, type if type else
+                                      links.DEFAULT_TYPE)
+                return link
+            except DBException as dbe:
+                ERROR(str(dbe), will_exit=True)
+        return None
 
-    def __cmd_read_link(self) -> None:
+    def __cmd_read_link(self, link=None) -> None:
         """-RL / --read-link"""
-        raise NotImplementedError("CLI: read link")
+        try:
+            link = link if link else self.options.read_link
+            self.__print_table(self.links.get(link).to_dict())
+        except DBException as dbe:
+            ERROR(str(dbe), will_exit=False)
 
     def __cmd_write_link(self) -> None:
         """-WL / --write-link"""
@@ -241,48 +283,13 @@ class CLI(object):
         """-C / --check"""
         raise NotImplementedError("CLI: check database")
 
-    #--- Handle data ---------------------------------------------------------#
-
-    def __write_data(self, protocol:Protocol, data:str):
-        """Write data with format field:value to protocol."""
-        field, value = self.__parse_data(data)
-        try:
-            _, oldval = protocol.get(field)
-        except DBException as dbe: # Field does not exist
-            ERROR(str(dbe), will_exit=False)
-            if self.__confirm(MSG_CONFIRM_ADD_FIELD.format(field,
-                                                           protocol.name),
-                                  self.options.force):
-                protocol.add(field, value)
-                self.__cmd_read(protocol.name)                
-        else: # Field exists
-            if self.__confirm(MSG_CONFIRM_WRITE.format(field, value, protocol.name,
-                                                       oldval), self.options.force):
-                protocol.set(field, value)
-                self.__cmd_read(protocol.name)
-            
-    def __write_link(self, protocol:Protocol, link:str):
-        """Write link information with format name:url to protocol.
-        We must first create the link in the Link connection.
-        """
-        description, url = self.__parse_data(link)
-        # Check if link already exists, create it if not
-        try:
-            link = self.links.get(url)
-        except DBException: # Link does not exist, we create it
-            link = None
-        # Actually create and associate the link
-        if self.__confirm(MSG_CONFIRM_ADD_LINK_PROTO.format(url, description,
-                                                            protocol.name),
-                          self.options.force):
-            link = link if link else self.links.add(url, description)
-            protocol.add_link(link.id)
-            # Add to protocol link list
-        
     #--- Helpers -------------------------------------------------------------#
 
     def __print_links(self, table_format, key, link_ids: list) -> None:
         """Print links from ID."""
+        if not isinstance(link_ids, list):
+            print(table_format.format(key, ERR_BADLINK))
+            return
         for id in link_ids:
             try:
                 link = str(self.links.get_id(id))
@@ -291,30 +298,26 @@ class CLI(object):
             print(table_format.format(key, link))
             key = "" # We only want to print the key for the first line
     
-    def __print_table(self, protocol: dict) -> None:
+    def __print_table(self, protocol: dict, nocap: bool=False) -> None:
         """Displays the protocol table on terminal."""
         full_table_size = get_terminal_size().columns
-        table_size = full_table_size - 16 - 8
-        table_format = "| {0: <16} | {1: <" + str(table_size) + "} |"
+        table_size = full_table_size - 20 - 8
+        table_format = "| {0: <20} | {1: <" + str(table_size) + "} |"
         print("-" * (full_table_size - 1))
         for k, v in protocol.items():
             if k == mongodb.id:
                 continue
-            elif k == protocols.resources:
-                self.__print_links(table_format, k, v)
+            elif k in p.FIELDS and p.TYPE(k) == types.LINKLIST and v:
+                self.__print_links(table_format, p.NAME(k), v)
             else:
                 v = ", ".join(v) if isinstance(v, list) else str(v)
                 v = v if len(v) < table_size else v[:table_size-3]+"..."
+                if k in p.FIELDS:
+                    k = p.NAME(k)
+                else:
+                    k = k if nocap else k.capitalize()
                 print(table_format.format(k, v))
         print("-" * (full_table_size - 1))
-
-    def __parse_data(self, data) -> tuple:
-        """Translates from str field:value to tuple (field, value)."""
-        field = data[:data.find(":")].strip()
-        value = data[data.find(":")+1:].strip()
-        if data.find(":") < 0 or not field or not value:
-            ERROR(ERR_BADDATA, will_exit=True)
-        return field, value
 
     def __confirm(self, msg, force):
         """Interactively ask for confirmation from the user."""

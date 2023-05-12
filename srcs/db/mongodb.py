@@ -87,6 +87,5 @@ class MongoDB(object):
         try:
             self.client.admin.command('ping')
         except ConnectionFailure:
-            raise DBException(ERR_DBCONNECT)
+            raise DBException(ERR_DBCONNECT) from None
 
-        

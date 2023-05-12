@@ -80,6 +80,7 @@ class Link(object):
         if not self.__url or not self.description:
             raise DBException(ERR_EMPTY)
         if self.type not in links.TYPES:
+            print(self.type)
             raise DBException(ERR_LINKTYPE.format(", ".join(links.TYPES)))
 
     def to_dict(self, exclude_id: bool=True) -> dict:
@@ -120,7 +121,7 @@ class Links(object):
     def get(self, url) -> Link:
         """Get a link object by its URL."""
         match = []
-        for link in self.all:
+        for link in self.all_as_objects:
             if len(search(Link.to_url(url), link.url, threshold=0)):
                 match.append(link)
         if len(match) == 1:
@@ -134,11 +135,11 @@ class Links(object):
         """Get a link object by its ID in database."""
         # TMP: replace with filter
         for link in self.all:
-            if link.id == id:
-                return link
+            if link[links.id] == id:
+                return Link(**link)
         raise DBException(ERR_UNKID.format(id))
     
-    def add(self, url, description, type=links.DEFAULT_TYPE) -> None:
+    def add(self, url, description, type=links.DEFAULT_TYPE) -> Link:
         """Add a link to link collection."""
         try:
             self.get(url)
@@ -156,6 +157,10 @@ class Links(object):
     
     @property
     def all(self) -> list:
+        return [x for x in self.__db.links_all]
+
+    @property
+    def all_as_objects(self) -> list:
         return [Link(**x) for x in self.__db.links_all]
 
     @property

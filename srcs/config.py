@@ -8,7 +8,9 @@ from types import SimpleNamespace
 # KEYS                                                                        #
 #-----------------------------------------------------------------------------#
 
-OPENAI_API_KEY = "" # Insert your OpenAI API key, don't push it.
+with open("openai_api_key") as fd:
+    key = fd.read().strip()
+OPENAI_API_KEY = key # Insert your OpenAI API key, don't push it.
 
 #-----------------------------------------------------------------------------#
 # LIST CONFIGURATION                                                          #
@@ -36,25 +38,51 @@ mongodb.id = "_id"
 mongodb.protocols = "protocols"
 mongodb.links = "links"
 
+types = SimpleNamespace()
+types.STR = "str"
+types.BOOL = "bool"
+types.LIST = "list"
+types.LINKLIST = "linklist"
+
 protocols = SimpleNamespace()
 protocols.name = "name"
 protocols.alias = "alias"
+protocols.description = "description"
+protocols.keywords = "keywords"
 protocols.resources = "resources"
-protocols.MANDATORY_FIELDS = (
-    protocols.name,
-    protocols.alias,
-    "keywords",
-    "port",
-    "website",
-    "specs",
-    "nmap",
-    "wireshark",
-    "scapy",
-    protocols.resources
-)
+protocols.port = "port"
+protocols.access = "access"
+protocols.specs = "specs"
+protocols.nmap = "nmap"
+protocols.wireshark = "wireshark"
+protocols.scapy = "scapy"
+protocols.pcap = "pcap"
+protocols.cve = "cve"
+
+protocols.FIELDS = {
+    protocols.name: ("Name", types.STR),
+    protocols.alias: ("Aliases", types.LIST),
+    protocols.description: ("Description", types.STR),
+    protocols.keywords: ("Keywords", types.LIST),
+    protocols.port: ("Port(s)", types.LIST),
+    protocols.access: ("Access to specs", types.BOOL),
+    protocols.specs: ("Specifications", types.LINKLIST),
+    protocols.nmap: ("Nmap script(s)", types.LINKLIST),
+    protocols.wireshark: ("Wireshark dissector", types.LINKLIST),
+    protocols.scapy: ("Scapy layer", types.LINKLIST),
+    protocols.pcap: ("Example Pcap(s)", types.LINKLIST),
+    protocols.cve: ("Related CVE", types.LINKLIST),
+    protocols.resources: ("Resources", types.LINKLIST)
+}
+
+protocols.NAME = lambda x: protocols.FIELDS[x][0] if x in protocols.FIELDS else x
+protocols.TYPE = lambda x: protocols.FIELDS[x][1] if x in protocols.FIELDS else None
 
 links = SimpleNamespace()
-links.TYPES = ("conference, paper, tool, other")
+links.id = "_id"
+links.TYPES = ("conference", "paper", "tool", "other", protocols.specs,
+               protocols.nmap, protocols.wireshark, protocols.scapy,
+               protocols.pcap, protocols.cve)
 links.DEFAULT_TYPE = "other"
 
 # Sensitivity for search, relying on the Levenshtein distance

@@ -6,7 +6,7 @@
 """
 
 from . import MongoDB, DBException, search
-from config import protocols as p, mongodb
+from config import protocols as p, types, mongodb
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -15,9 +15,10 @@ from config import protocols as p, mongodb
 ERR_MANDFIELD = "Missing mandatory field '{0}' for {1}."
 ERR_UNKPROTO = "Protocol '{0}' not found."
 ERR_EXIPROTO = "Protocol '{0}' already exists."
-ERR_UNKFIELD = "Protocol {0} has no field '{1}'."
+ERR_UNKFIELD = "Protocol '{0}' has no field '{1}'."
+ERR_EXIVALUE = "Field '{0}' already contains this value."
 ERR_MULTIMATCH = "Multiple match found, please choose between {0}."
-
+ERR_BOOLVALUE = "This field only accept 'true' or 'false'"
 #-----------------------------------------------------------------------------#
 # Protocol class                                                              #
 #-----------------------------------------------------------------------------#
@@ -64,6 +65,13 @@ class Protocol(object):
         """Update existing field in protocol."""
         self.__check()
         field, _ = self.get(field)
+        # Check types
+        if p.TYPE(field) == types.BOOL:
+            value = value.lower().strip()
+            if value not in ["true", "false"]:
+                raise DBException(ERR_BOOLVALUE.format(field))
+            value = True if value == "true" else False
+        # Store
         document = {"name": self.name}
         newvalue = {field: value}
         self.__db.protocols.update_one(document, {"$set": newvalue})
@@ -73,15 +81,15 @@ class Protocol(object):
         setattr(self, field, value)
         self.set(field, value)
 
-    def add_link(self, link_id) -> None:
-        """A a link using the ID from the link document in db."""
-        # First make sure that resources is a list
-        if not isinstance(self.resources, list):
-            self.resources = []
-        # Check duplicate id and add link :)
-        if link_id not in self.resources:
-            self.resources.append(link_id)
-            self.set(p.resources, self.resources)
+    def append(self, field:str, value) -> None:
+        """Append a value to the existing value in a field."""
+        _, oldvalue = self.get(field)
+        oldvalue = [oldvalue] if not isinstance(oldvalue, list) else oldvalue
+        if value not in oldvalue:
+            value = [value] if not isinstance(value, list) else value
+            self.set(field, [x for x in oldvalue + value if x != ''])
+        else:
+            raise DBException(ERR_EXIVALUE.format(p.NAME(field)))
         
     def to_dict(self, exclude_id: bool=True) -> dict:
         """Convert protocol object's content to dictionary."""
@@ -106,18 +114,19 @@ class Protocol(object):
 
     def __fill(self):
         """Check that all mandatory fields are set for protocol objects."""
-        for attr in p.MANDATORY_FIELDS:
+        for attr,_ in p.FIELDS.items():
             try:
                 getattr(self, attr)
             except AttributeError:
                 setattr(self, attr, "")
+        self.__check()
 
     #--- Private -------------------------------------------------------------#
                 
     def __check(self):
         """Check that all mandatory fields are set for protocol objects."""
         try:
-            for attr in p.MANDATORY_FIELDS:
+            for attr in p.FIELDS:
                 getattr(self, attr)
         except AttributeError:
             raise DBException(ERR_MANDFIELD.format(attr, self.name)) from None
@@ -131,10 +140,7 @@ class Protocols(object):
     __db = None
     
     def __init__(self):
-        try:
-            self.__db = MongoDB()
-        except DBException as dbe:
-            ERROR(dbe)
+        self.__db = MongoDB()
             
     def get(self, protocol_name:str) -> Protocol:
         """Get a protocol by its name. Returns data as a Protocol object.
@@ -163,11 +169,11 @@ class Protocols(object):
     def add(self, protocol:Protocol):
         """Add a new protocol."""
         try:
-            self.get(protocol.name)
+            proto2 = self.get(protocol.name)
         except DBException:
             pass # The protocol does not exist, we can continue
         else:
-            raise DBException(ERR_EXIPROTO.format(protocol.name))
+            raise DBException(ERR_EXIPROTO.format(proto2.name))
         self.__db.protocols.insert_one(protocol.to_dict())
         
     def delete(self, protocol:Protocol):
