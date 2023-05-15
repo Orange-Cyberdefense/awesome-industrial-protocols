@@ -25,8 +25,8 @@ LIST_LOGO = "srcs/out/templates/logo-awesome-industrial-protocols.png"
 # Markdown pages
 markdown = SimpleNamespace()
 markdown.awesomelist_name = "README.md"
-markdown.awesomelist_path = dirname(abspath(__file__))
-markdown.protocolpage_path = join(dirname(abspath(__file__)), pardir, "protocols")
+markdown.awesomelist_path = abspath(join(dirname(abspath(__file__)), pardir))
+markdown.protocolpage_path = abspath(join(dirname(abspath(__file__)), pardir, "protocols"))
 
 # Templates for Markdown pages
 markdown.awesomelist_template = "template-awesome-industrial-protocols.md"

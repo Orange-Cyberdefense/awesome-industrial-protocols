@@ -25,6 +25,7 @@ LINK_FORMAT = lambda x: sub('[^0-9a-zA-Z]+', '', x.lower().strip())
 
 LINK = lambda x: "[{0}](#{1})".format(x, LINK_FORMAT(x))
 IMG = lambda x, y: "![{0}]({1})".format(x, y)
+IMG_LOGO = lambda x, y: "<img src=\"{0}\" alt=\"{1}\" width=\"250\">".format(y, x)
 
 LINKOBJ = lambda x: "[{0}]({1})".format(x.description, x.url)
 
@@ -41,12 +42,15 @@ class MDException(Exception):
 class Markdown(object):
     """Class to convert data to Markdown."""
     alist_template = None
+    alist_file = None
     ppage_template = None
     protocols = None
     links = None
+    awesome_list = None
     
     def __init__(self):
         self.alist_template = join(m.templates_path, m.awesomelist_template)
+        self.alist_file = join(m.awesomelist_path, m.awesomelist_name)
         self.ppage_template = join(m.templates_path, m.protocolpage_template)
         # Check files
         for md in [self.alist_template, self.ppage_template]:
@@ -54,8 +58,13 @@ class Markdown(object):
                 raise MDException(ERR_NOTEMFILE.format(md))
 
     #--- Public --------------------------------------------------------------#
-    
-    def awesome_list(self, protocols: Protocols, links: Links, stdout=False) -> str:
+
+    def write_awesome(self):
+        with open(self.alist_file, "w") as fd:
+            fd.write("\n".join(self.awesome_list))
+            fd.write("\n")
+
+    def awesome_list(self, protocols: Protocols, links: Links, write=True) -> str:
         """Convert protocols to a nice awesome list in Markdown."""
         self.protocols = protocols.all_as_objects
         self.links = links
@@ -71,17 +80,21 @@ class Markdown(object):
             if line in keywords.keys():
                 line = keywords[line]()
             final.append(line)
-        print("\n".join(final))
+        self.awesome_list = final
+        # Store to file
+        if write:
+            self.write_wesome()
+        return self.alist_file
 
-    def protocol_pages(self, protocols: Protocols, stdout=False) -> str:
+    def protocol_pages(self, protocols: Protocols) -> str:
         """Convert all protocols to a set of protocol pages in Markdown."""
         all_path = []
         for protocol in protocols.all_as_objects:
-            path = self.protocol_page(protocol, stdout)
+            path = self.protocol_page(protocol)
             all_path.append(path)
         return all_path
 
-    def protocol_page(self, protocol: Protocol, stdout=False) -> str:
+    def protocol_page(self, protocol: Protocol) -> str:
         """Convert a protocol object to a nice protocol page in Markdown."""
         raise NotImplementedError("protocol_page")
     
@@ -99,7 +112,7 @@ class Markdown(object):
         return LIST_DESCRIPTION
 
     def __f_logo(self) -> str:
-        return IMG(LIST_TITLE, LIST_LOGO)
+        return IMG_LOGO(LIST_TITLE, LIST_LOGO)
 
     def __f_toc(self) -> str:
         toc = [H2(m.t_toc)+"\n"]

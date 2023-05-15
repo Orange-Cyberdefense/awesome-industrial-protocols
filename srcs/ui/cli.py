@@ -7,6 +7,7 @@
 
 from argparse import ArgumentParser
 from os import get_terminal_size
+from os.path import exists
 from sys import stderr
 # Internal
 from config import TOOL_DESCRIPTION, mongodb, protocols as p, links, types, AI_WARNING
@@ -47,8 +48,7 @@ MSG_CONFIRM_WRITE_LINK = "Do you want to write '{0}: {1}' to '{2}' (previous val
 MSG_CONFIRM_APPEND = "Do you want to append '{0}' to field '{1}'?"
 MSG_CONFIRM_DELETE = "Do you really want to delete protocol '{0}'? (ALL DATA WILL BE LOST)"
 MSG_CONFIRM_DELETE_LINK = "Do you really want to delete '{0}'?"
-MSG_CONFIRM_GEN_ALIST = "Do you want to create awesome list?"
-MSG_CONFIRM_GEN_PPAGE = "Do you want to create protocol pages?"
+MSG_CONFIRM_OVERWRITE = "File '{0}' already exists. Overwrite?"
 
 ERR_ACTION = "No action is defined. Choose between {0} (-h for help)."
 ERR_WRITE = "Write requires data (-d) OR link (-l) (-h for help)."
@@ -303,8 +303,13 @@ class CLI(object):
         """-G / --gen"""
         try:
             md_generator = Markdown()
-            if self.__confirm(MSG_CONFIRM_GEN_ALIST, self.options.force):
-                md_generator.awesome_list(self.protocols, self.links)
+            path = md_generator.awesome_list(self.protocols, self.links, write=False)
+            if exists(path):
+                if self.__confirm(MSG_CONFIRM_OVERWRITE.format(path), self.options.force):
+                    md_generator.write_awesome()
+                    print("Awesome list written to {0}.".format(path))
+            else:
+                md_generator.write_awesome()                    
             # if self.__confirm(MSG_CONFIRM_GEN_PPAGE, self.options.force):
             #     md_generator.protocol_pages(self.protocols)
         except MDException as mde:
