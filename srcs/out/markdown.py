@@ -7,8 +7,9 @@
 from os.path import join, exists
 from re import sub
 # Internal
-from config import markdown as m, LIST_TITLE, LIST_DESCRIPTION, LIST_LOGO
-from db import Protocols, Protocol
+from config import markdown as m, LIST_TITLE, LIST_DESCRIPTION, LIST_LOGO, \
+    protocols as p, types, links as l
+from db import DBException, Protocols, Protocol, Links, Link
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -25,6 +26,10 @@ LINK_FORMAT = lambda x: sub('[^0-9a-zA-Z]+', '', x.lower().strip())
 LINK = lambda x: "[{0}](#{1})".format(x, LINK_FORMAT(x))
 IMG = lambda x, y: "![{0}]({1})".format(x, y)
 
+LINKOBJ = lambda x: "[{0}]({1})".format(x.description, x.url)
+
+TABLE = lambda x, y: "| {0} | {1} |".format(x, y)
+BORDER_TABLE = "|---|---|"
 
 #-----------------------------------------------------------------------------#
 # Markdown class                                                              #
@@ -38,6 +43,7 @@ class Markdown(object):
     alist_template = None
     ppage_template = None
     protocols = None
+    links = None
     
     def __init__(self):
         self.alist_template = join(m.templates_path, m.awesomelist_template)
@@ -49,9 +55,10 @@ class Markdown(object):
 
     #--- Public --------------------------------------------------------------#
     
-    def awesome_list(self, protocols: Protocols, stdout=False) -> str:
+    def awesome_list(self, protocols: Protocols, links: Links, stdout=False) -> str:
         """Convert protocols to a nice awesome list in Markdown."""
         self.protocols = protocols.all_as_objects
+        self.links = links
         keywords = {
             m.f_title: self.__f_title,
             m.f_description: self.__f_description,
@@ -102,7 +109,47 @@ class Markdown(object):
 
     def __f_content(self) -> str:
         content = []
+        # Main table
         for protocol in self.protocols:
-            current = [H2(protocol.name)]
+            current = ["\n", H2(protocol.name)]
+            current.append(TABLE("Protocol" ,protocol.name))
+            current.append(BORDER_TABLE)
+            # Main table
+            for k, v in protocol.to_dict().items():
+                if k in p.FIELDS and k != p.resources:
+                    if p.TYPE(k) == types.LINKLIST:
+                        current += self.__f_content_linklist(k, v)
+                    else:
+                        v = ", ".join(v) if isinstance(v, list) else v
+                        current.append(TABLE(k.capitalize(), v))
             content.append("\n".join(current))
+            # Resources
+            content += self.__f_content_resources(protocol.resources)
         return "\n".join(content)
+
+    def __f_content_linklist(self, key, linklist) -> list:
+        content = []
+        ct = 0
+        for link in linklist:
+            try:
+                link = self.links.get_id(link)
+                content.append(TABLE(key.capitalize() if ct == 0 else "-", LINKOBJ(link)))
+                ct += 1
+            except DBException:
+                pass
+        return content
+
+    def __f_content_resources(self, resources) -> list:
+        rdict = {t: [] for t in l.TYPES}
+        for link in resources:
+            try:
+                link = self.links.get_id(link)
+                rdict[link.type].append("- "+LINKOBJ(link))
+            except DBException:
+                pass
+        content = []
+        for k, v in rdict.items():
+            if v:
+                content.append(H3(k.capitalize()))
+                content += v
+        return content

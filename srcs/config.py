@@ -114,9 +114,7 @@ links.id = "_id"
 links.url = "url"
 links.description = "description"
 links.type = "type"
-links.TYPES = ("conference", "paper", "tool", "other", protocols.specs,
-               protocols.nmap, protocols.wireshark, protocols.scapy,
-               protocols.pcap, protocols.cve)
+links.TYPES = ("conference", "paper", "tool", "other")
 links.DEFAULT_TYPE = "other"
 
 #-----------------------------------------------------------------------------#

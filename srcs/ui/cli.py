@@ -304,7 +304,7 @@ class CLI(object):
         try:
             md_generator = Markdown()
             if self.__confirm(MSG_CONFIRM_GEN_ALIST, self.options.force):
-                md_generator.awesome_list(self.protocols)
+                md_generator.awesome_list(self.protocols, self.links)
             # if self.__confirm(MSG_CONFIRM_GEN_PPAGE, self.options.force):
             #     md_generator.protocol_pages(self.protocols)
         except MDException as mde:
