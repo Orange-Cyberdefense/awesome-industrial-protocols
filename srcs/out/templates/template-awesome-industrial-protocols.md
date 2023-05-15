@@ -1,5 +1,4 @@
-Awesome Industrial Protocols
-============================
+%title%
 
 %description%
 

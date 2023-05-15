@@ -3,6 +3,8 @@
 # Configuration data
 
 from types import SimpleNamespace
+from os import pardir
+from os.path import abspath, dirname, join
 
 #-----------------------------------------------------------------------------#
 # KEYS                                                                        #
@@ -16,7 +18,29 @@ OPENAI_API_KEY = key # Insert your OpenAI API key, don't push it.
 # LIST CONFIGURATION                                                          #
 #-----------------------------------------------------------------------------#
 
-LIST_DESCRIPTION = "List of industrial network protocols resources."
+LIST_TITLE = "Awesome Industrial Protocols"
+LIST_DESCRIPTION = "Security-oriented list of industrial network protocols resources."
+LIST_LOGO = "srcs/out/templates/logo-awesome-industrial-protocols.png"
+
+# Markdown pages
+markdown = SimpleNamespace()
+markdown.awesomelist_name = "README.md"
+markdown.awesomelist_path = dirname(abspath(__file__))
+markdown.protocolpage_path = join(dirname(abspath(__file__)), pardir, "protocols")
+
+# Templates for Markdown pages
+markdown.awesomelist_template = "template-awesome-industrial-protocols.md"
+markdown.protocolpage_template = "template-protocol-page.md"
+markdown.templates_path = join(dirname(abspath(__file__)), "out", "templates")
+
+# Format for Markdown templates and files
+markdown.f_title = "%title%"
+markdown.f_description = "%description%"
+markdown.f_logo = "%logo%"
+markdown.f_toc = "%toc%"
+markdown.f_content = "%content%"
+
+markdown.t_toc = "Table of contents"
 
 #-----------------------------------------------------------------------------#
 # TOOL CONFIGURATION                                                          #
@@ -24,26 +48,34 @@ LIST_DESCRIPTION = "List of industrial network protocols resources."
 
 TOOL_DESCRIPTION = "Industrial network protocols browser and more."
 
+# Sensitivity for search engine, relying on the Levenshtein distance.
+# Higher threshold means less sensitivity and less precise matches.
+LEVENSHTEIN_THRESHOLD = 2
+
 #-----------------------------------------------------------------------------#
 # DATABASE MANAGEMENT                                                         #
 #-----------------------------------------------------------------------------#
 
+# Connection
 mongodb = SimpleNamespace()
 mongodb.host = "127.0.0.1"
 mongodb.port = 27017
 mongodb.timeout = 1000
 mongodb.database = "netindusdb"
 mongodb.id = "_id"
+
 # Collections
 mongodb.protocols = "protocols"
 mongodb.links = "links"
 
+# Protocols collection types
 types = SimpleNamespace()
 types.STR = "str"
 types.BOOL = "bool"
 types.LIST = "list"
 types.LINKLIST = "linklist"
 
+# Protocols collection content
 protocols = SimpleNamespace()
 protocols.name = "name"
 protocols.alias = "alias"
@@ -58,7 +90,6 @@ protocols.wireshark = "wireshark"
 protocols.scapy = "scapy"
 protocols.pcap = "pcap"
 protocols.cve = "cve"
-
 protocols.FIELDS = {
     protocols.name: ("Name", types.STR),
     protocols.alias: ("Aliases", types.LIST),
@@ -74,10 +105,10 @@ protocols.FIELDS = {
     protocols.cve: ("Related CVE", types.LINKLIST),
     protocols.resources: ("Resources", types.LINKLIST)
 }
-
 protocols.NAME = lambda x: protocols.FIELDS[x][0] if x in protocols.FIELDS else x
 protocols.TYPE = lambda x: protocols.FIELDS[x][1] if x in protocols.FIELDS else None
 
+# Links collection content
 links = SimpleNamespace()
 links.id = "_id"
 links.url = "url"
@@ -87,10 +118,6 @@ links.TYPES = ("conference", "paper", "tool", "other", protocols.specs,
                protocols.nmap, protocols.wireshark, protocols.scapy,
                protocols.pcap, protocols.cve)
 links.DEFAULT_TYPE = "other"
-
-# Sensitivity for search, relying on the Levenshtein distance
-# Higher threshold means less sensitivity and less precise matches
-LEVENSHTEIN_THRESHOLD = 2
 
 #-----------------------------------------------------------------------------#
 # AUTOMATED SEARCH                                                            #

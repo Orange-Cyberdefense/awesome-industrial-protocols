@@ -11,6 +11,7 @@ from sys import stderr
 # Internal
 from config import TOOL_DESCRIPTION, mongodb, protocols as p, links, types, AI_WARNING
 from db import MongoDB, DBException, Protocols, Protocol, Links, Link
+from out import Markdown, MDException
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -46,6 +47,8 @@ MSG_CONFIRM_WRITE_LINK = "Do you want to write '{0}: {1}' to '{2}' (previous val
 MSG_CONFIRM_APPEND = "Do you want to append '{0}' to field '{1}'?"
 MSG_CONFIRM_DELETE = "Do you really want to delete protocol '{0}'? (ALL DATA WILL BE LOST)"
 MSG_CONFIRM_DELETE_LINK = "Do you really want to delete '{0}'?"
+MSG_CONFIRM_GEN_ALIST = "Do you want to create awesome list?"
+MSG_CONFIRM_GEN_PPAGE = "Do you want to create protocol pages?"
 
 ERR_ACTION = "No action is defined. Choose between {0} (-h for help)."
 ERR_WRITE = "Write requires data (-d) OR link (-l) (-h for help)."
@@ -298,7 +301,14 @@ class CLI(object):
         
     def __cmd_gen(self) -> None:
         """-G / --gen"""
-        raise NotImplementedError("CLI: generate files")
+        try:
+            md_generator = Markdown()
+            if self.__confirm(MSG_CONFIRM_GEN_ALIST, self.options.force):
+                md_generator.awesome_list(self.protocols)
+            # if self.__confirm(MSG_CONFIRM_GEN_PPAGE, self.options.force):
+            #     md_generator.protocol_pages(self.protocols)
+        except MDException as mde:
+            ERROR(mde, will_exit=True)
 
     def __cmd_check(self) -> None:
         """-C / --check"""
