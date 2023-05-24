@@ -23,14 +23,14 @@ OPTIONS = (
     ("-F", "--filter", "list protocols according to filter", None, "filter"),
     ("-A", "--add", "add a new protocol", None, "protocol"),
     ("-R", "--read", "read data of a protocol", None, "protocol"),
-    ("-W", "--write", "write data to a protocol", None, "protocol field value", 3),
+    ("-W", "--write", "write data to a protocol", None, ("protocol", "field", "value"), 3),
     ("-D", "--delete", "delete a protocol", None, "protocol"),
-    ("-AI", "--ask_ai", "search data for a protocol using IA", None, "protocol"),
+    ("-AI", "--ask-ai", "search data for a protocol using IA", None, "protocol"),
     ("-N", "--note", "add personal notes for a protocol", None, "protocol"),
     ("-LL", "--list-links", "list all links", None, None),
-    ("-AL", "--add-link", "add a new link", None, "description url", 2),
+    ("-AL", "--add-link", "add a new link", None, ("description", "url"), 2),
     ("-RL", "--read-link", "read data of a link", None, "url"),
-    ("-WL", "--write-link", "change data of a link", None, "url field value", 3),
+    ("-WL", "--write-link", "change data of a link", None, ("url", "field", "value"), 3),
     ("-DL", "--delete-link", "delete a link", None, "url"),
     ("-G", "--gen", "generate Markdown files with protocols' data", None, None),
     ("-C", "--check", "check the database's content", None, None),
@@ -39,6 +39,8 @@ OPTIONS = (
 
 MSG_PROTO_COUNT = "[*] Total number of protocols: {0}"
 MSG_LINKS_COUNT = "[*] Total number of links: {0}"
+MSG_WRITE_ALIST = "Awesome list written to {0}."
+MSG_WRITE_PPAGE = "{0} protocol page written to {1}."
 
 MSG_CONFIRM_ADD_PROTO = "Do you want to add protocol '{0}'?"
 MSG_CONFIRM_ADD_FIELD = "Do you want to add field '{0}' to protocol '{1}'?"
@@ -54,6 +56,7 @@ ERR_ACTION = "No action is defined. Choose between {0} (-h for help)."
 ERR_WRITE = "Write requires data (-d) OR link (-l) (-h for help)."
 ERR_BADDATA = "Data to write is invalid (-h for help)."
 ERR_BADLINK = "Link is invalid."
+ERR_OPENAI = "OpenAI not found (pip install openai)."
 
 def ERROR(msg: str, will_exit: bool=False):
     print("ERROR:", msg, file=stderr)
@@ -225,7 +228,7 @@ class CLI(object):
         try:
             from auto import AI
         except ImportError:
-            ERROR("OpenAI not found (pip install openai)", will_exit=True)
+            ERROR(ERR_OPENAI, will_exit=True)
         print(AI_WARNING)
         # Check if protocol exists, if not create it.
         try:
@@ -303,15 +306,25 @@ class CLI(object):
         """-G / --gen"""
         try:
             md_generator = Markdown()
-            path = md_generator.awesome_list(self.protocols, self.links, write=False)
+            # Awesome list
+            path = md_generator.gen_awesome_list(self.protocols, self.links, write=False)
             if exists(path):
                 if self.__confirm(MSG_CONFIRM_OVERWRITE.format(path), self.options.force):
                     md_generator.write_awesome()
-                    print("Awesome list written to {0}.".format(path))
+                    print(MSG_WRITE_ALIST.format(path))
             else:
                 md_generator.write_awesome()                    
-            # if self.__confirm(MSG_CONFIRM_GEN_PPAGE, self.options.force):
-            #     md_generator.protocol_pages(self.protocols)
+                print(MSG_WRITE_ALIST.format(path))
+            # Protocol pages
+            for protocol in self.protocols.all_as_objects:
+                path = md_generator.gen_protocol_page(protocol, self.links, write=False)
+                if exists(path):
+                    if self.__confirm(MSG_CONFIRM_OVERWRITE.format(path), self.options.force):
+                        md_generator.write_protocol_page()
+                        print(MSG_WRITE_PPAGE.format(protocol.name, path))
+                else:
+                    md_generator.write_protocol_page()
+                    print(MSG_WRITE_PPAGE.format(protocol.name, path))
         except MDException as mde:
             ERROR(mde, will_exit=True)
 

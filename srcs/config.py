@@ -39,6 +39,9 @@ markdown.f_description = "%description%"
 markdown.f_logo = "%logo%"
 markdown.f_toc = "%toc%"
 markdown.f_content = "%content%"
+markdown.f_name = "%name%"
+markdown.f_table = "%table%"
+markdown.f_resources = "%resources%"
 
 markdown.t_toc = "Table of contents"
 

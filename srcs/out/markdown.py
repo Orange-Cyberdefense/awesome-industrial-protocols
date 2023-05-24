@@ -25,7 +25,6 @@ LINK_FORMAT = lambda x: sub('[^0-9a-zA-Z]+', '', x.lower().strip())
 
 LINK = lambda x: "[{0}](#{1})".format(x, LINK_FORMAT(x))
 IMG = lambda x, y: "![{0}]({1})".format(x, y)
-IMG_LOGO = lambda x, y: "<img src=\"{0}\" alt=\"{1}\" width=\"250\">".format(y, x)
 
 LINKOBJ = lambda x: "[{0}]({1})".format(x.description, x.url)
 
@@ -60,11 +59,18 @@ class Markdown(object):
     #--- Public --------------------------------------------------------------#
 
     def write_awesome(self):
+        """We split the call to generator and writer to ask for confirmation."""
         with open(self.alist_file, "w") as fd:
             fd.write("\n".join(self.awesome_list))
             fd.write("\n")
 
-    def awesome_list(self, protocols: Protocols, links: Links, write=True) -> str:
+    def write_protocol_page(self):
+        """We split the call to generator and writer to ask for confirmation."""
+        with open(self.ppage_file, "w") as fd:
+            fd.write("\n".join(self.protocol_page))
+            fd.write("\n")
+            
+    def gen_awesome_list(self, protocols: Protocols, links: Links, write=True) -> str:
         """Convert protocols to a nice awesome list in Markdown."""
         self.protocols = protocols.all_as_objects
         self.links = links
@@ -83,10 +89,10 @@ class Markdown(object):
         self.awesome_list = final
         # Store to file
         if write:
-            self.write_wesome()
+            self.write_awesome()
         return self.alist_file
-
-    def protocol_pages(self, protocols: Protocols) -> str:
+    
+    def gen_protocol_pages(self, protocols: Protocols, links: Links) -> str:
         """Convert all protocols to a set of protocol pages in Markdown."""
         all_path = []
         for protocol in protocols.all_as_objects:
@@ -94,9 +100,26 @@ class Markdown(object):
             all_path.append(path)
         return all_path
 
-    def protocol_page(self, protocol: Protocol) -> str:
+    def gen_protocol_page(self, protocol: Protocol, links: Links, write=True) -> str:
         """Convert a protocol object to a nice protocol page in Markdown."""
-        raise NotImplementedError("protocol_page")
+        self.links = links
+        filename = "{0}.md".format(LINK_FORMAT(protocol.name))
+        self.ppage_file = join(m.protocolpage_path, filename)
+        keywords = {
+            m.f_name: self.__f_name,
+            m.f_table: self.__f_table,
+            m.f_resources: self.__f_resources
+        }
+        final = []
+        for line in self.__read(self.ppage_template):
+            if line in keywords.keys():
+                line = keywords[line](protocol)
+            final.append(line)
+        self.protocol_page = final
+        # Store to file
+        if write:
+            self.write_protocol_page()
+        return self.ppage_file
     
     #--- Private -------------------------------------------------------------#
 
@@ -112,7 +135,7 @@ class Markdown(object):
         return LIST_DESCRIPTION
 
     def __f_logo(self) -> str:
-        return IMG_LOGO(LIST_TITLE, LIST_LOGO)
+        return IMG(LIST_TITLE, LIST_LOGO)
 
     def __f_toc(self) -> str:
         toc = [H2(m.t_toc)+"\n"]
@@ -131,16 +154,16 @@ class Markdown(object):
             for k, v in protocol.to_dict().items():
                 if k in p.FIELDS and k != p.resources:
                     if p.TYPE(k) == types.LINKLIST:
-                        current += self.__f_content_linklist(k, v)
+                        current += self.__f_linklist(k, v)
                     else:
                         v = ", ".join(v) if isinstance(v, list) else v
                         current.append(TABLE(k.capitalize(), v))
             content.append("\n".join(current))
             # Resources
-            content += self.__f_content_resources(protocol.resources)
+            content.append(self.__f_resources(protocol, H3))
         return "\n".join(content)
 
-    def __f_content_linklist(self, key, linklist) -> list:
+    def __f_linklist(self, key, linklist) -> list:
         content = []
         ct = 0
         for link in linklist:
@@ -152,9 +175,25 @@ class Markdown(object):
                 pass
         return content
 
-    def __f_content_resources(self, resources) -> list:
+    def __f_name(self, protocol):
+        return H1(protocol.name)
+
+    def __f_table(self, protocol):
+        current = []
+        current.append(TABLE("Protocol" ,protocol.name))
+        current.append(BORDER_TABLE)
+        for k, v in protocol.to_dict().items():
+            if k != p.resources:
+                if p.TYPE(k) == types.LINKLIST:
+                    current += self.__f_linklist(k, v)
+                else:
+                    v = ", ".join(v) if isinstance(v, list) else v
+                    current.append(TABLE(k.capitalize(), v))
+        return "\n".join(current)
+
+    def __f_resources(self, protocol, level=H2) -> list:
         rdict = {t: [] for t in l.TYPES}
-        for link in resources:
+        for link in protocol.resources:
             try:
                 link = self.links.get_id(link)
                 rdict[link.type].append("- "+LINKOBJ(link))
@@ -163,6 +202,6 @@ class Markdown(object):
         content = []
         for k, v in rdict.items():
             if v:
-                content.append(H3(k.capitalize()))
+                content.append(level(k.capitalize()))
                 content += v
-        return content
+        return "\n".join(content)
