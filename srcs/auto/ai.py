@@ -2,10 +2,11 @@
 # Claire-lex - 2023
 # Interface to OpenAI for AI-generated data
 
+from re import findall
 import openai
 from openai.error import AuthenticationError
 # Internal
-from config import ai
+from config import ai, protocols as p
 
 """Generate data with OpenAI models.
 
@@ -22,6 +23,7 @@ is marked with *, please double-check it.
 #-----------------------------------------------------------------------------#
 
 ERR_AIAUTH = "Your OpenAI API key is invalid or you don't have a paid plan."
+ERR_NOPROTO = "AI does not recognize {0} as a protocol."
 
 #-----------------------------------------------------------------------------#
 # AI class                                                                    #
@@ -35,12 +37,55 @@ class AI(object):
     def __init__(self):
         openai.api_key = ai.key
 
-    def scenario_generator(self, protocol) -> str:
-        # Global information
-        {
-            ai.is_protocol: ai.yes_no_question.format()
+
+    def __security_questions(self, name: str) -> str:
+        q_security = {
+            "encryption": (ai.has_encryption, ai.has_mandatory_encryption),
+            "authentication": (ai.has_authentication, ai.has_mandatory_authentication),
+            "integrity checks": (ai.has_integrity, ai.has_mandatory_integrity)
         }
+        answer = []
+        for security, question in q_security.items():
+            r = self.request(ai.yes_no_question.format(name, question[0]))
+            if r.lower().startswith("yes"):
+                r = self.request(ai.yes_no_question.format(name, question[1]))
+                if r.lower().startswith("yes"):
+                    r = "Mandatory " + security
+                else:
+                    r = "Optional " + security
+                answer.append(r)
+        return ", ".join(answer) if answer else ""
         
+    def protocol_generator(self, name) -> str:
+        q_yes_no = {
+            p.access: ai.is_spec_free,
+        }
+        q_open = {
+            p.description: ai.description,
+            p.port: ai.default_port
+        }
+        # First question is just for checking:
+        question = ai.yes_no_question.format(name, ai.is_protocol)
+        response = self.request(question)
+        if not response.lower().startswith("yes"):
+            raise AIException(ERR_NOPROTO.format(protocol.name))
+        # Questions where answer should be yes or no
+        for attribute, question in q_yes_no.items():
+            question = ai.yes_no_question.format(name, question)
+            response = self.request(question)
+            response = "Yes" if response.lower().startswith("yes") else "No"
+            yield attribute, response+"*"
+        # Questions with open answers
+        for attribute, question in q_open.items():
+            response = self.request("{0} {1}".format(name, question))
+            if attribute == p.port:
+                response = ", ".join(findall(r'\d+', response))
+            yield attribute, response+"*"
+        # Multi-level questions about security features
+        response = self.__security_questions(name)
+        yield p.security, response+"*"
+
+            
     def request(self, request:str) -> str:
         try:
             return self.__openai_request(request)

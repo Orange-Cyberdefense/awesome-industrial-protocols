@@ -8,8 +8,10 @@ In this repository:
 * You are currently viewing the **Awesome Industrial Protocols** page.
 * Detailed pages for protocols are available in `protocols`.
 * All data is stored in MongoDB databases in `db`.
-* **Turn/IP** (in `srcs`) is a handy tool to manipulate this data and generate
-  the lists.
+* **Turn/IP** (in `srcs`) is a handy tool to manipulate this data and simplify
+  the research and test process on industrial protocols.
+
+> All AI-generated data is marked with `*`.
 
 %toc%
 

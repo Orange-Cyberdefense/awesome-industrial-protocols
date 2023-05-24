@@ -8,8 +8,10 @@ In this repository:
 * You are currently viewing the **Awesome Industrial Protocols** page.
 * Detailed pages for protocols are available in `protocols`.
 * All data is stored in MongoDB databases in `db`.
-* **Turn/IP** (in `srcs`) is a handy tool to manipulate this data and generate
-the lists.
+* **Turn/IP** (in `srcs`) is a handy tool to manipulate this data and simplify
+the research and test process on industrial protocols.
+
+> All AI-generated data is marked with `*`.
 
 ## Table of contents
 
@@ -18,6 +20,7 @@ the lists.
 - [etht](#etht)
 - [thierry](#thierry)
 - [steak](#steak)
+- [ModbusTCP](#modbustcp)
 
 
 
@@ -39,9 +42,11 @@ the lists.
 |---|---|
 | Name | KNXnet/IP |
 | Alias | KNX |
-| Port | 3671/tcp |
-| Access | loutre |
+| Port | 3671* |
+| Access | Yes* |
 | Keywords | BMS, building automation |
+| Security | Optional encryption, Mandatory authentication, Mandatory integrity checks* |
+| Description | Open, standardized, IP-based, home/building automation protocol.* |
 ### Other
 - [KNX association](https://knx.org)
 - [KNX association](https://knx.org/1)
@@ -83,6 +88,20 @@ the lists.
 | Keywords |  |
 | Port |  |
 | Access | True |
+| Wireshark | [Les petits canards c'est rigolo](https://www.kmlproject.com) |
+
+
+
+## ModbusTCP
+| Protocol | ModbusTCP |
+|---|---|
+| Name | ModbusTCP |
+| Alias | Modbus |
+| Description | Communication protocol for industrial automation.* |
+| Keywords |  |
+| Port | lapin, 502* |
+| Access | Yes* |
+| Security | Optional authentication, Optional integrity checks* |
 
 
 **awesome-industrial-protocols** is licensed under

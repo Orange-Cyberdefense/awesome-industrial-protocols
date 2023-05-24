@@ -74,7 +74,6 @@ mongodb.links = "links"
 # Protocols collection types
 types = SimpleNamespace()
 types.STR = "str"
-types.BOOL = "bool"
 types.LIST = "list"
 types.LINKLIST = "linklist"
 
@@ -88,6 +87,7 @@ protocols.resources = "resources"
 protocols.port = "port"
 protocols.access = "access"
 protocols.specs = "specs"
+protocols.security = "security"
 protocols.nmap = "nmap"
 protocols.wireshark = "wireshark"
 protocols.scapy = "scapy"
@@ -98,9 +98,10 @@ protocols.FIELDS = {
     protocols.alias: ("Aliases", types.LIST),
     protocols.description: ("Description", types.STR),
     protocols.keywords: ("Keywords", types.LIST),
-    protocols.port: ("Port(s)", types.LIST),
-    protocols.access: ("Access to specs", types.BOOL),
+    protocols.port: ("Port(s)", types.STR),
+    protocols.access: ("Access to specs", types.STR),
     protocols.specs: ("Specifications", types.LINKLIST),
+    protocols.security: ("Security features", types.STR),
     protocols.nmap: ("Nmap script(s)", types.LINKLIST),
     protocols.wireshark: ("Wireshark dissector", types.LINKLIST),
     protocols.scapy: ("Scapy layer", types.LINKLIST),
@@ -141,12 +142,10 @@ ai.description = "description in 10 words"
 ai.default_port = "default port"
 # Documentation
 ai.is_spec_free = "specification is available for free"
-ai.has_wireshark = "has a Wireshark dissector"
-ai.has_scapy = "has a Scapy layer"
 # Security
 ai.has_encryption = "has encryption"
 ai.has_mandatory_encryption = "has mandatory encryption"
 ai.has_authentication = "has authentication"
 ai.has_mandatory_authentication = "has mandatory authentication"
 ai.has_integrity = "has integrity checks"
-ai.has_mandatory_intergrity = "has mandatory integrity checks"
+ai.has_mandatory_integrity = "has mandatory integrity checks"

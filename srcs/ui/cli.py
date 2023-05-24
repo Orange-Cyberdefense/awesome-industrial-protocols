@@ -13,6 +13,7 @@ from sys import stderr
 from config import TOOL_DESCRIPTION, mongodb, protocols as p, links, types, AI_WARNING
 from db import MongoDB, DBException, Protocols, Protocol, Links, Link
 from out import Markdown, MDException
+from auto import AI, AIException
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -177,8 +178,10 @@ class CLI(object):
                                   self.options.force):
                     if p.TYPE(field) == types.LINKLIST:
                         link = self.__cmd_add_link(value, value)
+                        if not link:
+                            return
                         value = link.id
-                        protocol.append(field, value)
+                    protocol.append(field, value)
             else:
                 if self.__confirm(MSG_CONFIRM_WRITE.format(p.NAME(field), value,
                                                            protocol.name,
@@ -232,10 +235,15 @@ class CLI(object):
         print(AI_WARNING)
         # Check if protocol exists, if not create it.
         try:
+            self.protocols.get(self.options.ask_ai)
+        except DBException: # Does not exist
+            self.__cmd_add(self.options.ask_ai)
+        try:
             ai = AI()
-            # TODO : replace with scenario
-            print(ai.request("write a 4 lines poem about seagulls"))
-        except AIError as aie:
+            protocol = self.protocols.get(self.options.ask_ai)
+            for q, a in ai.protocol_generator(protocol.name):
+                self.__write_field(protocol, q, a, getattr(protocol, q))
+        except AIException as aie:
             ERROR(str(aie), will_exit=True)
             
     def __cmd_note(self) -> None:

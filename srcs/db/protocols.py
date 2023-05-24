@@ -53,7 +53,6 @@ class Protocol(object):
 
         :raises DBException: if the field does not exist.
         """
-        self.__check()
         match = search(field, self.fields, threshold=0)
         if len(match) == 1:
             return match[0], getattr(self, match[0])
@@ -63,18 +62,12 @@ class Protocol(object):
 
     def set(self, field:str, value) -> None:
         """Update existing field in protocol."""
-        self.__check()
         field, _ = self.get(field)
-        # Check types
-        if p.TYPE(field) == types.BOOL:
-            value = value.lower().strip()
-            if value not in ["true", "false"]:
-                raise DBException(ERR_BOOLVALUE.format(field))
-            value = True if value == "true" else False
         # Store
         document = {"name": self.name}
         newvalue = {field: value}
         self.__db.protocols.update_one(document, {"$set": newvalue})
+        self.__check()
 
     def add(self, field:str, value) -> None:
         """Add a new field to protocol."""
