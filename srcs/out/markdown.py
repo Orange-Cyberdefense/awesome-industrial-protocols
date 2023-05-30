@@ -169,7 +169,8 @@ class Markdown(object):
         for link in linklist:
             try:
                 link = self.links.get_id(link)
-                content.append(TABLE(key.capitalize() if ct == 0 else "-", LINKOBJ(link)))
+                key = p.FIELDS[key][0] if key in p.FIELDS.keys() else key.capitalize()
+                content.append(TABLE(key if ct == 0 else "-", LINKOBJ(link)))
                 ct += 1
             except DBException:
                 pass
@@ -187,8 +188,9 @@ class Markdown(object):
                 if p.TYPE(k) == types.LINKLIST:
                     current += self.__f_linklist(k, v)
                 else:
+                    k = p.FIELDS[k][0] if k in p.FIELDS.keys() else k.capitalize()
                     v = ", ".join(v) if isinstance(v, list) else v
-                    current.append(TABLE(k.capitalize(), v))
+                    current.append(TABLE(k, v))
         return "\n".join(current)
 
     def __f_resources(self, protocol, level=H2) -> list:
@@ -202,6 +204,6 @@ class Markdown(object):
         content = []
         for k, v in rdict.items():
             if v:
-                content.append(level(k.capitalize()))
+                content.append(level(k.capitalize()+"s"))
                 content += v
         return "\n".join(content)

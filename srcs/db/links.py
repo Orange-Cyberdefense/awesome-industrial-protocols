@@ -88,7 +88,7 @@ class Link(object):
     def check_url(url: str) -> None:
         """Try to open the URL to see if it exists. Raises DBException if not."""
         try:
-            urlopen(url, timeout=1)
+            urlopen(url, timeout=2)
         except (URLError, socket_timeout):
             raise DBException(ERR_BADURL.format(url)) from None
 

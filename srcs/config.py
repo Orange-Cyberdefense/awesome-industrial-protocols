@@ -123,7 +123,7 @@ links.id = "_id"
 links.url = "url"
 links.description = "description"
 links.type = "type"
-links.TYPES = ("conference", "paper", "tool", "other")
+links.TYPES = ("documentation", "conference", "paper", "tool", "other")
 links.DEFAULT_TYPE = "other"
 
 #-----------------------------------------------------------------------------#

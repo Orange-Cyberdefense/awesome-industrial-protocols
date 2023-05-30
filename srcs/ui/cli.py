@@ -373,12 +373,15 @@ class CLI(object):
 
     def __print_links(self, table_format, key, link_ids: list) -> None:
         """Print links from ID."""
+        full_table_size = get_terminal_size().columns
+        table_size = full_table_size - 20 - 8
         if not isinstance(link_ids, list):
             print(table_format.format(key, ERR_BADLINK))
             return
         for id in link_ids:
             try:
-                link = str(self.links.get_id(id))
+                link = self.links.get_id(id).url
+                link = link if len(link) < table_size else link[:table_size-3]+"..."
             except DBException as dbe:
                 link = str(dbe)
             print(table_format.format(key, link))

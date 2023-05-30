@@ -1,0 +1,6 @@
+{"_id":{"$oid":"6475f61f57e0c9ba88bdfef1"},"url":"https://my.knx.org/fr/shop/knx-specifications","description":"KNX Standard","type":"documentation"}
+{"_id":{"$oid":"6475f7593d9386a5141bb24a"},"url":"https://github.com/secdev/scapy/blob/master/scapy/contrib/knx.py","description":"KNXnet/IP Scapy layer","type":"tool"}
+{"_id":{"$oid":"6475f7c7302c382b339fb14f"},"url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-knxip.c","description":"KNXnet/IP Wireshark dissector","type":"tool"}
+{"_id":{"$oid":"6475f84318f4b06119555beb"},"url":"https://nmap.org/nsedoc/scripts/knx-gateway-discover.html","description":"KNXnet/IP Nmap discovery script","type":"tool"}
+{"_id":{"$oid":"6475fa933f9e3095afb60c59"},"url":"https://www.youtube.com/watch?v=RX-O4XuCW1Y","description":"Learn how to control every room at a luxury hotel remotely (Jesus Molina, DEFCON 22, 2014)","type":"conference"}
+{"_id":{"$oid":"6475fb026a5a4f44a0694588"},"url":"https://www.youtube.com/watch?v=QofeTV39kQE","description":"Sneak into buildings with KNXnet/IP (Claire Vacherot, DEFCON 29, 2020)","type":"conference"}
