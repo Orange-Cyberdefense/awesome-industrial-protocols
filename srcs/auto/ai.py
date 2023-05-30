@@ -4,7 +4,7 @@
 
 from re import findall
 import openai
-from openai.error import AuthenticationError
+from openai.error import AuthenticationError, RateLimitError
 # Internal
 from config import ai, protocols as p
 
@@ -37,7 +37,6 @@ class AI(object):
     def __init__(self):
         openai.api_key = ai.key
 
-
     def __security_questions(self, name: str) -> str:
         q_security = {
             "encryption": (ai.has_encryption, ai.has_mandatory_encryption),
@@ -68,7 +67,7 @@ class AI(object):
         question = ai.yes_no_question.format(name, ai.is_protocol)
         response = self.request(question)
         if not response.lower().startswith("yes"):
-            raise AIException(ERR_NOPROTO.format(protocol.name))
+            raise AIException(ERR_NOPROTO.format(name))
         # Questions where answer should be yes or no
         for attribute, question in q_yes_no.items():
             question = ai.yes_no_question.format(name, question)
@@ -91,6 +90,8 @@ class AI(object):
             return self.__openai_request(request)
         except AuthenticationError as ae:
             raise AIException(ERR_AIAUTH) from None
+        except RateLimitError as rle:
+            raise AIException(str(rle)) from None
         
     def __openai_request(self, request: str) -> str:
         response = openai.Completion.create(

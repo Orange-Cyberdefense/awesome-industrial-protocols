@@ -64,12 +64,17 @@ mongodb = SimpleNamespace()
 mongodb.host = "127.0.0.1"
 mongodb.port = 27017
 mongodb.timeout = 1000
-mongodb.database = "netindusdb"
+mongodb.database = "awesome-industrial-protocols"
 mongodb.id = "_id"
 
 # Collections
 mongodb.protocols = "protocols"
 mongodb.links = "links"
+
+# Database files
+mongodb.dbfile_path = abspath(join(dirname(abspath(__file__)), pardir, "db"))
+mongodb.dbfile_protocols = "protocols.json"
+mongodb.dbfile_links = "links.json"
 
 # Protocols collection types
 types = SimpleNamespace()

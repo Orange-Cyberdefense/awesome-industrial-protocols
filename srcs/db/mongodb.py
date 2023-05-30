@@ -22,6 +22,8 @@ from config import mongodb
 #-----------------------------------------------------------------------------#
 
 # Errors
+ERR_NODB = "Database {0} not found, please import it with 'python turn-ip.py "\
+           "--mongoimport'"
 ERR_DBCONNECT = "Connection to database failed."
 
 #-----------------------------------------------------------------------------#
@@ -44,13 +46,15 @@ class MongoDB(object):
             # Setting only one MongoDB Client
             cls.instance.client = MongoClient(mongodb.host, mongodb.port,
                                               serverSelectionTimeoutMS=mongodb.timeout)
+            if mongodb.database not in (cls.instance.client.list_database_names()):
+                raise DBException(ERR_NODB.format(mongodb.database))
             cls.instance.db = cls.instance.client[mongodb.database]
         return cls.instance
 
     def __init__(self):
         # We want to check that the connection is OK every time.
         self.__check_connection()
-    
+
     #-------------------------------------------------------------------------#
     # Properties                                                              #
     #-------------------------------------------------------------------------#

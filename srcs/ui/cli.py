@@ -7,8 +7,9 @@
 
 from argparse import ArgumentParser
 from os import get_terminal_size
-from os.path import exists
+from os.path import exists, join
 from sys import stderr
+from subprocess import run as subprocess_run
 # Internal
 from config import TOOL_DESCRIPTION, mongodb, protocols as p, links, types, AI_WARNING
 from db import MongoDB, DBException, Protocols, Protocol, Links, Link
@@ -35,7 +36,9 @@ OPTIONS = (
     ("-DL", "--delete-link", "delete a link", None, "url"),
     ("-G", "--gen", "generate Markdown files with protocols' data", None, None),
     ("-C", "--check", "check the database's content", None, None),
-    ("-f", "--force", "do not ask for confirmation (with -W)", False, None)
+    ("-f", "--force", "do not ask for confirmation (with -W)", False, None),
+    ("-MI", "--mongoimport", "Import database from JSON files in repository.", False, None),
+    ("-ME", "--mongoexport", "Export database to JSON files in repository.", False, None)
 )
 
 MSG_PROTO_COUNT = "[*] Total number of protocols: {0}"
@@ -92,13 +95,16 @@ class CLI(object):
             "write_link": self.__cmd_write_link,
             "delete_link": self.__cmd_delete_link,
             "gen": self.__cmd_gen,
-            "check": self.__cmd_check
+            "check": self.__cmd_check,
+            "mongoimport": self.__cmd_mongoimport,
+            "mongoexport": self.__cmd_mongoexport
         }
         self.options = self.__init_options()
         try:
             self.db = MongoDB()
         except DBException as dbe:
-            ERROR(dbe, will_exit=True)
+            if not self.options.mongoimport:
+                ERROR(dbe, will_exit=True)
         self.protocols = Protocols()
         self.links = Links()
 
@@ -343,6 +349,26 @@ class CLI(object):
         for issue in self.links.check():
             print(issue)
 
+    def __cmd_mongoimport(self) -> None:
+        "-MI / --mongoimport"
+        cmd = ["mongoimport", "--db=\"{0}\"".format(mongodb.database)]
+        protofile = join(mongodb.dbfile_path, mongodb.dbfile_protocols)
+        linksfile = join(mongodb.dbfile_path, mongodb.dbfile_links)
+        proto = ["--collection=protocols", "--file=\"{0}\"".format(protofile)]
+        links = ["--collection=links", "--file=\"{0}\"".format(linksfile)]
+        subprocess_run(cmd + proto)
+        subprocess_run(cmd + links)
+
+    def __cmd_mongoexport(self) -> None:
+        "-ME / --mongoexport"
+        cmd = ["mongoexport", "--db=\"{0}\"".format(mongodb.database)]
+        protofile = join(mongodb.dbfile_path, mongodb.dbfile_protocols)
+        linksfile = join(mongodb.dbfile_path, mongodb.dbfile_links)
+        proto = ["--collection=protocols", "--out=\"{0}\"".format(protofile)]
+        links = ["--collection=links", "--out=\"{0}\"".format(linksfile)]
+        subprocess_run(cmd + proto)
+        subprocess_run(cmd + links)
+        
     #--- Helpers -------------------------------------------------------------#
 
     def __print_links(self, table_format, key, link_ids: list) -> None:
