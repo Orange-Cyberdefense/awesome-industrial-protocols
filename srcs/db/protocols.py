@@ -5,7 +5,7 @@
 """Classes that represent and handle protocols' info from the database.
 """
 
-from . import MongoDB, DBException, search
+from . import MongoDB, DBException, search, exact_search
 from config import protocols as p, types, mongodb
 
 #-----------------------------------------------------------------------------#
@@ -154,7 +154,10 @@ class Protocols(object):
         match = []
         # We do that all the time (I know it sucks) to be up to date with db
         for protocol in self.all:
-            if len(search(protocol_name, all_names(protocol))):
+            if len(exact_search(protocol_name, all_names(protocol))):
+                match = [Protocol(**protocol)]
+                break # We found the exact match
+            elif len(search(protocol_name, all_names(protocol))):
                 match.append(Protocol(**protocol))
         if len(match) == 1:
             return match[0]

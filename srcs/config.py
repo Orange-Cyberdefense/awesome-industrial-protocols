@@ -165,4 +165,4 @@ wireshark.api_epan_folder = "https://api.github.com/repositories/21329550/conten
 wireshark.dissector_folder = "dissectors"
 wireshark.regex_dissector_name = "^packet-([^\.]+)\.c$" # packet-*.c
 wireshark.naming_function = "proto_register_protocol"
-wireshark.regex_function_param = "[^\(]\(([^\)]+)\).*" # (*)
+wireshark.regex_function_param = "[^\(]\((.*?)\);" # (*)

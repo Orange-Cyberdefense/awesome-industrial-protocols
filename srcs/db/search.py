@@ -52,3 +52,12 @@ def search(needle: str, haystack, threshold: int=LEVENSHTEIN_THRESHOLD) -> list:
             if levenshtein(needle, entry) <= threshold:
                 results.append(entry)
     return results
+
+def exact_search(needle: str, haystack, max_threshold=LEVENSHTEIN_THRESHOLD) -> list:
+    """Search for exact case-insensitive match."""
+    needle = needle.lower()
+    if isinstance(haystack, str):
+        haystack = haystack.lower()
+    elif isinstance(haystack, (list, tuple)):
+        haystack = [x.lower() for x in haystack]
+    return search(needle, haystack, 0)
