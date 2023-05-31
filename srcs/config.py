@@ -43,7 +43,7 @@ markdown.f_name = "%name%"
 markdown.f_table = "%table%"
 markdown.f_resources = "%resources%"
 
-markdown.t_toc = "Table of contents"
+markdown.t_toc = "Contents"
 
 #-----------------------------------------------------------------------------#
 # TOOL CONFIGURATION                                                          #

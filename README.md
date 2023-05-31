@@ -13,7 +13,7 @@ the research and test process on industrial protocols.
 
 > All AI-generated data is marked with `*`.
 
-## Table of contents
+## Contents
 
 - [KNXnet/IP](#knxnetip)
 
