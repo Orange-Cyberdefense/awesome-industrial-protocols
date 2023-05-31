@@ -132,8 +132,6 @@ class Link(object):
     def __check(self):
         if not self.__url or not self.description:
             raise DBException(ERR_EMPTY)
-        # if self.type not in l.TYPES:
-        #     raise DBException(ERR_LINKTYPE.format(", ".join(l.TYPES)))
     
 #-----------------------------------------------------------------------------#
 # Links class                                                                 #

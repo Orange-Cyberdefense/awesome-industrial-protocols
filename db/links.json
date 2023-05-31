@@ -1,6 +1,19 @@
 {"_id":{"$oid":"6475f61f57e0c9ba88bdfef1"},"url":"https://my.knx.org/fr/shop/knx-specifications","description":"KNX Standard","type":"documentation"}
 {"_id":{"$oid":"6475f7593d9386a5141bb24a"},"url":"https://github.com/secdev/scapy/blob/master/scapy/contrib/knx.py","description":"KNXnet/IP Scapy layer","type":"tool"}
 {"_id":{"$oid":"6475f7c7302c382b339fb14f"},"url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-knxip.c","description":"KNXnet/IP Wireshark dissector","type":"tool"}
-{"_id":{"$oid":"6475f84318f4b06119555beb"},"url":"https://nmap.org/nsedoc/scripts/knx-gateway-discover.html","description":"KNXnet/IP Nmap discovery script","type":"tool"}
 {"_id":{"$oid":"6475fa933f9e3095afb60c59"},"url":"https://www.youtube.com/watch?v=RX-O4XuCW1Y","description":"Learn how to control every room at a luxury hotel remotely (Jesus Molina, DEFCON 22, 2014)","type":"conference"}
 {"_id":{"$oid":"6475fb026a5a4f44a0694588"},"url":"https://www.youtube.com/watch?v=QofeTV39kQE","description":"Sneak into buildings with KNXnet/IP (Claire Vacherot, DEFCON 29, 2020)","type":"conference"}
+{"_id":{"$oid":"6475f84318f4b06119555beb"},"url":"https://nmap.org/nsedoc/scripts/knx-gateway-discover.html","description":"knx-gateway-discover","type":"tool"}
+{"_id":{"$oid":"6477048d7f9cacb861ef232c"},"url":"https://www.odva.org/subscriptions-services/specifications","description":"Ethernet/IP Specifications","type":"documentation"}
+{"_id":{"$oid":"647705f1e066827b03f67c0f"},"url":"https://nmap.org/nsedoc/scripts/enip-info.html","description":"enip-info","type":"tool"}
+{"_id":{"$oid":"6477074631a762222e8a7a85"},"url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-enip.c","description":"Ethernet/IP Wireshark dissector","type":"tool"}
+{"_id":{"$oid":"647707a72e72844c9b6487ed"},"url":"https://github.com/secdev/scapy/blob/master/scapy/contrib/enipTCP.py","description":"Ethernet/IP Scapy layer","type":"tool"}
+{"_id":{"$oid":"64770817002f8101cdf1f1e2"},"url":"https://github.com/Orange-Cyberdefense/bof","description":"BOF: Testing framework for industrial protocols","type":"tool"}
+{"_id":{"$oid":"6477085ca88361520eb72202"},"url":"https://github.com/takeshixx/knxmap","description":"KNXmap","type":"tool"}
+{"_id":{"$oid":"6477089f7e728dd668cbfde0"},"url":"https://github.com/EIPStackGroup/OpENer","description":"OpENer: Ethernet/IP stack","type":"tool"}
+{"_id":{"$oid":"647708ff3dc592498a0aa7aa"},"url":"https://github.com/digitalbond/Redpoint","description":"Digital Bond's ICS enumeration tools (nmap scripts)","type":"tool"}
+{"_id":{"$oid":"6477095bf8b61ae06f88f126"},"url":"https://github.com/scy-phy/scapy-cip-enip","description":"Ethernet/IP dissectors for Scapy","type":"tool"}
+{"_id":{"$oid":"64770a38e991b963d54ff42a"},"url":"https://claroty.com/team82/research/opener-enip-stack-vulnerabilities","description":"Fuzzing and PR’ing: How We Found Bugs in a Popular Third-Party EtherNet/IP Protocol Stack","type":"article"}
+{"_id":{"$oid":"64770a941e9dfa16ff401312"},"url":"https://github.com/knxd/knxd","description":"KNXd service","type":"tool"}
+{"_id":{"$oid":"64770b091c3b139700595ee9"},"url":"https://github.com/automayt/ICS-pcap","description":"ICS PCAPs Collection","type":"tool"}
+{"_id":{"$oid":"64770c36487d6d55ac8c531f"},"url":"https://github.com/claroty/enip-stack-detector","description":"EtherNet/IP & CIP Stack Detector","type":"tool"}

@@ -188,12 +188,13 @@ class Protocols(object):
         
     @property
     def all(self) -> list:
-        """Return the complete list of protocols as Protocol objects."""
+        """Return the complete list of protocols as JSON."""
         return [x for x in self.__db.protocols_all]
 
     @property
     def all_as_objects(self) -> list:
-        return [Protocol(**x) for x in self.__db.protocols_all]
+        objects = [Protocol(**x) for x in self.__db.protocols_all]
+        return sorted(objects, key=lambda x: x.name)
         
     @property
     def list(self) -> list:
