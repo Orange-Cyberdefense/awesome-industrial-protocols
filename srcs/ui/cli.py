@@ -27,7 +27,6 @@ OPTIONS = (
     ("-R", "--read", "read data of a protocol", None, "protocol"),
     ("-W", "--write", "write data to a protocol", None, ("protocol", "field", "value"), 3),
     ("-D", "--delete", "delete a protocol", None, "protocol"),
-    ("-AI", "--ask-ai", "search data for a protocol using IA", None, "protocol"),
     ("-N", "--note", "add personal notes for a protocol", None, "protocol"),
     ("-LL", "--list-links", "list all links", None, None),
     ("-AL", "--add-link", "add a new link", None, ("description", "url"), 2),
@@ -36,6 +35,7 @@ OPTIONS = (
     ("-DL", "--delete-link", "delete a link", None, "url"),
     ("-G", "--gen", "generate Markdown files with protocols' data", None, None),
     ("-C", "--check", "check the database's content", None, None),
+    ("-S", "--search", "search for data from various sources", None, ("method", "protocol"), 2),
     ("-f", "--force", "do not ask for confirmation (with -W)", False, None),
     ("-MI", "--mongoimport", "Import database from JSON files in repository.", False, None),
     ("-ME", "--mongoexport", "Export database to JSON files in repository.", False, None)
@@ -59,8 +59,9 @@ MSG_CONFIRM_OVERWRITE = "File '{0}' already exists. Overwrite?"
 ERR_ACTION = "No action is defined. Choose between {0} (-h for help)."
 ERR_WRITE = "Write requires data (-d) OR link (-l) (-h for help)."
 ERR_BADDATA = "Data to write is invalid (-h for help)."
-ERR_BADLINK = "Link is invalid."
+ERR_BADLINK = "Link is invalid (-h for help)."
 ERR_OPENAI = "OpenAI not found (pip install openai)."
+ERR_SEARCHMETHOD = "Search method not found. Choose between {0} (-h for help)."
 
 def ERROR(msg: str, will_exit: bool=False):
     print("ERROR:", msg, file=stderr)
@@ -87,7 +88,6 @@ class CLI(object):
             "read": self.__cmd_read,
             "write": self.__cmd_write,
             "delete": self.__cmd_delete,
-            "ask_ai": self.__cmd_ask_ai,
             "note": self.__cmd_note,
             "list_links": self.__cmd_list_links,
             "add_link": self.__cmd_add_link,
@@ -96,6 +96,7 @@ class CLI(object):
             "delete_link": self.__cmd_delete_link,
             "gen": self.__cmd_gen,
             "check": self.__cmd_check,
+            "search": self.__cmd_search,
             "mongoimport": self.__cmd_mongoimport,
             "mongoexport": self.__cmd_mongoexport
         }
@@ -231,30 +232,6 @@ class CLI(object):
         if self.__confirm(MSG_CONFIRM_DELETE.format(protocol.name),
                           self.options.force):
             self.protocols.delete(protocol)
-
-    def __cmd_ask_ai(self) -> None:
-        """-AI / --ask-ai"""
-        try:
-            from auto import AI
-        except ImportError:
-            ERROR(ERR_OPENAI, will_exit=True)
-        print(AI_WARNING)
-        # Check if protocol exists, if not create it.
-        try:
-            self.protocols.get(self.options.ask_ai)
-        except DBException: # Does not exist
-            self.__cmd_add(self.options.ask_ai)
-        try:
-            ai = AI()
-            protocol = self.protocols.get(self.options.ask_ai)
-            for q, a in ai.protocol_generator(protocol.name):
-                self.__write_field(protocol, q, a, getattr(protocol, q))
-        except AIException as aie:
-            ERROR(str(aie), will_exit=True)
-            
-    def __cmd_note(self) -> None:
-        """-N / --note"""
-        raise NotImplementedError("CLI: note")
             
     def __cmd_list_links(self) -> None:
         """-LL / --links"""
@@ -349,6 +326,50 @@ class CLI(object):
         for issue in self.links.check():
             print(issue)
 
+    def __cmd_search(self) -> None:
+        """-S / --search"""
+        methods = {
+            "openai": self.__cmd_search_openai,
+            "wireshark": self.__cmd_search_wireshark,
+            "scapy": self.__cmd_search_scapy
+        }
+        method, protocol = self.options.search
+        if method.lower() not in methods.keys():
+            ERROR(ERR_SEARCHMETHOD.format(", ".join(methods.keys())), will_exit=True)
+        methods[method.lower()](protocol)
+
+    def __cmd_search_openai(self, protocol) -> None:
+        """-S openai / --search openai"""
+        try:
+            from auto import AI
+        except ImportError:
+            ERROR(ERR_OPENAI, will_exit=True)
+        print(AI_WARNING)
+        # Check if protocol exists, if not create it.
+        try:
+            self.protocols.get(protocol)
+        except DBException: # Does not exist
+            self.__cmd_add(protocol)
+        try:
+            ai = AI()
+            protocol = self.protocols.get(protocol)
+            for q, a in ai.protocol_generator(protocol.name):
+                self.__write_field(protocol, q, a, getattr(protocol, q))
+        except AIException as aie:
+            ERROR(str(aie), will_exit=True)
+
+    def __cmd_search_wireshark(self, protocol) -> None:
+        """-S wireshark / --search wireshark"""
+        raise NotImplementedError("CLI: search wireshark")
+
+    def __cmd_search_scapy(self, protocol) -> None:
+        """-S scapy / --search scapy"""
+        raise NotImplementedError("CLI: search scapy")
+    
+    def __cmd_note(self) -> None:
+        """-N / --note"""
+        raise NotImplementedError("CLI: note")
+        
     def __cmd_mongoimport(self) -> None:
         "-MI / --mongoimport"
         cmd = ["mongoimport", "--db=\"{0}\"".format(mongodb.database)]
