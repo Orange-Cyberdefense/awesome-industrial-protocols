@@ -53,7 +53,7 @@ def search(needle: str, haystack, threshold: int=LEVENSHTEIN_THRESHOLD) -> list:
                 results.append(entry)
     return results
 
-def exact_search(needle: str, haystack, max_threshold=LEVENSHTEIN_THRESHOLD) -> list:
+def exact_search(needle: str, haystack) -> list:
     """Search for exact case-insensitive match."""
     needle = needle.lower()
     if isinstance(haystack, str):

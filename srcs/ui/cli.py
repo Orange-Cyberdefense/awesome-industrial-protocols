@@ -14,7 +14,7 @@ from subprocess import run as subprocess_run
 from config import TOOL_DESCRIPTION, mongodb, protocols as p, links, types, AI_WARNING
 from db import MongoDB, DBException, Protocols, Protocol, Links, Link
 from out import Markdown, MDException
-from auto import AI, AIException
+from auto import AI, AIException, Wireshark, WSException
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -360,7 +360,22 @@ class CLI(object):
 
     def __cmd_search_wireshark(self, protocol) -> None:
         """-S wireshark / --search wireshark"""
-        raise NotImplementedError("CLI: search wireshark")
+        try:
+            self.protocols.get(protocol)
+        except DBException: # Does not exist
+            self.__cmd_add(protocol)
+        try:
+            ws = Wireshark()
+            protocol = self.protocols.get(protocol)
+            candidates = ws.get_dissector(protocol.names)
+            if len(candidates) < 1:
+                ERROR("No dissector found for protocol {0}.".format(protocol.name))
+            elif len(candidates) > 1:
+                print("Multiple matching dissectors found: {0}.".format(x.name for x in candidates))
+            else:
+                print("Found dissector {0} for {1}.".format(candidates[0].name, protocol.name))
+        except WSException as wse:
+            ERROR(str(wse), will_exit=True)
 
     def __cmd_search_scapy(self, protocol) -> None:
         """-S scapy / --search scapy"""

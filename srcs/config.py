@@ -162,7 +162,7 @@ wireshark = SimpleNamespace()
 wireshark.api_trees = "https://api.github.com/repos/wireshark/wireshark/git/trees/"
 wireshark.api_epan_folder = "https://api.github.com/repositories/21329550/contents/epan"
 # Search data in Wireshark repository's tree
-wireshark.dissector_folder = "dissectors"
+wireshark.dissectors_folder = "dissectors"
 wireshark.regex_dissector_name = "^packet-([^\.]+)\.c$" # packet-*.c
 wireshark.naming_function = "proto_register_protocol"
 wireshark.regex_function_param = "[^\(]\((.*?)\);" # (*)
