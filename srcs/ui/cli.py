@@ -62,6 +62,7 @@ ERR_BADDATA = "Data to write is invalid (-h for help)."
 ERR_BADLINK = "Link is invalid (-h for help)."
 ERR_OPENAI = "OpenAI not found (pip install openai)."
 ERR_SEARCHMETHOD = "Search method not found. Choose between {0} (-h for help)."
+ERR_NODISSECTOR = "No dissector found for protocol {0}."
 
 def ERROR(msg: str, will_exit: bool=False):
     print("ERROR:", msg, file=stderr)
@@ -367,11 +368,12 @@ class CLI(object):
         try:
             ws = Wireshark()
             protocol = self.protocols.get(protocol)
-            candidates = ws.get_dissector(protocol.names)
+            candidates = ws.get_dissector(protocol)
             if len(candidates) < 1:
-                ERROR("No dissector found for protocol {0}.".format(protocol.name))
+                ERROR(ERR_NODISSECTOR.format(protocol.name))
             elif len(candidates) > 1:
-                print("Multiple matching dissectors found: {0}.".format(x.name for x in candidates))
+                d = ", ".join([x.name for x in candidates])
+                print("Multiple matching dissectors found: {0}.".format(d))
             else:
                 print("Found dissector {0} for {1}.".format(candidates[0].name, protocol.name))
         except WSException as wse:

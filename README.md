@@ -15,9 +15,26 @@ the research and test process on industrial protocols.
 
 ## Contents
 
+- [CAN](#can)
 - [Ethernet/IP](#ethernetip)
 - [IEC-60870-5-104](#iec608705104)
 - [KNXnet/IP](#knxnetip)
+
+
+
+## CAN
+| Protocol | CAN |
+|---|---|
+| Name | CAN |
+| Alias | CANbus, CANopen |
+| Description | Communication protocol enabling data exchange between electronic components in vehicles. |
+| Keywords | CANbus |
+| Port |  |
+| Access |  |
+| Specifications | [ISO-11898](https://www.iso.org/standard/63648.html) |
+| Security |  |
+| Wireshark dissector | [packet-canopen.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-canopen.c) |
+| Scapy layer | [can.py](https://github.com/secdev/scapy/blob/master/scapy/layers/can.py) |
 
 
 
@@ -35,13 +52,15 @@ the research and test process on industrial protocols.
 | Nmap script(s) | [enip-info](https://nmap.org/nsedoc/scripts/enip-info.html) |
 | Wireshark dissector | [packet-enip.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-enip.c) |
 | Scapy layer | [enipTCP.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/enipTCP.py) |
+| Example Pcap(s) | [ICS-pcap Ethernet/IP](https://github.com/automayt/ICS-pcap/tree/master/ETHERNET_IP) |
 ### Articles
 - [Fuzzing and PR’ing: How We Found Bugs in a Popular Third-Party EtherNet/IP Protocol Stack](https://claroty.com/team82/research/opener-enip-stack-vulnerabilities) - Sharon Brizinov, Tal Keren (Claroty, 2021)
+### Conferences
+- [Hunting EtherNet/IP Protocol Stacks](https://www.youtube.com/watch?v=0jftEYDo0ao) - Conference by Sharon Brizinov @ SANS ICS Security Summit 2022
 ### Tools
 - [OpENer](https://github.com/EIPStackGroup/OpENer) - EtherNet/IP stack for I/O adapter devices
 - [Redpoint](https://github.com/digitalbond/Redpoint) - Digital Bond's ICS enumeration tools (nmap scripts)
 - [scapy-cip-enip](https://github.com/scy-phy/scapy-cip-enip) - Ethernet/IP dissectors for Scapy
-- [ICS-pcap](https://github.com/automayt/ICS-pcap) - Collection of PCAPs for ICS/SCADA utilities and protocols
 - [enip-stack-detector](https://github.com/claroty/enip-stack-detector) - EtherNet/IP & CIP Stack Detector
 
 
@@ -57,7 +76,10 @@ the research and test process on industrial protocols.
 | Specifications | [IEC-60870-5-104 Specification](https://webstore.iec.ch/publication/25035) |
 | Security |  |
 | Nmap script(s) | [iec-identify](https://nmap.org/nsedoc/scripts/iec-identify.html) |
-
+| Wireshark dissector | [packet-iec104.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-iec104.c) |
+| Example Pcap(s) | [ICS-pcap IEC-60870-5-104](https://github.com/automayt/ICS-pcap/tree/master/IEC%2060870) |
+### Papers
+- [Description and analysis of IEC 104 Protocol](https://www.fit.vut.cz/research/publication/11570/.en) - Technical report by Petr Matousek @ Faculty of Information Techology, Czech Republic (2017)
 
 
 ## KNXnet/IP
@@ -82,7 +104,6 @@ the research and test process on industrial protocols.
 - [KNXmap](https://github.com/takeshixx/knxmap) - KNXnet/IP scanning and auditing tool
 - [knxd](https://github.com/knxd/knxd) - KNXd service
 - [KNX Virtual](https://www.knx.org/knx-en/for-professionals/get-started/knx-virtual/index.php) - Windows-based application simulating a KNX installation
-### Others
 - [ETS](https://www.knx.org/knx-en/for-professionals/software/ets-professional/) - Engineering Tool Software for KNXnet/IP (ETS Demo is free)
 
 **awesome-industrial-protocols** is licensed under
