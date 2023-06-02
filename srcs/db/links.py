@@ -18,9 +18,9 @@ from config import mongodb, links as l
 #-----------------------------------------------------------------------------#
 
 ERR_LINKTYPE = "Invalid link type, choose between: {0}."
-ERR_EMPTY = "A link must have at least a url and a description."
+ERR_EMPTY = "A link must have at least a name and a url."
 ERR_BADURL = "URL '{0}' cannot be accessed"
-ERR_UNKURL = "URL '{0}' not found."
+ERR_UNKURL = "Link '{0}' not found."
 ERR_EXIURL = "URL '{0}' already exists."
 ERR_UNKID = "This link ID does not match with any existing link ({0})."
 ERR_MULTIMATCH = "Multiple match found, please choose between {0}."
@@ -34,6 +34,7 @@ class Link(object):
     """Class representing a single link."""
     __db = None
     id = None
+    name = None
     __url: None # ParseResult from urllib
     type: None
     description: None
@@ -44,10 +45,12 @@ class Link(object):
         except DBException as dbe:
             ERROR(dbe)
         self.id = kwargs[mongodb.id] if mongodb.id in kwargs else None
+        self.name = kwargs[l.name] if l.name in kwargs else None
         self.__url = self.__set_url(kwargs[l.url]) if l.url in kwargs else None
         self.type = kwargs[l.type] if l.type in kwargs else l.DEFAULT_TYPE
         self.description = kwargs[l.description] if l.description in kwargs else None
         self.fields_dict = {
+            l.name: self.name,
             l.url: self.url,
             l.description: self.description,
             l.type: self.type
@@ -55,8 +58,8 @@ class Link(object):
         self.__check()
 
     def __str__(self):
-        return "[{0}] {1}: {2}".format(self.type.capitalize(), self.description,
-                                       self.url)
+        return "[{0}] {1}: {2}: {3}".format(self.type.capitalize(), self.name,
+                                            self.description, self.url)
 
     def get(self, field: str) -> str:
         """Return value associated to field."""
@@ -99,6 +102,7 @@ class Link(object):
     def to_dict(self, exclude_id: bool=True) -> dict:
         """Convert link object's content to dictionary."""
         ldict = {
+            l.name: self.name,
             l.url: self.url,
             l.description: self.description,
             l.type: self.type
@@ -130,7 +134,7 @@ class Link(object):
         return url
         
     def __check(self):
-        if not self.__url or not self.description:
+        if not self.name or not self.__url:
             raise DBException(ERR_EMPTY)
     
 #-----------------------------------------------------------------------------#
@@ -153,6 +157,9 @@ class Links(object):
         for link in self.all_as_objects:
             if len(search(Link.to_url(url), link.url, threshold=0)):
                 match.append(link)
+            # We also search by name
+            elif len(search(url, link.name, threshold=0)):
+                match.append(link)
         if len(match) == 1:
             return match[0]
         if len(match) > 1:
@@ -168,7 +175,7 @@ class Links(object):
                 return Link(**link)
         raise DBException(ERR_UNKID.format(id))
     
-    def add(self, url, description, type=l.DEFAULT_TYPE) -> Link:
+    def add(self, name, url, description, type=l.DEFAULT_TYPE) -> Link:
         """Add a link to link collection."""
         try:
             self.get(url)
@@ -176,7 +183,7 @@ class Links(object):
             pass # The protocol does not exist, we can continue
         else:
             raise DBException(ERR_EXIURL.format(url))
-        link = Link(url=url, description=description, type=type)
+        link = Link(name=name, url=url, description=description, type=type)
         # Check if link is valid and exists before inserting it to DB
         Link.check_url(link.url) # Will raise exception if invalid
         self.__db.links.insert_one(link.to_dict())

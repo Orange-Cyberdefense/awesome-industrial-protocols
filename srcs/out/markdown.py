@@ -26,7 +26,8 @@ LINK_FORMAT = lambda x: sub('[^0-9a-zA-Z]+', '', x.lower().strip())
 LINK = lambda x: "[{0}](#{1})".format(x, LINK_FORMAT(x))
 IMG = lambda x, y: "![{0}]({1})".format(x, y)
 
-LINKOBJ = lambda x: "[{0}]({1})".format(x.description, x.url)
+LINKOBJ = lambda x: "[{0}]({1})".format(x.name, x.url)
+LINKOBJDESC = lambda x: "[{0}]({1}) - {2}".format(x.name, x.url, x.description)
 
 TABLE = lambda x, y: "| {0} | {1} |".format(x, y)
 BORDER_TABLE = "|---|---|"
@@ -198,7 +199,8 @@ class Markdown(object):
         for link in protocol.resources:
             try:
                 link = self.links.get_id(link)
-                rdict[link.type].append("- "+LINKOBJ(link))
+                link_fmt = LINKOBJDESC(link) if link.description else LINKOBJ(link)
+                rdict[link.type].append("- " + link_fmt)
             except DBException:
                 pass
         content = []

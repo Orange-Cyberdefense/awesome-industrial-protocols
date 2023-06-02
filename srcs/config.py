@@ -120,10 +120,11 @@ protocols.TYPE = lambda x: protocols.FIELDS[x][1] if x in protocols.FIELDS else 
 # Links collection content
 links = SimpleNamespace()
 links.id = "_id"
+links.name = "name"
 links.url = "url"
 links.description = "description"
 links.type = "type"
-links.TYPES = ("documentation", "conference", "paper", "tool", "article", "other")
+links.TYPES = ("documentation", "article", "conference", "paper", "tool", "other")
 links.DEFAULT_TYPE = "other"
 
 #-----------------------------------------------------------------------------#

@@ -29,7 +29,7 @@ OPTIONS = (
     ("-D", "--delete", "delete a protocol", None, "protocol"),
     ("-N", "--note", "add personal notes for a protocol", None, "protocol"),
     ("-LL", "--list-links", "list all links", None, None),
-    ("-AL", "--add-link", "add a new link", None, ("description", "url"), 2),
+    ("-AL", "--add-link", "add a new link", None, ("name", "url"), 2),
     ("-RL", "--read-link", "read data of a link", None, "url"),
     ("-WL", "--write-link", "change data of a link", None, ("url", "field", "value"), 3),
     ("-DL", "--delete-link", "delete a link", None, "url"),
@@ -238,11 +238,11 @@ class CLI(object):
         for links in self.links.all_as_objects:
             print(links)
 
-    def __cmd_add_link(self, url: str=None, description: str=None,
+    def __cmd_add_link(self, name: str=None, url: str=None, description: str=None,
                        type: str=None) -> Link:
         """-AL / --add-link"""
         if self.options.add_link:
-            description, url = self.options.add_link
+            name, url = self.options.add_link
         try:
             # links.add checks that too but we need to do that before confirmation
             link = self.links.get(url)
@@ -251,8 +251,8 @@ class CLI(object):
             pass
         if self.__confirm(MSG_CONFIRM_ADD_LINK.format(url), self.options.force):
             try:
-                link = self.links.add(url, description, type if type else
-                                      links.DEFAULT_TYPE)
+                link = self.links.add(name, url, description if description else
+                                      "", type if type else links.DEFAULT_TYPE)
                 return link
             except DBException as dbe:
                 ERROR(str(dbe), will_exit=True)
