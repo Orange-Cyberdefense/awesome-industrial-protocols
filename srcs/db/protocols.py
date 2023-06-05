@@ -60,9 +60,15 @@ class Protocol(object):
             raise DBException(ERR_MULTIMATCH.format(", ".join(match)))
         raise DBException(ERR_UNKFIELD.format(self.name, field)) from None            
 
-    def set(self, field:str, value) -> None:
+    def set(self, field:str, value, replace=False) -> None:
         """Update existing field in protocol."""
         field, _ = self.get(field)
+        # Different behavior if linklist
+        if p.TYPE(field) == types.LINKLIST:
+            if not replace:
+                self.append(field, value)
+                return
+            value = value if isinstance(value, list) else [value]
         # Store
         document = {"name": self.name}
         newvalue = {field: value}
@@ -197,7 +203,7 @@ class Protocols(object):
     @property
     def all_as_objects(self) -> list:
         objects = [Protocol(**x) for x in self.__db.protocols_all]
-        return sorted(objects, key=lambda x: x.name)
+        return sorted(objects, key=lambda x: x.name.lower())
         
     @property
     def list(self) -> list:

@@ -46,7 +46,7 @@ the research and test process on industrial protocols.
 | Description | Ethernet-based industrial communication protocol for industrial automation systems. |
 | Keywords | CIP |
 | Port | 44818/tcp, 2222/udp |
-| Access | 1000$ |
+| Access | Paid |
 | Specifications | [Ethernet/IP Specifications](https://www.odva.org/subscriptions-services/specifications) |
 | Security |  |
 | Nmap script(s) | [enip-info](https://nmap.org/nsedoc/scripts/enip-info.html) |
@@ -58,10 +58,10 @@ the research and test process on industrial protocols.
 ### Conferences
 - [Hunting EtherNet/IP Protocol Stacks](https://www.youtube.com/watch?v=0jftEYDo0ao) - Conference by Sharon Brizinov @ SANS ICS Security Summit 2022
 ### Tools
+- [enip-stack-detector](https://github.com/claroty/enip-stack-detector) - EtherNet/IP & CIP Stack Detector
 - [OpENer](https://github.com/EIPStackGroup/OpENer) - EtherNet/IP stack for I/O adapter devices
 - [Redpoint](https://github.com/digitalbond/Redpoint) - Digital Bond's ICS enumeration tools (nmap scripts)
 - [scapy-cip-enip](https://github.com/scy-phy/scapy-cip-enip) - Ethernet/IP dissectors for Scapy
-- [enip-stack-detector](https://github.com/claroty/enip-stack-detector) - EtherNet/IP & CIP Stack Detector
 
 
 ## IEC-60870-5-104
@@ -101,11 +101,11 @@ the research and test process on industrial protocols.
 - [Sneak into buildings with KNXnet/IP](https://www.youtube.com/watch?v=QofeTV39kQE) - Conference by Claire Vacherot @ DEF CON 29 (2020)
 ### Tools
 - [BOF](https://github.com/Orange-Cyberdefense/bof) - Testing framework for industrial protocols
-- [KNXmap](https://github.com/takeshixx/knxmap) - KNXnet/IP scanning and auditing tool
-- [knxd](https://github.com/knxd/knxd) - KNXd service
-- [KNX Virtual](https://www.knx.org/knx-en/for-professionals/get-started/knx-virtual/index.php) - Windows-based application simulating a KNX installation
 - [ETS](https://www.knx.org/knx-en/for-professionals/software/ets-professional/) - Engineering Tool Software for KNXnet/IP (ETS Demo is free)
+- [KNX Virtual](https://www.knx.org/knx-en/for-professionals/get-started/knx-virtual/index.php) - Windows-based application simulating a KNX installation
+- [knxd](https://github.com/knxd/knxd) - KNXd service
+- [KNXmap](https://github.com/takeshixx/knxmap) - KNXnet/IP scanning and auditing tool
 
-**awesome-industrial-protocols** is licensed under
+> **awesome-industrial-protocols** is licensed under
 [CC0](https://creativecommons.org/publicdomain/zero/1.0/). **Turn/IP** is
 licensed under [GPL-v3](https://www.gnu.org/licenses/gpl-3.0.en.html).

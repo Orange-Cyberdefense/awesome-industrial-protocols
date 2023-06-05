@@ -168,3 +168,4 @@ wireshark.dissectors_folder = "dissectors"
 wireshark.regex_dissector_name = "^packet-([^\.]+)\.c$" # packet-*.c
 wireshark.naming_function = "proto_register_protocol"
 wireshark.regex_function_param = "[^\(]\((.*?)\);" # (*)
+wireshark.dissector_desc = "Wireshark dissector for {0}"

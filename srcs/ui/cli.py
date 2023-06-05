@@ -11,7 +11,8 @@ from os.path import exists, join
 from sys import stderr
 from subprocess import run as subprocess_run
 # Internal
-from config import TOOL_DESCRIPTION, mongodb, protocols as p, links, types, AI_WARNING
+from config import TOOL_DESCRIPTION, AI_WARNING, protocols as p 
+from config import links, types, mongodb, wireshark
 from db import MongoDB, DBException, Protocols, Protocol, Links, Link
 from out import Markdown, MDException
 from auto import AI, AIException, Wireshark, WSException
@@ -45,6 +46,7 @@ MSG_PROTO_COUNT = "[*] Total number of protocols: {0}"
 MSG_LINKS_COUNT = "[*] Total number of links: {0}"
 MSG_WRITE_ALIST = "Awesome list written to {0}."
 MSG_WRITE_PPAGE = "{0} protocol page written to {1}."
+MSG_MULTIDISSECTOR = "Multiple matching dissectors found: {0}."
 
 MSG_CONFIRM_ADD_PROTO = "Do you want to add protocol '{0}'?"
 MSG_CONFIRM_ADD_FIELD = "Do you want to add field '{0}' to protocol '{1}'?"
@@ -55,6 +57,7 @@ MSG_CONFIRM_APPEND = "Do you want to append '{0}' to field '{1}'?"
 MSG_CONFIRM_DELETE = "Do you really want to delete protocol '{0}'? (ALL DATA WILL BE LOST)"
 MSG_CONFIRM_DELETE_LINK = "Do you really want to delete '{0}'?"
 MSG_CONFIRM_OVERWRITE = "File '{0}' already exists. Overwrite?"
+MSG_CONFIRM_ADDDISSECTOR = "Do you want to set dissector {0} for protocol {1}?"
 
 ERR_ACTION = "No action is defined. Choose between {0} (-h for help)."
 ERR_WRITE = "Write requires data (-d) OR link (-l) (-h for help)."
@@ -373,9 +376,16 @@ class CLI(object):
                 ERROR(ERR_NODISSECTOR.format(protocol.name))
             elif len(candidates) > 1:
                 d = ", ".join([x.name for x in candidates])
-                print("Multiple matching dissectors found: {0}.".format(d))
+                print(MSG_MULTIDISSECTOR.format(d))
             else:
-                print("Found dissector {0} for {1}.".format(candidates[0].name, protocol.name))
+                dissector = candidates[0]
+                if self.__confirm(MSG_CONFIRM_ADDDISSECTOR.format(
+                        dissector.name, protocol.name), self.options.force):
+                    description = wireshark.dissector_desc.format(protocol.name)
+                    link = self.__cmd_add_link(dissector.name, dissector.url,
+                                               description, "tool")
+                    if link:
+                        protocol.set(p.wireshark, link.id, replace=True)
         except WSException as wse:
             ERROR(str(wse), will_exit=True)
 

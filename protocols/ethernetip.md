@@ -7,7 +7,7 @@
 | Description | Ethernet-based industrial communication protocol for industrial automation systems. |
 | Keywords | CIP |
 | Port(s) | 44818/tcp, 2222/udp |
-| Access to specs | 1000$ |
+| Access to specs | Paid |
 | Specifications | [Ethernet/IP Specifications](https://www.odva.org/subscriptions-services/specifications) |
 | Security features |  |
 | Nmap script(s) | [enip-info](https://nmap.org/nsedoc/scripts/enip-info.html) |
@@ -20,9 +20,9 @@
 ## Conferences
 - [Hunting EtherNet/IP Protocol Stacks](https://www.youtube.com/watch?v=0jftEYDo0ao) - Conference by Sharon Brizinov @ SANS ICS Security Summit 2022
 ## Tools
+- [enip-stack-detector](https://github.com/claroty/enip-stack-detector) - EtherNet/IP & CIP Stack Detector
 - [OpENer](https://github.com/EIPStackGroup/OpENer) - EtherNet/IP stack for I/O adapter devices
 - [Redpoint](https://github.com/digitalbond/Redpoint) - Digital Bond's ICS enumeration tools (nmap scripts)
 - [scapy-cip-enip](https://github.com/scy-phy/scapy-cip-enip) - Ethernet/IP dissectors for Scapy
-- [enip-stack-detector](https://github.com/claroty/enip-stack-detector) - EtherNet/IP & CIP Stack Detector
 
 > All AI-generated data is marked with `*`.

@@ -210,7 +210,8 @@ class Links(object):
 
     @property
     def all_as_objects(self) -> list:
-        return [Link(**x) for x in self.__db.links_all]
+        objects = [Link(**x) for x in self.__db.links_all]
+        return sorted(objects, key=lambda x: x.name.lower())
 
     @property
     def count(self) -> int:

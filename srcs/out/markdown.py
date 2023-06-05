@@ -199,13 +199,15 @@ class Markdown(object):
         for link in protocol.resources:
             try:
                 link = self.links.get_id(link)
-                link_fmt = LINKOBJDESC(link) if link.description else LINKOBJ(link)
-                rdict[link.type].append("- " + link_fmt)
+                rdict[link.type].append(link)#"- " + link_fmt)
             except DBException:
                 pass
         content = []
         for k, v in rdict.items():
             if v:
                 content.append(level(k.capitalize()+"s"))
-                content += v
+                v = sorted(v, key=lambda x: x.name.lower())
+                for link in v:
+                    link_fmt = LINKOBJDESC(link) if link.description else LINKOBJ(link)
+                    content.append("- " + link_fmt)
         return "\n".join(content)
