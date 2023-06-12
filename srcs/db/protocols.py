@@ -62,13 +62,18 @@ class Protocol(object):
 
     def set(self, field:str, value, replace=False) -> None:
         """Update existing field in protocol."""
-        field, _ = self.get(field)
+        field, oldvalue = self.get(field)
         # Different behavior if linklist
         if p.TYPE(field) == types.LINKLIST:
-            if not replace:
-                self.append(field, value)
-                return
-            value = value if isinstance(value, list) else [value]
+            if not replace and oldvalue: # We append
+                oldvalue = [oldvalue] if not isinstance(oldvalue, list) else oldvalue
+                if value not in oldvalue:
+                    value = [value] if not isinstance(value, list) else value
+                    value = [x for x in oldvalue + value if x != '']
+                else:
+                    raise DBException(ERR_EXIVALUE.format(p.NAME(field)))
+            else:
+                value = value if isinstance(value, list) else [value]
         # Store
         document = {"name": self.name}
         newvalue = {field: value}
@@ -82,6 +87,7 @@ class Protocol(object):
 
     def append(self, field:str, value) -> None:
         """Append a value to the existing value in a field."""
+        print("append")
         _, oldvalue = self.get(field)
         oldvalue = [oldvalue] if not isinstance(oldvalue, list) else oldvalue
         if value not in oldvalue:

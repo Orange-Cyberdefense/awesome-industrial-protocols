@@ -5,8 +5,8 @@
 """Classes that represent and handle links in the database."""
 
 from urllib.parse import urlparse, ParseResult
-from urllib.request import urlopen
-from urllib.error import URLError
+from urllib.request import urlopen, Request
+from urllib.error import URLError, HTTPError
 from socket import timeout as socket_timeout
 from re import match as re_match
 # Internal
@@ -17,9 +17,12 @@ from config import mongodb, links as l
 # Constants                                                                   #
 #-----------------------------------------------------------------------------#
 
+TIMEOUT=2
+
 ERR_LINKTYPE = "Invalid link type, choose between: {0}."
 ERR_EMPTY = "A link must have at least a name and a url."
-ERR_BADURL = "URL '{0}' cannot be accessed"
+ERR_BADURL = "URL '{0}' cannot be accessed."
+ERR_HTTP = "URL '{0}' returned error: {1}."
 ERR_UNKURL = "Link '{0}' not found."
 ERR_EXIURL = "URL '{0}' already exists."
 ERR_UNKID = "This link ID does not match with any existing link ({0})."
@@ -91,7 +94,10 @@ class Link(object):
     def check_url(url: str) -> None:
         """Try to open the URL to see if it exists. Raises DBException if not."""
         try:
-            urlopen(url, timeout=2)
+            request = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+            urlopen(request, timeout=TIMEOUT)            
+        except HTTPError as he:
+            raise DBException(ERR_HTTP.format(url, str(he))) from None
         except (URLError, socket_timeout):
             raise DBException(ERR_BADURL.format(url)) from None
 

@@ -153,6 +153,8 @@ class Markdown(object):
             current.append(BORDER_TABLE)
             # Main table
             for k, v in protocol.to_dict().items():
+                if not v or not len(v):
+                    continue
                 if k in p.FIELDS and k != p.resources:
                     if p.TYPE(k) == types.LINKLIST:
                         current += self.__f_linklist(k, v)
@@ -166,6 +168,10 @@ class Markdown(object):
 
     def __f_linklist(self, key, linklist) -> list:
         content = []
+        key = p.FIELDS[key][0] if key in p.FIELDS.keys() else key.capitalize()
+        value = [LINKOBJ(self.links.get_id(l)) for l in linklist]
+        content.append(TABLE(key, ", ".join(value)))
+        """
         ct = 0
         for link in linklist:
             try:
@@ -175,6 +181,7 @@ class Markdown(object):
                 ct += 1
             except DBException:
                 pass
+        """
         return content
 
     def __f_name(self, protocol):

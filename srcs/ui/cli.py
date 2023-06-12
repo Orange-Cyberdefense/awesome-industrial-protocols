@@ -148,7 +148,7 @@ class CLI(object):
 
     def __cmd_list(self) -> None:
         """-L / --list"""
-        pdict = {x.name: x.keywords for x in self.protocols.all_as_objects}
+        pdict = {x.name: x.description for x in self.protocols.all_as_objects}
         self.__print_table(pdict, nocap=True)
         # Stats
         print(MSG_PROTO_COUNT.format(self.protocols.count))
@@ -192,7 +192,7 @@ class CLI(object):
                         if not link:
                             return
                         value = link.id
-                    protocol.append(field, value)
+                    protocol.set(field, value)
             else:
                 if self.__confirm(MSG_CONFIRM_WRITE.format(p.NAME(field), value,
                                                            protocol.name,
