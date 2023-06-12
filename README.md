@@ -15,10 +15,34 @@ the research and test process on industrial protocols.
 
 ## Contents
 
+- [BACnet/IP](#bacnetip)
 - [CAN](#can)
+- [CODESYS](#codesys)
+- [DNP3](#dnp3)
 - [Ethernet/IP](#ethernetip)
 - [IEC-60870-5-104](#iec608705104)
+- [IEC-61850](#iec61850)
 - [KNXnet/IP](#knxnetip)
+- [Modbus](#modbus)
+- [Niagara Fox](#niagarafox)
+- [OPC-UA](#opcua)
+- [S7comm](#s7comm)
+- [UMAS](#umas)
+
+
+
+## BACnet/IP
+| Protocol | BACnet/IP |
+|---|---|
+| Name | BACnet/IP |
+| Alias | BACnet |
+| Description | Building automation and control network communication protocol for HVAC systems |
+| Keywords | HVAC |
+| Port | 47808/udp |
+| Access | Paid |
+| Specifications | [BACnet/IP Specification](https://bacnet.org/buy/) |
+| Nmap script(s) | [bacnet-info](https://nmap.org/nsedoc/scripts/bacnet-info.html) |
+| Wireshark dissector | [packet-bacnet.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-bacnet.c) |
 
 
 
@@ -29,13 +53,40 @@ the research and test process on industrial protocols.
 | Alias | CANbus, CANopen |
 | Description | Communication protocol enabling data exchange between electronic components in vehicles. |
 | Keywords | CANbus |
-| Port |  |
-| Access |  |
 | Specifications | [ISO-11898](https://www.iso.org/standard/63648.html) |
-| Security |  |
 | Wireshark dissector | [packet-canopen.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-canopen.c) |
 | Scapy layer | [can.py](https://github.com/secdev/scapy/blob/master/scapy/layers/can.py) |
 
+
+
+## CODESYS
+| Protocol | CODESYS |
+|---|---|
+| Name | CODESYS |
+| Alias | IEC-61131-3 |
+| Description | PLC programming and runtime environment for industrial automation systems |
+| Port | 1200/tcp, 2455/tcp |
+| Access | Paid |
+| Specifications | [CODESYS Specification](https://webstore.iec.ch/publication/4552) |
+
+
+
+## DNP3
+| Protocol | DNP3 |
+|---|---|
+| Name | DNP3 |
+| Alias | Distributed Network Protocol |
+| Description | Industrial communication protocol for remote monitoring and control of automation systems. |
+| Keywords | Power grid, Water |
+| Port | 20000/tcp, 20000/udp |
+| Access | Paid |
+| Specifications | [IEEE 1815-2012](https://standards.ieee.org/ieee/1815/5414/) |
+| Security | Optional authentication, optional encryption with TLS |
+| Wireshark dissector | [packet-dnp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-dnp.c) |
+| Example Pcap(s) | [ICS-pcap DNP3](https://github.com/automayt/ICS-pcap/tree/master/DNP3) |
+### Tools
+- [dnp-info](https://github.com/sjhilt/Nmap-NSEs/blob/master/dnp3-info.nse) - Nmap discovery script for DNP3
+- [FreyrSCADA DNP3](https://github.com/FreyrSCADA/DNP3) - DNP3 Protocol - Outstation Server and Client Master Simulator
 
 
 ## Ethernet/IP
@@ -48,7 +99,6 @@ the research and test process on industrial protocols.
 | Port | 44818/tcp, 2222/udp |
 | Access | Paid |
 | Specifications | [Ethernet/IP Specifications](https://www.odva.org/subscriptions-services/specifications) |
-| Security |  |
 | Nmap script(s) | [enip-info](https://nmap.org/nsedoc/scripts/enip-info.html) |
 | Wireshark dissector | [packet-enip.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-enip.c) |
 | Scapy layer | [enipTCP.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/enipTCP.py) |
@@ -58,6 +108,7 @@ the research and test process on industrial protocols.
 ### Conferences
 - [Hunting EtherNet/IP Protocol Stacks](https://www.youtube.com/watch?v=0jftEYDo0ao) - Conference by Sharon Brizinov @ SANS ICS Security Summit 2022
 ### Tools
+- [CIPster](https://github.com/liftoff-sr/CIPster) - Ethernet/IP (Common Industrial Protocol) stack in C++
 - [enip-stack-detector](https://github.com/claroty/enip-stack-detector) - EtherNet/IP & CIP Stack Detector
 - [OpENer](https://github.com/EIPStackGroup/OpENer) - EtherNet/IP stack for I/O adapter devices
 - [Redpoint](https://github.com/digitalbond/Redpoint) - Digital Bond's ICS enumeration tools (nmap scripts)
@@ -70,16 +121,30 @@ the research and test process on industrial protocols.
 | Name | IEC-60870-5-104 |
 | Alias | IEC-104 |
 | Description | Grid communication protocol for control and monitoring. |
-| Keywords |  |
 | Port | 2404/tcp |
 | Access | Paid |
 | Specifications | [IEC-60870-5-104 Specification](https://webstore.iec.ch/publication/25035) |
-| Security |  |
 | Nmap script(s) | [iec-identify](https://nmap.org/nsedoc/scripts/iec-identify.html) |
 | Wireshark dissector | [packet-iec104.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-iec104.c) |
+| Scapy layer | [iec104.py](https://github.com/secdev/scapy/tree/master/scapy/contrib/scada/iec104) |
 | Example Pcap(s) | [ICS-pcap IEC-60870-5-104](https://github.com/automayt/ICS-pcap/tree/master/IEC%2060870) |
 ### Papers
 - [Description and analysis of IEC 104 Protocol](https://www.fit.vut.cz/research/publication/11570/.en) - Technical report by Petr Matousek @ Faculty of Information Techology, Czech Republic (2017)
+### Tools
+- [FreyrSCADA IEC-60870-5-104](https://github.com/FreyrSCADA/IEC-60870-5-104) - IEC 60870-5-104 Protocol - RTU Server and Master Client Simulator
+
+
+## IEC-61850
+| Protocol | IEC-61850 |
+|---|---|
+| Name | IEC-61850 |
+| Alias | IEC-61850/GOOSE, IEC-61850/GSSE, IEC-61850/SV |
+| Description | Communication networks and systems for power utility automation |
+| Keywords | Power grid |
+| Access | Paid |
+| Specifications | [IEC 61850 Specification](https://webstore.iec.ch/publication/6028) |
+| Wireshark dissector | [packet-goose.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-goose.c), [packet-sv.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-sv.c) |
+
 
 
 ## KNXnet/IP
@@ -96,6 +161,8 @@ the research and test process on industrial protocols.
 | Nmap script(s) | [knx-gateway-discover](https://nmap.org/nsedoc/scripts/knx-gateway-discover.html) |
 | Wireshark dissector | [packet-knxip.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-knxip.c) |
 | Scapy layer | [knx.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/knx.py) |
+### Documentations
+- [knx.org](https://www.knx.org/knx-en/for-professionals/index.php) - KNX official website
 ### Conferences
 - [Learn how to control every room at a luxury hotel remotely](https://www.youtube.com/watch?v=RX-O4XuCW1Y) - Conference by Jesus Molina @ DEF CON 22 (2014)
 - [Sneak into buildings with KNXnet/IP](https://www.youtube.com/watch?v=QofeTV39kQE) - Conference by Claire Vacherot @ DEF CON 29 (2020)
@@ -105,6 +172,62 @@ the research and test process on industrial protocols.
 - [KNX Virtual](https://www.knx.org/knx-en/for-professionals/get-started/knx-virtual/index.php) - Windows-based application simulating a KNX installation
 - [knxd](https://github.com/knxd/knxd) - KNXd service
 - [KNXmap](https://github.com/takeshixx/knxmap) - KNXnet/IP scanning and auditing tool
+
+
+## Modbus
+| Protocol | Modbus |
+|---|---|
+| Name | Modbus |
+| Alias | Modbus TCP |
+| Port | 502/tcp |
+| Specifications | [Modbus TCP Specification](https://modbus.org/specs.php) |
+| Nmap script(s) | [modbus-discover](https://nmap.org/nsedoc/scripts/modbus-discover.html) |
+| Wireshark dissector | [packet-mbtcp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-mbtcp.c) |
+### Tools
+- [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
+
+
+## Niagara Fox
+| Protocol | Niagara Fox |
+|---|---|
+| Name | Niagara Fox |
+| Alias | Fox |
+| Description | Communication protocol used by Tridium Niagara devices |
+| Keywords | Tridium |
+| Port | 1911/tcp, 3011/tcp, 4911/tcp, 5011/tcp |
+| Nmap script(s) | [fox-info](https://nmap.org/nsedoc/scripts/fox-info.html) |
+### Tools
+- [foxdissector](https://github.com/MartinoTommasini/foxdissector) - Wireshark dissector for the Niagara Fox protocol in Lua
+
+
+## OPC-UA
+| Protocol | OPC-UA |
+|---|---|
+| Name | OPC-UA |
+| Alias | OPCUA |
+| Port | 4840/tcp, 4840/udp, 4843/tcp (TLS)  |
+| Wireshark dissector | [OPC-UA Plugin](https://github.com/wireshark/wireshark/tree/master/plugins/epan/opcua) |
+
+
+
+## S7comm
+| Protocol | S7comm |
+|---|---|
+| Name | S7comm |
+| Alias | S7 |
+| Port | 102/tcp |
+| Nmap script(s) | [s7-info](https://nmap.org/nsedoc/scripts/s7-info.html) |
+| Wireshark dissector | [packet-s7comm.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-s7comm.c) |
+| Example Pcap(s) | [ICS-pcap S7](https://github.com/automayt/ICS-pcap/tree/master/S7) |
+
+
+
+## UMAS
+| Protocol | UMAS |
+|---|---|
+| Name | UMAS |
+### Tools
+- [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
 
 > **awesome-industrial-protocols** is licensed under
 [CC0](https://creativecommons.org/publicdomain/zero/1.0/). **Turn/IP** is

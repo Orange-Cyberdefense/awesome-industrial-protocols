@@ -10,8 +10,11 @@
 | Access to specs |  |
 | Specifications | [ISO-11898](https://www.iso.org/standard/63648.html) |
 | Security features |  |
+| Nmap script(s) |  |
 | Wireshark dissector | [packet-canopen.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-canopen.c) |
 | Scapy layer | [can.py](https://github.com/secdev/scapy/blob/master/scapy/layers/can.py) |
+| Example Pcap(s) |  |
+| Related CVE |  |
 
 
 

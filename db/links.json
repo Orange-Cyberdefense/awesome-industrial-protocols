@@ -1,4 +1,4 @@
-{"_id":{"$oid":"6475f7593d9386a5141bb24a"},"url":"https://github.com/secdev/scapy/blob/master/scapy/contrib/knx.py","description":"KNXnet/IP Scapy layer","type":"tool","name":"knx.py"}
+{"_id":{"$oid":"6475f7593d9386a5141bb24a"},"url":"https://github.com/secdev/scapy/blob/master/scapy/contrib/knx.py","description":"Scapy layer for KNXnet/IP","type":"tool","name":"knx.py"}
 {"_id":{"$oid":"6475f7c7302c382b339fb14f"},"url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-knxip.c","description":"KNXnet/IP Wireshark dissector","type":"tool","name":"packet-knxip.c"}
 {"_id":{"$oid":"6475fa933f9e3095afb60c59"},"url":"https://www.youtube.com/watch?v=RX-O4XuCW1Y","description":"Conference by Jesus Molina @ DEF CON 22 (2014)","type":"conference","name":"Learn how to control every room at a luxury hotel remotely"}
 {"_id":{"$oid":"6475fb026a5a4f44a0694588"},"url":"https://www.youtube.com/watch?v=QofeTV39kQE","description":"Conference by Claire Vacherot @ DEF CON 29 (2020)","type":"conference","name":"Sneak into buildings with KNXnet/IP"}
@@ -6,7 +6,7 @@
 {"_id":{"$oid":"6477048d7f9cacb861ef232c"},"url":"https://www.odva.org/subscriptions-services/specifications","description":"Page to buy specifications (1000$)","type":"documentation","name":"Ethernet/IP Specifications"}
 {"_id":{"$oid":"647705f1e066827b03f67c0f"},"url":"https://nmap.org/nsedoc/scripts/enip-info.html","description":"Nmap discovery script for Ethernet/IP","type":"tool","name":"enip-info"}
 {"_id":{"$oid":"6477074631a762222e8a7a85"},"url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-enip.c","description":"Ethernet/IP Wireshark dissector","type":"tool","name":"packet-enip.c"}
-{"_id":{"$oid":"647707a72e72844c9b6487ed"},"url":"https://github.com/secdev/scapy/blob/master/scapy/contrib/enipTCP.py","description":"Ethernet/IP Scapy layer","type":"tool","name":"enipTCP.py"}
+{"_id":{"$oid":"647707a72e72844c9b6487ed"},"url":"https://github.com/secdev/scapy/blob/master/scapy/contrib/enipTCP.py","description":"Scapy layer for Ethernet/IP","type":"tool","name":"enipTCP.py"}
 {"_id":{"$oid":"64770817002f8101cdf1f1e2"},"url":"https://github.com/Orange-Cyberdefense/bof","description":"Testing framework for industrial protocols","type":"tool","name":"BOF"}
 {"_id":{"$oid":"6477085ca88361520eb72202"},"url":"https://github.com/takeshixx/knxmap","description":"KNXnet/IP scanning and auditing tool","type":"tool","name":"KNXmap"}
 {"_id":{"$oid":"6477089f7e728dd668cbfde0"},"url":"https://github.com/EIPStackGroup/OpENer","description":"EtherNet/IP stack for I/O adapter devices","type":"tool","name":"OpENer"}
@@ -29,3 +29,31 @@
 {"_id":{"$oid":"6479f68131a8105941fd13b9"},"name":"ICS-pcap IEC-60870-5-104","url":"https://github.com/automayt/ICS-pcap/tree/master/IEC%2060870","description":"PCAP sample for IEC-60870-5-104 on ICS-pcap","type":"tool"}
 {"_id":{"$oid":"6479f71921ba7bac394fbe35"},"name":"packet-iec104.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-iec104.c","description":"Wireshark dissector for IEC-60870-5-104","type":"tool"}
 {"_id":{"$oid":"6479f8aa6c1947f724e0c8dd"},"name":"Description and analysis of IEC 104 Protocol","url":"https://www.fit.vut.cz/research/publication/11570/.en","description":"Technical report by Petr Matousek @ Faculty of Information Techology, Czech Republic (2017)","type":"paper"}
+{"_id":{"$oid":"6486d3d6308f16b0072159c8"},"name":"FreyrSCADA IEC-60870-5-104","url":"https://github.com/FreyrSCADA/IEC-60870-5-104","description":"IEC 60870-5-104 Protocol - RTU Server and Master Client Simulator","type":"tool"}
+{"_id":{"$oid":"6486d91a58ac3977d05665ef"},"name":"IEEE 1815-2012","url":"https://standards.ieee.org/ieee/1815/5414/","description":"IEEE Standard for Electric Power Systems Communications-Distributed Network Protocol (DNP3)","type":"documentation"}
+{"_id":{"$oid":"6486d9ea684c70dc15579615"},"name":"packet-dnp.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-dnp.c","description":"Wireshark dissector for DNP3","type":"tool"}
+{"_id":{"$oid":"6486dc0082f8a76804f6cf4d"},"name":"dnp-info","url":"https://github.com/sjhilt/Nmap-NSEs/blob/master/dnp3-info.nse","description":"Nmap discovery script for DNP3","type":"tool"}
+{"_id":{"$oid":"6486ddb42cdca5255cdc1b86"},"name":"FreyrSCADA DNP3","url":"https://github.com/FreyrSCADA/DNP3","description":"DNP3 Protocol - Outstation Server and Client Master Simulator","type":"tool"}
+{"_id":{"$oid":"6486def63364d314994d319e"},"name":"dnp.org","url":"https://www.dnp.org/","description":"DNP official website","type":"documentation"}
+{"_id":{"$oid":"6486e0cedc7e164f0cace90c"},"name":"IEC 61850 Specification","url":"https://webstore.iec.ch/publication/6028","description":"Page to buy specifications (all parts)","type":"other"}
+{"_id":{"$oid":"64870d286ee4cb0dc101c7b8"},"name":"packet-goose.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-goose.c","description":"Wireshark dissector for IEC 61850 GOOSE","type":"tool"}
+{"_id":{"$oid":"64870da1a52fa555b399ab25"},"name":"packet-sv.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-sv.c","description":"Wireshark dissector for IEC 61850 Sampled Values","type":"tool"}
+{"_id":{"$oid":"64871290b4ad0b13302d8d5e"},"name":"ICS-pcap DNP3","url":"https://github.com/automayt/ICS-pcap/tree/master/DNP3","description":"PCAP sample for DNP3","type":"tool"}
+{"_id":{"$oid":"648713471de7a408b4448316"},"name":"CIPster","url":"https://github.com/liftoff-sr/CIPster","description":"Ethernet/IP (Common Industrial Protocol) stack in C++","type":"tool"}
+{"_id":{"$oid":"6487143eca3ad196288e08da"},"name":"codesys.com","url":"https://www.codesys.com/","description":"CODESYS official website","type":"documentation"}
+{"_id":{"$oid":"6487147c9586b6c4b92e082a"},"name":"knx.org","url":"https://www.knx.org/knx-en/for-professionals/index.php","description":"KNX official website","type":"documentation"}
+{"_id":{"$oid":"648715217c789d536e01c6d3"},"name":"CODESYS Specification","url":"https://webstore.iec.ch/publication/4552","description":"Page to buy specifications (405 CHF)","type":"documentation"}
+{"_id":{"$oid":"648717559b55ade019586809"},"name":"packet-s7comm.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-s7comm.c","description":"Wireshark dissector for S7comm","type":"tool"}
+{"_id":{"$oid":"648717aead52a8dba8e7478b"},"name":"ICS-pcap S7","url":"https://github.com/automayt/ICS-pcap/tree/master/S7","description":"PCAP sample for S7comm","type":"tool"}
+{"_id":{"$oid":"64871a4fe80aaa32be335fe0"},"name":"packet-bacnet.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-bacnet.c","description":"Wireshark dissector for BACnet/IP","type":"tool"}
+{"_id":{"$oid":"64871a8b132d3e55ade1b3c1"},"name":"Modbus TCP Specification","url":"https://modbus.org/specs.php","description":"Page to download specifications (free)","type":"documentation"}
+{"_id":{"$oid":"64871aeb2a1ed9cd6e3ab486"},"name":"packet-mbtcp.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-mbtcp.c","description":"Wireshark dissector for Modbus TCP","type":"tool"}
+{"_id":{"$oid":"64871b3fd242653ca1a1e12a"},"name":"modbus-discover","url":"https://nmap.org/nsedoc/scripts/modbus-discover.html","description":"Nmap discovery script for Modbus TCP","type":"tool"}
+{"_id":{"$oid":"64871b9c8f052df7b9ff4679"},"name":"bacnet-info","url":"https://nmap.org/nsedoc/scripts/bacnet-info.html","description":"Nmap discovery script for BACnet/IP","type":"tool"}
+{"_id":{"$oid":"64871c99551085157855fceb"},"name":"BACnet/IP Specification","url":"https://bacnet.org/buy/","description":"Page to buy specifications (125$)","type":"documentation"}
+{"_id":{"$oid":"64871d324272d5515e5be9b5"},"name":"iec104.py","url":"https://github.com/secdev/scapy/tree/master/scapy/contrib/scada/iec104","description":"Scapy layer for IEC-60870-5-104","type":"other"}
+{"_id":{"$oid":"64871ed5e675729fe07b15ed"},"name":"OPC-UA Plugin","url":"https://github.com/wireshark/wireshark/tree/master/plugins/epan/opcua","description":"OPC-UA plugin for Wireshark","type":"tool"}
+{"_id":{"$oid":"64871f4dff91a48f6abe58d2"},"name":"s7-info","url":"https://nmap.org/nsedoc/scripts/s7-info.html","description":"Nmap discovery script for S7comm","type":"tool"}
+{"_id":{"$oid":"64871fc09674e8a1f45ed01a"},"name":"Malmod","url":"https://github.com/mliras/malmod","description":"Scripts to attack Modicon M340 via UMAS","type":"tool"}
+{"_id":{"$oid":"648721434d5530977765c143"},"name":"fox-info","url":"https://nmap.org/nsedoc/scripts/fox-info.html","description":"Nmap discovery script for Niagara Fox","type":"tool"}
+{"_id":{"$oid":"648721a40dee780bd3161b7d"},"name":"foxdissector","url":"https://github.com/MartinoTommasini/foxdissector","description":"Wireshark dissector for the Niagara Fox protocol in Lua","type":"tool"}
