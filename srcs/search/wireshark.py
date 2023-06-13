@@ -8,7 +8,7 @@ from re import search as re_search
 from os.path import join
 # Internal
 from config import wireshark as w
-from db import search, has_common_items, Protocol
+from db import find, has_common_items, Protocol
 from . import SearchException, get_api_json, search_json, get_code_from_github
 
 #-----------------------------------------------------------------------------#
@@ -70,7 +70,7 @@ class Wireshark(object):
             if isinstance(entry, dict) and "path" in entry.keys():
                 path = re_search("^packet-([^\.]+)\.c$", entry["path"])
                 if path and len(path.groups()):
-                    match = search(path.group(1), protocol.names, threshold=1)
+                    match = find(path.group(1), protocol.names, threshold=1)
                     if match:
                         results.append(Dissector(entry))
         # If multiple dissectors found, we want to check the list of names

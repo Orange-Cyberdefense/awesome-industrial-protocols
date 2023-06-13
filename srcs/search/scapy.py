@@ -9,7 +9,7 @@ from os.path import dirname, basename, join
 from glob import glob
 # Internal
 from config import scapy as s
-from db import search, has_common_items, Protocol
+from db import find, has_common_items, Protocol
 from . import SearchException, get_api_json
 
 #-----------------------------------------------------------------------------#
@@ -61,7 +61,7 @@ class Scapy(object):
             raise SearchException(ERR_BADTREE)
         for layer in layers + contrib:
             if isinstance(layer, dict) and "name" in layer.keys():
-                match = search(layer["name"].replace(".py", ""), protocol.names, threshold=1)
+                match = find(layer["name"].replace(".py", ""), protocol.names, threshold=1)
                 if match:
                     candidates.append(Layer(layer))
         return candidates

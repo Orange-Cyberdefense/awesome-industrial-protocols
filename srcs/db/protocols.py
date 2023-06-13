@@ -5,7 +5,7 @@
 """Classes that represent and handle protocols' info from the database.
 """
 
-from . import MongoDB, DBException, search, exact_search
+from . import MongoDB, DBException, find, exact_find
 from config import protocols as p, types, mongodb
 
 #-----------------------------------------------------------------------------#
@@ -53,7 +53,7 @@ class Protocol(object):
 
         :raises DBException: if the field does not exist.
         """
-        match = search(field, self.fields, threshold=0)
+        match = find(field, self.fields, threshold=0)
         if len(match) == 1:
             return match[0], getattr(self, match[0])
         if len(match) > 1:
@@ -166,10 +166,10 @@ class Protocols(object):
         match = []
         # We do that all the time (I know it sucks) to be up to date with db
         for protocol in self.all:
-            if len(exact_search(protocol_name, all_names(protocol))):
+            if len(exact_find(protocol_name, all_names(protocol))):
                 match = [Protocol(**protocol)]
                 break # We found the exact match
-            elif len(search(protocol_name, all_names(protocol))):
+            elif len(find(protocol_name, all_names(protocol))):
                 match.append(Protocol(**protocol))
         if len(match) == 1:
             return match[0]

@@ -1,6 +1,6 @@
 # Turn/IP
 # Claire-lex - 2023
-# Search functions
+# Find functions
 
 from re import sub
 # Internal
@@ -29,38 +29,38 @@ def levenshtein(s, t):
                           d[i - 1][j - 1] + cost) # substitution   
     return d[m][n]
 
-def format_for_search(value: str) -> str:
+def format_for_find(value: str) -> str:
     """Standardize input to make case and character independent match."""
     if isinstance(value, str):
         return sub('[^0-9a-zA-Z]+', '', value.lower().strip())
     return value
 
-def search(needle: str, haystack, threshold: int=LEVENSHTEIN_THRESHOLD) -> list:
-    """Search for needle in haystack (a list or a string).
+def find(needle: str, haystack, threshold: int=LEVENSHTEIN_THRESHOLD) -> list:
+    """Find needle in haystack (a list or a string).
 
-    The search uses the Levenshtein distance and may return several results.
+    The function uses the Levenshtein distance and may return several results.
     """
     results = []
-    needle = format_for_search(needle)
+    needle = format_for_find(needle)
     if isinstance(haystack, str):
-        haystack = format_for_search(haystack)
+        haystack = format_for_find(haystack)
         if levenshtein(needle, haystack) <= threshold:
             results.append(needle)
     elif isinstance(haystack, (list, tuple)):
         for entry in haystack:
-            entry = format_for_search(entry)
+            entry = format_for_find(entry)
             if levenshtein(needle, entry) <= threshold:
                 results.append(entry)
     return results
 
-def exact_search(needle: str, haystack) -> list:
+def exact_find(needle: str, haystack) -> list:
     """Search for exact case-insensitive match."""
     needle = needle.lower()
     if isinstance(haystack, str):
         haystack = haystack.lower()
     elif isinstance(haystack, (list, tuple)):
         haystack = [x.lower() for x in haystack]
-    return search(needle, haystack, 0)
+    return find(needle, haystack, 0)
 
 def has_common_items(list1: str, list2: str) -> bool:
     """Returns true if at least one item for list1 is also in list2."""

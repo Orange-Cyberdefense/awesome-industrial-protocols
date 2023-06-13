@@ -10,7 +10,7 @@ from urllib.error import URLError, HTTPError
 from socket import timeout as socket_timeout
 from re import match as re_match
 # Internal
-from . import MongoDB, DBException, search
+from . import MongoDB, DBException, find
 from config import mongodb, links as l
 
 #-----------------------------------------------------------------------------#
@@ -161,10 +161,10 @@ class Links(object):
         """Get a link object by its URL."""
         match = []
         for link in self.all_as_objects:
-            if len(search(Link.to_url(url), link.url, threshold=0)):
+            if len(find(Link.to_url(url), link.url, threshold=0)):
                 match.append(link)
             # We also search by name
-            elif len(search(url, link.name, threshold=0)):
+            elif len(find(url, link.name, threshold=0)):
                 match.append(link)
         if len(match) == 1:
             return match[0]
