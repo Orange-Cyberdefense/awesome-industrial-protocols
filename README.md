@@ -18,6 +18,7 @@ the research and test process on industrial protocols.
 - [BACnet/IP](#bacnetip)
 - [CAN](#can)
 - [CODESYS](#codesys)
+- [DICOM](#dicom)
 - [DNP3](#dnp3)
 - [Ethernet/IP](#ethernetip)
 - [IEC-60870-5-104](#iec608705104)
@@ -43,7 +44,10 @@ the research and test process on industrial protocols.
 | Specifications | [BACnet/IP Specification](https://bacnet.org/buy/) |
 | Nmap script(s) | [bacnet-info](https://nmap.org/nsedoc/scripts/bacnet-info.html) |
 | Wireshark dissector | [packet-bacnet.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-bacnet.c) |
-
+### Articles
+- [BACnet CVE-2019-12480](https://1modm.github.io/CVE-2019-12480.html) - On M's blog (2019)
+### Tools
+- [BACnet Stack](https://github.com/bacnet-stack/bacnet-stack) - BACnet open source protocol stack
 
 
 ## CAN
@@ -69,6 +73,22 @@ the research and test process on industrial protocols.
 | Access | Paid |
 | Specifications | [CODESYS Specification](https://webstore.iec.ch/publication/4552) |
 
+
+
+## DICOM
+| Protocol | DICOM |
+|---|---|
+| Name | DICOM |
+| Alias | DCM |
+| Description | Communication and management of medical imaging information |
+| Keywords | Radiography, Medical |
+| Port | 104/tcp |
+| Access | Free |
+| Specifications | [DICOM Standard](https://www.dicomstandard.org/current/) |
+| Nmap script(s) | [dicom-ping](https://nmap.org/nsedoc/scripts/dicom-ping.html) |
+| Wireshark dissector | [packet-dcm.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-dcm.c) |
+### Tools
+- [pydicom](https://github.com/pydicom/pydicom) - Python package to read, modify and write DICOM files
 
 
 ## DNP3
@@ -172,6 +192,7 @@ the research and test process on industrial protocols.
 - [KNX Virtual](https://www.knx.org/knx-en/for-professionals/get-started/knx-virtual/index.php) - Windows-based application simulating a KNX installation
 - [knxd](https://github.com/knxd/knxd) - KNXd service
 - [KNXmap](https://github.com/takeshixx/knxmap) - KNXnet/IP scanning and auditing tool
+- [XKNX](https://github.com/XKNX/xknx) - A KNX library written in Python
 
 
 ## Modbus
@@ -183,6 +204,7 @@ the research and test process on industrial protocols.
 | Specifications | [Modbus TCP Specification](https://modbus.org/specs.php) |
 | Nmap script(s) | [modbus-discover](https://nmap.org/nsedoc/scripts/modbus-discover.html) |
 | Wireshark dissector | [packet-mbtcp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-mbtcp.c) |
+| Scapy layer | [modbus.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/modbus.py) |
 ### Tools
 - [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
 
@@ -207,7 +229,8 @@ the research and test process on industrial protocols.
 | Alias | OPCUA |
 | Port | 4840/tcp, 4840/udp, 4843/tcp (TLS)  |
 | Wireshark dissector | [OPC-UA Plugin](https://github.com/wireshark/wireshark/tree/master/plugins/epan/opcua) |
-
+### Tools
+- [python-opcua](https://github.com/FreeOpcUa/python-opcua) - OPC UA Client and Server in Python
 
 
 ## S7comm
@@ -219,13 +242,24 @@ the research and test process on industrial protocols.
 | Nmap script(s) | [s7-info](https://nmap.org/nsedoc/scripts/s7-info.html) |
 | Wireshark dissector | [packet-s7comm.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-s7comm.c) |
 | Example Pcap(s) | [ICS-pcap S7](https://github.com/automayt/ICS-pcap/tree/master/S7) |
-
+### Articles
+- [The Siemens S7 Communication - Part 1 General Structure](http://gmiru.com/article/s7comm/) - On GyM's Personal Blog (2016)
+- [The Siemens S7 Communication - Part 2 Job Requests and Ack Data](http://gmiru.com/article/s7comm-part2/) - On GyM's Personal Blog (2017)
+### Tools
+- [s7scan](https://github.com/klsecservices/s7scan) - Scan networks to gather basic information about Siemens PLCs
 
 
 ## UMAS
 | Protocol | UMAS |
 |---|---|
 | Name | UMAS |
+### Articles
+- [The secrets of Schneider Electric’s UMAS protocol](https://ics-cert.kaspersky.com/publications/reports/2022/09/29/the-secrets-of-schneider-electrics-umas-protocol/) - Kaspersky ICS CERT (2022)
+- [The Unity (UMAS) protocol (Part I)](http://lirasenlared.blogspot.com/2017/08/the-unity-umas-protocol-part-i.html) - Liras en la red (2017)
+- [The Unity (UMAS) protocol (Part II)](http://lirasenlared.blogspot.com/2017/08/the-unity-umas-protocol-part-ii.html) - Liras en la red (2017)
+- [The Unity (UMAS) protocol (Part III)](http://lirasenlared.blogspot.com/2017/08/the-unity-umas-protocol-part-iii.html) - Liras en la red (2017)
+- [The Unity (UMAS) protocol (Part IV)](http://lirasenlared.blogspot.com/2017/08/the-unity-umas-protocol-part-iv.html) - Liras en la red (2017)
+- [The Unity (UMAS) protocol (Part V)](http://lirasenlared.blogspot.com/2017/09/the-unity-umas-protocol-part-v.html) - Liras en la red (2017)
 ### Tools
 - [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
 

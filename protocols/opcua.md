@@ -16,6 +16,7 @@
 | Example Pcap(s) |  |
 | Related CVE |  |
 
-
+## Tools
+- [python-opcua](https://github.com/FreeOpcUa/python-opcua) - OPC UA Client and Server in Python
 
 > All AI-generated data is marked with `*`.

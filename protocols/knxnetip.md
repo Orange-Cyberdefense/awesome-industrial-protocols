@@ -27,5 +27,6 @@
 - [KNX Virtual](https://www.knx.org/knx-en/for-professionals/get-started/knx-virtual/index.php) - Windows-based application simulating a KNX installation
 - [knxd](https://github.com/knxd/knxd) - KNXd service
 - [KNXmap](https://github.com/takeshixx/knxmap) - KNXnet/IP scanning and auditing tool
+- [XKNX](https://github.com/XKNX/xknx) - A KNX library written in Python
 
 > All AI-generated data is marked with `*`.

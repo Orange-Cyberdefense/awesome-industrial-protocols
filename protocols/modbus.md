@@ -12,7 +12,7 @@
 | Security features |  |
 | Nmap script(s) | [modbus-discover](https://nmap.org/nsedoc/scripts/modbus-discover.html) |
 | Wireshark dissector | [packet-mbtcp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-mbtcp.c) |
-| Scapy layer |  |
+| Scapy layer | [modbus.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/modbus.py) |
 | Example Pcap(s) |  |
 | Related CVE |  |
 

@@ -57,3 +57,21 @@
 {"_id":{"$oid":"64871fc09674e8a1f45ed01a"},"name":"Malmod","url":"https://github.com/mliras/malmod","description":"Scripts to attack Modicon M340 via UMAS","type":"tool"}
 {"_id":{"$oid":"648721434d5530977765c143"},"name":"fox-info","url":"https://nmap.org/nsedoc/scripts/fox-info.html","description":"Nmap discovery script for Niagara Fox","type":"tool"}
 {"_id":{"$oid":"648721a40dee780bd3161b7d"},"name":"foxdissector","url":"https://github.com/MartinoTommasini/foxdissector","description":"Wireshark dissector for the Niagara Fox protocol in Lua","type":"tool"}
+{"_id":{"$oid":"64881795d8607c0b3f1d518a"},"name":"packet-dcm.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-dcm.c","description":"Wireshark dissector for DICOM","type":"tool"}
+{"_id":{"$oid":"648817b594ceade75f8782ea"},"name":"pydicom","url":"https://github.com/pydicom/pydicom","description":"Python package to read, modify and write DICOM files","type":"tool"}
+{"_id":{"$oid":"648818534bb9d802385215b1"},"name":"dicom-ping","url":"https://nmap.org/nsedoc/scripts/dicom-ping.html","description":"Nmap discovery script for DICOM","type":"tool"}
+{"_id":{"$oid":"6488256fecd3a3ed0d3b9dab"},"name":"DICOM Standard","url":"https://www.dicomstandard.org/current/","description":"Page to download the specifications (free)","type":"other"}
+{"_id":{"$oid":"64888217638fda360ec7f366"},"name":"modbus.py","url":"https://github.com/secdev/scapy/blob/master/scapy/contrib/modbus.py","description":"Scapy layer for Modbus","type":"tool"}
+{"_id":{"$oid":"648888715584b32571a3155c"},"name":"python-opcua","url":"https://github.com/FreeOpcUa/python-opcua","description":"OPC UA Client and Server in Python","type":"tool"}
+{"_id":{"$oid":"6488892c18088040310d1aaa"},"name":"XKNX","url":"https://github.com/XKNX/xknx","description":"A KNX library written in Python","type":"tool"}
+{"_id":{"$oid":"6488897d473de59a97492b74"},"name":"BACnet Stack","url":"https://github.com/bacnet-stack/bacnet-stack","description":"BACnet open source protocol stack","type":"tool"}
+{"_id":{"$oid":"64888a2ea321a5ef13784858"},"name":"s7scan","url":"https://github.com/klsecservices/s7scan","description":"Scan networks to gather basic information about Siemens PLCs","type":"tool"}
+{"_id":{"$oid":"64888ba83423bc6d9ffcefa1"},"name":"The Siemens S7 Communication - Part 1 General Structure","url":"http://gmiru.com/article/s7comm/","description":"On GyM's Personal Blog (2016)","type":"article"}
+{"_id":{"$oid":"64888c10dbc8e12b130ca4db"},"name":"The Siemens S7 Communication - Part 2 Job Requests and Ack Data","url":"http://gmiru.com/article/s7comm-part2/","description":"On GyM's Personal Blog (2017)","type":"article"}
+{"_id":{"$oid":"64888c68504b0d40506c4fe6"},"name":"The secrets of Schneider Electric’s UMAS protocol","url":"https://ics-cert.kaspersky.com/publications/reports/2022/09/29/the-secrets-of-schneider-electrics-umas-protocol/","description":"Kaspersky ICS CERT (2022)","type":"article"}
+{"_id":{"$oid":"64888d47eff64b4e85a3c09b"},"name":"BACnet CVE-2019-12480","url":"https://1modm.github.io/CVE-2019-12480.html","description":"On M's blog (2019)","type":"article"}
+{"_id":{"$oid":"64888e5ed5122abda6106e5d"},"name":"The Unity (UMAS) protocol (Part I)","url":"http://lirasenlared.blogspot.com/2017/08/the-unity-umas-protocol-part-i.html","description":"Liras en la red (2017)","type":"article"}
+{"_id":{"$oid":"64888ea2304e2e1474b26f82"},"name":"The Unity (UMAS) protocol (Part II)","url":"http://lirasenlared.blogspot.com/2017/08/the-unity-umas-protocol-part-ii.html","description":"Liras en la red (2017)","type":"article"}
+{"_id":{"$oid":"64888ec75036fa20222208d1"},"name":"The Unity (UMAS) protocol (Part III)","url":"http://lirasenlared.blogspot.com/2017/08/the-unity-umas-protocol-part-iii.html","description":"Liras en la red (2017)","type":"article"}
+{"_id":{"$oid":"64888eee85e4230d5af43d5c"},"name":"The Unity (UMAS) protocol (Part IV)","url":"http://lirasenlared.blogspot.com/2017/08/the-unity-umas-protocol-part-iv.html","description":"Liras en la red (2017)","type":"article"}
+{"_id":{"$oid":"64888f0267c2d6197a4cb9ed"},"name":"The Unity (UMAS) protocol (Part V)","url":"http://lirasenlared.blogspot.com/2017/09/the-unity-umas-protocol-part-v.html","description":"Liras en la red (2017)","type":"article"}
