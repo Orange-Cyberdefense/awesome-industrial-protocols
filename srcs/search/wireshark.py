@@ -14,6 +14,7 @@ from base64 import b64decode
 # Internal
 from config import wireshark as w
 from db import search, has_common_items, Protocol
+from . import SearchException
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -27,9 +28,6 @@ ERR_DLCODE = "Dissector's code could not be retrieved ({0})."
 #-----------------------------------------------------------------------------#
 # Wireshark class                                                             #
 #-----------------------------------------------------------------------------#
-
-class WSException(Exception):
-    pass
 
 class Dissector(object):
     """Object representing data about a dissector."""
@@ -47,7 +45,7 @@ class Dissector(object):
         """Retrieve the dissector's complete code from GitHub API."""
         dissector = Wireshark.get_api_json(self.api_url)
         if "content" not in dissector.keys():
-            raise WSException(ERR_DLCODE.format(self.name))
+            raise SearchException(ERR_DLCODE.format(self.name))
         content = b64decode(dissector["content"]).decode('utf-8')
         return content
     
@@ -89,16 +87,16 @@ class Wireshark(object):
             json = loads(api.content)
             return json
         except ConnectionError:
-            raise WSException(ERR_APICONN) from None
+            raise SearchException(ERR_APICONN) from None
         except JSONDecodeError:
-            raise WSException(ERR_APIJSON) from None
+            raise SearchException(ERR_APIJSON) from None
         return None
 
     def get_dissector(self, protocol: Protocol):
         """Get the dissector corresponding to the protocol."""
         dissectors = self.__get_dissectors_tree()
         if "tree" not in dissectors.keys():
-            raise WSException(ERR_BADTREE)
+            raise SearchException(ERR_BADTREE)
         results = []
         for entry in dissectors["tree"]:
             if isinstance(entry, dict) and "path" in entry.keys():
@@ -128,7 +126,7 @@ class Wireshark(object):
         dissectors_sha = self.__search_in_dictlist("name", w.dissectors_folder,
                                                    "sha", epan_tree)
         if not dissectors_sha:
-            raise WSException("Dissector's SHA could not be retrieved.")
+            raise SearchException("Dissector's SHA could not be retrieved.")
         # Get the tree corresponding to the SHA
         return self.get_api_json(join(w.api_trees, dissectors_sha))
         

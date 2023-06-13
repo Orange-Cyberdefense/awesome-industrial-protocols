@@ -64,7 +64,7 @@ class Protocol(object):
         """Update existing field in protocol."""
         field, oldvalue = self.get(field)
         # Different behavior if linklist
-        if p.TYPE(field) == types.LINKLIST:
+        if p.TYPE(field) in (types.LINKLIST, types.LIST):
             if not replace and oldvalue: # We append
                 oldvalue = [oldvalue] if not isinstance(oldvalue, list) else oldvalue
                 if value not in oldvalue:

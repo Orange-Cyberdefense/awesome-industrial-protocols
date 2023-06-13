@@ -15,7 +15,7 @@ from config import TOOL_DESCRIPTION, AI_WARNING, protocols as p
 from config import links, types, mongodb, wireshark
 from db import MongoDB, DBException, Protocols, Protocol, Links, Link
 from out import Markdown, MDException
-from auto import AI, AIException, Wireshark, WSException
+from search import SearchException, AI, Wireshark
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -345,7 +345,7 @@ class CLI(object):
     def __cmd_search_openai(self, protocol) -> None:
         """-S openai / --search openai"""
         try:
-            from auto import AI
+            from search import AI
         except ImportError:
             ERROR(ERR_OPENAI, will_exit=True)
         print(AI_WARNING)
@@ -359,7 +359,7 @@ class CLI(object):
             protocol = self.protocols.get(protocol)
             for q, a in ai.protocol_generator(protocol.name):
                 self.__write_field(protocol, q, a, getattr(protocol, q))
-        except AIException as aie:
+        except SearchException as aie:
             ERROR(str(aie), will_exit=True)
 
     def __cmd_search_wireshark(self, protocol) -> None:
@@ -386,12 +386,19 @@ class CLI(object):
                                                description, "tool")
                     if link:
                         protocol.set(p.wireshark, link.id, replace=True)
-        except WSException as wse:
+        except SearchException as wse:
             ERROR(str(wse), will_exit=True)
 
     def __cmd_search_scapy(self, protocol) -> None:
         """-S scapy / --search scapy"""
-        raise NotImplementedError("CLI: search scapy")
+        try:
+            self.protocols.get(protocol)
+        except DBException: # Does not exist
+            self.__cmd_add(protocol)
+        try:
+            pass
+        except SearchException as wse:
+            ERROR(str(wse), will_exit=True)
     
     def __cmd_note(self) -> None:
         """-N / --note"""

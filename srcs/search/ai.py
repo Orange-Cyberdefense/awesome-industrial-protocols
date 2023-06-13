@@ -7,6 +7,7 @@ import openai
 from openai.error import AuthenticationError, RateLimitError
 # Internal
 from config import ai, protocols as p
+from . import SearchException
 
 """Generate data with OpenAI models.
 
@@ -23,14 +24,11 @@ is marked with *, please double-check it.
 #-----------------------------------------------------------------------------#
 
 ERR_AIAUTH = "Your OpenAI API key is invalid or you don't have a paid plan."
-ERR_NOPROTO = "AI does not recognize {0} as a protocol."
+ERR_NOPROTO = "AI does not recognize {0} as a protocol (message: {1})."
 
 #-----------------------------------------------------------------------------#
 # AI class                                                                    #
 #-----------------------------------------------------------------------------#
-
-class AIException(Exception):
-    pass
 
 class AI(object):
     """Handle requests to OpenAI to extract data for protocols."""
@@ -67,7 +65,7 @@ class AI(object):
         question = ai.yes_no_question.format(name, ai.is_protocol)
         response = self.request(question)
         if not response.lower().startswith("yes"):
-            raise AIException(ERR_NOPROTO.format(name))
+            raise SearchException(ERR_NOPROTO.format(name, response))
         # Questions where answer should be yes or no
         for attribute, question in q_yes_no.items():
             question = ai.yes_no_question.format(name, question)
@@ -89,9 +87,9 @@ class AI(object):
         try:
             return self.__openai_request(request)
         except AuthenticationError as ae:
-            raise AIException(ERR_AIAUTH) from None
+            raise SearchException(ERR_AIAUTH) from None
         except RateLimitError as rle:
-            raise AIException(str(rle)) from None
+            raise SearchException(str(rle)) from None
         
     def __openai_request(self, request: str) -> str:
         response = openai.Completion.create(
