@@ -12,10 +12,10 @@ from sys import stderr
 from subprocess import run as subprocess_run
 # Internal
 from config import TOOL_DESCRIPTION, AI_WARNING, protocols as p 
-from config import links, types, mongodb, wireshark
+from config import links, types, mongodb, wireshark, scapy
 from db import MongoDB, DBException, Protocols, Protocol, Links, Link
 from out import Markdown, MDException
-from search import SearchException, AI, Wireshark
+from search import SearchException, AI, Wireshark, Scapy
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -47,6 +47,7 @@ MSG_LINKS_COUNT = "[*] Total number of links: {0}"
 MSG_WRITE_ALIST = "Awesome list written to {0}."
 MSG_WRITE_PPAGE = "{0} protocol page written to {1}."
 MSG_MULTIDISSECTOR = "Multiple matching dissectors found: {0}."
+MSG_MULTILAYER = "Multiple matching layers found: {0}."
 
 MSG_CONFIRM_ADD_PROTO = "Do you want to add protocol '{0}'?"
 MSG_CONFIRM_ADD_FIELD = "Do you want to add field '{0}' to protocol '{1}'?"
@@ -58,6 +59,7 @@ MSG_CONFIRM_DELETE = "Do you really want to delete protocol '{0}'? (ALL DATA WIL
 MSG_CONFIRM_DELETE_LINK = "Do you really want to delete '{0}'?"
 MSG_CONFIRM_OVERWRITE = "File '{0}' already exists. Overwrite?"
 MSG_CONFIRM_ADDDISSECTOR = "Do you want to set dissector {0} for protocol {1}?"
+MSG_CONFIRM_ADDLAYER = "Do you want to set layer {0} for protocol {1}?"
 
 ERR_ACTION = "No action is defined. Choose between {0} (-h for help)."
 ERR_WRITE = "Write requires data (-d) OR link (-l) (-h for help)."
@@ -66,6 +68,7 @@ ERR_BADLINK = "Link is invalid (-h for help)."
 ERR_OPENAI = "OpenAI not found (pip install openai)."
 ERR_SEARCHMETHOD = "Search method not found. Choose between {0} (-h for help)."
 ERR_NODISSECTOR = "No dissector found for protocol {0}."
+ERR_NOLAYER = "No layer found for protocol {0}."
 
 def ERROR(msg: str, will_exit: bool=False):
     print("ERROR:", msg, file=stderr)
@@ -338,9 +341,14 @@ class CLI(object):
             "scapy": self.__cmd_search_scapy
         }
         method, protocol = self.options.search
-        if method.lower() not in methods.keys():
+        if method.lower() == "all":
+            for method in methods:
+                if method != "openai":
+                    methods[method.lower()](protocol)                    
+        elif method.lower() not in methods.keys():
             ERROR(ERR_SEARCHMETHOD.format(", ".join(methods.keys())), will_exit=True)
-        methods[method.lower()](protocol)
+        else:
+            methods[method.lower()](protocol)
 
     def __cmd_search_openai(self, protocol) -> None:
         """-S openai / --search openai"""
@@ -359,8 +367,8 @@ class CLI(object):
             protocol = self.protocols.get(protocol)
             for q, a in ai.protocol_generator(protocol.name):
                 self.__write_field(protocol, q, a, getattr(protocol, q))
-        except SearchException as aie:
-            ERROR(str(aie), will_exit=True)
+        except (DBException, SearchException) as exc:
+            ERROR(str(exc), will_exit=True)
 
     def __cmd_search_wireshark(self, protocol) -> None:
         """-S wireshark / --search wireshark"""
@@ -369,9 +377,8 @@ class CLI(object):
         except DBException: # Does not exist
             self.__cmd_add(protocol)
         try:
-            ws = Wireshark()
             protocol = self.protocols.get(protocol)
-            candidates = ws.get_dissector(protocol)
+            candidates = Wireshark().get_dissector(protocol)
             if len(candidates) < 1:
                 ERROR(ERR_NODISSECTOR.format(protocol.name))
             elif len(candidates) > 1:
@@ -386,8 +393,8 @@ class CLI(object):
                                                description, "tool")
                     if link:
                         protocol.set(p.wireshark, link.id, replace=True)
-        except SearchException as wse:
-            ERROR(str(wse), will_exit=True)
+        except (DBException, SearchException) as exc:
+            ERROR(str(exc), will_exit=True)
 
     def __cmd_search_scapy(self, protocol) -> None:
         """-S scapy / --search scapy"""
@@ -396,9 +403,25 @@ class CLI(object):
         except DBException: # Does not exist
             self.__cmd_add(protocol)
         try:
-            pass
-        except SearchException as wse:
-            ERROR(str(wse), will_exit=True)
+            protocol = self.protocols.get(protocol)
+            candidates = Scapy().get_layer(protocol)
+            if len(candidates) < 1:
+                ERROR(ERR_NOLAYER.format(protocol.name))
+            elif len(candidates) > 1:
+                d = ", ".join([x.name for x in candidates])
+                print(MSG_MULTILAYER.format(d))
+            else:
+                layer = candidates[0]
+                if self.__confirm(MSG_CONFIRM_ADDLAYER.format(layer.name,
+                                                              protocol.name),
+                                  self.options.force):
+                    description = scapy.layer_desc.format(protocol.name)
+                    link = self.__cmd_add_link(layer.name, layer.url,
+                                               description, "tool")
+                    if link:
+                        protocol.set(p.scapy, link.id, replace=True)
+        except (DBException, SearchException) as exc:
+            ERROR(str(exc), will_exit=True)
     
     def __cmd_note(self) -> None:
         """-N / --note"""

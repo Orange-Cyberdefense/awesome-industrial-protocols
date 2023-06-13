@@ -4,8 +4,7 @@
 
 """File for automated data search for protocols."""
 
-class SearchException(Exception):
-    pass
-
+from .search import *
 from .ai import *
 from .wireshark import *
+from .scapy import *

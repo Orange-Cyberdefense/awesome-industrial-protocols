@@ -4,29 +4,21 @@
 
 """Search for data in Wireshark dissectors."""
 
-from requests import get
-from requests.exceptions import ConnectionError
-from json import loads
-from json.decoder import JSONDecodeError
 from re import search as re_search
 from os.path import join
-from base64 import b64decode
 # Internal
 from config import wireshark as w
 from db import search, has_common_items, Protocol
-from . import SearchException
+from . import SearchException, get_api_json, search_json, get_code_from_github
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
 #-----------------------------------------------------------------------------#
 
-ERR_APICONN = "API is not reachable."
-ERR_APIJSON = "Could not extract JSON."
 ERR_BADTREE = "Invalid GitHub tree format."
-ERR_DLCODE = "Dissector's code could not be retrieved ({0})."
 
 #-----------------------------------------------------------------------------#
-# Wireshark class                                                             #
+# Wireshark classes                                                           #
 #-----------------------------------------------------------------------------#
 
 class Dissector(object):
@@ -35,23 +27,12 @@ class Dissector(object):
 
     def __init__(self, raw: dict):
         self.raw = raw
+        self.name = raw["path"]
         self.api_url = raw["url"]
-        self.code = self.__dl_code()
+        self.code = get_code_from_github(self.api_url)
 
     def __str__(self):
         return "Dissector {0}: {1}".format(self.name, self.url)
-
-    def __dl_code(self):
-        """Retrieve the dissector's complete code from GitHub API."""
-        dissector = Wireshark.get_api_json(self.api_url)
-        if "content" not in dissector.keys():
-            raise SearchException(ERR_DLCODE.format(self.name))
-        content = b64decode(dissector["content"]).decode('utf-8')
-        return content
-    
-    @property
-    def name(self):
-        return self.raw["path"]
 
     @property
     def url(self):
@@ -78,19 +59,6 @@ class Wireshark(object):
     
     def __init__(self):
         pass
-
-    @staticmethod
-    def get_api_json(url: str) -> list:
-        """Get data from API and return it as a parsed JSON list."""
-        try:
-            api = get(url)
-            json = loads(api.content)
-            return json
-        except ConnectionError:
-            raise SearchException(ERR_APICONN) from None
-        except JSONDecodeError:
-            raise SearchException(ERR_APIJSON) from None
-        return None
 
     def get_dissector(self, protocol: Protocol):
         """Get the dissector corresponding to the protocol."""
@@ -122,25 +90,10 @@ class Wireshark(object):
         - We call the Trees API using this SHA.
         """
         # Get the SHA of the dissectors folder
-        epan_tree = self.get_api_json(w.api_epan_folder)
-        dissectors_sha = self.__search_in_dictlist("name", w.dissectors_folder,
-                                                   "sha", epan_tree)
-        if not dissectors_sha:
-            raise SearchException("Dissector's SHA could not be retrieved.")
+        epan_tree = get_api_json(w.api_epan_folder)
+        dissectors_tree = search_json("name", w.dissectors_folder, "git_url",
+                                      epan_tree)
+        if not dissectors_tree:
+            raise SearchException("Dissector's tree could not be retrieved.")
         # Get the tree corresponding to the SHA
-        return self.get_api_json(join(w.api_trees, dissectors_sha))
-        
-    def __search_in_dictlist(self, searchkey: str, searchvalue: str,
-                            requestedkey: str, listdict: list) -> object:
-        """In a list of dictionaries, the return the value of
-        listdict["requestedkey"] where listdict["searchkey"] == searchvalue.
-        """
-        for entry in listdict:
-            if not isinstance(entry, dict):
-                continue
-            if searchkey not in entry.keys() or requestedkey not in entry.keys():
-                continue
-            if entry[searchkey] == searchvalue:
-                return entry[requestedkey]
-        return None
-
+        return get_api_json(dissectors_tree)
