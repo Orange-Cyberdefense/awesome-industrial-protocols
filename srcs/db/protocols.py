@@ -159,8 +159,10 @@ class Protocols(object):
         :raises DBException: If the protocol does not exist.
         """
         def all_names(protocol:dict):
-            alias = protocol[p.alias] if isinstance(protocol[p.alias], list) \
-                    else [protocol[p.alias]]
+            alias = []
+            if p.alias in protocol.keys():
+                alias = protocol[p.alias] if isinstance(protocol[p.alias], list) \
+                        else [protocol[p.alias]]
             return [protocol[p.name]] + alias
         
         match = []

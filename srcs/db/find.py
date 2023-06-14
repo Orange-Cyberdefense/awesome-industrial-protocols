@@ -67,6 +67,6 @@ def has_common_items(list1: str, list2: str) -> bool:
     if not list1 or not list2:
         return False
     for item in list1:
-        if len(exact_search(item, list2)):
+        if len(exact_find(item, list2)):
             return True
     return False
