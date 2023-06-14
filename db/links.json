@@ -25,7 +25,7 @@
 {"_id":{"$oid":"6479ed931a0ac0a210ed656c"},"name":"ISO-11898","url":"https://www.iso.org/standard/63648.html","description":"CAN specifications","type":"documentation"}
 {"_id":{"$oid":"6479ee5819124a286a979e4e"},"name":"packet-canopen.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-canopen.c","description":"Wireshark dissector for CANopen","type":"tool"}
 {"_id":{"$oid":"6479ef0517fe85758ea0ea34"},"name":"can.py","url":"https://github.com/secdev/scapy/blob/master/scapy/layers/can.py","description":"Scapy layer for CANopen","type":"tool"}
-{"_id":{"$oid":"6479f60f00f9b19bed986be8"},"name":"ICS-pcap Ethernet/IP","url":"https://github.com/automayt/ICS-pcap/tree/master/ETHERNET_IP","description":"PCAP sample for Ethernet/IP on ICS-pcap","type":"tool"}
+{"_id":{"$oid":"6479f60f00f9b19bed986be8"},"name":"ICS-pcap Ethernet/IP","url":"https://github.com/automayt/ICS-pcap/tree/master/ETHERNET_IP","description":"PCAP sample for Ethernet/IP","type":"tool"}
 {"_id":{"$oid":"6479f68131a8105941fd13b9"},"name":"ICS-pcap IEC-60870-5-104","url":"https://github.com/automayt/ICS-pcap/tree/master/IEC%2060870","description":"PCAP sample for IEC-60870-5-104 on ICS-pcap","type":"tool"}
 {"_id":{"$oid":"6479f71921ba7bac394fbe35"},"name":"packet-iec104.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-iec104.c","description":"Wireshark dissector for IEC-60870-5-104","type":"tool"}
 {"_id":{"$oid":"6479f8aa6c1947f724e0c8dd"},"name":"Description and analysis of IEC 104 Protocol","url":"https://www.fit.vut.cz/research/publication/11570/.en","description":"Technical report by Petr Matousek @ Faculty of Information Techology, Czech Republic (2017)","type":"paper"}
@@ -75,3 +75,18 @@
 {"_id":{"$oid":"64888ec75036fa20222208d1"},"name":"The Unity (UMAS) protocol (Part III)","url":"http://lirasenlared.blogspot.com/2017/08/the-unity-umas-protocol-part-iii.html","description":"Liras en la red (2017)","type":"article"}
 {"_id":{"$oid":"64888eee85e4230d5af43d5c"},"name":"The Unity (UMAS) protocol (Part IV)","url":"http://lirasenlared.blogspot.com/2017/08/the-unity-umas-protocol-part-iv.html","description":"Liras en la red (2017)","type":"article"}
 {"_id":{"$oid":"64888f0267c2d6197a4cb9ed"},"name":"The Unity (UMAS) protocol (Part V)","url":"http://lirasenlared.blogspot.com/2017/09/the-unity-umas-protocol-part-v.html","description":"Liras en la red (2017)","type":"article"}
+{"_id":{"$oid":"6489927e64491c329d1b10af"},"name":"opc_da.py","url":"https://github.com/secdev/scapy/blob/master/scapy/contrib/opc_da.py","description":"Scapy layer for OPC-DA","type":"tool"}
+{"_id":{"$oid":"6489a996c64c86ccc818bbe6"},"name":"pnio.py","url":"https://github.com/secdev/scapy/blob/master/scapy/contrib/pnio.py","description":"Scapy layer for Profinet-IO","type":"tool"}
+{"_id":{"$oid":"6489a9e389e01918016e5168"},"name":"pnio_dcp.py","url":"https://github.com/secdev/scapy/blob/master/scapy/contrib/pnio_dcp.py","description":"Scapy layer for Profinet-DCP","type":"tool"}
+{"_id":{"$oid":"6489aaf59fb7bc8d852fee07"},"name":"ethercat.py","url":"https://github.com/secdev/scapy/blob/master/scapy/contrib/ethercat.py","description":"Scapy layer for EtherCAT","type":"tool"}
+{"_id":{"$oid":"6489b4564dc437782feaf46a"},"name":"ICS-pcap EIP","url":"https://github.com/automayt/ICS-pcap/tree/master/EIP","description":"PCAP sample for Ethernet/IP","type":"tool"}
+{"_id":{"$oid":"6489bf9ff7cb9108f77a7f4c"},"name":"packet-hl7.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hl7.c","description":"Wireshark dissector for HL7","type":"tool"}
+{"_id":{"$oid":"6489c0d80c94ae38ef83c9dc"},"name":"ICS-pcap EtherCAT","url":"https://github.com/automayt/ICS-pcap/tree/master/ETHERCAT/ethercat","description":"PCAP sample for EtherCAT","type":"tool"}
+{"_id":{"$oid":"6489cd60b7add73991cc61af"},"name":"packet-sbus.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-sbus.c","description":"Wireshark dissector for S-Bus","type":"tool"}
+{"_id":{"$oid":"6489cdaa395f3aac3ff2a330"},"name":"ICS-pcap Ether-S-Bus","url":"https://github.com/automayt/ICS-pcap/tree/master/ETHERSBUS/sbus","description":"PCAP sample for Ether-S-Bus","type":"tool"}
+{"_id":{"$oid":"6489d25e9df738c4b18ccd28"},"name":"packet-esio.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-esio.c","description":"Wireshark dissector for Ether-S-I/O","type":"tool"}
+{"_id":{"$oid":"6489d36189de3e74f48a50f1"},"name":"ICS-pcap Ether-S-I/O","url":"https://github.com/automayt/ICS-pcap/tree/master/ETHERSIO","description":"PCAP sample for Ether-S-I/O","type":"tool"}
+{"_id":{"$oid":"6489d4c52943dec9414c1284"},"name":"packet-omron-fins.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-omron-fins.c","description":"Wireshark dissector for FINS","type":"tool"}
+{"_id":{"$oid":"6489d86d5ee97c0267abae40"},"name":"packet-hartip.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hartip.c","description":"Wireshark dissector for HART-IP","type":"tool"}
+{"_id":{"$oid":"6489d897a6dd4976edfdd2a6"},"name":"ICS-pcap HART-IP","url":"https://github.com/automayt/ICS-pcap/tree/master/HART%20IP/hart_ip","description":"PCAP sample for HART-IP","type":"tool"}
+{"_id":{"$oid":"6489dd19e58c984a637dd783"},"name":"ICS-pcap Modbus","url":"https://github.com/automayt/ICS-pcap/tree/master/MODBUS","description":"PCAP sample for Modbus TCP","type":"tool"}

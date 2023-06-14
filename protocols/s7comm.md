@@ -4,7 +4,7 @@
 |---|---|
 | Name | S7comm |
 | Aliases | S7 |
-| Description |  |
+| Description | Communication protocol for Siemens S7 PLCs |
 | Keywords |  |
 | Port(s) | 102/tcp |
 | Access to specs |  |

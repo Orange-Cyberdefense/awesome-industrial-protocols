@@ -6,7 +6,7 @@
 | Aliases | OPCUA |
 | Description |  |
 | Keywords |  |
-| Port(s) | 4840/tcp, 4840/udp, 4843/tcp (TLS)  |
+| Port(s) | 4840/tcp, 4840/udp, 4843/tcp (TLS) |
 | Access to specs |  |
 | Specifications |  |
 | Security features |  |

@@ -20,13 +20,23 @@ the research and test process on industrial protocols.
 - [CODESYS](#codesys)
 - [DICOM](#dicom)
 - [DNP3](#dnp3)
+- [Ether-S-I/O](#ethersio)
+- [EtherCAT](#ethercat)
 - [Ethernet/IP](#ethernetip)
+- [FINS](#fins)
+- [GE-SRTP](#gesrtp)
+- [HART-IP](#hartip)
+- [HL7](#hl7)
 - [IEC-60870-5-104](#iec608705104)
 - [IEC-61850](#iec61850)
 - [KNXnet/IP](#knxnetip)
 - [Modbus](#modbus)
 - [Niagara Fox](#niagarafox)
+- [OPC-DA](#opcda)
 - [OPC-UA](#opcua)
+- [Profinet-DCP](#profinetdcp)
+- [Profinet-IO](#profinetio)
+- [S-Bus](#sbus)
 - [S7comm](#s7comm)
 - [UMAS](#umas)
 
@@ -103,10 +113,34 @@ the research and test process on industrial protocols.
 | Specifications | [IEEE 1815-2012](https://standards.ieee.org/ieee/1815/5414/) |
 | Security | Optional authentication, optional encryption with TLS |
 | Wireshark dissector | [packet-dnp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-dnp.c) |
-| Example Pcap(s) | [ICS-pcap DNP3](https://github.com/automayt/ICS-pcap/tree/master/DNP3) |
+| Example Pcap(s) | [ICS-pcap Ethernet/IP](https://github.com/automayt/ICS-pcap/tree/master/ETHERNET_IP) |
 ### Tools
 - [dnp-info](https://github.com/sjhilt/Nmap-NSEs/blob/master/dnp3-info.nse) - Nmap discovery script for DNP3
 - [FreyrSCADA DNP3](https://github.com/FreyrSCADA/DNP3) - DNP3 Protocol - Outstation Server and Client Master Simulator
+
+
+## Ether-S-I/O
+| Protocol | Ether-S-I/O |
+|---|---|
+| Name | Ether-S-I/O |
+| Alias | EtherSIO, ESIO |
+| Description | Proprietary protocol for Saia PCD controller I/O communication |
+| Keywords | SAIA |
+| Port | 6060/udp |
+| Wireshark dissector | [packet-esio.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-esio.c) |
+| Example Pcap(s) | [ICS-pcap Ether-S-I/O](https://github.com/automayt/ICS-pcap/tree/master/ETHERSIO) |
+
+
+
+## EtherCAT
+| Protocol | EtherCAT |
+|---|---|
+| Name | EtherCAT |
+| Alias | ECATF, ECAT |
+| Description | Real-time industrial Ethernet communication protocol for automation systems |
+| Scapy layer | [ethercat.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/ethercat.py) |
+| Example Pcap(s) | [ICS-pcap EtherCAT](https://github.com/automayt/ICS-pcap/tree/master/ETHERCAT/ethercat) |
+
 
 
 ## Ethernet/IP
@@ -122,7 +156,7 @@ the research and test process on industrial protocols.
 | Nmap script(s) | [enip-info](https://nmap.org/nsedoc/scripts/enip-info.html) |
 | Wireshark dissector | [packet-enip.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-enip.c) |
 | Scapy layer | [enipTCP.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/enipTCP.py) |
-| Example Pcap(s) | [ICS-pcap Ethernet/IP](https://github.com/automayt/ICS-pcap/tree/master/ETHERNET_IP) |
+| Example Pcap(s) | [ICS-pcap Ethernet/IP](https://github.com/automayt/ICS-pcap/tree/master/ETHERNET_IP), [ICS-pcap EIP](https://github.com/automayt/ICS-pcap/tree/master/EIP) |
 ### Articles
 - [Fuzzing and PR’ing: How We Found Bugs in a Popular Third-Party EtherNet/IP Protocol Stack](https://claroty.com/team82/research/opener-enip-stack-vulnerabilities) - Sharon Brizinov, Tal Keren (Claroty, 2021)
 ### Conferences
@@ -133,6 +167,46 @@ the research and test process on industrial protocols.
 - [OpENer](https://github.com/EIPStackGroup/OpENer) - EtherNet/IP stack for I/O adapter devices
 - [Redpoint](https://github.com/digitalbond/Redpoint) - Digital Bond's ICS enumeration tools (nmap scripts)
 - [scapy-cip-enip](https://github.com/scy-phy/scapy-cip-enip) - Ethernet/IP dissectors for Scapy
+
+
+## FINS
+| Protocol | FINS |
+|---|---|
+| Name | FINS |
+| Alias | OMRON |
+| Description | Omron's industrial communication protocol for automation systems |
+| Port | 9600/udp |
+| Wireshark dissector | [packet-omron-fins.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-omron-fins.c) |
+
+
+
+## GE-SRTP
+| Protocol | GE-SRTP |
+|---|---|
+| Name | GE-SRTP |
+| Description | General Electric's protocol for communication between GE devices and SCADA |
+| Port | 18245/tcp |
+
+
+
+## HART-IP
+| Protocol | HART-IP |
+|---|---|
+| Name | HART-IP |
+| Alias | HART |
+| Description | IP-based communication protocol for HART (ICS) data transmission |
+| Wireshark dissector | [packet-hartip.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hartip.c) |
+| Example Pcap(s) | [ICS-pcap HART-IP](https://github.com/automayt/ICS-pcap/tree/master/HART%20IP/hart_ip) |
+
+
+
+## HL7
+| Protocol | HL7 |
+|---|---|
+| Name | HL7 |
+| Description | Standard for healthcare data exchange and interoperability |
+| Wireshark dissector | [packet-hl7.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hl7.c) |
+
 
 
 ## IEC-60870-5-104
@@ -200,11 +274,13 @@ the research and test process on industrial protocols.
 |---|---|
 | Name | Modbus |
 | Alias | Modbus TCP |
+| Description | Widely used industrial communication protocol. |
 | Port | 502/tcp |
 | Specifications | [Modbus TCP Specification](https://modbus.org/specs.php) |
 | Nmap script(s) | [modbus-discover](https://nmap.org/nsedoc/scripts/modbus-discover.html) |
 | Wireshark dissector | [packet-mbtcp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-mbtcp.c) |
 | Scapy layer | [modbus.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/modbus.py) |
+| Example Pcap(s) | [ICS-pcap Modbus](https://github.com/automayt/ICS-pcap/tree/master/MODBUS) |
 ### Tools
 - [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
 
@@ -222,15 +298,57 @@ the research and test process on industrial protocols.
 - [foxdissector](https://github.com/MartinoTommasini/foxdissector) - Wireshark dissector for the Niagara Fox protocol in Lua
 
 
+## OPC-DA
+| Protocol | OPC-DA |
+|---|---|
+| Name | OPC-DA |
+| Alias | OPCDA |
+| Scapy layer | [opc_da.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/opc_da.py) |
+
+
+
 ## OPC-UA
 | Protocol | OPC-UA |
 |---|---|
 | Name | OPC-UA |
 | Alias | OPCUA |
-| Port | 4840/tcp, 4840/udp, 4843/tcp (TLS)  |
+| Port | 4840/tcp, 4840/udp, 4843/tcp (TLS) |
 | Wireshark dissector | [OPC-UA Plugin](https://github.com/wireshark/wireshark/tree/master/plugins/epan/opcua) |
 ### Tools
 - [python-opcua](https://github.com/FreeOpcUa/python-opcua) - OPC UA Client and Server in Python
+
+
+## Profinet-DCP
+| Protocol | Profinet-DCP |
+|---|---|
+| Name | Profinet-DCP |
+| Alias | PNDCP |
+| Description | Device identification, configuration, and network management protocol |
+| Scapy layer | [pnio_dcp.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/pnio_dcp.py) |
+
+
+
+## Profinet-IO
+| Protocol | Profinet-IO |
+|---|---|
+| Name | Profinet-IO |
+| Alias | PNIO |
+| Description | Real-time communication between controllers and I/O devices |
+| Scapy layer | [pnio.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/pnio.py) |
+
+
+
+## S-Bus
+| Protocol | S-Bus |
+|---|---|
+| Name | S-Bus |
+| Alias | Ether-S-Bus, SAIA S-Bus |
+| Description | SAIA's communication protocol for building automation. |
+| Keywords | SAIA |
+| Access | Free |
+| Wireshark dissector | [packet-sbus.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-sbus.c) |
+| Example Pcap(s) | [ICS-pcap Ether-S-Bus](https://github.com/automayt/ICS-pcap/tree/master/ETHERSBUS/sbus) |
+
 
 
 ## S7comm
@@ -238,6 +356,7 @@ the research and test process on industrial protocols.
 |---|---|
 | Name | S7comm |
 | Alias | S7 |
+| Description | Communication protocol for Siemens S7 PLCs |
 | Port | 102/tcp |
 | Nmap script(s) | [s7-info](https://nmap.org/nsedoc/scripts/s7-info.html) |
 | Wireshark dissector | [packet-s7comm.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-s7comm.c) |

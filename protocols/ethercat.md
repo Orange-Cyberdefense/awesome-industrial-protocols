@@ -1,0 +1,21 @@
+# EtherCAT
+
+| Protocol | EtherCAT |
+|---|---|
+| Name | EtherCAT |
+| Aliases | ECATF, ECAT |
+| Description | Real-time industrial Ethernet communication protocol for automation systems |
+| Keywords |  |
+| Port(s) |  |
+| Access to specs |  |
+| Specifications |  |
+| Security features |  |
+| Nmap script(s) |  |
+| Wireshark dissector |  |
+| Scapy layer | [ethercat.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/ethercat.py) |
+| Example Pcap(s) | [ICS-pcap EtherCAT](https://github.com/automayt/ICS-pcap/tree/master/ETHERCAT/ethercat) |
+| Related CVE |  |
+
+
+
+> All AI-generated data is marked with `*`.
