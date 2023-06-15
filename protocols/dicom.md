@@ -10,7 +10,7 @@
 | Access to specs | Free |
 | Specifications | [DICOM Standard](https://www.dicomstandard.org/current/) |
 | Security features |  |
-| Nmap script(s) | [dicom-ping](https://nmap.org/nsedoc/scripts/dicom-ping.html) |
+| Nmap script(s) | [dicom-ping.nse](https://nmap.org/nsedoc/scripts/dicom-ping.html) |
 | Wireshark dissector | [packet-dcm.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-dcm.c) |
 | Scapy layer |  |
 | Example Pcap(s) |  |

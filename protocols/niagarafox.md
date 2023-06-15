@@ -10,7 +10,7 @@
 | Access to specs |  |
 | Specifications |  |
 | Security features |  |
-| Nmap script(s) | [fox-info](https://nmap.org/nsedoc/scripts/fox-info.html) |
+| Nmap script(s) | [fox-info.nse](https://nmap.org/nsedoc/scripts/fox-info.html) |
 | Wireshark dissector |  |
 | Scapy layer |  |
 | Example Pcap(s) |  |

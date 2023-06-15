@@ -4,7 +4,7 @@
 |---|---|
 | Name | S-Bus |
 | Aliases | Ether-S-Bus, SAIA S-Bus |
-| Description | SAIA's communication protocol for building automation. |
+| Description | SAIA's communication protocol for building automation |
 | Keywords | SAIA |
 | Port(s) |  |
 | Access to specs | Free |

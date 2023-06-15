@@ -6,7 +6,7 @@
 | Aliases | PNDCP |
 | Description | Device identification, configuration, and network management protocol |
 | Keywords |  |
-| Port(s) |  |
+| Port(s) | Ethernet |
 | Access to specs |  |
 | Specifications |  |
 | Security features |  |

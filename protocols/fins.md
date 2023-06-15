@@ -10,7 +10,7 @@
 | Access to specs |  |
 | Specifications |  |
 | Security features |  |
-| Nmap script(s) |  |
+| Nmap script(s) | [omrontcp-info.nse](https://github.com/digitalbond/Redpoint/blob/master/omrontcp-info.nse), [omronudp-info.nse](https://github.com/digitalbond/Redpoint/blob/master/omronudp-info.nse) |
 | Wireshark dissector | [packet-omron-fins.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-omron-fins.c) |
 | Scapy layer |  |
 | Example Pcap(s) |  |

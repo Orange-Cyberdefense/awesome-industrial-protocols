@@ -4,13 +4,13 @@
 |---|---|
 | Name | UMAS |
 | Aliases |  |
-| Description |  |
+| Description | Schneider Electric's proprietary protocol for communication systems |
 | Keywords |  |
 | Port(s) |  |
 | Access to specs |  |
 | Specifications |  |
 | Security features |  |
-| Nmap script(s) |  |
+| Nmap script(s) | [modicon-info.nse](https://github.com/digitalbond/Redpoint/blob/master/modicon-info.nse) |
 | Wireshark dissector |  |
 | Scapy layer |  |
 | Example Pcap(s) |  |

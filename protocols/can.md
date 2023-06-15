@@ -4,7 +4,7 @@
 |---|---|
 | Name | CAN |
 | Aliases | CANbus, CANopen |
-| Description | Communication protocol enabling data exchange between electronic components in vehicles. |
+| Description | Communication protocol enabling data exchange between electronic components in vehicles |
 | Keywords | CANbus |
 | Port(s) |  |
 | Access to specs |  |

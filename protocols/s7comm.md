@@ -10,7 +10,7 @@
 | Access to specs |  |
 | Specifications |  |
 | Security features |  |
-| Nmap script(s) | [s7-info](https://nmap.org/nsedoc/scripts/s7-info.html) |
+| Nmap script(s) | [s7-info.nse](https://nmap.org/nsedoc/scripts/s7-info.html), [s7-enumerate.nse](https://github.com/digitalbond/Redpoint/blob/master/s7-enumerate.nse) |
 | Wireshark dissector | [packet-s7comm.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-s7comm.c) |
 | Scapy layer |  |
 | Example Pcap(s) | [ICS-pcap S7](https://github.com/automayt/ICS-pcap/tree/master/S7) |

@@ -4,16 +4,16 @@
 |---|---|
 | Name | DNP3 |
 | Aliases | Distributed Network Protocol |
-| Description | Industrial communication protocol for remote monitoring and control of automation systems. |
+| Description | Industrial communication protocol for remote monitoring and control of automation systems |
 | Keywords | Power grid, Water |
 | Port(s) | 20000/tcp, 20000/udp |
 | Access to specs | Paid |
 | Specifications | [IEEE 1815-2012](https://standards.ieee.org/ieee/1815/5414/) |
 | Security features | Optional authentication, optional encryption with TLS |
-| Nmap script(s) |  |
+| Nmap script(s) | [dnp3-info.nse](https://github.com/digitalbond/Redpoint/blob/master/dnp3-info.nse) |
 | Wireshark dissector | [packet-dnp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-dnp.c) |
 | Scapy layer |  |
-| Example Pcap(s) | [ICS-pcap Ethernet/IP](https://github.com/automayt/ICS-pcap/tree/master/ETHERNET_IP) |
+| Example Pcap(s) | [ICS-pcap DNP3](https://github.com/automayt/ICS-pcap/tree/master/DNP3) |
 | Related CVE |  |
 
 ## Tools
