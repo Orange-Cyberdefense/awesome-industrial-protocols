@@ -78,6 +78,7 @@ class Protocol(object):
         document = {"name": self.name}
         newvalue = {field: value}
         self.__db.protocols.update_one(document, {"$set": newvalue})
+        setattr(self, field, value)
         self.__check()
 
     def add(self, field:str, value) -> None:
@@ -114,7 +115,7 @@ class Protocol(object):
         """Return all names, including aliases."""
         alias = self.alias if isinstance(self.alias, list) \
             else [self.alias]
-        return [self.name] + alias
+        return [x for x in [self.name] + alias if x != ""]
 
     @property
     def fields(self) -> list:

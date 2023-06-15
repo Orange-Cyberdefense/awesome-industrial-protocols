@@ -8,3 +8,4 @@ from .search import *
 from .ai import *
 from .wireshark import *
 from .scapy import *
+from .cve import *

@@ -15,7 +15,7 @@ from config import TOOL_DESCRIPTION, AI_WARNING, protocols as p
 from config import links, types, mongodb, wireshark, scapy
 from db import MongoDB, DBException, Protocols, Protocol, Links, Link
 from out import Markdown, MDException
-from search import SearchException, AI, Wireshark, Scapy
+from search import SearchException, AI, Wireshark, Scapy, CVEList
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -48,6 +48,7 @@ MSG_WRITE_ALIST = "Awesome list written to {0}."
 MSG_WRITE_PPAGE = "{0} protocol page written to {1}."
 MSG_MULTIDISSECTOR = "Multiple matching dissectors found: {0}."
 MSG_MULTILAYER = "Multiple matching layers found: {0}."
+MSG_CVE_WAIT = "Searching for CVEs in NIST's database (it may take some time)."
 
 MSG_CONFIRM_ADD_PROTO = "Do you want to add protocol '{0}'?"
 MSG_CONFIRM_ADD_FIELD = "Do you want to add field '{0}' to protocol '{1}'?"
@@ -60,6 +61,7 @@ MSG_CONFIRM_DELETE_LINK = "Do you really want to delete '{0}'?"
 MSG_CONFIRM_OVERWRITE = "File '{0}' already exists. Overwrite?"
 MSG_CONFIRM_ADDDISSECTOR = "Do you want to set dissector {0} for protocol {1}?"
 MSG_CONFIRM_ADDLAYER = "Do you want to set layer {0} for protocol {1}?"
+MSG_CONFIRM_ADDCVE = "Do you want to add {0} to protocol {1}?"
 
 ERR_ACTION = "No action is defined. Choose between {0} (-h for help)."
 ERR_WRITE = "Write requires data (-d) OR link (-l) (-h for help)."
@@ -210,15 +212,7 @@ class CLI(object):
         """-W / --write"""
         protocol, field, value = self.options.write
         # Does protocol exist?
-        try:
-            protocol = self.protocols.get(protocol)
-        except DBException as dbe:
-            ERROR(str(dbe), will_exit=False)
-            # Protocol does not exist but can be added
-            if self.__cmd_add(protocol):
-                self.__cmd_write() # We call the function again 8D
-            return # Protocol was not created, leaving.
-        # Now we need to know what kind of data to write
+        protocol = self.__get_protocol(protocol)
         try:
             field, oldvalue = protocol.get(field)
         except DBException as dbe: # Field does not exist
@@ -332,15 +326,17 @@ class CLI(object):
             print(issue)
         for issue in self.links.check():
             print(issue)
-
+            
     def __cmd_search(self) -> None:
         """-S / --search"""
         methods = {
             "openai": self.__cmd_search_openai,
             "wireshark": self.__cmd_search_wireshark,
-            "scapy": self.__cmd_search_scapy
+            "scapy": self.__cmd_search_scapy,
+            "cve": self.__cmd_search_cve
         }
         method, protocol = self.options.search
+        protocol = self.__get_protocol(protocol)
         if method.lower() == "all":
             for method in methods:
                 if method != "openai":
@@ -350,34 +346,23 @@ class CLI(object):
         else:
             methods[method.lower()](protocol)
 
-    def __cmd_search_openai(self, protocol) -> None:
+    def __cmd_search_openai(self, protocol: Protocol) -> None:
         """-S openai / --search openai"""
         try:
             from search import AI
         except ImportError:
             ERROR(ERR_OPENAI, will_exit=True)
         print(AI_WARNING)
-        # Check if protocol exists, if not create it.
-        try:
-            self.protocols.get(protocol)
-        except DBException: # Does not exist
-            self.__cmd_add(protocol)
         try:
             ai = AI()
-            protocol = self.protocols.get(protocol)
             for q, a in ai.protocol_generator(protocol.name):
                 self.__write_field(protocol, q, a, getattr(protocol, q))
-        except (DBException, SearchException) as exc:
-            ERROR(str(exc), will_exit=True)
+        except SearchException as se:
+            ERROR(str(se), will_exit=True)
 
-    def __cmd_search_wireshark(self, protocol) -> None:
+    def __cmd_search_wireshark(self, protocol: Protocol) -> None:
         """-S wireshark / --search wireshark"""
         try:
-            self.protocols.get(protocol)
-        except DBException: # Does not exist
-            self.__cmd_add(protocol)
-        try:
-            protocol = self.protocols.get(protocol)
             candidates = Wireshark().get_dissector(protocol)
             if len(candidates) < 1:
                 ERROR(ERR_NODISSECTOR.format(protocol.name))
@@ -393,17 +378,12 @@ class CLI(object):
                                                description, "tool")
                     if link:
                         protocol.set(p.wireshark, link.id, replace=True)
-        except (DBException, SearchException) as exc:
-            ERROR(str(exc), will_exit=True)
+        except SearchException as se:
+            ERROR(str(se), will_exit=True)
 
-    def __cmd_search_scapy(self, protocol) -> None:
+    def __cmd_search_scapy(self, protocol: Protocol) -> None:
         """-S scapy / --search scapy"""
         try:
-            self.protocols.get(protocol)
-        except DBException: # Does not exist
-            self.__cmd_add(protocol)
-        try:
-            protocol = self.protocols.get(protocol)
             candidates = Scapy().get_layer(protocol)
             if len(candidates) < 1:
                 ERROR(ERR_NOLAYER.format(protocol.name))
@@ -420,16 +400,36 @@ class CLI(object):
                                                description, "tool")
                     if link:
                         protocol.set(p.scapy, link.id, replace=True)
-        except (DBException, SearchException) as exc:
-            ERROR(str(exc), will_exit=True)
-    
+        except SearchException as se:
+            ERROR(str(se), will_exit=True)
+
+    def __cmd_search_cve(self, protocol: Protocol) -> None:
+        """-S cve / --search cve"""
+        try:
+            print(MSG_CVE_WAIT)
+            candidates = CVEList().search_by_keywords(protocol)
+            for c in candidates:
+                print(c)
+                if self.__confirm(MSG_CONFIRM_ADDCVE.format(c.id,
+                                                            protocol.name),
+                                  self.options.force):
+                    link = self.__cmd_add_link(c.id, c.url, c.description,
+                                               "cve")
+                    if link:
+                        try:
+                            protocol.set(p.cve, link.id)
+                        except DBException as dbe:
+                            ERROR(str(dbe))
+        except SearchException as se:
+            ERROR(str(se), will_exit=True)
+            
     def __cmd_note(self) -> None:
         """-N / --note"""
         raise NotImplementedError("CLI: note")
         
     def __cmd_mongoimport(self) -> None:
         "-MI / --mongoimport"
-        cmd = ["mongoimport", "--db=\"{0}\"".format(mongodb.database)]
+        cmd = ["mongoimport", "--db=\"{0}\"".format(mongodb.database), "--drop"]
         protofile = join(mongodb.dbfile_path, mongodb.dbfile_protocols)
         linksfile = join(mongodb.dbfile_path, mongodb.dbfile_links)
         proto = ["--collection=protocols", "--file=\"{0}\"".format(protofile)]
@@ -486,6 +486,20 @@ class CLI(object):
                 print(table_format.format(k, v))
         print("-" * (full_table_size - 1))
 
+    def __get_protocol(self, protocol: str) -> Protocol:
+        """Helper: Return a Protocol object from its name, or create it."""
+        try:
+            self.protocols.get(protocol)
+        except DBException as dbe: # Does not exist or multiple matches
+            ERROR(str(dbe), will_exit=False)
+            self.__cmd_add(protocol)
+        # We check again if the protocol exists now.
+        try:
+            protocol = self.protocols.get(protocol)
+        except DBException as dbe:
+            ERROR(str(dbe), will_exit=True)
+        return protocol
+        
     def __confirm(self, msg, force):
         """Interactively ask for confirmation from the user."""
         confirm = True if force else False

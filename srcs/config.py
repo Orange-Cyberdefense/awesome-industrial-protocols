@@ -19,7 +19,7 @@ OPENAI_API_KEY = key # Insert your OpenAI API key, don't push it.
 #-----------------------------------------------------------------------------#
 
 LIST_TITLE = "Awesome Industrial Protocols"
-LIST_DESCRIPTION = "Security-oriented list of industrial network protocols resources."
+LIST_DESCRIPTION = "Offensive security-oriented list of industrial network protocols resources."
 LIST_LOGO = "srcs/out/templates/logo-awesome-industrial-protocols.png"
 
 # Markdown pages
@@ -124,7 +124,7 @@ links.name = "name"
 links.url = "url"
 links.description = "description"
 links.type = "type"
-links.TYPES = ("documentation", "article", "conference", "paper", "tool", "other")
+links.TYPES = ("documentation", "article", "conference", "paper", "tool", "other", "cve")
 links.DEFAULT_TYPE = "other"
 
 #-----------------------------------------------------------------------------#
@@ -174,3 +174,8 @@ scapy = SimpleNamespace()
 scapy.api_layers_folder ="https://api.github.com/repos/secdev/scapy/contents/scapy/layers"
 scapy.api_contrib_folder = "https://api.github.com/repos/secdev/scapy/contents/scapy/contrib"
 scapy.layer_desc = "Scapy layer for {0}"
+
+cvelist = SimpleNamespace()
+# URL to NIST's NVD CVE database's API
+cvelist.api_keywords_search = "https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch={0}"
+cvelist.nvd_detail = "https://nvd.nist.gov/vuln/detail/"

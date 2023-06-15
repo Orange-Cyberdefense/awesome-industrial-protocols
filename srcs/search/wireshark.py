@@ -55,7 +55,6 @@ class Dissector(object):
         
 class Wireshark(object):
     """Interface to Wireshark dissectors code using GitHub's API."""
-    dissector = None
     
     def __init__(self):
         pass
