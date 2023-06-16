@@ -11,7 +11,7 @@ In this repository:
 * **Turn/IP** (in `srcs`) is a handy tool to manipulate this data and simplify
 the research and test process on industrial protocols.
 
-> All AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`.
 
 ## Contents
 
@@ -58,7 +58,7 @@ the research and test process on industrial protocols.
 | Specifications | [BACnet/IP Specification](https://bacnet.org/buy/) |
 | Nmap script(s) | [bacnet-info.nse](https://nmap.org/nsedoc/scripts/bacnet-info.html) |
 | Wireshark dissector | [packet-bacnet.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-bacnet.c) |
-| Related CVE | [CVE-2018-10238](https://nvd.nist.gov/vuln/detail/CVE-2018-10238), [CVE-2018-18878](https://nvd.nist.gov/vuln/detail/CVE-2018-18878), [CVE-2019-12480](https://nvd.nist.gov/vuln/detail/CVE-2019-12480), [CVE-2021-41545](https://nvd.nist.gov/vuln/detail/CVE-2021-41545) |
+| Detailed page | [bacnetip.md](../protocols/bacnetip.md) |
 ### Articles
 - [BACnet CVE-2019-12480](https://1modm.github.io/CVE-2019-12480.html) - On M's blog (2019)
 ### Tools
@@ -75,6 +75,7 @@ the research and test process on industrial protocols.
 | Specifications | [ISO-11898](https://www.iso.org/standard/63648.html) |
 | Wireshark dissector | [packet-canopen.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-canopen.c) |
 | Scapy layer | [can.py](https://github.com/secdev/scapy/blob/master/scapy/layers/can.py) |
+| Detailed page | [can.md](../protocols/can.md) |
 
 
 
@@ -88,7 +89,7 @@ the research and test process on industrial protocols.
 | Access | Paid |
 | Specifications | [CODESYS Specification](https://webstore.iec.ch/publication/4552) |
 | Nmap script(s) | [codesys-v2-discover.nse](https://github.com/digitalbond/Redpoint/blob/master/codesys-v2-discover.nse) |
-| Related CVE | [CVE-2012-4704](https://nvd.nist.gov/vuln/detail/CVE-2012-4704), [CVE-2012-4705](https://nvd.nist.gov/vuln/detail/CVE-2012-4705), [CVE-2012-4706](https://nvd.nist.gov/vuln/detail/CVE-2012-4706), [CVE-2012-4707](https://nvd.nist.gov/vuln/detail/CVE-2012-4707), [CVE-2012-4708](https://nvd.nist.gov/vuln/detail/CVE-2012-4708), [CVE-2013-2781](https://nvd.nist.gov/vuln/detail/CVE-2013-2781), [CVE-2014-0769](https://nvd.nist.gov/vuln/detail/CVE-2014-0769), [CVE-2015-6460](https://nvd.nist.gov/vuln/detail/CVE-2015-6460), [CVE-2015-6482](https://nvd.nist.gov/vuln/detail/CVE-2015-6482), [CVE-2018-5459](https://nvd.nist.gov/vuln/detail/CVE-2018-5459), [CVE-2018-8836](https://nvd.nist.gov/vuln/detail/CVE-2018-8836), [CVE-2019-5105](https://nvd.nist.gov/vuln/detail/CVE-2019-5105), [CVE-2019-9009](https://nvd.nist.gov/vuln/detail/CVE-2019-9009), [CVE-2019-9010](https://nvd.nist.gov/vuln/detail/CVE-2019-9010), [CVE-2019-9012](https://nvd.nist.gov/vuln/detail/CVE-2019-9012), [CVE-2020-6081](https://nvd.nist.gov/vuln/detail/CVE-2020-6081), [CVE-2020-7052](https://nvd.nist.gov/vuln/detail/CVE-2020-7052), [CVE-2021-29242](https://nvd.nist.gov/vuln/detail/CVE-2021-29242), [CVE-2021-34593](https://nvd.nist.gov/vuln/detail/CVE-2021-34593), [CVE-2021-34595](https://nvd.nist.gov/vuln/detail/CVE-2021-34595), [CVE-2021-34596](https://nvd.nist.gov/vuln/detail/CVE-2021-34596), [CVE-2021-36764](https://nvd.nist.gov/vuln/detail/CVE-2021-36764), [CVE-2022-22515](https://nvd.nist.gov/vuln/detail/CVE-2022-22515), [CVE-2022-22517](https://nvd.nist.gov/vuln/detail/CVE-2022-22517), [CVE-2022-31804](https://nvd.nist.gov/vuln/detail/CVE-2022-31804), [CVE-2022-31805](https://nvd.nist.gov/vuln/detail/CVE-2022-31805) |
+| Detailed page | [codesys.md](../protocols/codesys.md) |
 
 
 
@@ -101,6 +102,7 @@ the research and test process on industrial protocols.
 | Keywords | Allen-Bradley |
 | Port | 2222/tcp |
 | Nmap script(s) | [cspv4-info.nse](https://github.com/digitalbond/Redpoint/blob/master/cspv4-info.nse) |
+| Detailed page | [cspv4.md](../protocols/cspv4.md) |
 
 
 
@@ -116,7 +118,9 @@ the research and test process on industrial protocols.
 | Specifications | [DICOM Standard](https://www.dicomstandard.org/current/) |
 | Nmap script(s) | [dicom-ping.nse](https://nmap.org/nsedoc/scripts/dicom-ping.html) |
 | Wireshark dissector | [packet-dcm.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-dcm.c) |
+| Detailed page | [dicom.md](../protocols/dicom.md) |
 ### Tools
+- [DCMTK](https://dcmtk.org/en/) - DICOM ToolKit
 - [pydicom](https://github.com/pydicom/pydicom) - Python package to read, modify and write DICOM files
 
 
@@ -134,6 +138,7 @@ the research and test process on industrial protocols.
 | Nmap script(s) | [dnp3-info.nse](https://github.com/digitalbond/Redpoint/blob/master/dnp3-info.nse) |
 | Wireshark dissector | [packet-dnp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-dnp.c) |
 | Example Pcap(s) | [ICS-pcap DNP3](https://github.com/automayt/ICS-pcap/tree/master/DNP3) |
+| Detailed page | [dnp3.md](../protocols/dnp3.md) |
 ### Tools
 - [dnp-info](https://github.com/sjhilt/Nmap-NSEs/blob/master/dnp3-info.nse) - Nmap discovery script for DNP3
 - [FreyrSCADA DNP3](https://github.com/FreyrSCADA/DNP3) - DNP3 Protocol - Outstation Server and Client Master Simulator
@@ -149,6 +154,7 @@ the research and test process on industrial protocols.
 | Port | 6060/udp |
 | Wireshark dissector | [packet-esio.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-esio.c) |
 | Example Pcap(s) | [ICS-pcap Ether-S-I/O](https://github.com/automayt/ICS-pcap/tree/master/ETHERSIO) |
+| Detailed page | [ethersio.md](../protocols/ethersio.md) |
 
 
 
@@ -160,6 +166,7 @@ the research and test process on industrial protocols.
 | Description | Real-time industrial Ethernet communication protocol for automation systems |
 | Scapy layer | [ethercat.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/ethercat.py) |
 | Example Pcap(s) | [ICS-pcap EtherCAT](https://github.com/automayt/ICS-pcap/tree/master/ETHERCAT/ethercat) |
+| Detailed page | [ethercat.md](../protocols/ethercat.md) |
 
 
 
@@ -177,7 +184,7 @@ the research and test process on industrial protocols.
 | Wireshark dissector | [packet-enip.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-enip.c) |
 | Scapy layer | [enipTCP.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/enipTCP.py) |
 | Example Pcap(s) | [ICS-pcap Ethernet/IP](https://github.com/automayt/ICS-pcap/tree/master/ETHERNET_IP), [ICS-pcap EIP](https://github.com/automayt/ICS-pcap/tree/master/EIP) |
-| Related CVE | [CVE-2012-6435](https://nvd.nist.gov/vuln/detail/CVE-2012-6435), [CVE-2012-6436](https://nvd.nist.gov/vuln/detail/CVE-2012-6436), [CVE-2012-6438](https://nvd.nist.gov/vuln/detail/CVE-2012-6438), [CVE-2012-6439](https://nvd.nist.gov/vuln/detail/CVE-2012-6439), [CVE-2012-6441](https://nvd.nist.gov/vuln/detail/CVE-2012-6441), [CVE-2012-6442](https://nvd.nist.gov/vuln/detail/CVE-2012-6442), [CVE-2018-14827](https://nvd.nist.gov/vuln/detail/CVE-2018-14827), [CVE-2019-6815](https://nvd.nist.gov/vuln/detail/CVE-2019-6815), [CVE-2020-13530](https://nvd.nist.gov/vuln/detail/CVE-2020-13530), [CVE-2020-13556](https://nvd.nist.gov/vuln/detail/CVE-2020-13556), [CVE-2020-13573](https://nvd.nist.gov/vuln/detail/CVE-2020-13573), [CVE-2020-25159](https://nvd.nist.gov/vuln/detail/CVE-2020-25159), [CVE-2020-6083](https://nvd.nist.gov/vuln/detail/CVE-2020-6083), [CVE-2020-6084](https://nvd.nist.gov/vuln/detail/CVE-2020-6084), [CVE-2020-6085](https://nvd.nist.gov/vuln/detail/CVE-2020-6085), [CVE-2020-6086](https://nvd.nist.gov/vuln/detail/CVE-2020-6086), [CVE-2020-6087](https://nvd.nist.gov/vuln/detail/CVE-2020-6087), [CVE-2020-6088](https://nvd.nist.gov/vuln/detail/CVE-2020-6088), [CVE-2021-20987](https://nvd.nist.gov/vuln/detail/CVE-2021-20987), [CVE-2021-21777](https://nvd.nist.gov/vuln/detail/CVE-2021-21777), [CVE-2021-27478](https://nvd.nist.gov/vuln/detail/CVE-2021-27478), [CVE-2021-27482](https://nvd.nist.gov/vuln/detail/CVE-2021-27482), [CVE-2021-27498](https://nvd.nist.gov/vuln/detail/CVE-2021-27498), [CVE-2021-27500](https://nvd.nist.gov/vuln/detail/CVE-2021-27500), [CVE-2021-34754](https://nvd.nist.gov/vuln/detail/CVE-2021-34754), [CVE-2021-36765](https://nvd.nist.gov/vuln/detail/CVE-2021-36765), [CVE-2022-1737](https://nvd.nist.gov/vuln/detail/CVE-2022-1737), [CVE-2022-3752](https://nvd.nist.gov/vuln/detail/CVE-2022-3752), [CVE-2022-43604](https://nvd.nist.gov/vuln/detail/CVE-2022-43604), [CVE-2022-43605](https://nvd.nist.gov/vuln/detail/CVE-2022-43605), [CVE-2022-43606](https://nvd.nist.gov/vuln/detail/CVE-2022-43606) |
+| Detailed page | [ethernetip.md](../protocols/ethernetip.md) |
 ### Articles
 - [Fuzzing and PR’ing: How We Found Bugs in a Popular Third-Party EtherNet/IP Protocol Stack](https://claroty.com/team82/research/opener-enip-stack-vulnerabilities) - Sharon Brizinov, Tal Keren (Claroty, 2021)
 ### Conferences
@@ -199,6 +206,7 @@ the research and test process on industrial protocols.
 | Port | 9600/udp |
 | Nmap script(s) | [omrontcp-info.nse](https://github.com/digitalbond/Redpoint/blob/master/omrontcp-info.nse), [omronudp-info.nse](https://github.com/digitalbond/Redpoint/blob/master/omronudp-info.nse) |
 | Wireshark dissector | [packet-omron-fins.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-omron-fins.c) |
+| Detailed page | [fins.md](../protocols/fins.md) |
 
 
 
@@ -208,6 +216,7 @@ the research and test process on industrial protocols.
 | Name | GE-SRTP |
 | Description | General Electric's protocol for communication between GE devices and SCADA |
 | Port | 18245/tcp |
+| Detailed page | [gesrtp.md](../protocols/gesrtp.md) |
 
 
 
@@ -219,6 +228,7 @@ the research and test process on industrial protocols.
 | Description | IP-based communication protocol for HART (ICS) data transmission |
 | Wireshark dissector | [packet-hartip.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hartip.c) |
 | Example Pcap(s) | [ICS-pcap HART-IP](https://github.com/automayt/ICS-pcap/tree/master/HART%20IP/hart_ip) |
+| Detailed page | [hartip.md](../protocols/hartip.md) |
 
 
 
@@ -228,6 +238,7 @@ the research and test process on industrial protocols.
 | Name | HL7 |
 | Description | Standard for healthcare data exchange and interoperability |
 | Wireshark dissector | [packet-hl7.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hl7.c) |
+| Detailed page | [hl7.md](../protocols/hl7.md) |
 
 
 
@@ -244,6 +255,7 @@ the research and test process on industrial protocols.
 | Wireshark dissector | [packet-iec104.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-iec104.c) |
 | Scapy layer | [iec104.py](https://github.com/secdev/scapy/tree/master/scapy/contrib/scada/iec104) |
 | Example Pcap(s) | [ICS-pcap IEC-60870-5-104](https://github.com/automayt/ICS-pcap/tree/master/IEC%2060870) |
+| Detailed page | [iec608705104.md](../protocols/iec608705104.md) |
 ### Papers
 - [Description and analysis of IEC 104 Protocol](https://www.fit.vut.cz/research/publication/11570/.en) - Technical report by Petr Matousek @ Faculty of Information Techology, Czech Republic (2017)
 ### Tools
@@ -260,6 +272,7 @@ the research and test process on industrial protocols.
 | Access | Paid |
 | Specifications | [IEC 61850 Specification](https://webstore.iec.ch/publication/6028) |
 | Wireshark dissector | [packet-goose.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-goose.c), [packet-sv.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-sv.c) |
+| Detailed page | [iec61850.md](../protocols/iec61850.md) |
 
 
 
@@ -277,7 +290,7 @@ the research and test process on industrial protocols.
 | Nmap script(s) | [knx-gateway-discover.nse](https://nmap.org/nsedoc/scripts/knx-gateway-discover.html) |
 | Wireshark dissector | [packet-knxip.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-knxip.c) |
 | Scapy layer | [knx.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/knx.py) |
-| Related CVE | [CVE-2015-8299](https://nvd.nist.gov/vuln/detail/CVE-2015-8299), [CVE-2021-37740](https://nvd.nist.gov/vuln/detail/CVE-2021-37740) |
+| Detailed page | [knxnetip.md](../protocols/knxnetip.md) |
 ### Documentations
 - [knx.org](https://www.knx.org/knx-en/for-professionals/index.php) - KNX official website
 ### Conferences
@@ -304,6 +317,7 @@ the research and test process on industrial protocols.
 | Wireshark dissector | [packet-mbtcp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-mbtcp.c) |
 | Scapy layer | [modbus.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/modbus.py) |
 | Example Pcap(s) | [ICS-pcap Modbus](https://github.com/automayt/ICS-pcap/tree/master/MODBUS) |
+| Detailed page | [modbus.md](../protocols/modbus.md) |
 ### Tools
 - [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
 
@@ -317,6 +331,7 @@ the research and test process on industrial protocols.
 | Keywords | Tridium |
 | Port | 1911/tcp, 3011/tcp, 4911/tcp, 5011/tcp |
 | Nmap script(s) | [fox-info.nse](https://nmap.org/nsedoc/scripts/fox-info.html) |
+| Detailed page | [niagarafox.md](../protocols/niagarafox.md) |
 ### Tools
 - [foxdissector](https://github.com/MartinoTommasini/foxdissector) - Wireshark dissector for the Niagara Fox protocol in Lua
 
@@ -328,6 +343,7 @@ the research and test process on industrial protocols.
 | Alias | OPCDA |
 | Description | Legacy protocol for real-time data exchange in industrial systems |
 | Scapy layer | [opc_da.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/opc_da.py) |
+| Detailed page | [opcda.md](../protocols/opcda.md) |
 ### Papers
 - [Exploring the OPC attack surface](https://claroty.com/team82/research/white-papers/exploring-the-opc-attack-surface) - Claroty Team82 (2021)
 
@@ -340,7 +356,7 @@ the research and test process on industrial protocols.
 | Description | Open communication standard for industrial automation and control |
 | Port | 4840/tcp, 4840/udp, 4843/tcp (TLS) |
 | Wireshark dissector | [OPC-UA Plugin](https://github.com/wireshark/wireshark/tree/master/plugins/epan/opcua) |
-| Related CVE | [CVE-2019-13542](https://nvd.nist.gov/vuln/detail/CVE-2019-13542) |
+| Detailed page | [opcua.md](../protocols/opcua.md) |
 ### Articles
 - [OPC UA Deep Dive (Part 1): History of the OPC UA Protocol](https://claroty.com/team82/research/opc-ua-deep-dive-history-of-the-opc-ua-protocol) - Claroty Team82 (2023)
 - [OPC UA Deep Dive (Part 2): What is OPC UA?](https://claroty.com/team82/research/opc-deep-dive-part-2-what-is-opc-ua) - Claroty Team82 (2023)
@@ -360,6 +376,7 @@ the research and test process on industrial protocols.
 | Keywords | Phoenix Contact |
 | Port | 1962/tcp |
 | Nmap script(s) | [pcworx-info.nse](https://github.com/digitalbond/Redpoint/blob/master/pcworx-info.nse) |
+| Detailed page | [pcworx.md](../protocols/pcworx.md) |
 
 
 
@@ -371,6 +388,7 @@ the research and test process on industrial protocols.
 | Description | Real-time Ethernet protocol for industrial automation and control |
 | Port | Ethernet |
 | Wireshark dissector | [packet-epl.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-epl.c) |
+| Detailed page | [powerlink.md](../protocols/powerlink.md) |
 ### Articles
 - [Quick Start - POWERLINK on Raspberry Pi2](https://www.kalycito.com/quick-start-powerlink-on-raspberry-pi2/) - Kalycito (2018)
 ### Tools
@@ -386,6 +404,7 @@ the research and test process on industrial protocols.
 | Description | Real-time operating system with proprietary protocol for industrial automation and control |
 | Port | 20547/tcp |
 | Nmap script(s) | [proconos-info.nse](https://github.com/digitalbond/Redpoint/blob/master/proconos-info.nse) |
+| Detailed page | [proconos.md](../protocols/proconos.md) |
 
 
 
@@ -397,6 +416,7 @@ the research and test process on industrial protocols.
 | Description | Device identification, configuration, and network management protocol |
 | Port | Ethernet |
 | Scapy layer | [pnio_dcp.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/pnio_dcp.py) |
+| Detailed page | [profinetdcp.md](../protocols/profinetdcp.md) |
 
 
 
@@ -407,6 +427,7 @@ the research and test process on industrial protocols.
 | Alias | PNIO |
 | Description | Real-time communication between controllers and I/O devices |
 | Scapy layer | [pnio.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/pnio.py) |
+| Detailed page | [profinetio.md](../protocols/profinetio.md) |
 
 
 
@@ -420,6 +441,7 @@ the research and test process on industrial protocols.
 | Access | Free |
 | Wireshark dissector | [packet-sbus.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-sbus.c) |
 | Example Pcap(s) | [ICS-pcap Ether-S-Bus](https://github.com/automayt/ICS-pcap/tree/master/ETHERSBUS/sbus) |
+| Detailed page | [sbus.md](../protocols/sbus.md) |
 
 
 
@@ -433,6 +455,7 @@ the research and test process on industrial protocols.
 | Nmap script(s) | [s7-info.nse](https://nmap.org/nsedoc/scripts/s7-info.html), [s7-enumerate.nse](https://github.com/digitalbond/Redpoint/blob/master/s7-enumerate.nse) |
 | Wireshark dissector | [packet-s7comm.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-s7comm.c) |
 | Example Pcap(s) | [ICS-pcap S7](https://github.com/automayt/ICS-pcap/tree/master/S7) |
+| Detailed page | [s7comm.md](../protocols/s7comm.md) |
 ### Articles
 - [The Siemens S7 Communication - Part 1 General Structure](http://gmiru.com/article/s7comm/) - On GyM's Personal Blog (2016)
 - [The Siemens S7 Communication - Part 2 Job Requests and Ack Data](http://gmiru.com/article/s7comm-part2/) - On GyM's Personal Blog (2017)
@@ -446,6 +469,7 @@ the research and test process on industrial protocols.
 | Name | UMAS |
 | Description | Schneider Electric's proprietary protocol for communication systems |
 | Nmap script(s) | [modicon-info.nse](https://github.com/digitalbond/Redpoint/blob/master/modicon-info.nse) |
+| Detailed page | [umas.md](../protocols/umas.md) |
 ### Articles
 - [The secrets of Schneider Electric’s UMAS protocol](https://ics-cert.kaspersky.com/publications/reports/2022/09/29/the-secrets-of-schneider-electrics-umas-protocol/) - Kaspersky ICS CERT (2022)
 - [The Unity (UMAS) protocol (Part I)](http://lirasenlared.blogspot.com/2017/08/the-unity-umas-protocol-part-i.html) - Liras en la red (2017)

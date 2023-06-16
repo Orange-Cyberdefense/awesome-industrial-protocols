@@ -23,12 +23,13 @@ H3 = lambda x: "### {0}".format(x)
 
 LINK_FORMAT = lambda x: sub('[^0-9a-zA-Z]+', '', x.lower().strip())
 
-LINK = lambda x: "[{0}](#{1})".format(x, LINK_FORMAT(x))
+INTLINK = lambda x: "[{0}](#{1})".format(x, LINK_FORMAT(x))
 IMG = lambda x, y: "![{0}]({1})".format(x, y)
 
 LINKOBJ = lambda x: "[{0}]({1})".format(x.name, x.url)
 LINKOBJDESC = lambda x: "[{0}]({1}) - {2}".format(x.name, x.url, x.description)
 
+LINK = lambda x, y: "[{0}]({1})".format(x, y)
 TABLE = lambda x, y: "| {0} | {1} |".format(x, y)
 BORDER_TABLE = "|---|---|"
 
@@ -141,10 +142,16 @@ class Markdown(object):
     def __f_toc(self) -> str:
         toc = [H2(m.t_toc)+"\n"]
         for protocol in self.protocols:
-            toc.append("- "+LINK(protocol.name))
+            toc.append("- " + INTLINK(protocol.name))
         return "\n".join(toc)
 
     def __f_content(self) -> str:
+        """Generate protocol sections in awesome list.
+
+        Format:
+        1. Main table with field information (basic fields, not extended).
+        2. List of resources
+        """
         content = []
         # Main table
         for protocol in self.protocols:
@@ -161,33 +168,28 @@ class Markdown(object):
                     else:
                         v = ", ".join(v) if isinstance(v, list) else v
                         current.append(TABLE(k.capitalize(), v))
+            # At the end of the table we want to append the link to detailed page
+            filename = "{0}.md".format(LINK_FORMAT(protocol.name))
+            fileurl = join(m.protocolpage_relpath, filename)
+            current.append(TABLE(m.t_details, LINK(filename, fileurl)))
             content.append("\n".join(current))
             # Resources
             content.append(self.__f_resources(protocol, H3))
         return "\n".join(content)
 
-    def __f_linklist(self, key, linklist) -> list:
+    def __f_linklist(self, key: str, linklist: list) -> list:
+        """Format Link objects in Markdown to insert in Markdown tables."""
         content = []
-        key = p.FIELDS[key][0] if key in p.FIELDS.keys() else key.capitalize()
+        key = p.ALL_FIELDS[key][0] if key in p.ALL_FIELDS.keys() else key.capitalize()
         value = [LINKOBJ(self.links.get_id(l)) for l in linklist]
         content.append(TABLE(key, ", ".join(value)))
-        """
-        ct = 0
-        for link in linklist:
-            try:
-                link = self.links.get_id(link)
-                key = p.FIELDS[key][0] if key in p.FIELDS.keys() else key.capitalize()
-                content.append(TABLE(key if ct == 0 else "-", LINKOBJ(link)))
-                ct += 1
-            except DBException:
-                pass
-        """
         return content
 
-    def __f_name(self, protocol):
+    def __f_name(self, protocol: Protocol) -> str:
         return H1(protocol.name)
 
-    def __f_table(self, protocol):
+    def __f_table(self, protocol: Protocol) -> str:
+        """Format a table with extended fields for protocol pages."""
         current = []
         current.append(TABLE("Protocol" ,protocol.name))
         current.append(BORDER_TABLE)
@@ -196,12 +198,13 @@ class Markdown(object):
                 if p.TYPE(k) == types.LINKLIST:
                     current += self.__f_linklist(k, v)
                 else:
-                    k = p.FIELDS[k][0] if k in p.FIELDS.keys() else k.capitalize()
+                    k = p.ALL_FIELDS[k][0] if k in p.ALL_FIELDS.keys() else k.capitalize()
                     v = ", ".join(v) if isinstance(v, list) else v
                     current.append(TABLE(k, v))
         return "\n".join(current)
 
-    def __f_resources(self, protocol, level=H2) -> list:
+    def __f_resources(self, protocol: Protocol, level: str=H2) -> list:
+        """Format list of resources for awesome list and protocol pages."""
         rdict = {t: [] for t in l.TYPES}
         for link in protocol.resources:
             try:

@@ -124,7 +124,7 @@ class Protocol(object):
 
     def __fill(self):
         """Check that all mandatory fields are set for protocol objects."""
-        for attr,_ in p.FIELDS.items():
+        for attr,_ in p.ALL_FIELDS.items():
             try:
                 getattr(self, attr)
             except AttributeError:
@@ -136,7 +136,7 @@ class Protocol(object):
     def __check(self):
         """Check that all mandatory fields are set for protocol objects."""
         try:
-            for attr in p.FIELDS:
+            for attr in p.ALL_FIELDS:
                 getattr(self, attr)
         except AttributeError:
             raise DBException(ERR_MANDFIELD.format(attr, self.name)) from None

@@ -27,6 +27,7 @@ markdown = SimpleNamespace()
 markdown.awesomelist_name = "README.md"
 markdown.awesomelist_path = abspath(join(dirname(abspath(__file__)), pardir))
 markdown.protocolpage_path = abspath(join(dirname(abspath(__file__)), pardir, "protocols"))
+markdown.protocolpage_relpath = join(pardir, "protocols")
 
 # Templates for Markdown pages
 markdown.awesomelist_template = "template-awesome-industrial-protocols.md"
@@ -44,6 +45,7 @@ markdown.f_table = "%table%"
 markdown.f_resources = "%resources%"
 
 markdown.t_toc = "Contents"
+markdown.t_details = "Detailed page"
 
 #-----------------------------------------------------------------------------#
 # TOOL CONFIGURATION                                                          #
@@ -111,11 +113,14 @@ protocols.FIELDS = {
     protocols.wireshark: ("Wireshark dissector", types.LINKLIST),
     protocols.scapy: ("Scapy layer", types.LINKLIST),
     protocols.pcap: ("Example Pcap(s)", types.LINKLIST),
-    protocols.cve: ("Related CVE", types.LINKLIST),
     protocols.resources: ("Resources", types.LINKLIST)
 }
-protocols.NAME = lambda x: protocols.FIELDS[x][0] if x in protocols.FIELDS else x
-protocols.TYPE = lambda x: protocols.FIELDS[x][1] if x in protocols.FIELDS else None
+protocols.EXTENDED_FIELDS = {
+    protocols.cve: ("Related CVE", types.LINKLIST),
+}
+protocols.ALL_FIELDS = {**protocols.FIELDS, **protocols.EXTENDED_FIELDS}
+protocols.NAME = lambda x: protocols.ALL_FIELDS[x][0] if x in protocols.ALL_FIELDS else x
+protocols.TYPE = lambda x: protocols.ALL_FIELDS[x][1] if x in protocols.ALL_FIELDS else None
 
 # Links collection content
 links = SimpleNamespace()

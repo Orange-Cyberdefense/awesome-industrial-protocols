@@ -11,7 +11,7 @@ In this repository:
 * **Turn/IP** (in `srcs`) is a handy tool to manipulate this data and simplify
   the research and test process on industrial protocols.
 
-> All AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`.
 
 %toc%
 

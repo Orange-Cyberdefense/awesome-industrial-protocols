@@ -474,12 +474,12 @@ class CLI(object):
         for k, v in protocol.items():
             if k == mongodb.id:
                 continue
-            elif k in p.FIELDS and p.TYPE(k) == types.LINKLIST and v:
+            elif k in p.ALL_FIELDS and p.TYPE(k) == types.LINKLIST and v:
                 self.__print_links(table_format, p.NAME(k), v)
             else:
                 v = ", ".join(v) if isinstance(v, list) else str(v)
                 v = v if len(v) < table_size else v[:table_size-3]+"..."
-                if k in p.FIELDS:
+                if k in p.ALL_FIELDS:
                     k = p.NAME(k)
                 else:
                     k = k if nocap else k.capitalize()
