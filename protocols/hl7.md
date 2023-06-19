@@ -14,7 +14,7 @@
 | Wireshark dissector | [packet-hl7.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hl7.c) |
 | Scapy layer |  |
 | Example Pcap(s) |  |
-| Related CVE |  |
+| Related CVE | [CVE-2020-27260](https://nvd.nist.gov/vuln/detail/CVE-2020-27260) |
 
 
 

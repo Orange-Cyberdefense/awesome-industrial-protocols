@@ -14,7 +14,7 @@
 | Wireshark dissector |  |
 | Scapy layer | [opc_da.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/opc_da.py) |
 | Example Pcap(s) |  |
-| Related CVE |  |
+| Related CVE | [CVE-2012-3008](https://nvd.nist.gov/vuln/detail/CVE-2012-3008) |
 
 ## Papers
 - [Exploring the OPC attack surface](https://claroty.com/team82/research/white-papers/exploring-the-opc-attack-surface) - Claroty Team82 (2021)

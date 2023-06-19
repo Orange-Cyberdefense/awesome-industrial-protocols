@@ -14,7 +14,7 @@
 | Wireshark dissector |  |
 | Scapy layer |  |
 | Example Pcap(s) |  |
-| Related CVE |  |
+| Related CVE | [CVE-2014-9195](https://nvd.nist.gov/vuln/detail/CVE-2014-9195), [CVE-2018-5452](https://nvd.nist.gov/vuln/detail/CVE-2018-5452) |
 
 
 

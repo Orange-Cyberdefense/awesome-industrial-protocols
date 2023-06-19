@@ -14,7 +14,7 @@
 | Wireshark dissector | [OPC-UA Plugin](https://github.com/wireshark/wireshark/tree/master/plugins/epan/opcua) |
 | Scapy layer |  |
 | Example Pcap(s) |  |
-| Related CVE | [CVE-2019-13542](https://nvd.nist.gov/vuln/detail/CVE-2019-13542) |
+| Related CVE | [CVE-2019-13542](https://nvd.nist.gov/vuln/detail/CVE-2019-13542), [CVE-2021-23230](https://nvd.nist.gov/vuln/detail/CVE-2021-23230), [CVE-2021-42262](https://nvd.nist.gov/vuln/detail/CVE-2021-42262), [CVE-2022-25304](https://nvd.nist.gov/vuln/detail/CVE-2022-25304), [CVE-2022-25888](https://nvd.nist.gov/vuln/detail/CVE-2022-25888), [CVE-2022-25903](https://nvd.nist.gov/vuln/detail/CVE-2022-25903) |
 
 ## Articles
 - [OPC UA Deep Dive (Part 1): History of the OPC UA Protocol](https://claroty.com/team82/research/opc-ua-deep-dive-history-of-the-opc-ua-protocol) - Claroty Team82 (2023)

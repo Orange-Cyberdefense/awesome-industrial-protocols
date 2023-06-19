@@ -14,7 +14,7 @@
 | Wireshark dissector |  |
 | Scapy layer | [pnio.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/pnio.py) |
 | Example Pcap(s) |  |
-| Related CVE |  |
+| Related CVE | [CVE-2019-13946](https://nvd.nist.gov/vuln/detail/CVE-2019-13946), [CVE-2022-25622](https://nvd.nist.gov/vuln/detail/CVE-2022-25622) |
 
 
 
