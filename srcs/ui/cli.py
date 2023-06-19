@@ -287,12 +287,14 @@ class CLI(object):
     def __cmd_delete_link(self) -> None:
         """-DL / --delete-link"""
         try:
-            link = self.links.get(self.options.delete_link) # Will raise if unknown
+            links = self.links.get(self.options.delete_link, no_raise=True) # Will raise if unknown
         except DBException as dbe:
             ERROR(str(dbe), will_exit=True)
-        if self.__confirm(MSG_CONFIRM_DELETE_LINK.format(link.url),
-                          self.options.force):
-            self.links.delete(link)
+        links = links if isinstance(links, list) else [links]
+        for link in links:
+            if self.__confirm(MSG_CONFIRM_DELETE_LINK.format(link.url),
+                              self.options.force):
+                self.links.delete(link)
         
     def __cmd_gen(self) -> None:
         """-G / --gen"""

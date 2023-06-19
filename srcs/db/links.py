@@ -157,7 +157,7 @@ class Links(object):
         except DBException as dbe:
             ERROR(dbe)
             
-    def get(self, url) -> Link:
+    def get(self, url, no_raise=False) -> Link:
         """Get a link object by its URL."""
         match = []
         for link in self.all_as_objects:
@@ -169,8 +169,12 @@ class Links(object):
         if len(match) == 1:
             return match[0]
         if len(match) > 1:
+            if no_raise:
+                return match
             match = [x.name for x in match]
             raise DBException(ERR_MULTIMATCH.format(", ".join(match)))
+        if no_raise:
+            return None
         raise DBException(ERR_UNKURL.format(url))
 
     def get_id(self, id) -> Link:
