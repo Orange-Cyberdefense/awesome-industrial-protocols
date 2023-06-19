@@ -407,8 +407,11 @@ class CLI(object):
         """-S cve / --search cve"""
         try:
             print(MSG_CVE_WAIT)
+            _, current_cve_list = protocol.get(p.cve)
             candidates = CVEList().search_by_keywords(protocol)
             for c in candidates:
+                if self.links.has(c.url):
+                    continue # Skipping the ones we already have
                 print(c)
                 if self.__confirm(MSG_CONFIRM_ADDCVE.format(c.id,
                                                             protocol.name),
@@ -420,6 +423,7 @@ class CLI(object):
                             protocol.set(p.cve, link.id)
                         except DBException as dbe:
                             ERROR(str(dbe))
+                print("---")
         except SearchException as se:
             ERROR(str(se), will_exit=True)
             

@@ -180,6 +180,14 @@ class Links(object):
             if link[l.id] == id:
                 return Link(**link)
         raise DBException(ERR_UNKID.format(id))
+
+    def has(self, url: str) -> bool:
+        """Return true if this URL is already in link list."""
+        try:
+            self.get(url)
+        except DBException:
+            return False
+        return True
     
     def add(self, name, url, description, type=l.DEFAULT_TYPE) -> Link:
         """Add a link to link collection."""

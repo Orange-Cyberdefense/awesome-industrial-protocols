@@ -33,7 +33,8 @@ class CVE(object):
         self.url = c.nvd_detail + self.id
                 
     def __str__(self):
-        return "{0}: {1}\nURL: {2}".format(self.id, self.description, self.url)
+        return "*** {0}: {1} ***\nDescription:\n{2}".format(self.id, self.url,
+                                                            self.description)
                 
 class CVEList(object):
     """Interface to CVE Lit APIs."""
