@@ -24,6 +24,7 @@
 ## Papers
 - [Exploring the OPC attack surface](https://claroty.com/team82/research/white-papers/exploring-the-opc-attack-surface) - Claroty Team82 (2021)
 ## Tools
+- [freeopcua](https://github.com/FreeOpcUa/freeopcua) - Open Source C++ OPC-UA Server and Client Library
 - [python-opcua](https://github.com/FreeOpcUa/python-opcua) - OPC UA Client and Server in Python
 
-> All AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`.

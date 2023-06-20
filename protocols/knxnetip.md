@@ -29,4 +29,4 @@
 - [KNXmap](https://github.com/takeshixx/knxmap) - KNXnet/IP scanning and auditing tool
 - [XKNX](https://github.com/XKNX/xknx) - A KNX library written in Python
 
-> All AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`.

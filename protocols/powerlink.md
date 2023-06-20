@@ -23,4 +23,4 @@
 - [openPOWERLINK](https://openpowerlink.sourceforge.net/web/) - Open-source POWERLINK protocol stack
 - [openPOWERLINK_V2](https://github.com/OpenAutomationTechnologies/openPOWERLINK_V2) - GitHub page to openPOWERLINK protocol stack release 2
 
-> All AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`.

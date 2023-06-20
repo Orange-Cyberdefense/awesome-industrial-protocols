@@ -26,10 +26,13 @@ the research and test process on industrial protocols.
 - [Ether-S-I/O](#ethersio)
 - [EtherCAT](#ethercat)
 - [Ethernet/IP](#ethernetip)
+- [FF-HSE](#ffhse)
 - [FINS](#fins)
+- [FL-net](#flnet)
 - [GE-SRTP](#gesrtp)
 - [HART-IP](#hartip)
 - [HL7](#hl7)
+- [ICCP](#iccp)
 - [IEC-60870-5-104](#iec608705104)
 - [IEC-61850](#iec61850)
 - [KNXnet/IP](#knxnetip)
@@ -150,6 +153,7 @@ the research and test process on industrial protocols.
 | Detailed page | [dicom.md](../protocols/dicom.md) |
 ### Tools
 - [DCMTK](https://dcmtk.org/en/) - DICOM ToolKit
+- [dicom-server](https://github.com/microsoft/dicom-server) - Microsoft's OSS Implementation of DICOMweb standard
 - [pydicom](https://github.com/pydicom/pydicom) - Python package to read, modify and write DICOM files
 
 
@@ -226,6 +230,18 @@ the research and test process on industrial protocols.
 - [scapy-cip-enip](https://github.com/scy-phy/scapy-cip-enip) - Ethernet/IP dissectors for Scapy
 
 
+## FF-HSE
+| Protocol | FF-HSE |
+|---|---|
+| Name | FF-HSE |
+| Alias | Foundation Fieldbus HSE, FF |
+| Description | Ethernet-based communication for industrial process automation devices |
+| Port | 1089/tcp, 1090/tcp, 1091/tcp, 1089/udp, 1090/udp, 1091/udp |
+| Wireshark dissector | [packet-ff.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-ff.c) |
+| Detailed page | [ffhse.md](../protocols/ffhse.md) |
+
+
+
 ## FINS
 | Protocol | FINS |
 |---|---|
@@ -236,6 +252,19 @@ the research and test process on industrial protocols.
 | Nmap script(s) | [omrontcp-info.nse](https://github.com/digitalbond/Redpoint/blob/master/omrontcp-info.nse), [omronudp-info.nse](https://github.com/digitalbond/Redpoint/blob/master/omronudp-info.nse) |
 | Wireshark dissector | [packet-omron-fins.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-omron-fins.c) |
 | Detailed page | [fins.md](../protocols/fins.md) |
+
+
+
+## FL-net
+| Protocol | FL-net |
+|---|---|
+| Name | FL-net |
+| Alias | Factory LAN, OPCN-2 |
+| Description | Japan Electrical Manufacturers' Association's industrial-use open network |
+| Keywords | JEMA |
+| Access | Free |
+| Specifications | [FL-net specification](https://www.jema-net.or.jp/English/businessfields/standarization/opcn/standard/) |
+| Detailed page | [flnet.md](../protocols/flnet.md) |
 
 
 
@@ -268,6 +297,20 @@ the research and test process on industrial protocols.
 | Description | Standard for healthcare data exchange and interoperability |
 | Wireshark dissector | [packet-hl7.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hl7.c) |
 | Detailed page | [hl7.md](../protocols/hl7.md) |
+
+
+
+## ICCP
+| Protocol | ICCP |
+|---|---|
+| Name | ICCP |
+| Alias | IEC 60870-6, TASE.2 |
+| Description | Real-time data exchange between power system control centers |
+| Keywords | Power |
+| Port | 102/tcp |
+| Access | Paid |
+| Specifications | [ICCP (TASE.2) specification](https://webstore.iec.ch/publication/3760) |
+| Detailed page | [iccp.md](../protocols/iccp.md) |
 
 
 
@@ -394,6 +437,7 @@ the research and test process on industrial protocols.
 ### Papers
 - [Exploring the OPC attack surface](https://claroty.com/team82/research/white-papers/exploring-the-opc-attack-surface) - Claroty Team82 (2021)
 ### Tools
+- [freeopcua](https://github.com/FreeOpcUa/freeopcua) - Open Source C++ OPC-UA Server and Client Library
 - [python-opcua](https://github.com/FreeOpcUa/python-opcua) - OPC UA Client and Server in Python
 
 

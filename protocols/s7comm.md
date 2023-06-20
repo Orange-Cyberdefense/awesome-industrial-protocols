@@ -22,4 +22,4 @@
 ## Tools
 - [s7scan](https://github.com/klsecservices/s7scan) - Scan networks to gather basic information about Siemens PLCs
 
-> All AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`.

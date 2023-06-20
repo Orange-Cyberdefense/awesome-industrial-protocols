@@ -19,4 +19,4 @@
 ## Tools
 - [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
 
-> All AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`.

@@ -27,4 +27,4 @@
 - [Redpoint](https://github.com/digitalbond/Redpoint) - Digital Bond's ICS enumeration tools (nmap scripts)
 - [scapy-cip-enip](https://github.com/scy-phy/scapy-cip-enip) - Ethernet/IP dissectors for Scapy
 
-> All AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`.

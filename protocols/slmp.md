@@ -19,4 +19,4 @@
 ## Tools
 - [PySLMPClient](https://github.com/masahase0117/PySLMPClient) - Python client for SLMP
 
-> All AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`.

@@ -18,4 +18,4 @@
 
 
 
-> All AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`.

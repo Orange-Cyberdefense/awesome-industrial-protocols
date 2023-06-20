@@ -20,4 +20,4 @@
 - [dnp-info](https://github.com/sjhilt/Nmap-NSEs/blob/master/dnp3-info.nse) - Nmap discovery script for DNP3
 - [FreyrSCADA DNP3](https://github.com/FreyrSCADA/DNP3) - DNP3 Protocol - Outstation Server and Client Master Simulator
 
-> All AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`.
