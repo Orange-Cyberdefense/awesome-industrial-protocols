@@ -3,7 +3,10 @@
 # Interface to OpenAI for AI-generated data
 
 from re import findall
-import openai
+try:
+    import openai
+except ModuleNotFoundError:
+    pass
 from openai.error import AuthenticationError, RateLimitError
 # Internal
 from config import ai, protocols as p
@@ -33,6 +36,8 @@ ERR_NOPROTO = "AI does not recognize {0} as a protocol (message: {1})."
 class AI(object):
     """Handle requests to OpenAI to extract data for protocols."""
     def __init__(self):
+        # It will raise an exception (not caught this time) if not installed.
+        import openai
         openai.api_key = ai.key
 
     def __security_questions(self, name: str) -> str:

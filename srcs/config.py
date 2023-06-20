@@ -10,9 +10,15 @@ from os.path import abspath, dirname, join
 # KEYS                                                                        #
 #-----------------------------------------------------------------------------#
 
+# Used to query OpenAI models to gather information about protocols
 with open("openai_api_key") as fd:
     key = fd.read().strip()
 OPENAI_API_KEY = key # Insert your OpenAI API key, don't push it.
+
+# Used for searching videos on Youtube
+with open("google_api_key") as fd:
+    key = fd.read().strip()
+GOOGLE_API_KEY = key # Insert your Google API key, don't push it.
 
 #-----------------------------------------------------------------------------#
 # LIST CONFIGURATION                                                          #
@@ -184,3 +190,15 @@ cvelist = SimpleNamespace()
 # URL to NIST's NVD CVE database's API
 cvelist.api_keywords_search = "https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch={0}"
 cvelist.nvd_detail = "https://nvd.nist.gov/vuln/detail/"
+
+youtube = SimpleNamespace()
+# URL to Youtube site and API
+youtube.api_service_name = "youtube"
+youtube.api_version = "v3"
+youtube.watch_url = "https://www.youtube.com/watch?v="
+# Selected channels
+youtube.selected_channels = {
+    "UC6Om9kAkl32dWlDSNlDS9Iw": "DEFCON", # DEFCONConference
+    "UCJ6q9Ie29ajGqKApbLqfBOg": "Black Hat",
+    "UCcA_TRQ5sLtFC3pAkaVot3Q": "SANS ICS Security"
+}

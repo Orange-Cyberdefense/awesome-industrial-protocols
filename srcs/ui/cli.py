@@ -15,7 +15,7 @@ from config import TOOL_DESCRIPTION, AI_WARNING, protocols as p
 from config import links, types, mongodb, wireshark, scapy
 from db import MongoDB, DBException, Protocols, Protocol, Links, Link
 from out import Markdown, MDException
-from search import SearchException, AI, Wireshark, Scapy, CVEList
+from search import SearchException, AI, Wireshark, Scapy, CVEList, Youtube
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -71,6 +71,8 @@ ERR_OPENAI = "OpenAI not found (pip install openai)."
 ERR_SEARCHMETHOD = "Search method not found. Choose between {0} (-h for help)."
 ERR_NODISSECTOR = "No dissector found for protocol {0}."
 ERR_NOLAYER = "No layer found for protocol {0}."
+ERR_GOOGLEAPI = "To use Youtube search you need google-api-python-client." \
+                "(pip install google-api-python-client)."
 
 def ERROR(msg: str, will_exit: bool=False):
     print("ERROR:", msg, file=stderr)
@@ -336,6 +338,7 @@ class CLI(object):
             "wireshark": self.__cmd_search_wireshark,
             "scapy": self.__cmd_search_scapy,
             "cve": self.__cmd_search_cve
+            # "youtube": self.__cmd_search_youtube
         }
         method, protocol = self.options.search
         protocol = self.__get_protocol(protocol)
@@ -351,16 +354,14 @@ class CLI(object):
     def __cmd_search_openai(self, protocol: Protocol) -> None:
         """-S openai / --search openai"""
         try:
-            from search import AI
-        except ImportError:
-            ERROR(ERR_OPENAI, will_exit=True)
-        print(AI_WARNING)
-        try:
             ai = AI()
+            print(AI_WARNING)
             for q, a in ai.protocol_generator(protocol.name):
                 self.__write_field(protocol, q, a, getattr(protocol, q))
         except SearchException as se:
             ERROR(str(se), will_exit=True)
+        except ModuleNotFoundError:
+            ERROR(ERR_OPENAI, will_exit=True)
 
     def __cmd_search_wireshark(self, protocol: Protocol) -> None:
         """-S wireshark / --search wireshark"""
@@ -408,11 +409,11 @@ class CLI(object):
     def __cmd_search_cve(self, protocol: Protocol) -> None:
         """-S cve / --search cve"""
         try:
+            current_list = [self.links.get_id(x).name for x in protocol.get(p.cve)[1]]
             print(MSG_CVE_WAIT)
-            _, current_cve_list = protocol.get(p.cve)
             candidates = CVEList().search_by_keywords(protocol)
             for c in candidates:
-                if self.links.has(c.url):
+                if self.links.has(c.url) and c.id in current_list:
                     continue # Skipping the ones we already have
                 print(c)
                 if self.__confirm(MSG_CONFIRM_ADDCVE.format(c.id,
@@ -428,6 +429,29 @@ class CLI(object):
                 print("---")
         except SearchException as se:
             ERROR(str(se), will_exit=True)
+
+    def __cmd_search_youtube(self, protocol: Protocol) -> None:
+        """-S youtube / --search youtube"""
+        try:
+            candidates = Youtube().get_videos(protocol)
+            for c in candidates:
+                print(c)
+                if self.__confirm(MSG_CONFIRM_ADDVIDEO.format(c.title,
+                                                              protocol.name),
+                                  self.options.force):
+                    link = self.__cmd_add_link(c.title, c.url,
+                                               "@ {0} ({1})".format(c.channel, c.year),
+                                               "conference")
+                    if link:
+                        try:
+                            protocol.set(p.resources, link.id)
+                        except DBException as dbe:
+                            ERROR(str(dbe))
+                print("---")
+        except SearchException as se:
+            ERROR(str(se), will_exit=True)
+        except ModuleNotFoundError:
+            ERROR(ERR_GOOGLEAPI, will_exit=True)                
             
     def __cmd_note(self) -> None:
         """-N / --note"""
