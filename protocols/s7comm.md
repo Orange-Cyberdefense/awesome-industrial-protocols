@@ -20,6 +20,8 @@
 - [The Siemens S7 Communication - Part 1 General Structure](http://gmiru.com/article/s7comm/) - On GyM's Personal Blog (2016)
 - [The Siemens S7 Communication - Part 2 Job Requests and Ack Data](http://gmiru.com/article/s7comm-part2/) - On GyM's Personal Blog (2017)
 ## Tools
+- [python-snap7](https://github.com/gijzelaerr/python-snap7) - A Python wrapper for the snap7 PLC communication library
 - [s7scan](https://github.com/klsecservices/s7scan) - Scan networks to gather basic information about Siemens PLCs
+- [Snap7](https://snap7.sourceforge.net/) - Step7 Open Source Ethernet Communication Suite
 
 > All unreviewed AI-generated data is marked with `*`.
