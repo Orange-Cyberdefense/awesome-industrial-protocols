@@ -1,6 +1,7 @@
 # Turn/IP
 # Claire-lex - 2023
 # Interface to search for data in Wireshark dissectors
+# pylint: disable=too-few-public-methods,no-self-use
 
 """Search for data in Wireshark dissectors."""
 
@@ -36,6 +37,7 @@ class Dissector(object):
 
     @property
     def url(self):
+        """Return URL to dissector built from filename."""
         return join(w.dissectors_url, self.raw["path"])
 
     @property
@@ -47,15 +49,15 @@ class Dissector(object):
         names = []
         for line in self.code.split("\n"):
             if w.naming_function in line:
-                names = re_search("[^\(]\((.*?)\);", line)
-                if names and len(names.groups()):
+                names = re_search(r"[^\(]\((.*?)\);", line)
+                if names and names.groups():
                     names = [x.replace("\"", "").strip() for x in names.group(1).split(",")]
                     return names
         return None
-        
+
 class Wireshark(object):
     """Interface to Wireshark dissectors code using GitHub's API."""
-    
+
     def __init__(self):
         pass
 
@@ -67,8 +69,8 @@ class Wireshark(object):
         results = []
         for entry in dissectors["tree"]:
             if isinstance(entry, dict) and "path" in entry.keys():
-                path = re_search("^packet-([^\.]+)\.c$", entry["path"])
-                if path and len(path.groups()):
+                path = re_search(r"^packet-([^\.]+)\.c$", entry["path"])
+                if path and path.groups():
                     match = find(path.group(1), protocol.names, threshold=1)
                     if match:
                         results.append(Dissector(entry))
@@ -79,7 +81,7 @@ class Wireshark(object):
                 if has_common_items(entry.names, protocol.names):
                     return [entry] # This one matches, it's enough
         return results
-        
+
     def __get_dissectors_tree(self):
         """Get the SHA of the dissectors' folder tree.
 

@@ -1,17 +1,19 @@
 # Turn/IP
 # Claire-lex - 2023
 # Command-line interface
+# pylint: disable=invalid-name,too-few-public-methods,redefined-builtin,no-self-use
+# pylint: disable=redefined-outer-name
 
-"""Command-line interface
-"""
+"""Command-line interface."""
 
 from argparse import ArgumentParser
 from os import get_terminal_size
 from os.path import exists, join
 from sys import stderr
 from subprocess import run as subprocess_run
+from textwrap import fill
 # Internal
-from config import TOOL_DESCRIPTION, AI_WARNING, protocols as p 
+from config import TOOL_DESCRIPTION, AI_WARNING, protocols as p
 from config import links, types, mongodb, wireshark, scapy
 from db import MongoDB, DBException, Protocols, Protocol, Links, Link
 from out import Markdown, MDException
@@ -62,6 +64,7 @@ MSG_CONFIRM_OVERWRITE = "File '{0}' already exists. Overwrite?"
 MSG_CONFIRM_ADDDISSECTOR = "Do you want to set dissector {0} for protocol {1}?"
 MSG_CONFIRM_ADDLAYER = "Do you want to set layer {0} for protocol {1}?"
 MSG_CONFIRM_ADDCVE = "Do you want to add {0} to protocol {1}?"
+MSG_CONFIRM_ADDVIDEO = "Do you want to add video '{0}' to protocol {1}?"
 
 ERR_ACTION = "No action is defined. Choose between {0} (-h for help)."
 ERR_WRITE = "Write requires data (-d) OR link (-l) (-h for help)."
@@ -74,7 +77,8 @@ ERR_NOLAYER = "No layer found for protocol {0}."
 ERR_GOOGLEAPI = "To use Youtube search you need google-api-python-client." \
                 "(pip install google-api-python-client)."
 
-def ERROR(msg: str, will_exit: bool=False):
+def ERROR(msg: str, will_exit: bool = False):
+    """Display error messages to terminal."""
     print("ERROR:", msg, file=stderr)
     if will_exit:
         exit(-1)
@@ -120,7 +124,7 @@ class CLI(object):
         self.protocols = Protocols()
         self.links = Links()
 
-    def run(self, argv: list=None):
+    def run(self):
         """Use arguments for command line to launch commands."""
         is_function = False
         for option in vars(self.options):
@@ -145,7 +149,7 @@ class CLI(object):
                                      action="store_true", default=opt[3])
             elif len(opt) == 6:
                 options.add_argument(opt[0], opt[1], help=opt[2], nargs=opt[5],
-                                     metavar=opt[4], default=opt[3])                
+                                     metavar=opt[4], default=opt[3])
             else:
                 options.add_argument(opt[0], opt[1], help=opt[2],
                                      metavar=opt[4], default=opt[3])
@@ -164,8 +168,8 @@ class CLI(object):
     def __cmd_filter(self) -> None:
         """-F / --filter"""
         raise NotImplementedError("CLI: filter")
-        
-    def __cmd_add(self, new: str=None) -> bool:
+
+    def __cmd_add(self, new: str = None) -> bool:
         """-A / --add"""
         new = new if new else self.options.add
         if not self.__confirm(MSG_CONFIRM_ADD_PROTO.format(new), self.options.force):
@@ -177,8 +181,8 @@ class CLI(object):
             ERROR(dbe, will_exit=True)
         self.__cmd_read(new)
         return True
-        
-    def __cmd_read(self, protocol: str=None) -> None:
+
+    def __cmd_read(self, protocol: str = None) -> None:
         """-R / --read"""
         try:
             protocol = protocol if protocol else self.options.read
@@ -209,7 +213,6 @@ class CLI(object):
         except DBException as dbe:
             ERROR(dbe, will_exit=True)
 
-            
     def __cmd_write(self) -> None:
         """-W / --write"""
         protocol, field, value = self.options.write
@@ -217,10 +220,10 @@ class CLI(object):
         protocol = self.__get_protocol(protocol)
         try:
             field, oldvalue = protocol.get(field)
-        except DBException as dbe: # Field does not exist
+        except DBException: # Field does not exist
             if self.__confirm(MSG_CONFIRM_ADD_FIELD.format(field,
                                                            protocol.name),
-                                  self.options.force):
+                              self.options.force):
                 protocol.add(field, value)
         else: # Field exists, should we append or replace ?
             self.__write_field(protocol, field, value, oldvalue)
@@ -235,14 +238,14 @@ class CLI(object):
         if self.__confirm(MSG_CONFIRM_DELETE.format(protocol.name),
                           self.options.force):
             self.protocols.delete(protocol)
-            
+
     def __cmd_list_links(self) -> None:
         """-LL / --links"""
         for links in self.links.all_as_objects:
             print(links)
 
-    def __cmd_add_link(self, name: str=None, url: str=None, description: str=None,
-                       type: str=None) -> Link:
+    def __cmd_add_link(self, name: str = None, url: str = None,
+                       description: str = None, type: str = None) -> Link:
         """-AL / --add-link"""
         if self.options.add_link:
             name, url = self.options.add_link
@@ -261,7 +264,7 @@ class CLI(object):
                 ERROR(str(dbe), will_exit=True)
         return None
 
-    def __cmd_read_link(self, link=None) -> None:
+    def __cmd_read_link(self, link: str = None) -> None:
         """-RL / --read-link"""
         try:
             link = link if link else self.options.read_link
@@ -269,9 +272,8 @@ class CLI(object):
         except DBException as dbe:
             ERROR(str(dbe), will_exit=False)
 
-            
-    def __cmd_write_link(self, url: str=None, field: str=None, value:
-                         str=None) -> None:
+    def __cmd_write_link(self, url: str = None, field: str = None,
+                         value: str = None) -> None:
         """-WL / --write-link"""
         if self.options.write_link:
             url, field, value = self.options.write_link
@@ -285,7 +287,6 @@ class CLI(object):
         except DBException as dbe:
             ERROR(dbe, will_exit=True)
 
-            
     def __cmd_delete_link(self) -> None:
         """-DL / --delete-link"""
         try:
@@ -297,7 +298,7 @@ class CLI(object):
             if self.__confirm(MSG_CONFIRM_DELETE_LINK.format(link.url),
                               self.options.force):
                 self.links.delete(link)
-        
+
     def __cmd_gen(self) -> None:
         """-G / --gen"""
         try:
@@ -309,7 +310,7 @@ class CLI(object):
                     md_generator.write_awesome()
                     print(MSG_WRITE_ALIST.format(path))
             else:
-                md_generator.write_awesome()                    
+                md_generator.write_awesome()
                 print(MSG_WRITE_ALIST.format(path))
             # Protocol pages
             for protocol in self.protocols.all_as_objects:
@@ -330,22 +331,22 @@ class CLI(object):
             print(issue)
         for issue in self.links.check():
             print(issue)
-            
+
     def __cmd_search(self) -> None:
         """-S / --search"""
         methods = {
             "openai": self.__cmd_search_openai,
             "wireshark": self.__cmd_search_wireshark,
             "scapy": self.__cmd_search_scapy,
-            "cve": self.__cmd_search_cve
-            # "youtube": self.__cmd_search_youtube
+            "cve": self.__cmd_search_cve,
+            "youtube": self.__cmd_search_youtube
         }
         method, protocol = self.options.search
         protocol = self.__get_protocol(protocol)
         if method.lower() == "all":
             for method in methods:
                 if method != "openai":
-                    methods[method.lower()](protocol)                    
+                    methods[method.lower()](protocol)
         elif method.lower() not in methods.keys():
             ERROR(ERR_SEARCHMETHOD.format(", ".join(methods.keys())), will_exit=True)
         else:
@@ -415,7 +416,7 @@ class CLI(object):
             for c in candidates:
                 if self.links.has(c.url) and c.id in current_list:
                     continue # Skipping the ones we already have
-                print(c)
+                self.__box_print(c.id, c.url, c.description)
                 if self.__confirm(MSG_CONFIRM_ADDCVE.format(c.id,
                                                             protocol.name),
                                   self.options.force):
@@ -426,7 +427,6 @@ class CLI(object):
                             protocol.set(p.cve, link.id)
                         except DBException as dbe:
                             ERROR(str(dbe))
-                print("---")
         except SearchException as se:
             ERROR(str(se), will_exit=True)
 
@@ -435,7 +435,7 @@ class CLI(object):
         try:
             candidates = Youtube().get_videos(protocol)
             for c in candidates:
-                print(c)
+                self.__box_print(str(c), c.url, c.description)
                 if self.__confirm(MSG_CONFIRM_ADDVIDEO.format(c.title,
                                                               protocol.name),
                                   self.options.force):
@@ -447,16 +447,15 @@ class CLI(object):
                             protocol.set(p.resources, link.id)
                         except DBException as dbe:
                             ERROR(str(dbe))
-                print("---")
         except SearchException as se:
             ERROR(str(se), will_exit=True)
         except ModuleNotFoundError:
-            ERROR(ERR_GOOGLEAPI, will_exit=True)                
-            
+            ERROR(ERR_GOOGLEAPI, will_exit=True)
+
     def __cmd_note(self) -> None:
         """-N / --note"""
         raise NotImplementedError("CLI: note")
-        
+
     def __cmd_mongoimport(self) -> None:
         "-MI / --mongoimport"
         cmd = ["mongoimport", "--db=\"{0}\"".format(mongodb.database), "--drop"]
@@ -476,8 +475,23 @@ class CLI(object):
         links = ["--collection=links", "--out=\"{0}\"".format(linksfile)]
         subprocess_run(cmd + proto)
         subprocess_run(cmd + links)
-        
+
     #--- Helpers -------------------------------------------------------------#
+
+    def __box_print(self, title: str, url: str, description: str) -> None:
+        """Display information in ASCII boxes."""
+        table_size = get_terminal_size().columns
+        text_size = table_size - 4
+        table_format = "| {0: <" + str(text_size) + "} |"
+        print("-" * (table_size - 1))
+        for t in fill(title, text_size).split("\n"):
+            print(table_format.format(t))
+        for u in fill(url, text_size).split("\n"):
+            print(table_format.format(u))
+        print("-" * (table_size - 1))
+        for d in fill(description, text_size).split("\n"):
+            print(table_format.format(d))
+        print("-" * (table_size - 1))
 
     def __print_links(self, table_format, key, link_ids: list) -> None:
         """Print links from ID."""
@@ -494,8 +508,8 @@ class CLI(object):
                 link = str(dbe)
             print(table_format.format(key, link))
             key = "" # We only want to print the key for the first line
-    
-    def __print_table(self, protocol: dict, nocap: bool=False) -> None:
+
+    def __print_table(self, protocol: dict, nocap: bool = False) -> None:
         """Displays the protocol table on terminal."""
         full_table_size = get_terminal_size().columns
         table_size = full_table_size - 20 - 8
@@ -529,11 +543,11 @@ class CLI(object):
         except DBException as dbe:
             ERROR(str(dbe), will_exit=True)
         return protocol
-        
-    def __confirm(self, msg, force):
+
+    def __confirm(self, msg: str, force: bool):
         """Interactively ask for confirmation from the user."""
         confirm = True if force else False
         if not force:
             res = input("{0} [y/n]: ".format(msg))
-            confirm = True if res in ("y","Y") else False
+            confirm = True if res in ("y", "Y") else False
         return confirm

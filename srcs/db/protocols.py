@@ -1,12 +1,13 @@
 # Turn/IP
 # Claire-lex - 2023
 # Protocols and Protocol class
+# pylint: disable=invalid-name,no-member
 
 """Classes that represent and handle protocols' info from the database.
 """
 
-from . import MongoDB, DBException, find, exact_find
 from config import protocols as p, types, mongodb
+from . import MongoDB, DBException, find, exact_find
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -30,23 +31,20 @@ class Protocol(object):
 
     def __init__(self, **kwargs):
         """All entries from dictionary kwargs is converted to an attribute."""
-        try:
-            self.__db = MongoDB()
-        except DBException as dbe:
-            ERROR(dbe)
+        self.__db = MongoDB()
         for k, v in kwargs.items():
             setattr(self, k, v)
 
     #--- Public --------------------------------------------------------------#
-            
+
     def create(self, **kwargs):
         """Create a new protocol object."""
         for k, v in kwargs.items():
             setattr(self, k, v)
         self.__fill() # Add mandatory field to the object if missing
         return self
-        
-    def get(self, field:str) -> tuple:
+
+    def get(self, field: str) -> tuple:
         """Get the exact name and value associated to field.
 
         The research is case-insensitive.
@@ -58,9 +56,9 @@ class Protocol(object):
             return match[0], getattr(self, match[0])
         if len(match) > 1:
             raise DBException(ERR_MULTIMATCH.format(", ".join(match)))
-        raise DBException(ERR_UNKFIELD.format(self.name, field)) from None            
+        raise DBException(ERR_UNKFIELD.format(self.name, field)) from None
 
-    def set(self, field:str, value, replace=False) -> None:
+    def set(self, field: str, value: object, replace: bool = False) -> None:
         """Update existing field in protocol."""
         field, oldvalue = self.get(field)
         # Different behavior if linklist
@@ -81,14 +79,13 @@ class Protocol(object):
         setattr(self, field, value)
         self.__check()
 
-    def add(self, field:str, value) -> None:
+    def add(self, field: str, value: object) -> None:
         """Add a new field to protocol."""
         setattr(self, field, value)
         self.set(field, value)
 
-    def append(self, field:str, value) -> None:
+    def append(self, field: str, value: object) -> None:
         """Append a value to the existing value in a field."""
-        print("append")
         _, oldvalue = self.get(field)
         oldvalue = [oldvalue] if not isinstance(oldvalue, list) else oldvalue
         if value not in oldvalue:
@@ -100,8 +97,8 @@ class Protocol(object):
     def check(self):
         """Check visitor."""
         self.__check()
-        
-    def to_dict(self, exclude_id: bool=True) -> dict:
+
+    def to_dict(self, exclude_id: bool = True) -> dict:
         """Convert protocol object's content to dictionary."""
         pdict = {}
         for item in self.fields:
@@ -109,7 +106,7 @@ class Protocol(object):
                 continue
             pdict[item] = getattr(self, item)
         return pdict
-    
+
     @property
     def names(self) -> list:
         """Return all names, including aliases."""
@@ -120,11 +117,11 @@ class Protocol(object):
     @property
     def fields(self) -> list:
         """Return fields in protocol object (public class attributes)."""
-        return [x for x in self.__dict__.keys() if not x.startswith("_Protocol_")]
+        return [x for x in self.__dict__ if not x.startswith("_Protocol_")]
 
     def __fill(self):
         """Check that all mandatory fields are set for protocol objects."""
-        for attr,_ in p.ALL_FIELDS.items():
+        for attr, _ in p.ALL_FIELDS.items():
             try:
                 getattr(self, attr)
             except AttributeError:
@@ -132,7 +129,7 @@ class Protocol(object):
         self.__check()
 
     #--- Private -------------------------------------------------------------#
-                
+
     def __check(self):
         """Check that all mandatory fields are set for protocol objects."""
         try:
@@ -140,39 +137,40 @@ class Protocol(object):
                 getattr(self, attr)
         except AttributeError:
             raise DBException(ERR_MANDFIELD.format(attr, self.name)) from None
-            
+
 #-----------------------------------------------------------------------------#
 # Protocols class                                                             #
 #-----------------------------------------------------------------------------#
-        
+
 class Protocols(object):
     """Interface with database to handle the protocols' collection."""
     __db = None
-    
+
     def __init__(self):
         self.__db = MongoDB()
-            
-    def get(self, protocol_name:str) -> Protocol:
+
+    def get(self, protocol_name: str) -> Protocol:
         """Get a protocol by its name. Returns data as a Protocol object.
 
         The research is case-insensitive. The name also be one of the aliases.
 
         :raises DBException: If the protocol does not exist.
         """
-        def all_names(protocol:dict):
+        def all_names(protocol: dict) -> list:
+            """Return all the names (regular name and aliases) for a protocol."""
             alias = []
             if p.alias in protocol.keys():
                 alias = protocol[p.alias] if isinstance(protocol[p.alias], list) \
                         else [protocol[p.alias]]
             return [protocol[p.name]] + alias
-        
+
         match = []
         # We do that all the time (I know it sucks) to be up to date with db
         for protocol in self.all:
-            if len(exact_find(protocol_name, all_names(protocol))):
+            if exact_find(protocol_name, all_names(protocol)):
                 match = [Protocol(**protocol)]
                 break # We found the exact match
-            elif len(find(protocol_name, all_names(protocol))):
+            elif find(protocol_name, all_names(protocol)):
                 match.append(Protocol(**protocol))
         if len(match) == 1:
             return match[0]
@@ -181,7 +179,7 @@ class Protocols(object):
             raise DBException(ERR_MULTIMATCH.format(", ".join(match)))
         raise DBException(ERR_UNKPROTO.format(protocol_name))
 
-    def add(self, protocol:Protocol):
+    def add(self, protocol: Protocol) -> None:
         """Add a new protocol."""
         try:
             proto2 = self.get(protocol.name)
@@ -190,8 +188,8 @@ class Protocols(object):
         else:
             raise DBException(ERR_EXIPROTO.format(proto2.name))
         self.__db.protocols.insert_one(protocol.to_dict())
-        
-    def delete(self, protocol:Protocol) -> None:
+
+    def delete(self, protocol: Protocol) -> None:
         """Delete an existing protocol."""
         self.get(protocol.name) # Will raise if unknown
         self.__db.protocols.delete_one({p.name: protocol.name})
@@ -203,17 +201,18 @@ class Protocols(object):
                 protocol.check()
             except DBException as dbe:
                 yield str(dbe)
-        
+
     @property
     def all(self) -> list:
-        """Return the complete list of protocols as JSON."""
+        """Return the list of protocols as JSON."""
         return [x for x in self.__db.protocols_all]
 
     @property
     def all_as_objects(self) -> list:
+        """Return the list of protocols as Protocol objects."""
         objects = [Protocol(**x) for x in self.__db.protocols_all]
         return sorted(objects, key=lambda x: x.name.lower())
-        
+
     @property
     def list(self) -> list:
         """Return the list of protocol names."""

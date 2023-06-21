@@ -1,6 +1,7 @@
 # Turn/IP
 # Claire-lex - 2023
 # Search module default file
+# pylint: disable=wildcard-import,redefined-builtin
 
 """File for automated data search for protocols."""
 

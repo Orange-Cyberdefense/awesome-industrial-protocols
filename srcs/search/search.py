@@ -1,14 +1,15 @@
 # Turn/IP
 # Claire-lex - 2023
 # Interface to search for data in Scapy layers
+# pylint: disable=redefined-builtin
 
 """Functions for data search using JSON APIs (GitHub)."""
 
-from requests import get
-from requests.exceptions import ConnectionError
+from base64 import b64decode
 from json import loads
 from json.decoder import JSONDecodeError
-from base64 import b64decode
+from requests import get
+from requests.exceptions import ConnectionError
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -23,6 +24,7 @@ ERR_DLCODE = "Code could not be retrieved from API ({0})."
 #-----------------------------------------------------------------------------#
 
 class SearchException(Exception):
+    """Exception class for automated search-related errors."""
     pass
 
 #--- Extract data from JSON APIs ---------------------------------------------#

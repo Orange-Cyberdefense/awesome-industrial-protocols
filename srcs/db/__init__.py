@@ -1,6 +1,7 @@
 # Turn/IP
 # Claire-lex - 2023
 # DB module default file
+# pylint: disable=wildcard-import
 
 """Database management
 

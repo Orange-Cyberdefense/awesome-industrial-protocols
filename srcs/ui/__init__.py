@@ -1,6 +1,7 @@
 # Turn/IP
 # Claire-lex - 2023
 # UI module default file
+# pylint: disable=wildcard-import
 
 """User interfaces
 

@@ -1,15 +1,15 @@
 # Turn/IP
 # Claire-lex - 2023
 # Interface to search for data in Scapy layers
+# pylint: disable=too-few-public-methods,no-self-use
 
 """Search for data in Scapy layers."""
 
 from importlib.util import find_spec
-from os.path import dirname, basename, join
-from glob import glob
+from os.path import dirname
 # Internal
 from config import scapy as s
-from db import find, has_common_items, Protocol
+from db import find, Protocol
 from . import SearchException, get_api_json
 
 #-----------------------------------------------------------------------------#
@@ -34,11 +34,12 @@ class Layer(object):
 
     @property
     def names(self):
+        """Return all the names but so far there's only one name..."""
         return self.name
-        
+
     def __str__(self):
         return "Layer {0}: {1}".format(self.name, self.url)
-        
+
 class Scapy(object):
     """Interface to Scapy layers using GitHub's API and current install."""
     local_install = None
@@ -50,8 +51,8 @@ class Scapy(object):
         """Get Scapy's install directory if it is installed."""
         if find_spec("scapy"):
             import scapy
-            self.scapy_directory = dirname(scapy.__file__)
-            
+            self.local_install = dirname(scapy.__file__)
+
     def get_layer(self, protocol: Protocol) -> list:
         """Get the Scapy layer corresponding to protocol from Github's API."""
         candidates = []

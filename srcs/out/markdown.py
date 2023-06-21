@@ -1,6 +1,7 @@
 # Turn/IP
 # Claire-lex - 2023
 # Markdown text generator
+# pylint: disable=invalid-name,no-self-use,unnecessary-lambda,too-many-instance-attributes
 
 """Markdown text generator."""
 
@@ -9,7 +10,7 @@ from re import sub
 # Internal
 from config import markdown as m, LIST_TITLE, LIST_DESCRIPTION, LIST_LOGO, \
     protocols as p, types, links as l
-from db import DBException, Protocols, Protocol, Links, Link
+from db import DBException, Protocols, Protocol, Links
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -38,6 +39,7 @@ BORDER_TABLE = "|---|---|"
 #-----------------------------------------------------------------------------#
 
 class MDException(Exception):
+    """Exception class for Markdown generated-related errors."""
     pass
 
 class Markdown(object):
@@ -45,10 +47,12 @@ class Markdown(object):
     alist_template = None
     alist_file = None
     ppage_template = None
+    ppage_file = None
     protocols = None
     links = None
     awesome_list = None
-    
+    protocol_page = None
+
     def __init__(self):
         self.alist_template = join(m.templates_path, m.awesomelist_template)
         self.alist_file = join(m.awesomelist_path, m.awesomelist_name)
@@ -71,7 +75,7 @@ class Markdown(object):
         with open(self.ppage_file, "w") as fd:
             fd.write("\n".join(self.protocol_page))
             fd.write("\n")
-            
+
     def gen_awesome_list(self, protocols: Protocols, links: Links, write=True) -> str:
         """Convert protocols to a nice awesome list in Markdown."""
         self.protocols = protocols.all_as_objects
@@ -93,12 +97,12 @@ class Markdown(object):
         if write:
             self.write_awesome()
         return self.alist_file
-    
+
     def gen_protocol_pages(self, protocols: Protocols, links: Links) -> str:
         """Convert all protocols to a set of protocol pages in Markdown."""
         all_path = []
         for protocol in protocols.all_as_objects:
-            path = self.protocol_page(protocol)
+            path = self.gen_protocol_page(protocol, links)
             all_path.append(path)
         return all_path
 
@@ -122,7 +126,7 @@ class Markdown(object):
         if write:
             self.write_protocol_page()
         return self.ppage_file
-    
+
     #--- Private -------------------------------------------------------------#
 
     def __read(self, template_file: str) -> str:
@@ -132,7 +136,7 @@ class Markdown(object):
 
     def __f_title(self) -> str:
         return H1(LIST_TITLE)
-                
+
     def __f_description(self) -> str:
         return LIST_DESCRIPTION
 
@@ -156,11 +160,11 @@ class Markdown(object):
         # Main table
         for protocol in self.protocols:
             current = ["\n", H2(protocol.name)]
-            current.append(TABLE("Protocol" ,protocol.name))
+            current.append(TABLE("Protocol", protocol.name))
             current.append(BORDER_TABLE)
             # Main table
             for k, v in protocol.to_dict().items():
-                if not v or not len(v):
+                if not v:
                     continue
                 if k in p.FIELDS and k != p.resources:
                     if p.TYPE(k) == types.LINKLIST:
@@ -186,12 +190,13 @@ class Markdown(object):
         return content
 
     def __f_name(self, protocol: Protocol) -> str:
+        """Return name as a head title."""
         return H1(protocol.name)
 
     def __f_table(self, protocol: Protocol) -> str:
         """Format a table with extended fields for protocol pages."""
         current = []
-        current.append(TABLE("Protocol" ,protocol.name))
+        current.append(TABLE("Protocol", protocol.name))
         current.append(BORDER_TABLE)
         for k, v in protocol.to_dict().items():
             if k != p.resources:
@@ -203,7 +208,7 @@ class Markdown(object):
                     current.append(TABLE(k, v))
         return "\n".join(current)
 
-    def __f_resources(self, protocol: Protocol, level: str=H2) -> list:
+    def __f_resources(self, protocol: Protocol, level: str = H2) -> list:
         """Format list of resources for awesome list and protocol pages."""
         rdict = {t: [] for t in l.TYPES}
         for link in protocol.resources:

@@ -1,6 +1,7 @@
 # Turn/IP
 # Claire-lex - 2023
 # MongoDB database manager
+# pylint: disable=invalid-name,import-error
 
 """Interface with MongoDB database
 
@@ -33,6 +34,7 @@ ERR_DBCONNECT = "Connection to database failed."
 
 # Error handling
 class DBException(Exception):
+    """Exception class for access to database-related errors."""
     pass
 
 class MongoDB(object):
@@ -66,35 +68,41 @@ class MongoDB(object):
 
     @property
     def protocols(self):
+        """Return protocols collection."""
         return self.db[mongodb.protocols]
 
     @property
     def protocols_count(self):
+        """Return number of protocols in collection."""
         return self.db[mongodb.protocols].count_documents({})
 
     @property
     def protocols_all(self) -> list:
+        """Return all protocols in collection."""
         return [x for x in self.db[mongodb.protocols].find()]
-    
+
     @property
     def links(self):
+        """Return links collection."""
         return self.db[mongodb.links]
 
     @property
     def links_count(self):
+        """Return number of links in collection."""
         return self.db[mongodb.links].count_documents({})
 
     @property
     def links_all(self) -> list:
+        """Return all links in collection."""
         return [x for x in self.db[mongodb.links].find()]
-    
+
     #-------------------------------------------------------------------------#
     # Private                                                                 #
     #-------------------------------------------------------------------------#
 
     def __check_connection(self):
+        """Check that we are connected to the database server."""
         try:
             self.client.admin.command('ping')
         except ConnectionFailure:
             raise DBException(ERR_DBCONNECT) from None
-

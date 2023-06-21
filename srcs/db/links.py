@@ -1,6 +1,7 @@
 # Turn/IP
 # Claire-lex - 2023
 # Links and Link class
+# pylint: disable=invalid-name,redefined-builtin
 
 """Classes that represent and handle links in the database."""
 
@@ -10,14 +11,14 @@ from urllib.error import URLError, HTTPError
 from socket import timeout as socket_timeout
 from re import match as re_match
 # Internal
-from . import MongoDB, DBException, find
 from config import mongodb, links as l
+from . import MongoDB, DBException, find
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
 #-----------------------------------------------------------------------------#
 
-TIMEOUT=2
+TIMEOUT = 2
 
 ERR_LINKTYPE = "Invalid link type, choose between: {0}."
 ERR_EMPTY = "A link must have at least a name and a url."
@@ -43,10 +44,7 @@ class Link(object):
     description: None
 
     def __init__(self, **kwargs):
-        try:
-            self.__db = MongoDB()
-        except DBException as dbe:
-            ERROR(dbe)
+        self.__db = MongoDB()
         self.id = kwargs[mongodb.id] if mongodb.id in kwargs else None
         self.name = kwargs[l.name] if l.name in kwargs else None
         self.__url = self.__set_url(kwargs[l.url]) if l.url in kwargs else None
@@ -84,7 +82,7 @@ class Link(object):
         document = {"url": self.url}
         newvalue = {field: value}
         self.__db.links.update_one(document, {"$set": newvalue})
-    
+
     @staticmethod
     def to_url(url: str) -> str:
         """Format URL string to match Link.url, to detect duplicates."""
@@ -95,7 +93,7 @@ class Link(object):
         """Try to open the URL to see if it exists. Raises DBException if not."""
         try:
             request = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-            urlopen(request, timeout=TIMEOUT)            
+            urlopen(request, timeout=TIMEOUT)
         except HTTPError as he:
             raise DBException(ERR_HTTP.format(url, str(he))) from None
         except (URLError, socket_timeout):
@@ -104,8 +102,8 @@ class Link(object):
     def check(self):
         """Check visitor."""
         self.__check()
-        
-    def to_dict(self, exclude_id: bool=True) -> dict:
+
+    def to_dict(self, exclude_id: bool = True) -> dict:
         """Convert link object's content to dictionary."""
         ldict = {
             l.name: self.name,
@@ -114,35 +112,35 @@ class Link(object):
             l.type: self.type
         }
         if not exclude_id:
-            ldict[l.id] = self._id
+            ldict[l.id] = self.id
         return ldict
 
     @property
     def url(self) -> str:
         """URL is internally handled as ParseResult (urllib), returned as str."""
         return self.__url.geturl()
-    
+
     @property
     def fields(self) -> list:
         """Return fields in protocol object (public class attributes)."""
         return (self.url, self.description, self.type)
 
-        
+
     #--- Private -------------------------------------------------------------#
 
     @staticmethod
-    def __set_url(url) -> ParseResult:
+    def __set_url(url: str) -> ParseResult:
         """Convert url passed as argument to a parsed url (uses urllib)."""
         url = url if re_match(r'http.*://.*', url) else "https://" + url
         url = urlparse(url)
-        if not url.scheme :
+        if not url.scheme:
             url._replace(scheme="https")
         return url
-        
+
     def __check(self):
         if not self.name or not self.__url:
             raise DBException(ERR_EMPTY)
-    
+
 #-----------------------------------------------------------------------------#
 # Links class                                                                 #
 #-----------------------------------------------------------------------------#
@@ -152,19 +150,16 @@ class Links(object):
     __db = None
 
     def __init__(self):
-        try:
-            self.__db = MongoDB()
-        except DBException as dbe:
-            ERROR(dbe)
-            
-    def get(self, url, no_raise=False) -> Link:
+        self.__db = MongoDB()
+
+    def get(self, url: str, no_raise: bool = False) -> Link:
         """Get a link object by its URL."""
         match = []
         for link in self.all_as_objects:
-            if len(find(Link.to_url(url), link.url, threshold=0)):
+            if find(Link.to_url(url), link.url, threshold=0):
                 match.append(link)
             # We also search by name
-            elif len(find(url, link.name, threshold=0)):
+            elif find(url, link.name, threshold=0):
                 match.append(link)
         if len(match) == 1:
             return match[0]
@@ -177,7 +172,7 @@ class Links(object):
             return None
         raise DBException(ERR_UNKURL.format(url))
 
-    def get_id(self, id) -> Link:
+    def get_id(self, id: object) -> Link:
         """Get a link object by its ID in database."""
         # TMP: replace with filter
         for link in self.all:
@@ -192,8 +187,9 @@ class Links(object):
         except DBException:
             return False
         return True
-    
-    def add(self, name, url, description, type=l.DEFAULT_TYPE) -> Link:
+
+    def add(self, name: str, url: str, description: str,
+            type: str = l.DEFAULT_TYPE) -> Link:
         """Add a link to link collection."""
         try:
             self.get(url)
@@ -221,13 +217,15 @@ class Links(object):
                 link.check()
             except DBException as dbe:
                 yield str(dbe)
-        
+
     @property
     def all(self) -> list:
+        """Return the list of links as JSON."""
         return [x for x in self.__db.links_all]
 
     @property
     def all_as_objects(self) -> list:
+        """Return the list of links as Link objects."""
         objects = [Link(**x) for x in self.__db.links_all]
         return sorted(objects, key=lambda x: x.name.lower())
 
