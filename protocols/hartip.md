@@ -3,7 +3,7 @@
 | Protocol | HART-IP |
 |---|---|
 | Name | HART-IP |
-| Aliases | HART |
+| Aliases | HART, WirelessHART |
 | Description | IP-based communication protocol for HART (ICS) data transmission |
 | Keywords |  |
 | Port(s) |  |
