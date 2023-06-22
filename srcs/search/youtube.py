@@ -8,6 +8,7 @@
 from importlib.util import find_spec
 try:
     from googleapiclient.discovery import build
+    from googleapiclient.errors import HttpError
 except ModuleNotFoundError as mnfe:
     pass
 # Internal
@@ -83,15 +84,23 @@ class Youtube(object):
         """
         candidates = []
         found_titles = []
-        for channel in y.selected_channels:
-            for name in protocol.names:
-                response = self.youtube_api.search().list(
-                    q=name,
-                    channelId=channel,
-                    part="snippet"
-                ).execute()
-                for item in response["items"]:
-                    if item["snippet"]["title"] not in found_titles:
-                        candidates.append(Video(item, self.youtube_api))
-                        found_titles.append(item["snippet"]["title"])
+        try:
+            for channel in y.selected_channels:
+                for name in protocol.names:
+                    response = self.youtube_api.search().list(
+                        q=name,
+                        channelId=channel,
+                        part="snippet"
+                    ).execute()
+                    for item in response["items"]:
+                        if item["snippet"]["title"] not in found_titles:
+                            try:
+                                video = Video(item, self.youtube_api)
+                            except SearchException:
+                                pass # Video was invalid
+                            else:
+                                candidates.append(video)
+                                found_titles.append(item["snippet"]["title"])
+        except HttpError as he:
+            raise SearchException(str(he)) from None
         return sorted(set(candidates), key=lambda x: x.year)

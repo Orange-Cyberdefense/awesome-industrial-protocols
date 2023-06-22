@@ -332,7 +332,7 @@ class CLI(object):
         for issue in self.links.check():
             print(issue)
 
-    def __cmd_search(self) -> None:
+    def __cmd_search(self, method: str = None, protocol:str = None) -> None:
         """-S / --search"""
         methods = {
             "openai": self.__cmd_search_openai,
@@ -341,16 +341,22 @@ class CLI(object):
             "cve": self.__cmd_search_cve,
             "youtube": self.__cmd_search_youtube
         }
-        method, protocol = self.options.search
-        protocol = self.__get_protocol(protocol)
-        if method.lower() == "all":
-            for method in methods:
-                if method != "openai":
-                    methods[method.lower()](protocol)
-        elif method.lower() not in methods.keys():
-            ERROR(ERR_SEARCHMETHOD.format(", ".join(methods.keys())), will_exit=True)
+        if not method and not protocol:
+            method, protocol = self.options.search
+        if protocol == "all":
+            for p in self.protocols.all_as_objects:
+                self.__cmd_search(method, p)
         else:
-            methods[method.lower()](protocol)
+            if not isinstance(protocol, Protocol):
+                protocol = self.__get_protocol(protocol)
+            if method.lower() == "all":
+                for method in methods:
+                    if method != "openai":
+                        methods[method.lower()](protocol)
+            elif method.lower() not in methods.keys():
+                ERROR(ERR_SEARCHMETHOD.format(", ".join(methods.keys())), will_exit=True)
+            else:
+                methods[method.lower()](protocol)
 
     def __cmd_search_openai(self, protocol: Protocol) -> None:
         """-S openai / --search openai"""

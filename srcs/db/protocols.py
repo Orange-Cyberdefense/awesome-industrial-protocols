@@ -206,7 +206,7 @@ class Protocols(object):
     def all(self) -> list:
         """Return the list of protocols as JSON."""
         return [x for x in self.__db.protocols_all]
-
+    
     @property
     def all_as_objects(self) -> list:
         """Return the list of protocols as Protocol objects."""
