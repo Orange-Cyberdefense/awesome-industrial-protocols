@@ -38,6 +38,7 @@ the research and test process on industrial protocols.
 - [ISA100.11a](#isa10011a)
 - [KNXnet/IP](#knxnetip)
 - [LoRaWAN](#lorawan)
+- [M-Bus](#mbus)
 - [Modbus](#modbus)
 - [Niagara Fox](#niagarafox)
 - [OPC-DA](#opcda)
@@ -49,7 +50,9 @@ the research and test process on industrial protocols.
 - [Profinet-IO](#profinetio)
 - [S-Bus](#sbus)
 - [S7comm](#s7comm)
+- [SERCOS-III](#sercosiii)
 - [SLMP](#slmp)
+- [TSAA](#tsaa)
 - [UMAS](#umas)
 - [ZigBee](#zigbee)
 
@@ -157,6 +160,8 @@ the research and test process on industrial protocols.
 | Nmap script(s) | [dicom-ping.nse](https://nmap.org/nsedoc/scripts/dicom-ping.html) |
 | Wireshark dissector | [packet-dcm.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-dcm.c) |
 | Detailed page | [dicom.md](../protocols/dicom.md) |
+### Conferences
+- [Healthscare – An Insider's Biopsy of Healthcare Application Security](https://www.youtube.com/watch?v=33dQhsIcp7U) - Seth Fogie @ Black Hat USA (2020)
 ### Tools
 - [DCMTK](https://dcmtk.org/en/) - DICOM ToolKit
 - [dicom-server](https://github.com/microsoft/dicom-server) - Microsoft's OSS Implementation of DICOMweb standard
@@ -178,6 +183,11 @@ the research and test process on industrial protocols.
 | Wireshark dissector | [packet-dnp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-dnp.c) |
 | Example Pcap(s) | [ICS-pcap DNP3](https://github.com/automayt/ICS-pcap/tree/master/DNP3) |
 | Detailed page | [dnp3.md](../protocols/dnp3.md) |
+### Conferences
+- [NSM 101 for ICS](https://www.youtube.com/watch?v=H6AWRziR028) - Chris Sistrunk @ DEF CON 23 101 Track (2015)
+- [SCADA Protocol Implementation Considerations | SANS ICS Concepts](https://www.youtube.com/watch?v=Fi7JhLm4vjY) - @ SANS ICS Security (2022)
+- [Sniffing SCADA](https://www.youtube.com/watch?v=4vPptUmyv4U) - Karl Koscher @ DEF CON 23 Packet Capture Village (2015)
+- [Unraveling SCADA Protocols Using Sulley Fuzzer](https://www.youtube.com/watch?v=UUta_Ord8GI) - Ganesh Devarajan @ DEF CON 15 (2014)
 ### Tools
 - [dnp-info](https://github.com/sjhilt/Nmap-NSEs/blob/master/dnp3-info.nse) - Nmap discovery script for DNP3
 - [dnp3-simulator](https://github.com/dnp3/dnp3-simulator) - .NET DNP3 simulator with GUI 
@@ -237,7 +247,6 @@ the research and test process on industrial protocols.
 - [enip-stack-detector](https://github.com/claroty/enip-stack-detector) - EtherNet/IP & CIP Stack Detector
 - [OpENer](https://github.com/EIPStackGroup/OpENer) - EtherNet/IP stack for I/O adapter devices
 - [pycomm3](https://github.com/ottowayi/pycomm3) - A Python Ethernet/IP library for communicating with Allen-Bradley PLCs
-- [Redpoint](https://github.com/digitalbond/Redpoint) - Digital Bond's ICS enumeration tools (nmap scripts)
 - [scapy-cip-enip](https://github.com/scy-phy/scapy-cip-enip) - Ethernet/IP dissectors for Scapy
 
 
@@ -298,7 +307,11 @@ the research and test process on industrial protocols.
 | Wireshark dissector | [packet-hartip.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hartip.c) |
 | Example Pcap(s) | [ICS-pcap HART-IP](https://github.com/automayt/ICS-pcap/tree/master/HART%20IP/hart_ip) |
 | Detailed page | [hartip.md](../protocols/hartip.md) |
-
+### Conferences
+- [Dissecting Industrial Wireless Implementations](https://www.youtube.com/watch?v=I-TCfl0Jm2M) - Blake Johnson @ DEF CON 25 ICS Village (2017)
+- [DTM Components: Shadow Keys to the ICS Kingdom](https://www.youtube.com/watch?v=VeMgbC0a-u8) - Alexander Bolshev and Gleb Cherbov @ Black Hat Europe (2014)
+- [ICSCorsair: How I Will PWN Your ERP Through 4-20 mA Current Loop](https://www.youtube.com/watch?v=T9tahQImuWI) - Alexander Bolshev and Gleb Cherbov @ Black Hat USA (2014)
+- [It WISNt Me Attacking Industrial Wireless Mesh Networks](https://www.youtube.com/watch?v=-WfP2VVhTt0) - Paternotte and van Ommeren @ DEF CON 25 (2018)
 
 
 ## HL7
@@ -322,7 +335,8 @@ the research and test process on industrial protocols.
 | Access | Paid |
 | Specifications | [ICCP (TASE.2) specification](https://webstore.iec.ch/publication/3760) |
 | Detailed page | [iccp.md](../protocols/iccp.md) |
-
+### Conferences
+- [Unraveling SCADA Protocols Using Sulley Fuzzer](https://www.youtube.com/watch?v=UUta_Ord8GI) - Ganesh Devarajan @ DEF CON 15 (2014)
 
 
 ## IEC-60870-5-104
@@ -434,6 +448,18 @@ the research and test process on industrial protocols.
 - [ChirpStack Network Server](https://github.com/brocaar/chirpstack-network-server) - Open-source LoRaWAN network-server
 - [lorawan-server](https://github.com/gotthardp/lorawan-server) - Compact server for private LoRaWAN networks
 - [lorawan-stack](https://github.com/TheThingsNetwork/lorawan-stack) - Open Source LoRaWAN Network Server
+
+
+## M-Bus
+| Protocol | M-Bus |
+|---|---|
+| Name | M-Bus |
+| Alias | Meter-Bus, EN13757 |
+| Description | Communication protocol for utility metering devices |
+| Access | The old specification is free, not the current one |
+| Specifications | [M-Bus specification](https://m-bus.com/documentation) |
+| Detailed page | [mbus.md](../protocols/mbus.md) |
+
 
 
 ## Modbus
@@ -587,7 +613,7 @@ the research and test process on industrial protocols.
 | Protocol | S7comm |
 |---|---|
 | Name | S7comm |
-| Alias | S7 |
+| Alias | S7, S7commPlus |
 | Description | Communication protocol for Siemens S7 PLCs |
 | Port | 102/tcp |
 | Nmap script(s) | [s7-info.nse](https://nmap.org/nsedoc/scripts/s7-info.html), [s7-enumerate.nse](https://github.com/digitalbond/Redpoint/blob/master/s7-enumerate.nse) |
@@ -597,10 +623,26 @@ the research and test process on industrial protocols.
 ### Articles
 - [The Siemens S7 Communication - Part 1 General Structure](http://gmiru.com/article/s7comm/) - On GyM's Personal Blog (2016)
 - [The Siemens S7 Communication - Part 2 Job Requests and Ack Data](http://gmiru.com/article/s7comm-part2/) - On GyM's Personal Blog (2017)
+### Conferences
+- [Fuzzing and Breaking Security Functions of SIMATIC PLCs](https://www.youtube.com/watch?v=XeSSuWR5PaU) - Gao Jian @ Black Hat Europe (2022)
+- [PLC-Blaster: A worm Living Solely In The PLC](https://www.youtube.com/watch?v=NNAKaAKRUow) - Ralf Spenneberg, Maik Brueggemann & Hendrik Schwartke @ Black Hat Asia (2016)
+- [Rogue7: Rogue Engineering-Station Attacks on S7 Simatic PLCs](https://www.youtube.com/watch?v=dHxsctLBUEI) - Uriel Malin, Sara Bitan, Avishai Wool and Eli Biham @ Black Hat USA (2019)
+- [The spear to break the security wall of S7CommPlus](https://www.youtube.com/watch?v=93lyRgZYxKw) - Cheng Lei @ DEF CON 25 (2017)
 ### Tools
 - [python-snap7](https://github.com/gijzelaerr/python-snap7) - A Python wrapper for the snap7 PLC communication library
 - [s7scan](https://github.com/klsecservices/s7scan) - Scan networks to gather basic information about Siemens PLCs
 - [Snap7](https://snap7.sourceforge.net/) - Step7 Open Source Ethernet Communication Suite
+
+
+## SERCOS-III
+| Protocol | SERCOS-III |
+|---|---|
+| Name | SERCOS-III |
+| Alias | SERCOS |
+| Description | IEC standard universal bus for Ethernet-based real-time communication |
+| Wireshark dissector | [packet-sercosiii.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-sercosiii.c) |
+| Detailed page | [sercosiii.md](../protocols/sercosiii.md) |
+
 
 
 ## SLMP
@@ -615,6 +657,16 @@ the research and test process on industrial protocols.
 | Detailed page | [slmp.md](../protocols/slmp.md) |
 ### Tools
 - [PySLMPClient](https://github.com/masahase0117/PySLMPClient) - Python client for SLMP
+
+
+## TSAA
+| Protocol | TSAA |
+|---|---|
+| Name | TSAA |
+| Alias | Triconex |
+| Description | Messaging protocol to read and write data to Triconex controllers |
+| Detailed page | [tsaa.md](../protocols/tsaa.md) |
+
 
 
 ## UMAS
