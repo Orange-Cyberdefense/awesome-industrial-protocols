@@ -39,7 +39,7 @@ markdown = SimpleNamespace()
 markdown.awesomelist_name = "README.md"
 markdown.awesomelist_path = abspath(join(dirname(abspath(__file__)), pardir))
 markdown.protocolpage_path = abspath(join(dirname(abspath(__file__)), pardir, "protocols"))
-markdown.protocolpage_relpath = join(pardir, "protocols")
+markdown.protocolpage_relpath = join("protocols")
 
 # Templates for Markdown pages
 markdown.awesomelist_template = "template-awesome-industrial-protocols.md"
