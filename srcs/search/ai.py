@@ -17,9 +17,9 @@ from re import findall
 from importlib.util import find_spec
 try:
     import openai
+    from openai.error import AuthenticationError, RateLimitError
 except ModuleNotFoundError:
     pass
-from openai.error import AuthenticationError, RateLimitError
 # Internal
 from config import ai, protocols as p
 from . import SearchException
@@ -28,6 +28,7 @@ from . import SearchException
 # Constants                                                                   #
 #-----------------------------------------------------------------------------#
 
+ERR_OAPI = "OpenAI API not found (pip install openai)"
 ERR_AIAUTH = "Your OpenAI API key is invalid or you don't have a paid plan."
 ERR_NOPROTO = "AI does not recognize {0} as a protocol (message: {1})."
 
@@ -39,7 +40,8 @@ class AI(object):
     """Handle requests to OpenAI to extract data for protocols."""
     def __init__(self):
         # It will raise an exception (not caught this time) if not installed.
-        find_spec('openai')
+        if not find_spec('openai'):
+            raise SearchException(ERR_OAPI)
         openai.api_key = ai.key
 
     #--- Public --------------------------------------------------------------#

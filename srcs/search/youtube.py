@@ -20,6 +20,7 @@ from . import SearchException
 # Constants                                                                   #
 #-----------------------------------------------------------------------------#
 
+ERR_GAPI = "Youtube API not found (pip install google-api-python-client)"
 ERR_YTAPI = "Invalid Youtube API object."
 ERR_BADRET = "Invalid format for result."
 
@@ -73,7 +74,8 @@ class Youtube(object):
 
     def __init__(self):
         # It will raise an exception (not caught this time) if not installed.
-        find_spec('googleapiclient')
+        if not find_spec('googleapiclient'):
+            raise SearchException(ERR_GAPI)
         self.youtube_api = build(y.api_service_name, y.api_version,
                                  developerKey=GOOGLE_API_KEY)
 
