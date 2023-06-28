@@ -1,9 +1,9 @@
-# CSP+
+# CC-Link
 
-| Protocol | CSP+ |
+| Protocol | CC-Link |
 |---|---|
-| Name | CSP+ |
-| Aliases |  |
+| Name | CC-Link |
+| Aliases | CSP+ |
 | Description | CC-Link IE communication profile for industrial automation networks |
 | Keywords | Mitsubishi, CC-Link, CC-Link IE, CLPA |
 | Port(s) |  |
