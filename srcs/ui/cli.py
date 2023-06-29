@@ -12,6 +12,7 @@ from os.path import exists, join
 from sys import stderr
 from subprocess import run as subprocess_run
 from textwrap import fill
+from bson.objectid import ObjectId
 # Internal
 from config import TOOL_DESCRIPTION, AI_WARNING, protocols as p
 from config import links, types, mongodb, wireshark, scapy
@@ -26,6 +27,7 @@ from search import SearchException, AI, Wireshark, Scapy, CVEList, Youtube
 OPTIONS = (
     ("-L", "--list", "list all protocols", None, None),
     ("-F", "--filter", "list protocols according to filter", None, "filter"),
+    ("-V", "--view", "view only a field of each protocol", None, "field"),
     ("-A", "--add", "add a new protocol", None, "protocol"),
     ("-R", "--read", "read data of a protocol", None, "protocol"),
     ("-W", "--write", "write data to a protocol", None, ("protocol", "field", "value"), 3),
@@ -99,6 +101,7 @@ class CLI(object):
         self.functions = {
             "list": self.__cmd_list,
             "filter": self.__cmd_filter,
+            "view": self.__cmd_view,
             "add": self.__cmd_add,
             "read": self.__cmd_read,
             "write": self.__cmd_write,
@@ -169,6 +172,15 @@ class CLI(object):
         """-F / --filter"""
         raise NotImplementedError("CLI: filter")
 
+    def __cmd_view(self, field = None) -> None:
+        """-V / --view"""
+        field = field if field else self.options.view
+        pdict = {}
+        for protocol in self.protocols.all_as_objects:
+            _, content = protocol.get(field)
+            pdict[protocol.name] = content
+        self.__print_table(pdict, nocap=True)
+    
     def __cmd_add(self, new: str = None) -> bool:
         """-A / --add"""
         new = new if new else self.options.add
@@ -525,6 +537,8 @@ class CLI(object):
             if k == mongodb.id:
                 continue
             elif k in p.ALL_FIELDS and p.TYPE(k) == types.LINKLIST and v:
+                self.__print_links(table_format, p.NAME(k), v)
+            elif v and isinstance(v, list) and isinstance(v[0], ObjectId):
                 self.__print_links(table_format, p.NAME(k), v)
             else:
                 v = ", ".join(v) if isinstance(v, list) else str(v)
