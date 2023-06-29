@@ -26,7 +26,7 @@ from search import SearchException, AI, Wireshark, Scapy, CVEList, Youtube
 
 OPTIONS = (
     ("-L", "--list", "list all protocols", None, None),
-    ("-F", "--filter", "list protocols according to filter", None, "filter"),
+    ("-F", "--filter", "list protocols matching a filter", None, "filter"),
     ("-V", "--view", "view only a field of each protocol", None, "field"),
     ("-A", "--add", "add a new protocol", None, "protocol"),
     ("-R", "--read", "read data of a protocol", None, "protocol"),
@@ -72,6 +72,7 @@ ERR_ACTION = "No action is defined. Choose between {0} (-h for help)."
 ERR_WRITE = "Write requires data (-d) OR link (-l) (-h for help)."
 ERR_BADDATA = "Data to write is invalid (-h for help)."
 ERR_BADLINK = "Link is invalid (-h for help)."
+ERR_NOFIELD = "Field '{0}' does not exist in any protocol."
 ERR_OPENAI = "OpenAI not found (pip install openai)."
 ERR_SEARCHMETHOD = "Search method not found. Choose between {0} (-h for help)."
 ERR_NODISSECTOR = "No dissector found for protocol {0}."
@@ -168,17 +169,40 @@ class CLI(object):
         print(MSG_PROTO_COUNT.format(self.protocols.count))
         print(MSG_LINKS_COUNT.format(self.links.count))
 
-    def __cmd_filter(self) -> None:
+    def __cmd_filter(self, filter = None) -> None:
         """-F / --filter"""
-        raise NotImplementedError("CLI: filter")
-
+        filter = filter if filter else self.options.filter
+        filter = filter.lower()
+        searched_fields = p.ALL_FIELDS.keys()
+        results = {}
+        for protocol in self.protocols.all_as_objects:
+            for key in searched_fields:
+                _, value = protocol.get(key)
+                if p.TYPE(key) == types.LINKLIST:
+                    links = [self.links.get_id(x) for x in value]
+                    value = " ".join([x.name for x in links] + \
+                                     [x.description for x in links])
+                else:
+                    value = " ".join(value) if isinstance(value, list) else str(value)
+                if filter in value.lower():
+                    results[protocol.name] = protocol.get(key)[1]
+        if results:
+            self.__print_table(results, nocap=True)
+    
     def __cmd_view(self, field = None) -> None:
         """-V / --view"""
         field = field if field else self.options.view
+        at_least_one_proto_has_field = False
         pdict = {}
         for protocol in self.protocols.all_as_objects:
-            _, content = protocol.get(field)
-            pdict[protocol.name] = content
+            try:
+                _, content = protocol.get(field)
+                pdict[protocol.name] = content
+                at_least_one_proto_has_field = True
+            except DBException as dbe:
+                pass
+        if not at_least_one_proto_has_field:
+            ERROR(ERR_NOFIELD.format(field), will_exit=True)
         self.__print_table(pdict, nocap=True)
     
     def __cmd_add(self, new: str = None) -> bool:

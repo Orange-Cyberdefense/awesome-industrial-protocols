@@ -47,16 +47,20 @@ but the (almost) graphical interface is under development. Here is an overview
 of the options (described below).
 
 ```
-usage: turn-ip.py [-h] [-L] [-F filter] [-A protocol] [-R protocol] [-W protocol
-                  field value] [-D protocol] [-N protocol] [-LL] [-AL name url]
-                  [-RL url] [-WL url field value] [-DL url] [-G] [-C] [-S method
-                  protocol] [-f] [-MI] [-ME]
+usage: turn-ip.py [-h] [-L] [-F filter] [-V field] [-A protocol] [-R protocol]
+                  [-W protocol field value] [-D protocol] [-N protocol] [-LL]
+                  [-AL name url] [-RL url] [-WL url field value] [-DL url] [-G]
+                  [-C] [-S method protocol] [-f] [-MI] [-ME]
 
 Industrial network protocols browser and more.
 
 optional arguments:
   -h, --help            show this help message and exit
   -L, --list            list all protocols
+  -F filter, --filter filter
+                        list protocols matching a filter
+  -V field, --view field
+                        view only a field of each protocol
   -A protocol, --add protocol
                         add a new protocol
   -R protocol, --read protocol
@@ -96,6 +100,11 @@ an exact match.
 python turn-ip.py -R myproto
 python turn-ip.py -R MyProt
 ```
+
+Protocol data can be filtered:
+
+- Option `-V` displays the value of one specific field for each protocol.
+- Option `-F` displays the protocol avec value matching with the filter.
 
 #### Add and modify a protocol
 
