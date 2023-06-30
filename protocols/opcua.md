@@ -21,7 +21,10 @@
 - [OPC UA Deep Dive (Part 2): What is OPC UA?](https://claroty.com/team82/research/opc-deep-dive-part-2-what-is-opc-ua) - Claroty Team82 (2023)
 - [OPC UA Deep Dive (Part 3): Exploring the OPC UA Protocol](https://claroty.com/team82/research/opc-ua-deep-dive-part-3-exploring-the-opc-ua-protocol) - Claroty Team82 (2023)
 - [Practical example of fuzzing OPC UA applications](https://ics-cert.kaspersky.com/publications/reports/2020/10/19/practical-example-of-fuzzing-opc-ua-applications/) - Kaspersky ICS-CERT (2020)
+- [Understanding the OPC Unified Architecture (OPC UA) Protocol](https://control.com/technical-articles/understanding-the-opc-ua-protocol/) - Anthony King Ho, Control Automation (2023)
 ## Conferences
+- [A Broken Chain: Discovering OPC UA Attack Surface and Exploiting the Supply Chain](https://www.youtube.com/watch?v=bWJ6DY86hkc) - @ Black Hat (2021)
+- [DEF CON 30 -  Jimmy Wylie - Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - @ DEF CON (2022)
 - [Resting on Feet of Clay: Securely Bootstrapping OPC UA Deployments](https://www.youtube.com/watch?v=8RUVB9eeITQ) - Alessandro Erba & Nils Ole Tippenhauer @ Black Hat Europe (2021)
 ## Papers
 - [Exploring the OPC attack surface](https://claroty.com/team82/research/white-papers/exploring-the-opc-attack-surface) - Claroty Team82 (2021)

@@ -18,7 +18,6 @@
 
 ## Conferences
 - [DEF CON 29 Biohacking Village - Alissa Knight, Mitch Parker - Playing with FHIR](https://www.youtube.com/watch?v=wrNyd60XPMg) - @ DEF CON (2021)
-- [Healthscare – An Insider's Biopsy of Healthcare Application Security](https://www.youtube.com/watch?v=33dQhsIcp7U) - Seth Fogie @ Black Hat USA (2020)
 - [Pestilential Protocol: How Unsecure HL7 Messages Threaten Patient Lives](https://www.youtube.com/watch?v=66x3vfac8rA) - @ Black Hat (2020)
 - [Understanding HL7 2.X Standards, Pen Testing, and Defending HL7 2.X Messages](https://www.youtube.com/watch?v=MR7cH44fjrc) - @ Black Hat (2016)
 

@@ -6,7 +6,7 @@
 | Aliases | Factory LAN, OPCN-2 |
 | Description | Japan Electrical Manufacturers' Association's industrial-use open network |
 | Keywords | JEMA |
-| Port(s) |  |
+| Port(s) | 55000/udp, 55001/udp, 55002/udp, 55003/udp |
 | Access to specs | Free |
 | Specifications | [FL-net specification](https://www.jema-net.or.jp/English/businessfields/standarization/opcn/standard/) |
 | Security features |  |

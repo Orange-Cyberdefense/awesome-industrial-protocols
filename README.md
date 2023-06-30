@@ -17,14 +17,17 @@ the research and test process on industrial protocols.
 
 - [BACnet/IP](#bacnetip)
 - [CAN](#can)
-- [CC-Link](#cclink)
+- [CC-Link IE](#cclinkie)
+- [CIP](#cip)
 - [CSPv4](#cspv4)
+- [DeviceNet](#devicenet)
 - [DF1](#df1)
 - [DICOM](#dicom)
 - [DNP3](#dnp3)
 - [Ether-S-I/O](#ethersio)
 - [EtherCAT](#ethercat)
 - [Ethernet/IP](#ethernetip)
+- [ETP](#etp)
 - [FF-HSE](#ffhse)
 - [FINS](#fins)
 - [FL-net](#flnet)
@@ -39,22 +42,27 @@ the research and test process on industrial protocols.
 - [KNXnet/IP](#knxnetip)
 - [LoRaWAN](#lorawan)
 - [M-Bus](#mbus)
+- [MELSEC](#melsec)
 - [Modbus](#modbus)
+- [MQTT](#mqtt)
 - [Niagara Fox](#niagarafox)
 - [OPC-DA](#opcda)
 - [OPC-UA](#opcua)
 - [PC-WORX](#pcworx)
+- [PCCC](#pccc)
 - [POWERLINK](#powerlink)
 - [ProConOs](#proconos)
 - [Profinet-DCP](#profinetdcp)
 - [Profinet-IO](#profinetio)
 - [S-Bus](#sbus)
 - [S7comm](#s7comm)
+- [SECS/GEM](#secsgem)
 - [SERCOS-III](#sercosiii)
 - [SLMP](#slmp)
 - [TriStation](#tristation)
 - [TSAA](#tsaa)
 - [UMAS](#umas)
+- [WITS](#wits)
 - [ZigBee](#zigbee)
 
 
@@ -73,7 +81,9 @@ the research and test process on industrial protocols.
 | Wireshark dissector | [packet-bacnet.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-bacnet.c) |
 | Detailed page | [bacnetip.md](protocols/bacnetip.md) |
 ### Articles
+- [10 things you should know about BACnet](https://www.rtautomation.com/rtas-blog/10-things-about-bacnet/) - Blog post on RTAutomation
 - [BACnet CVE-2019-12480](https://1modm.github.io/CVE-2019-12480.html) - On M's blog (2019)
+- [BACnet data representation](https://www.rtautomation.com/rtas-blog/bacnet-data-representation/) - Blog post on RTAutomation
 ### Conferences
 - [(in)Security in Building Automation: How to Create Dark Buildings with Light Speed](https://www.youtube.com/watch?v=PyOhwYgpGfM) - Thomas Brandstetter @ Black Hat USA (2017)
 - [HVACking Understand the Delta Between Security and Reality](https://www.youtube.com/watch?v=uJP061PUxgY) - Douglas McKee & Mark Bereza @ DEF CON 27 (2019)
@@ -109,17 +119,37 @@ the research and test process on industrial protocols.
 - [Self-Driving and Connected Cars: Fooling Sensors and Tracking Drivers](https://www.youtube.com/watch?v=C29UGFsIWVI) - Jonathan Petit @ Black Hat Europe (2015)
 
 
-## CC-Link
-| Protocol | CC-Link |
+## CC-Link IE
+| Protocol | CC-Link IE |
 |---|---|
-| Name | CC-Link |
-| Alias | CSP+ |
-| Description | CC-Link IE communication profile for industrial automation networks |
-| Keywords | Mitsubishi, CC-Link, CC-Link IE, CLPA |
+| Name | CC-Link IE |
+| Alias | CSP+, CC-Link, CC-Link IE TSN, CC-Link IE Control, CC-Link IE Field, CC-Link IE Field Basic |
+| Description | Industrial Ethernet communication network developed by the CC-Link Partner Association (CLPA) |
+| Keywords | Mitsubishi, CLPA |
 | Access | Free |
 | Specifications | [CSP+ specification](https://www.cc-link.org/en/downloads/index.html) |
-| Detailed page | [cclink.md](protocols/cclink.md) |
+| Detailed page | [cclinkie.md](protocols/cclinkie.md) |
+### Documentations
+- [CC-Link IE Field Network playlist](https://www.youtube.com/watch?v=h8QXlx2Xv9M&list=PL2zpUSDLjMt-J1HGOdzR1blv1z1s-eF03) - Mitsubishi Training
+- [CSP+ specification](https://www.cc-link.org/en/downloads/index.html) - Page to download CC-Link's CSP+ specifications
 
+
+## CIP
+| Protocol | CIP |
+|---|---|
+| Name | CIP |
+| Alias | Common Industrial Protocol |
+| Description | ODVA's protocol suite for industrial automation communication |
+| Keywords | ODVA, Ethernet/IP, DeviceNet, ControlNet, CompoNet |
+| Wireshark dissector | [packet-cip.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-cip.c) |
+| Detailed page | [cip.md](protocols/cip.md) |
+### Documentations
+- [CompoNet](https://www.odva.org/technology-standards/other-technologies/componet/) - Overview on ODVA.org
+- [ControlNet](https://www.odva.org/technology-standards/other-technologies/controlnet/) - Overview on ODVA.org
+- [DeviceNet](https://www.odva.org/technology-standards/key-technologies/devicenet/) - Overview on ODVA.org
+- [Ethernet/IP](https://www.odva.org/technology-standards/key-technologies/ethernet-ip/) - Overview on ODVA.org
+### Conferences
+- [Hunting EtherNet/IP Protocol Stacks](https://www.youtube.com/watch?v=0jftEYDo0ao) - Sharon Brizinov @ SANS ICS Security Summit 2022
 
 
 ## CSPv4
@@ -133,6 +163,21 @@ the research and test process on industrial protocols.
 | Nmap script(s) | [cspv4-info.nse](https://github.com/digitalbond/Redpoint/blob/master/cspv4-info.nse) |
 | Detailed page | [cspv4.md](protocols/cspv4.md) |
 
+
+
+## DeviceNet
+| Protocol | DeviceNet |
+|---|---|
+| Name | DeviceNet |
+| Description | CAN-based industrial automation network for device-level communication |
+| Keywords | CAN, CIP |
+| Wireshark dissector | [packet-devicenet.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-devicenet.c) |
+| Detailed page | [devicenet.md](protocols/devicenet.md) |
+### Documentations
+- [Common Industrial Protocol (CIP) and the family of CIP networks](https://www.odva.org/wp-content/uploads/2020/06/PUB00123R1_Common-Industrial_Protocol_and_Family_of_CIP_Networks.pdf) - ODVA publication (2016)
+- [DeviceNet](https://www.odva.org/technology-standards/key-technologies/devicenet/) - Overview on ODVA.org
+### Articles
+- [DeviceNet and Ethernet/IP](https://www.rtautomation.com/rtas-blog/devicenet-and-ethernet-ip/) - Blog post on RTAutomation
 
 
 ## DF1
@@ -162,8 +207,6 @@ the research and test process on industrial protocols.
 | Nmap script(s) | [dicom-ping.nse](https://nmap.org/nsedoc/scripts/dicom-ping.html) |
 | Wireshark dissector | [packet-dcm.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-dcm.c) |
 | Detailed page | [dicom.md](protocols/dicom.md) |
-### Conferences
-- [Healthscare – An Insider's Biopsy of Healthcare Application Security](https://www.youtube.com/watch?v=33dQhsIcp7U) - Seth Fogie @ Black Hat USA (2020)
 ### Tools
 - [DCMTK](https://dcmtk.org/en/) - DICOM ToolKit
 - [dicom-server](https://github.com/microsoft/dicom-server) - Microsoft's OSS Implementation of DICOMweb standard
@@ -218,10 +261,12 @@ the research and test process on industrial protocols.
 | Name | EtherCAT |
 | Alias | ECATF, ECAT |
 | Description | Real-time industrial Ethernet communication protocol for automation systems |
+| Port | 34980/udp |
 | Scapy layer | [ethercat.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/ethercat.py) |
 | Example Pcap(s) | [ICS-pcap EtherCAT](https://github.com/automayt/ICS-pcap/tree/master/ETHERCAT/ethercat) |
 | Detailed page | [ethercat.md](protocols/ethercat.md) |
-
+### Articles
+- [Industrial Network Options: EtherCAT Advantages, Challenges, and Specs](https://control.com/technical-articles/introduction-to-ethercat/) - Carlos Aguilar, Control Automation (2023)
 
 
 ## Ethernet/IP
@@ -239,6 +284,9 @@ the research and test process on industrial protocols.
 | Scapy layer | [enipTCP.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/enipTCP.py) |
 | Example Pcap(s) | [ICS-pcap Ethernet/IP](https://github.com/automayt/ICS-pcap/tree/master/ETHERNET_IP), [ICS-pcap EIP](https://github.com/automayt/ICS-pcap/tree/master/EIP) |
 | Detailed page | [ethernetip.md](protocols/ethernetip.md) |
+### Documentations
+- [Common Industrial Protocol (CIP) and the family of CIP networks](https://www.odva.org/wp-content/uploads/2020/06/PUB00123R1_Common-Industrial_Protocol_and_Family_of_CIP_Networks.pdf) - ODVA publication (2016)
+- [Ethernet/IP](https://www.odva.org/technology-standards/key-technologies/ethernet-ip/) - Overview on ODVA.org
 ### Articles
 - [Fuzzing and PR’ing: How We Found Bugs in a Popular Third-Party EtherNet/IP Protocol Stack](https://claroty.com/team82/research/opener-enip-stack-vulnerabilities) - Sharon Brizinov, Tal Keren (Claroty, 2021)
 ### Conferences
@@ -250,6 +298,16 @@ the research and test process on industrial protocols.
 - [OpENer](https://github.com/EIPStackGroup/OpENer) - EtherNet/IP stack for I/O adapter devices
 - [pycomm3](https://github.com/ottowayi/pycomm3) - A Python Ethernet/IP library for communicating with Allen-Bradley PLCs
 - [scapy-cip-enip](https://github.com/scy-phy/scapy-cip-enip) - Ethernet/IP dissectors for Scapy
+
+
+## ETP
+| Protocol | ETP |
+|---|---|
+| Name | ETP |
+| Description | Energistics' protocol for interoperable oil and gas data exchange |
+| Keywords | Energetics |
+| Detailed page | [etp.md](protocols/etp.md) |
+
 
 
 ## FF-HSE
@@ -285,6 +343,7 @@ the research and test process on industrial protocols.
 | Alias | Factory LAN, OPCN-2 |
 | Description | Japan Electrical Manufacturers' Association's industrial-use open network |
 | Keywords | JEMA |
+| Port | 55000/udp, 55001/udp, 55002/udp, 55003/udp |
 | Access | Free |
 | Specifications | [FL-net specification](https://www.jema-net.or.jp/English/businessfields/standarization/opcn/standard/) |
 | Detailed page | [flnet.md](protocols/flnet.md) |
@@ -310,6 +369,8 @@ the research and test process on industrial protocols.
 | Wireshark dissector | [packet-hartip.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hartip.c) |
 | Example Pcap(s) | [ICS-pcap HART-IP](https://github.com/automayt/ICS-pcap/tree/master/HART%20IP/hart_ip) |
 | Detailed page | [hartip.md](protocols/hartip.md) |
+### Articles
+- [WirelessHART Radio Communication Standard](https://control.com/textbook/wireless-instrumentation/wirelesshart/) - Lessons in Industrial Automation textbook, Control Automation
 ### Conferences
 - [Dissecting Industrial Wireless Implementations](https://www.youtube.com/watch?v=I-TCfl0Jm2M) - Blake Johnson @ DEF CON 25 ICS Village (2017)
 - [DTM Components: Shadow Keys to the ICS Kingdom](https://www.youtube.com/watch?v=VeMgbC0a-u8) - Alexander Bolshev and Gleb Cherbov @ Black Hat Europe (2014)
@@ -326,7 +387,6 @@ the research and test process on industrial protocols.
 | Detailed page | [hl7.md](protocols/hl7.md) |
 ### Conferences
 - [DEF CON 29 Biohacking Village - Alissa Knight, Mitch Parker - Playing with FHIR](https://www.youtube.com/watch?v=wrNyd60XPMg) - @ DEF CON (2021)
-- [Healthscare – An Insider's Biopsy of Healthcare Application Security](https://www.youtube.com/watch?v=33dQhsIcp7U) - Seth Fogie @ Black Hat USA (2020)
 - [Pestilential Protocol: How Unsecure HL7 Messages Threaten Patient Lives](https://www.youtube.com/watch?v=66x3vfac8rA) - @ Black Hat (2020)
 - [Understanding HL7 2.X Standards, Pen Testing, and Defending HL7 2.X Messages](https://www.youtube.com/watch?v=MR7cH44fjrc) - @ Black Hat (2016)
 
@@ -478,6 +538,18 @@ the research and test process on industrial protocols.
 
 
 
+## MELSEC
+| Protocol | MELSEC |
+|---|---|
+| Name | MELSEC |
+| Alias | MEL-SEC |
+| Description | Communication protocol for Mitsubishi Electric's MELSEC series of PLCs |
+| Keywords | Mitsubishi, MELSOFT |
+| Detailed page | [melsec.md](protocols/melsec.md) |
+### Conferences
+- [Taking Apart and Taking Over ICS & SCADA Ecosystems](https://www.youtube.com/watch?v=L0w_aE4jRFw) - Mars Cheng & Selmon Yang @ DEF CON 29 (2021)
+
+
 ## Modbus
 | Protocol | Modbus |
 |---|---|
@@ -491,9 +563,41 @@ the research and test process on industrial protocols.
 | Scapy layer | [modbus.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/modbus.py) |
 | Example Pcap(s) | [ICS-pcap Modbus](https://github.com/automayt/ICS-pcap/tree/master/MODBUS) |
 | Detailed page | [modbus.md](protocols/modbus.md) |
+### Articles
+- [Introduction to Modbus and Modbus Function Codes](https://control.com/technical-articles/introduction-to-modbus-and-modbus-function-codes/) - Shawn Dietrich, Control Automation (2023)
+### Conferences
+- [Black Hat USA 2013 - Out of Control: Demonstrating SCADA device exploitation](https://www.youtube.com/watch?v=FTzAkEnwx_c) - @ Black Hat (2013)
+- [Black Hat USA 2013 - The SCADA That Didn&#39;t Cry Wolf- Who&#39;s Really Attacking Your ICS Devices](https://www.youtube.com/watch?v=0M8nVv0bz6k) - @ Black Hat (2013)
+- [DEF CON 16 - Mark Bristow: ModScan: A SCADA MODBUS Network Scanner](https://www.youtube.com/watch?v=O_trNBh31lM) - @ DEF CON (2013)
+- [DEF CON 25 ICS Village - Arnaud Soullié  - Fun with Modbus 0x5a   Nothing New  Still Relevant?](https://www.youtube.com/watch?v=A_B69Rifu1g) - @ DEF CON (2017)
+- [Industrial Control Systems : Pentesting PLCs 101 (Part 1/2)](https://www.youtube.com/watch?v=iGwm6-lyn2Y) - Arnaud Soullie @ Black Hat Europe (2014)
+- [Industrial Control Systems : Pentesting PLCs 101 (Part 2/2)](https://www.youtube.com/watch?v=rP_Jys1_OJk) - Arnaud Soullie @ Black Hat Europe (2014)
+- [Industrial Protocol Gateways Under Analysis](https://www.youtube.com/watch?v=Rbkw_jsTBsY) - @ Black Hat (2021)
+- [Modbus Enumeration | SANS ICS Concepts](https://www.youtube.com/watch?v=QO99yojavvE) - @ SANS ICS Security (2021)
+- [Modbus Man-In-The-Middle | SANS ICS Concepts](https://www.youtube.com/watch?v=-1WbegoU8i0) - @ SANS ICS Security (2021)
+- [Understanding SCADA&#39;s Modbus Protocol](https://www.youtube.com/watch?v=oVDYaG2HInU) - @ Black Hat (2016)
+- [Unraveling SCADA Protocols Using Sulley Fuzzer](https://www.youtube.com/watch?v=UUta_Ord8GI) - Ganesh Devarajan @ DEF CON 15 (2014)
 ### Tools
 - [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
 - [PyModbus](https://github.com/pymodbus-dev/pymodbus) - A full modbus protocol written in python
+
+
+## MQTT
+| Protocol | MQTT |
+|---|---|
+| Name | MQTT |
+| Description | Publish-suscribe network protocol for message queue |
+| Keywords | Telemetry |
+| Nmap script(s) | [mqtt-suscribe.nse](https://nmap.org/nsedoc/scripts/mqtt-subscribe.html) |
+| Wireshark dissector | [packet-mqtt.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-mqtt.c) |
+| Scapy layer | [mqtt.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/mqtt.py) |
+| Detailed page | [mqtt.md](protocols/mqtt.md) |
+### Articles
+- [Not Just Another IIoT Article: MQTT for Pneumatic Cylinder Maintenance](https://control.com/technical-articles/not-just-another-iiot-article-mqtt-for-pneumatic-cylinder-maintenance/) - Shawn Dietrich, Control Automation (2023)
+### Conferences
+- [Choo Choo, Network Train - The One to Rule Your Perimeter](https://www.youtube.com/watch?v=RpXoVwCSHA0) - @ Black Hat (2023)
+- [DEF CON 24 - Lucas Lundgren, Neal Hindocha - Light Weight Protocol: Critical Implications](https://www.youtube.com/watch?v=o7qDVZr0t2c) - @ DEF CON (2016)
+- [When Machines Can&#39;t Talk](https://www.youtube.com/watch?v=X3fUNWRgeao) - @ Black Hat (2020)
 
 
 ## Niagara Fox
@@ -536,7 +640,10 @@ the research and test process on industrial protocols.
 - [OPC UA Deep Dive (Part 2): What is OPC UA?](https://claroty.com/team82/research/opc-deep-dive-part-2-what-is-opc-ua) - Claroty Team82 (2023)
 - [OPC UA Deep Dive (Part 3): Exploring the OPC UA Protocol](https://claroty.com/team82/research/opc-ua-deep-dive-part-3-exploring-the-opc-ua-protocol) - Claroty Team82 (2023)
 - [Practical example of fuzzing OPC UA applications](https://ics-cert.kaspersky.com/publications/reports/2020/10/19/practical-example-of-fuzzing-opc-ua-applications/) - Kaspersky ICS-CERT (2020)
+- [Understanding the OPC Unified Architecture (OPC UA) Protocol](https://control.com/technical-articles/understanding-the-opc-ua-protocol/) - Anthony King Ho, Control Automation (2023)
 ### Conferences
+- [A Broken Chain: Discovering OPC UA Attack Surface and Exploiting the Supply Chain](https://www.youtube.com/watch?v=bWJ6DY86hkc) - @ Black Hat (2021)
+- [DEF CON 30 -  Jimmy Wylie - Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - @ DEF CON (2022)
 - [Resting on Feet of Clay: Securely Bootstrapping OPC UA Deployments](https://www.youtube.com/watch?v=8RUVB9eeITQ) - Alessandro Erba & Nils Ole Tippenhauer @ Black Hat Europe (2021)
 ### Papers
 - [Exploring the OPC attack surface](https://claroty.com/team82/research/white-papers/exploring-the-opc-attack-surface) - Claroty Team82 (2021)
@@ -557,6 +664,15 @@ the research and test process on industrial protocols.
 | Port | 1962/tcp |
 | Nmap script(s) | [pcworx-info.nse](https://github.com/digitalbond/Redpoint/blob/master/pcworx-info.nse) |
 | Detailed page | [pcworx.md](protocols/pcworx.md) |
+
+
+
+## PCCC
+| Protocol | PCCC |
+|---|---|
+| Name | PCCC |
+| Keywords | Allen-Bradley |
+| Detailed page | [pccc.md](protocols/pccc.md) |
 
 
 
@@ -606,9 +722,11 @@ the research and test process on industrial protocols.
 | Name | Profinet-IO |
 | Alias | PNIO |
 | Description | Real-time communication between controllers and I/O devices |
+| Port | 34962/udp, 34963/udp, 34964/udp |
 | Scapy layer | [pnio.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/pnio.py) |
 | Detailed page | [profinetio.md](protocols/profinetio.md) |
-
+### Articles
+- [What Is the Difference Between Profibus and Profinet?](https://control.com/technical-articles/understanding-profibus-vs-profinet/) - Antonio Armenta, Control Automation (2021)
 
 
 ## S-Bus
@@ -650,6 +768,18 @@ the research and test process on industrial protocols.
 - [Snap7](https://snap7.sourceforge.net/) - Step7 Open Source Ethernet Communication Suite
 
 
+## SECS/GEM
+| Protocol | SECS/GEM |
+|---|---|
+| Name | SECS/GEM |
+| Alias | SECS, SECS-I, SECS-II, HSMS |
+| Description | Semiconductor equipment communication standard with generic equipment model |
+| Keywords | Semiconductor, MES |
+| Port | 5000/tcp (HSMS) |
+| Detailed page | [secsgem.md](protocols/secsgem.md) |
+
+
+
 ## SERCOS-III
 | Protocol | SERCOS-III |
 |---|---|
@@ -687,6 +817,7 @@ the research and test process on industrial protocols.
 ### Articles
 - [Attackers Deploy New ICS Attack Framework “TRITON” and Cause Operational Disruption to Critical Infrastructure](https://www.mandiant.com/resources/blog/attackers-deploy-new-ics-attack-framework-triton) - Blake Johnson, Dan Caban, Marina Krotofil, Dan Scali, Nathan Brubaker, Christopher Glyer @ Mandiant (2017, updated 2022)
 ### Conferences
+- [DEF CON 26 -  Krotofil , Wetzels - Thru the Eyes of the Attacker Designing Embedded Systems for ICS](https://www.youtube.com/watch?v=3x4MukvjEm8) - @ DEF CON (2018)
 - [How TRITON Disrupted Safety Systems & Changed the Threat Landscape of Industrial Control Systems](https://www.youtube.com/watch?v=Hw2HclZV2Kw) - Andrea Carcano, Marina Krotofil & Younes Dragoni @ Black Hat USA (2018)
 ### Tools
 - [tricotools](https://github.com/NozomiNetworks/tricotools) - Triconex TriStation utilities and tools
@@ -719,6 +850,17 @@ the research and test process on industrial protocols.
 - [The Unity (UMAS) protocol (Part V)](http://lirasenlared.blogspot.com/2017/09/the-unity-umas-protocol-part-v.html) - Liras en la red (2017)
 ### Tools
 - [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
+
+
+## WITS
+| Protocol | WITS |
+|---|---|
+| Name | WITS |
+| Alias | WITS0, WITSML |
+| Description | Real-time drilling data transfer standard in oil and gas |
+| Keywords | Wellsite, Drilling, Geology |
+| Detailed page | [wits.md](protocols/wits.md) |
+
 
 
 ## ZigBee

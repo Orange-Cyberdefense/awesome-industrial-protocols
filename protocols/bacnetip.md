@@ -17,7 +17,9 @@
 | Related CVE | [CVE-2018-10238](https://nvd.nist.gov/vuln/detail/CVE-2018-10238), [CVE-2018-18878](https://nvd.nist.gov/vuln/detail/CVE-2018-18878), [CVE-2019-12480](https://nvd.nist.gov/vuln/detail/CVE-2019-12480), [CVE-2021-41545](https://nvd.nist.gov/vuln/detail/CVE-2021-41545) |
 
 ## Articles
+- [10 things you should know about BACnet](https://www.rtautomation.com/rtas-blog/10-things-about-bacnet/) - Blog post on RTAutomation
 - [BACnet CVE-2019-12480](https://1modm.github.io/CVE-2019-12480.html) - On M's blog (2019)
+- [BACnet data representation](https://www.rtautomation.com/rtas-blog/bacnet-data-representation/) - Blog post on RTAutomation
 ## Conferences
 - [(in)Security in Building Automation: How to Create Dark Buildings with Light Speed](https://www.youtube.com/watch?v=PyOhwYgpGfM) - Thomas Brandstetter @ Black Hat USA (2017)
 - [HVACking Understand the Delta Between Security and Reality](https://www.youtube.com/watch?v=uJP061PUxgY) - Douglas McKee & Mark Bereza @ DEF CON 27 (2019)
