@@ -19,6 +19,5 @@
 
 ## Documentations
 - [CC-Link IE Field Network playlist](https://www.youtube.com/watch?v=h8QXlx2Xv9M&list=PL2zpUSDLjMt-J1HGOdzR1blv1z1s-eF03) - Mitsubishi Training
-- [CSP+ specification](https://www.cc-link.org/en/downloads/index.html) - Page to download CC-Link's CSP+ specifications
 
 > All unreviewed AI-generated data is marked with `*`.

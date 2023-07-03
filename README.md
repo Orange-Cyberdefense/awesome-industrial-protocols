@@ -23,6 +23,7 @@ or contributions.
 - [CAN](#can)
 - [CC-Link IE](#cclinkie)
 - [CIP](#cip)
+- [CODESYS](#codesys)
 - [CSPv4](#cspv4)
 - [DeviceNet](#devicenet)
 - [DF1](#df1)
@@ -135,7 +136,6 @@ or contributions.
 | Detailed page | [cclinkie.md](protocols/cclinkie.md) |
 ### Documentations
 - [CC-Link IE Field Network playlist](https://www.youtube.com/watch?v=h8QXlx2Xv9M&list=PL2zpUSDLjMt-J1HGOdzR1blv1z1s-eF03) - Mitsubishi Training
-- [CSP+ specification](https://www.cc-link.org/en/downloads/index.html) - Page to download CC-Link's CSP+ specifications
 
 
 ## CIP
@@ -148,6 +148,7 @@ or contributions.
 | Wireshark dissector | [packet-cip.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-cip.c) |
 | Detailed page | [cip.md](protocols/cip.md) |
 ### Documentations
+- [Common Industrial Protocol (CIP)](https://www.odva.org/technology-standards/key-technologies/common-industrial-protocol-cip/) - Overview on ODVA.org
 - [CompoNet](https://www.odva.org/technology-standards/other-technologies/componet/) - Overview on ODVA.org
 - [ControlNet](https://www.odva.org/technology-standards/other-technologies/controlnet/) - Overview on ODVA.org
 - [DeviceNet](https://www.odva.org/technology-standards/key-technologies/devicenet/) - Overview on ODVA.org
@@ -156,13 +157,24 @@ or contributions.
 - [Hunting EtherNet/IP Protocol Stacks](https://www.youtube.com/watch?v=0jftEYDo0ao) - Sharon Brizinov @ SANS ICS Security Summit 2022
 
 
+## CODESYS
+| Protocol | CODESYS |
+|---|---|
+| Name | CODESYS |
+| Description | Programmable logic controller (PLC) development, communication protocol and runtime environment. |
+| Port | 1200/tcp |
+| Detailed page | [codesys.md](protocols/codesys.md) |
+### Conferences
+- [DEF CON 30 -  Jimmy Wylie - Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - @ DEF CON (2022)
+
+
 ## CSPv4
 | Protocol | CSPv4 |
 |---|---|
 | Name | CSPv4 |
 | Alias | AB CSPv4, AB/Ethernet |
 | Description | Allen-Bradley's protocol for industrial Ethernet communication |
-| Keywords | Allen-Bradley |
+| Keywords | Allen-Bradley, PCCC |
 | Port | 2222/tcp |
 | Nmap script(s) | [cspv4-info.nse](https://github.com/digitalbond/Redpoint/blob/master/cspv4-info.nse) |
 | Detailed page | [cspv4.md](protocols/cspv4.md) |
@@ -190,9 +202,12 @@ or contributions.
 | Name | DF1 |
 | Alias | DF-1 |
 | Description | Allen-Bradley serial communication protocol for industrial automation devices |
+| Keywords | PCCC, Allen-Bradley |
 | Access | Free |
 | Specifications | [DF1 specification](https://literature.rockwellautomation.com/idc/groups/literature/documents/rm/1770-rm516_-en-p.pdf) |
 | Detailed page | [df1.md](protocols/df1.md) |
+### Articles
+- [AB/DF1 Protocol Tips](http://iatips.com/df1_tips.html) - Lynn's Industrial Automation Protocol Tips blog
 ### Tools
 - [abdf1](https://sourceforge.net/projects/abdf1/) - AB DF1 Protocol RS232 driver for Micrologix, SLC500, PLC 5
 - [Df1](https://github.com/leicht/Df1) - Df1 protocol for Allen-Bradley PLC
@@ -574,6 +589,7 @@ or contributions.
 - [Black Hat USA 2013 - The SCADA That Didn&#39;t Cry Wolf- Who&#39;s Really Attacking Your ICS Devices](https://www.youtube.com/watch?v=0M8nVv0bz6k) - @ Black Hat (2013)
 - [DEF CON 16 - Mark Bristow: ModScan: A SCADA MODBUS Network Scanner](https://www.youtube.com/watch?v=O_trNBh31lM) - @ DEF CON (2013)
 - [DEF CON 25 ICS Village - Arnaud Soullié  - Fun with Modbus 0x5a   Nothing New  Still Relevant?](https://www.youtube.com/watch?v=A_B69Rifu1g) - @ DEF CON (2017)
+- [DEF CON 30 -  Jimmy Wylie - Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - @ DEF CON (2022)
 - [Industrial Control Systems : Pentesting PLCs 101 (Part 1/2)](https://www.youtube.com/watch?v=iGwm6-lyn2Y) - Arnaud Soullie @ Black Hat Europe (2014)
 - [Industrial Control Systems : Pentesting PLCs 101 (Part 2/2)](https://www.youtube.com/watch?v=rP_Jys1_OJk) - Arnaud Soullie @ Black Hat Europe (2014)
 - [Industrial Protocol Gateways Under Analysis](https://www.youtube.com/watch?v=Rbkw_jsTBsY) - @ Black Hat (2021)
@@ -675,9 +691,13 @@ or contributions.
 | Protocol | PCCC |
 |---|---|
 | Name | PCCC |
+| Alias | AB/PCCC |
+| Description | Legacy command/response protocol for Allen-Bradley PLC communication |
 | Keywords | Allen-Bradley |
 | Detailed page | [pccc.md](protocols/pccc.md) |
-
+### Articles
+- [AB/PCCC Protocol Tips](http://iatips.com/pccc_tips.html) - Lynn's Industrial Automation Protocol Tips blog
+- [Ethernet/IP PCCC Service Codes](https://iatip.blogspot.com/2008/11/ethernetip-pccc-service-codes.html) - Lynn's Industrial protocols over IP blog
 
 
 ## POWERLINK

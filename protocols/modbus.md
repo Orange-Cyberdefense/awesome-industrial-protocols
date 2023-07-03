@@ -23,6 +23,7 @@
 - [Black Hat USA 2013 - The SCADA That Didn&#39;t Cry Wolf- Who&#39;s Really Attacking Your ICS Devices](https://www.youtube.com/watch?v=0M8nVv0bz6k) - @ Black Hat (2013)
 - [DEF CON 16 - Mark Bristow: ModScan: A SCADA MODBUS Network Scanner](https://www.youtube.com/watch?v=O_trNBh31lM) - @ DEF CON (2013)
 - [DEF CON 25 ICS Village - Arnaud Soullié  - Fun with Modbus 0x5a   Nothing New  Still Relevant?](https://www.youtube.com/watch?v=A_B69Rifu1g) - @ DEF CON (2017)
+- [DEF CON 30 -  Jimmy Wylie - Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - @ DEF CON (2022)
 - [Industrial Control Systems : Pentesting PLCs 101 (Part 1/2)](https://www.youtube.com/watch?v=iGwm6-lyn2Y) - Arnaud Soullie @ Black Hat Europe (2014)
 - [Industrial Control Systems : Pentesting PLCs 101 (Part 2/2)](https://www.youtube.com/watch?v=rP_Jys1_OJk) - Arnaud Soullie @ Black Hat Europe (2014)
 - [Industrial Protocol Gateways Under Analysis](https://www.youtube.com/watch?v=Rbkw_jsTBsY) - @ Black Hat (2021)

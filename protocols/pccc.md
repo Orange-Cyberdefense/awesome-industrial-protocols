@@ -3,8 +3,8 @@
 | Protocol | PCCC |
 |---|---|
 | Name | PCCC |
-| Aliases |  |
-| Description |  |
+| Aliases | AB/PCCC |
+| Description | Legacy command/response protocol for Allen-Bradley PLC communication |
 | Keywords | Allen-Bradley |
 | Port(s) |  |
 | Access to specs |  |
@@ -16,6 +16,8 @@
 | Example Pcap(s) |  |
 | Related CVE |  |
 
-
+## Articles
+- [AB/PCCC Protocol Tips](http://iatips.com/pccc_tips.html) - Lynn's Industrial Automation Protocol Tips blog
+- [Ethernet/IP PCCC Service Codes](https://iatip.blogspot.com/2008/11/ethernetip-pccc-service-codes.html) - Lynn's Industrial protocols over IP blog
 
 > All unreviewed AI-generated data is marked with `*`.

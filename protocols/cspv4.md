@@ -5,7 +5,7 @@
 | Name | CSPv4 |
 | Aliases | AB CSPv4, AB/Ethernet |
 | Description | Allen-Bradley's protocol for industrial Ethernet communication |
-| Keywords | Allen-Bradley |
+| Keywords | Allen-Bradley, PCCC |
 | Port(s) | 2222/tcp |
 | Access to specs |  |
 | Specifications |  |

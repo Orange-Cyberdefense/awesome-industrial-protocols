@@ -18,6 +18,7 @@
 | Keywods | CompoNet |
 
 ## Documentations
+- [Common Industrial Protocol (CIP)](https://www.odva.org/technology-standards/key-technologies/common-industrial-protocol-cip/) - Overview on ODVA.org
 - [CompoNet](https://www.odva.org/technology-standards/other-technologies/componet/) - Overview on ODVA.org
 - [ControlNet](https://www.odva.org/technology-standards/other-technologies/controlnet/) - Overview on ODVA.org
 - [DeviceNet](https://www.odva.org/technology-standards/key-technologies/devicenet/) - Overview on ODVA.org
