@@ -95,6 +95,7 @@ types = SimpleNamespace()
 types.STR = "str"
 types.LIST = "list"
 types.LINKLIST = "linklist"
+types.PKTLIST = "pktlist"
 
 # Protocols collection content
 protocols = SimpleNamespace()
@@ -112,6 +113,8 @@ protocols.wireshark = "wireshark"
 protocols.scapy = "scapy"
 protocols.pcap = "pcap"
 protocols.cve = "cve"
+protocols.multicast = "multicast"
+protocols.discovery = "discovery"
 protocols.FIELDS = {
     protocols.name: ("Name", types.STR),
     protocols.alias: ("Aliases", types.LIST),
@@ -129,6 +132,8 @@ protocols.FIELDS = {
 }
 protocols.EXTENDED_FIELDS = {
     protocols.cve: ("Related CVE", types.LINKLIST),
+    protocols.multicast: ("Multicast address", types.STR),
+    protocols.discovery: ("Discovery packet", types.PKTLIST)
 }
 protocols.ALL_FIELDS = {**protocols.FIELDS, **protocols.EXTENDED_FIELDS}
 protocols.NAME = lambda x: protocols.ALL_FIELDS[x][0] if x in protocols.ALL_FIELDS else x

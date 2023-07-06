@@ -15,6 +15,7 @@
 | Scapy layer | [knx.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/knx.py) |
 | Example Pcap(s) |  |
 | Related CVE | [CVE-2015-8299](https://nvd.nist.gov/vuln/detail/CVE-2015-8299), [CVE-2021-37740](https://nvd.nist.gov/vuln/detail/CVE-2021-37740) |
+| Multicast address | 224.0.23.12 |
 
 ## Documentations
 - [knx.org](https://www.knx.org/knx-en/for-professionals/index.php) - KNX official website

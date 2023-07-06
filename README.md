@@ -38,6 +38,7 @@ or contributions.
 - [FL-net](#flnet)
 - [GE-SRTP](#gesrtp)
 - [HART-IP](#hartip)
+- [HICP](#hicp)
 - [HL7](#hl7)
 - [ICCP](#iccp)
 - [IEC-60870-5-104](#iec608705104)
@@ -395,6 +396,19 @@ or contributions.
 - [DTM Components: Shadow Keys to the ICS Kingdom](https://www.youtube.com/watch?v=VeMgbC0a-u8) - Alexander Bolshev and Gleb Cherbov @ Black Hat Europe (2014)
 - [ICSCorsair: How I Will PWN Your ERP Through 4-20 mA Current Loop](https://www.youtube.com/watch?v=T9tahQImuWI) - Alexander Bolshev and Gleb Cherbov @ Black Hat USA (2014)
 - [It WISNt Me Attacking Industrial Wireless Mesh Networks](https://www.youtube.com/watch?v=-WfP2VVhTt0) - Paternotte and van Ommeren @ DEF CON 25 (2018)
+
+
+## HICP
+| Protocol | HICP |
+|---|---|
+| Name | HICP |
+| Alias | SHICP |
+| Description | Anybus' Host Interface Control Protocol |
+| Keywords | Anybus |
+| Port | 3250/udp |
+| Wireshark dissector | [packet-hicp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hicp.c), [packet-shicp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-shicp.c) |
+| Detailed page | [hicp.md](protocols/hicp.md) |
+
 
 
 ## HL7
