@@ -160,11 +160,11 @@ class Markdown(object):
         # Main table
         for protocol in self.protocols:
             current = ["\n", H2(protocol.name)]
-            current.append(TABLE("Protocol", protocol.name))
+            current.append(TABLE("Name", protocol.name))
             current.append(BORDER_TABLE)
             # Main table
             for k, v in protocol.to_dict().items():
-                if not v:
+                if not v or k == p.name:
                     continue
                 if k in p.FIELDS and k != p.resources:
                     if p.TYPE(k) == types.LINKLIST:

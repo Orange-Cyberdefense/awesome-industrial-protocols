@@ -74,9 +74,8 @@ or contributions.
 
 
 ## BACnet/IP
-| Protocol | BACnet/IP |
-|---|---|
 | Name | BACnet/IP |
+|---|---|
 | Alias | BACnet |
 | Description | Building automation and control network communication protocol for HVAC systems |
 | Keywords | HVAC |
@@ -101,9 +100,8 @@ or contributions.
 
 
 ## CAN
-| Protocol | CAN |
-|---|---|
 | Name | CAN |
+|---|---|
 | Alias | CANbus, CANopen |
 | Description | Communication protocol enabling data exchange between electronic components in vehicles |
 | Keywords | CANbus |
@@ -126,9 +124,8 @@ or contributions.
 
 
 ## CC-Link IE
-| Protocol | CC-Link IE |
-|---|---|
 | Name | CC-Link IE |
+|---|---|
 | Alias | CSP+, CC-Link, CC-Link IE TSN, CC-Link IE Control, CC-Link IE Field, CC-Link IE Field Basic |
 | Description | Industrial Ethernet communication network developed by the CC-Link Partner Association (CLPA) |
 | Keywords | Mitsubishi, CLPA |
@@ -140,9 +137,8 @@ or contributions.
 
 
 ## CIP
-| Protocol | CIP |
-|---|---|
 | Name | CIP |
+|---|---|
 | Alias | Common Industrial Protocol |
 | Description | ODVA's protocol suite for industrial automation communication |
 | Keywords | ODVA, Ethernet/IP, DeviceNet, ControlNet, CompoNet |
@@ -159,9 +155,8 @@ or contributions.
 
 
 ## CODESYS
-| Protocol | CODESYS |
-|---|---|
 | Name | CODESYS |
+|---|---|
 | Description | Programmable logic controller (PLC) development, communication protocol and runtime environment. |
 | Port | 1200/tcp |
 | Detailed page | [codesys.md](protocols/codesys.md) |
@@ -170,9 +165,8 @@ or contributions.
 
 
 ## CSPv4
-| Protocol | CSPv4 |
-|---|---|
 | Name | CSPv4 |
+|---|---|
 | Alias | AB CSPv4, AB/Ethernet |
 | Description | Allen-Bradley's protocol for industrial Ethernet communication |
 | Keywords | Allen-Bradley, PCCC |
@@ -183,9 +177,8 @@ or contributions.
 
 
 ## DeviceNet
-| Protocol | DeviceNet |
-|---|---|
 | Name | DeviceNet |
+|---|---|
 | Description | CAN-based industrial automation network for device-level communication |
 | Keywords | CAN, CIP |
 | Wireshark dissector | [packet-devicenet.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-devicenet.c) |
@@ -198,9 +191,8 @@ or contributions.
 
 
 ## DF1
-| Protocol | DF1 |
-|---|---|
 | Name | DF1 |
+|---|---|
 | Alias | DF-1 |
 | Description | Allen-Bradley serial communication protocol for industrial automation devices |
 | Keywords | PCCC, Allen-Bradley |
@@ -215,9 +207,8 @@ or contributions.
 
 
 ## DICOM
-| Protocol | DICOM |
-|---|---|
 | Name | DICOM |
+|---|---|
 | Alias | DCM |
 | Description | Communication and management of medical imaging information |
 | Keywords | Radiography, Medical |
@@ -234,9 +225,8 @@ or contributions.
 
 
 ## DNP3
-| Protocol | DNP3 |
-|---|---|
 | Name | DNP3 |
+|---|---|
 | Alias | Distributed Network Protocol |
 | Description | Industrial communication protocol for remote monitoring and control of automation systems |
 | Keywords | Power grid, Water |
@@ -262,9 +252,8 @@ or contributions.
 
 
 ## Ether-S-I/O
-| Protocol | Ether-S-I/O |
-|---|---|
 | Name | Ether-S-I/O |
+|---|---|
 | Alias | EtherSIO, ESIO |
 | Description | Proprietary protocol for Saia PCD controller I/O communication |
 | Keywords | SAIA |
@@ -276,9 +265,8 @@ or contributions.
 
 
 ## EtherCAT
-| Protocol | EtherCAT |
-|---|---|
 | Name | EtherCAT |
+|---|---|
 | Alias | ECATF, ECAT |
 | Description | Real-time industrial Ethernet communication protocol for automation systems |
 | Port | 34980/udp |
@@ -290,9 +278,8 @@ or contributions.
 
 
 ## Ethernet/IP
-| Protocol | Ethernet/IP |
-|---|---|
 | Name | Ethernet/IP |
+|---|---|
 | Alias | Enip |
 | Description | Ethernet-based industrial communication protocol for industrial automation systems |
 | Keywords | CIP |
@@ -321,9 +308,8 @@ or contributions.
 
 
 ## ETP
-| Protocol | ETP |
-|---|---|
 | Name | ETP |
+|---|---|
 | Description | Energistics' protocol for interoperable oil and gas data exchange |
 | Keywords | Energetics |
 | Detailed page | [etp.md](protocols/etp.md) |
@@ -331,9 +317,8 @@ or contributions.
 
 
 ## FF-HSE
-| Protocol | FF-HSE |
-|---|---|
 | Name | FF-HSE |
+|---|---|
 | Alias | Foundation Fieldbus HSE, FF |
 | Description | Ethernet-based communication for industrial process automation devices |
 | Port | 1089/tcp, 1090/tcp, 1091/tcp, 1089/udp, 1090/udp, 1091/udp |
@@ -343,9 +328,8 @@ or contributions.
 
 
 ## FINS
-| Protocol | FINS |
-|---|---|
 | Name | FINS |
+|---|---|
 | Alias | OMRON |
 | Description | Omron's industrial communication protocol for automation systems |
 | Port | 9600/udp |
@@ -357,9 +341,8 @@ or contributions.
 
 
 ## FL-net
-| Protocol | FL-net |
-|---|---|
 | Name | FL-net |
+|---|---|
 | Alias | Factory LAN, OPCN-2 |
 | Description | Japan Electrical Manufacturers' Association's industrial-use open network |
 | Keywords | JEMA |
@@ -371,9 +354,8 @@ or contributions.
 
 
 ## GE-SRTP
-| Protocol | GE-SRTP |
-|---|---|
 | Name | GE-SRTP |
+|---|---|
 | Description | General Electric's protocol for communication between GE devices and SCADA |
 | Port | 18245/tcp |
 | Detailed page | [gesrtp.md](protocols/gesrtp.md) |
@@ -381,9 +363,8 @@ or contributions.
 
 
 ## HART-IP
-| Protocol | HART-IP |
-|---|---|
 | Name | HART-IP |
+|---|---|
 | Alias | HART, WirelessHART |
 | Description | IP-based communication protocol for HART (ICS) data transmission |
 | Wireshark dissector | [packet-hartip.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hartip.c) |
@@ -399,9 +380,8 @@ or contributions.
 
 
 ## HICP
-| Protocol | HICP |
-|---|---|
 | Name | HICP |
+|---|---|
 | Alias | SHICP |
 | Description | Anybus' Host Interface Control Protocol |
 | Keywords | Anybus |
@@ -412,9 +392,8 @@ or contributions.
 
 
 ## HL7
-| Protocol | HL7 |
-|---|---|
 | Name | HL7 |
+|---|---|
 | Description | Standard for healthcare data exchange and interoperability |
 | Wireshark dissector | [packet-hl7.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hl7.c) |
 | Detailed page | [hl7.md](protocols/hl7.md) |
@@ -425,9 +404,8 @@ or contributions.
 
 
 ## ICCP
-| Protocol | ICCP |
-|---|---|
 | Name | ICCP |
+|---|---|
 | Alias | IEC 60870-6, TASE.2 |
 | Description | Real-time data exchange between power system control centers |
 | Keywords | Power |
@@ -440,9 +418,8 @@ or contributions.
 
 
 ## IEC-60870-5-104
-| Protocol | IEC-60870-5-104 |
-|---|---|
 | Name | IEC-60870-5-104 |
+|---|---|
 | Alias | IEC-104 |
 | Description | Grid communication protocol for control and monitoring |
 | Port | 2404/tcp |
@@ -464,9 +441,8 @@ or contributions.
 
 
 ## IEC-61850
-| Protocol | IEC-61850 |
-|---|---|
 | Name | IEC-61850 |
+|---|---|
 | Alias | IEC-61850/GOOSE, IEC-61850/GSSE, IEC-61850/SV |
 | Description | Communication networks and systems for power utility automation |
 | Keywords | Power grid |
@@ -479,9 +455,8 @@ or contributions.
 
 
 ## IEEE-C37.118
-| Protocol | IEEE-C37.118 |
-|---|---|
 | Name | IEEE-C37.118 |
+|---|---|
 | Alias | C37.118, Synchrophasor, Synphasor |
 | Description | Standard for synchrophasor data exchange in power systems |
 | Keywords | Power |
@@ -493,9 +468,8 @@ or contributions.
 
 
 ## ISA100.11a
-| Protocol | ISA100.11a |
-|---|---|
 | Name | ISA100.11a |
+|---|---|
 | Description | Wireless standard for industrial automation and control systems |
 | Detailed page | [isa10011a.md](protocols/isa10011a.md) |
 ### Conferences
@@ -503,9 +477,8 @@ or contributions.
 
 
 ## KNXnet/IP
-| Protocol | KNXnet/IP |
-|---|---|
 | Name | KNXnet/IP |
+|---|---|
 | Alias | KNX, KNX/IP, Konnex |
 | Description | Protocol for home and building automation systems |
 | Keywords | BMS, BAS, Building |
@@ -537,9 +510,8 @@ or contributions.
 
 
 ## LoRaWAN
-| Protocol | LoRaWAN |
-|---|---|
 | Name | LoRaWAN |
+|---|---|
 | Alias | LoRa |
 | Description | Long-range IoT communication protocol with low power requirements |
 | Keywords | Wireless |
@@ -560,9 +532,8 @@ or contributions.
 
 
 ## M-Bus
-| Protocol | M-Bus |
-|---|---|
 | Name | M-Bus |
+|---|---|
 | Alias | Meter-Bus, EN13757 |
 | Description | Communication protocol for utility metering devices |
 | Access | The old specification is free, not the current one |
@@ -572,9 +543,8 @@ or contributions.
 
 
 ## MELSEC
-| Protocol | MELSEC |
-|---|---|
 | Name | MELSEC |
+|---|---|
 | Alias | MEL-SEC |
 | Description | Communication protocol for Mitsubishi Electric's MELSEC series of PLCs |
 | Keywords | Mitsubishi, MELSOFT |
@@ -584,9 +554,8 @@ or contributions.
 
 
 ## Modbus
-| Protocol | Modbus |
-|---|---|
 | Name | Modbus |
+|---|---|
 | Alias | Modbus TCP |
 | Description | Widely used industrial communication protocol |
 | Port | 502/tcp |
@@ -617,9 +586,8 @@ or contributions.
 
 
 ## MQTT
-| Protocol | MQTT |
-|---|---|
 | Name | MQTT |
+|---|---|
 | Description | Publish-suscribe network protocol for message queue |
 | Keywords | Telemetry |
 | Nmap script(s) | [mqtt-suscribe.nse](https://nmap.org/nsedoc/scripts/mqtt-subscribe.html) |
@@ -635,9 +603,8 @@ or contributions.
 
 
 ## Niagara Fox
-| Protocol | Niagara Fox |
-|---|---|
 | Name | Niagara Fox |
+|---|---|
 | Alias | Fox |
 | Description | Communication protocol used by Tridium Niagara devices |
 | Keywords | Tridium |
@@ -649,9 +616,8 @@ or contributions.
 
 
 ## OPC-DA
-| Protocol | OPC-DA |
-|---|---|
 | Name | OPC-DA |
+|---|---|
 | Alias | OPCDA |
 | Description | Legacy protocol for real-time data exchange in industrial systems |
 | Scapy layer | [opc_da.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/opc_da.py) |
@@ -661,9 +627,8 @@ or contributions.
 
 
 ## OPC-UA
-| Protocol | OPC-UA |
-|---|---|
 | Name | OPC-UA |
+|---|---|
 | Alias | OPCUA |
 | Description | Open communication standard for industrial automation and control |
 | Port | 4840/tcp, 4840/udp, 4843/tcp (TLS) |
@@ -690,9 +655,8 @@ or contributions.
 
 
 ## PC-WORX
-| Protocol | PC-WORX |
-|---|---|
 | Name | PC-WORX |
+|---|---|
 | Description | Software suite with proprietary protocol for Phoenix Contact PLCs |
 | Keywords | Phoenix Contact |
 | Port | 1962/tcp |
@@ -702,9 +666,8 @@ or contributions.
 
 
 ## PCCC
-| Protocol | PCCC |
-|---|---|
 | Name | PCCC |
+|---|---|
 | Alias | AB/PCCC |
 | Description | Legacy command/response protocol for Allen-Bradley PLC communication |
 | Keywords | Allen-Bradley |
@@ -715,9 +678,8 @@ or contributions.
 
 
 ## POWERLINK
-| Protocol | POWERLINK |
-|---|---|
 | Name | POWERLINK |
+|---|---|
 | Alias | Ethernet PowerLink, EPL |
 | Description | Real-time Ethernet protocol for industrial automation and control |
 | Port | Ethernet |
@@ -732,9 +694,8 @@ or contributions.
 
 
 ## ProConOs
-| Protocol | ProConOs |
-|---|---|
 | Name | ProConOs |
+|---|---|
 | Description | Real-time operating system with proprietary protocol for industrial automation and control |
 | Port | 20547/tcp |
 | Nmap script(s) | [proconos-info.nse](https://github.com/digitalbond/Redpoint/blob/master/proconos-info.nse) |
@@ -743,9 +704,8 @@ or contributions.
 
 
 ## Profinet-DCP
-| Protocol | Profinet-DCP |
-|---|---|
 | Name | Profinet-DCP |
+|---|---|
 | Alias | PNDCP |
 | Description | Device identification, configuration, and network management protocol |
 | Port | Ethernet |
@@ -755,9 +715,8 @@ or contributions.
 
 
 ## Profinet-IO
-| Protocol | Profinet-IO |
-|---|---|
 | Name | Profinet-IO |
+|---|---|
 | Alias | PNIO |
 | Description | Real-time communication between controllers and I/O devices |
 | Port | 34962/udp, 34963/udp, 34964/udp |
@@ -768,9 +727,8 @@ or contributions.
 
 
 ## S-Bus
-| Protocol | S-Bus |
-|---|---|
 | Name | S-Bus |
+|---|---|
 | Alias | Ether-S-Bus, SAIA S-Bus |
 | Description | SAIA's communication protocol for building automation |
 | Keywords | SAIA |
@@ -782,9 +740,8 @@ or contributions.
 
 
 ## S7comm
-| Protocol | S7comm |
-|---|---|
 | Name | S7comm |
+|---|---|
 | Alias | S7, S7commPlus |
 | Description | Communication protocol for Siemens S7 PLCs |
 | Port | 102/tcp |
@@ -807,9 +764,8 @@ or contributions.
 
 
 ## SECS/GEM
-| Protocol | SECS/GEM |
-|---|---|
 | Name | SECS/GEM |
+|---|---|
 | Alias | SECS, SECS-I, SECS-II, HSMS |
 | Description | Semiconductor equipment communication standard with generic equipment model |
 | Keywords | Semiconductor, MES |
@@ -819,9 +775,8 @@ or contributions.
 
 
 ## SERCOS-III
-| Protocol | SERCOS-III |
-|---|---|
 | Name | SERCOS-III |
+|---|---|
 | Alias | SERCOS |
 | Description | IEC standard universal bus for Ethernet-based real-time communication |
 | Wireshark dissector | [packet-sercosiii.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-sercosiii.c) |
@@ -830,9 +785,8 @@ or contributions.
 
 
 ## SLMP
-| Protocol | SLMP |
-|---|---|
 | Name | SLMP |
+|---|---|
 | Alias | Seamless Message Protocol |
 | Description | CC-Link's messaging protocol for industrial automation communication |
 | Keywords | Mitsubishi, CC-Link, CLPA |
@@ -844,9 +798,8 @@ or contributions.
 
 
 ## TriStation
-| Protocol | TriStation |
-|---|---|
 | Name | TriStation |
+|---|---|
 | Alias | Triconex TriStation |
 | Description | Triconex's proprietary protocol for safety system communication |
 | Keywords | Triconex, TRITON |
@@ -862,9 +815,8 @@ or contributions.
 
 
 ## TSAA
-| Protocol | TSAA |
-|---|---|
 | Name | TSAA |
+|---|---|
 | Description | Messaging protocol to read and write data to Triconex controllers |
 | Keywords | Triconex |
 | Detailed page | [tsaa.md](protocols/tsaa.md) |
@@ -873,9 +825,8 @@ or contributions.
 
 
 ## UMAS
-| Protocol | UMAS |
-|---|---|
 | Name | UMAS |
+|---|---|
 | Description | Schneider Electric's proprietary protocol for communication systems |
 | Nmap script(s) | [modicon-info.nse](https://github.com/digitalbond/Redpoint/blob/master/modicon-info.nse) |
 | Detailed page | [umas.md](protocols/umas.md) |
@@ -891,9 +842,8 @@ or contributions.
 
 
 ## WITS
-| Protocol | WITS |
-|---|---|
 | Name | WITS |
+|---|---|
 | Alias | WITS0, WITSML |
 | Description | Real-time drilling data transfer standard in oil and gas |
 | Keywords | Wellsite, Drilling, Geology |
@@ -902,9 +852,8 @@ or contributions.
 
 
 ## ZigBee
-| Protocol | ZigBee |
-|---|---|
 | Name | ZigBee |
+|---|---|
 | Alias | ZBee |
 | Description | Wireless communication protocol for low-power IoT devices. |
 | Wireshark dissector | [packet-zbee-nwk.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-zbee-nwk.c) |
