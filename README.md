@@ -21,7 +21,7 @@ or contributions.
 
 - [BACnet/IP](#bacnetip)
 - [CAN](#can)
-- [CC-Link IE](#cclinkie)
+- [CC-Link IE](#cc-link-ie)
 - [CIP](#cip)
 - [CODESYS](#codesys)
 - [CSPv4](#cspv4)
@@ -29,41 +29,41 @@ or contributions.
 - [DF1](#df1)
 - [DICOM](#dicom)
 - [DNP3](#dnp3)
-- [Ether-S-I/O](#ethersio)
+- [Ether-S-I/O](#ether-s-io)
 - [EtherCAT](#ethercat)
 - [Ethernet/IP](#ethernetip)
 - [ETP](#etp)
-- [FF-HSE](#ffhse)
+- [FF-HSE](#ff-hse)
 - [FINS](#fins)
-- [FL-net](#flnet)
-- [GE-SRTP](#gesrtp)
-- [HART-IP](#hartip)
+- [FL-net](#fl-net)
+- [GE-SRTP](#ge-srtp)
+- [HART-IP](#hart-ip)
 - [HICP](#hicp)
 - [HL7](#hl7)
 - [ICCP](#iccp)
-- [IEC-60870-5-104](#iec608705104)
-- [IEC-61850](#iec61850)
-- [IEEE-C37.118](#ieeec37118)
+- [IEC-60870-5-104](#iec-60870-5-104)
+- [IEC-61850](#iec-61850)
+- [IEEE-C37.118](#ieee-c37118)
 - [ISA100.11a](#isa10011a)
 - [KNXnet/IP](#knxnetip)
 - [LoRaWAN](#lorawan)
-- [M-Bus](#mbus)
+- [M-Bus](#m-bus)
 - [MELSEC](#melsec)
 - [Modbus](#modbus)
 - [MQTT](#mqtt)
-- [Niagara Fox](#niagarafox)
-- [OPC-DA](#opcda)
-- [OPC-UA](#opcua)
-- [PC-WORX](#pcworx)
+- [Niagara Fox](#niagara-fox)
+- [OPC-DA](#opc-da)
+- [OPC-UA](#opc-ua)
+- [PC-WORX](#pc-worx)
 - [PCCC](#pccc)
 - [POWERLINK](#powerlink)
 - [ProConOs](#proconos)
-- [Profinet-DCP](#profinetdcp)
-- [Profinet-IO](#profinetio)
-- [S-Bus](#sbus)
+- [Profinet-DCP](#profinet-dcp)
+- [Profinet-IO](#profinet-io)
+- [S-Bus](#s-bus)
 - [S7comm](#s7comm)
 - [SECS/GEM](#secsgem)
-- [SERCOS-III](#sercosiii)
+- [SERCOS-III](#sercos-iii)
 - [SLMP](#slmp)
 - [TriStation](#tristation)
 - [TSAA](#tsaa)
@@ -131,7 +131,7 @@ or contributions.
 | Keywords | Mitsubishi, CLPA |
 | Access | Free |
 | Specifications | [CSP+ specification](https://www.cc-link.org/en/downloads/index.html) |
-| Detailed page | [cclinkie.md](protocols/cclinkie.md) |
+| Detailed page | [cc-link-ie.md](protocols/cc-link-ie.md) |
 ### Documentations
 - [CC-Link IE Field Network playlist](https://www.youtube.com/watch?v=h8QXlx2Xv9M&list=PL2zpUSDLjMt-J1HGOdzR1blv1z1s-eF03) - Mitsubishi Training
 
@@ -260,7 +260,7 @@ or contributions.
 | Port | 6060/udp |
 | Wireshark dissector | [packet-esio.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-esio.c) |
 | Example Pcap(s) | [ICS-pcap Ether-S-I/O](https://github.com/automayt/ICS-pcap/tree/master/ETHERSIO) |
-| Detailed page | [ethersio.md](protocols/ethersio.md) |
+| Detailed page | [ether-s-io.md](protocols/ether-s-io.md) |
 
 
 
@@ -323,7 +323,7 @@ or contributions.
 | Description | Ethernet-based communication for industrial process automation devices |
 | Port | 1089/tcp, 1090/tcp, 1091/tcp, 1089/udp, 1090/udp, 1091/udp |
 | Wireshark dissector | [packet-ff.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-ff.c) |
-| Detailed page | [ffhse.md](protocols/ffhse.md) |
+| Detailed page | [ff-hse.md](protocols/ff-hse.md) |
 
 
 
@@ -349,7 +349,7 @@ or contributions.
 | Port | 55000/udp, 55001/udp, 55002/udp, 55003/udp |
 | Access | Free |
 | Specifications | [FL-net specification](https://www.jema-net.or.jp/English/businessfields/standarization/opcn/standard/) |
-| Detailed page | [flnet.md](protocols/flnet.md) |
+| Detailed page | [fl-net.md](protocols/fl-net.md) |
 
 
 
@@ -358,7 +358,7 @@ or contributions.
 |---|---|
 | Description | General Electric's protocol for communication between GE devices and SCADA |
 | Port | 18245/tcp |
-| Detailed page | [gesrtp.md](protocols/gesrtp.md) |
+| Detailed page | [ge-srtp.md](protocols/ge-srtp.md) |
 
 
 
@@ -369,7 +369,7 @@ or contributions.
 | Description | IP-based communication protocol for HART (ICS) data transmission |
 | Wireshark dissector | [packet-hartip.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hartip.c) |
 | Example Pcap(s) | [ICS-pcap HART-IP](https://github.com/automayt/ICS-pcap/tree/master/HART%20IP/hart_ip) |
-| Detailed page | [hartip.md](protocols/hartip.md) |
+| Detailed page | [hart-ip.md](protocols/hart-ip.md) |
 ### Articles
 - [WirelessHART Radio Communication Standard](https://control.com/textbook/wireless-instrumentation/wirelesshart/) - Lessons in Industrial Automation textbook, Control Automation
 ### Conferences
@@ -429,7 +429,7 @@ or contributions.
 | Wireshark dissector | [packet-iec104.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-iec104.c) |
 | Scapy layer | [iec104.py](https://github.com/secdev/scapy/tree/master/scapy/contrib/scada/iec104) |
 | Example Pcap(s) | [ICS-pcap IEC-60870-5-104](https://github.com/automayt/ICS-pcap/tree/master/IEC%2060870) |
-| Detailed page | [iec608705104.md](protocols/iec608705104.md) |
+| Detailed page | [iec-60870-5-104.md](protocols/iec-60870-5-104.md) |
 ### Conferences
 - [Industroyer/Crashoverride: Zero Things Cool About a Threat Group Targeting the Power Grid](https://www.youtube.com/watch?v=TH17hSH1PGQ) - @ Black Hat (2020)
 - [Industroyer2: Sandworm&#39;s Cyberwarfare Targets Ukraine&#39;s Power Grid Again](https://www.youtube.com/watch?v=xC9iM5wVedQ) - @ Black Hat (2022)
@@ -449,7 +449,7 @@ or contributions.
 | Access | Paid |
 | Specifications | [IEC 61850 Specification](https://webstore.iec.ch/publication/6028) |
 | Wireshark dissector | [packet-goose.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-goose.c), [packet-sv.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-sv.c) |
-| Detailed page | [iec61850.md](protocols/iec61850.md) |
+| Detailed page | [iec-61850.md](protocols/iec-61850.md) |
 ### Tools
 - [libiec61850](https://github.com/mz-automation/libiec61850) - Open-source library for the IEC 61850 protocols
 
@@ -461,7 +461,7 @@ or contributions.
 | Description | Standard for synchrophasor data exchange in power systems |
 | Keywords | Power |
 | Wireshark dissector | [packet-synphasor.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-synphasor.c) |
-| Detailed page | [ieeec37118.md](protocols/ieeec37118.md) |
+| Detailed page | [ieee-c37118.md](protocols/ieee-c37118.md) |
 ### Tools
 - [OpenPDC](https://github.com/GridProtectionAlliance/openPDC) - Open Source Phasor Data Concentrator
 - [PyMU](https://github.com/iti/pymu) - Library based on the C37.118.2-2011 standard used for accessing PMU data in real-time
@@ -538,7 +538,7 @@ or contributions.
 | Description | Communication protocol for utility metering devices |
 | Access | The old specification is free, not the current one |
 | Specifications | [M-Bus specification](https://m-bus.com/documentation) |
-| Detailed page | [mbus.md](protocols/mbus.md) |
+| Detailed page | [m-bus.md](protocols/m-bus.md) |
 
 
 
@@ -610,7 +610,7 @@ or contributions.
 | Keywords | Tridium |
 | Port | 1911/tcp, 3011/tcp, 4911/tcp, 5011/tcp |
 | Nmap script(s) | [fox-info.nse](https://nmap.org/nsedoc/scripts/fox-info.html) |
-| Detailed page | [niagarafox.md](protocols/niagarafox.md) |
+| Detailed page | [niagara-fox.md](protocols/niagara-fox.md) |
 ### Tools
 - [foxdissector](https://github.com/MartinoTommasini/foxdissector) - Wireshark dissector for the Niagara Fox protocol in Lua
 
@@ -621,7 +621,7 @@ or contributions.
 | Alias | OPCDA |
 | Description | Legacy protocol for real-time data exchange in industrial systems |
 | Scapy layer | [opc_da.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/opc_da.py) |
-| Detailed page | [opcda.md](protocols/opcda.md) |
+| Detailed page | [opc-da.md](protocols/opc-da.md) |
 ### Papers
 - [Exploring the OPC attack surface](https://claroty.com/team82/research/white-papers/exploring-the-opc-attack-surface) - Claroty Team82 (2021)
 
@@ -633,7 +633,7 @@ or contributions.
 | Description | Open communication standard for industrial automation and control |
 | Port | 4840/tcp, 4840/udp, 4843/tcp (TLS) |
 | Wireshark dissector | [OPC-UA Plugin](https://github.com/wireshark/wireshark/tree/master/plugins/epan/opcua) |
-| Detailed page | [opcua.md](protocols/opcua.md) |
+| Detailed page | [opc-ua.md](protocols/opc-ua.md) |
 ### Articles
 - [OPC UA Deep Dive (Part 1): History of the OPC UA Protocol](https://claroty.com/team82/research/opc-ua-deep-dive-history-of-the-opc-ua-protocol) - Claroty Team82 (2023)
 - [OPC UA Deep Dive (Part 2): What is OPC UA?](https://claroty.com/team82/research/opc-deep-dive-part-2-what-is-opc-ua) - Claroty Team82 (2023)
@@ -661,7 +661,7 @@ or contributions.
 | Keywords | Phoenix Contact |
 | Port | 1962/tcp |
 | Nmap script(s) | [pcworx-info.nse](https://github.com/digitalbond/Redpoint/blob/master/pcworx-info.nse) |
-| Detailed page | [pcworx.md](protocols/pcworx.md) |
+| Detailed page | [pc-worx.md](protocols/pc-worx.md) |
 
 
 
@@ -710,7 +710,7 @@ or contributions.
 | Description | Device identification, configuration, and network management protocol |
 | Port | Ethernet |
 | Scapy layer | [pnio_dcp.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/pnio_dcp.py) |
-| Detailed page | [profinetdcp.md](protocols/profinetdcp.md) |
+| Detailed page | [profinet-dcp.md](protocols/profinet-dcp.md) |
 
 
 
@@ -721,7 +721,7 @@ or contributions.
 | Description | Real-time communication between controllers and I/O devices |
 | Port | 34962/udp, 34963/udp, 34964/udp |
 | Scapy layer | [pnio.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/pnio.py) |
-| Detailed page | [profinetio.md](protocols/profinetio.md) |
+| Detailed page | [profinet-io.md](protocols/profinet-io.md) |
 ### Articles
 - [What Is the Difference Between Profibus and Profinet?](https://control.com/technical-articles/understanding-profibus-vs-profinet/) - Antonio Armenta, Control Automation (2021)
 
@@ -735,7 +735,7 @@ or contributions.
 | Access | Free |
 | Wireshark dissector | [packet-sbus.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-sbus.c) |
 | Example Pcap(s) | [ICS-pcap Ether-S-Bus](https://github.com/automayt/ICS-pcap/tree/master/ETHERSBUS/sbus) |
-| Detailed page | [sbus.md](protocols/sbus.md) |
+| Detailed page | [s-bus.md](protocols/s-bus.md) |
 
 
 
@@ -780,7 +780,7 @@ or contributions.
 | Alias | SERCOS |
 | Description | IEC standard universal bus for Ethernet-based real-time communication |
 | Wireshark dissector | [packet-sercosiii.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-sercosiii.c) |
-| Detailed page | [sercosiii.md](protocols/sercosiii.md) |
+| Detailed page | [sercos-iii.md](protocols/sercos-iii.md) |
 
 
 

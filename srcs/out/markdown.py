@@ -22,7 +22,7 @@ H1 = lambda x: "# {0}".format(x)
 H2 = lambda x: "## {0}".format(x)
 H3 = lambda x: "### {0}".format(x)
 
-LINK_FORMAT = lambda x: sub('[^0-9a-zA-Z]+', '', x.lower().strip())
+LINK_FORMAT = lambda x: sub('[^0-9a-zA-Z\-]+', '', x.lower().strip().replace(" ", "-"))
 
 INTLINK = lambda x: "[{0}](#{1})".format(x, LINK_FORMAT(x))
 IMG = lambda x, y: "![{0}]({1})".format(x, y)
