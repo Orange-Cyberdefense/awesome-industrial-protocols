@@ -31,7 +31,7 @@ GOOGLE_API_KEY = key # Insert your Google API key, don't push it.
 #-----------------------------------------------------------------------------#
 
 LIST_TITLE = "Awesome Industrial Protocols"
-LIST_DESCRIPTION = "Offensive security-oriented list of industrial network protocols resources."
+LIST_DESCRIPTION = "Compilation of industrial network protocols resources focusing on offensive security."
 LIST_LOGO = "srcs/out/templates/logo-awesome-industrial-protocols.png"
 
 # Markdown pages
@@ -84,11 +84,13 @@ mongodb.id = "_id"
 # Collections
 mongodb.protocols = "protocols"
 mongodb.links = "links"
+mongodb.packets = "packets"
 
 # Database files
 mongodb.dbfile_path = abspath(join(dirname(abspath(__file__)), pardir, "db"))
 mongodb.dbfile_protocols = "protocols.json"
 mongodb.dbfile_links = "links.json"
+mongodb.dbfile_packets = "packets.json"
 
 # Protocols collection types
 types = SimpleNamespace()
@@ -148,6 +150,15 @@ links.description = "description"
 links.type = "type"
 links.TYPES = ("documentation", "article", "conference", "paper", "tool", "other", "cve")
 links.DEFAULT_TYPE = "other"
+
+# Packets collection content
+packets = SimpleNamespace()
+packets.id = "_id"
+packets.name = "name"
+packets.protocol = "protocol"
+packets.description = "description"
+packets.scapy = "scapy"
+packets.raw = "raw"
 
 #-----------------------------------------------------------------------------#
 # AUTOMATED SEARCH                                                            #

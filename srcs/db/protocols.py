@@ -7,7 +7,7 @@
 """
 
 from config import protocols as p, types, mongodb
-from . import MongoDB, DBException, find, exact_find
+from . import MongoDB, DBException, Collection, Document, find, exact_find
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -20,17 +20,17 @@ ERR_UNKFIELD = "Protocol '{0}' has no field '{1}'."
 ERR_EXIVALUE = "Field '{0}' already contains this value."
 ERR_MULTIMATCH = "Multiple match found, please choose between {0}."
 ERR_BOOLVALUE = "This field only accept 'true' or 'false'"
+
 #-----------------------------------------------------------------------------#
 # Protocol class                                                              #
 #-----------------------------------------------------------------------------#
 
-class Protocol(object):
+class Protocol(Document):
     """Class representing a single protocol document."""
     __db = None
     name = None
 
     def __init__(self, **kwargs):
-        """All entries from dictionary kwargs is converted to an attribute."""
         self.__db = MongoDB()
         for k, v in kwargs.items():
             setattr(self, k, v)
@@ -142,7 +142,7 @@ class Protocol(object):
 # Protocols class                                                             #
 #-----------------------------------------------------------------------------#
 
-class Protocols(object):
+class Protocols(Collection):
     """Interface with database to handle the protocols' collection."""
     __db = None
 

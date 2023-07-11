@@ -16,7 +16,8 @@ from bson.objectid import ObjectId
 # Internal
 from config import TOOL_DESCRIPTION, AI_WARNING, protocols as p
 from config import links, types, mongodb, wireshark, scapy
-from db import MongoDB, DBException, Protocols, Protocol, Links, Link
+from db import MongoDB, DBException
+from db import Protocols, Protocol, Links, Link, Packets, Packet
 from out import Markdown, MDException
 from search import SearchException, AI, Wireshark, Scapy, CVEList, Youtube
 
@@ -25,9 +26,9 @@ from search import SearchException, AI, Wireshark, Scapy, CVEList, Youtube
 #-----------------------------------------------------------------------------#
 
 OPTIONS = (
-    ("-L", "--list", "list all protocols", None, None),
     ("-F", "--filter", "list protocols matching a filter", None, "filter"),
     ("-V", "--view", "view only a field of each protocol", None, "field"),
+    ("-L", "--list", "list all protocols", None, None),
     ("-A", "--add", "add a new protocol", None, "protocol"),
     ("-R", "--read", "read data of a protocol", None, "protocol"),
     ("-W", "--write", "write data to a protocol", None, ("protocol", "field", "value"), 3),
@@ -38,6 +39,9 @@ OPTIONS = (
     ("-RL", "--read-link", "read data of a link", None, "url"),
     ("-WL", "--write-link", "change data of a link", None, ("url", "field", "value"), 3),
     ("-DL", "--delete-link", "delete a link", None, "url"),
+    ("-LP", "--list-packets", "list all packets", None, None),
+    ("-RP", "--read-packet", "read a packet from a protocol", None, ("protocol", "name"), 2),
+    ("-AP", "--add-packet", "add a new packet", None, ("protocol", "name"), 2),
     ("-G", "--gen", "generate Markdown files with protocols' data", None, None),
     ("-C", "--check", "check the database's content", None, None),
     ("-S", "--search", "search for data from various sources", None, ("method", "protocol"), 2),
@@ -57,6 +61,7 @@ MSG_CVE_WAIT = "Searching for CVEs in NIST's database (it may take some time)."
 MSG_CONFIRM_ADD_PROTO = "Do you want to add protocol '{0}'?"
 MSG_CONFIRM_ADD_FIELD = "Do you want to add field '{0}' to protocol '{1}'?"
 MSG_CONFIRM_ADD_LINK = "Do you want to add link '{0}'?"
+MSG_CONFIRM_ADD_PACKET = "Do you want to add packet '{0}'?"
 MSG_CONFIRM_WRITE = "Do you want to write '{0}: {1}' to '{2}' (previous value: '{3}')?"
 MSG_CONFIRM_WRITE_LINK = "Do you want to write '{0}: {1}' to '{2}' (previous value: '{3}')?"
 MSG_CONFIRM_APPEND = "Do you want to append '{0}' to field '{1}'?"
@@ -72,7 +77,9 @@ ERR_ACTION = "No action is defined. Choose between {0} (-h for help)."
 ERR_WRITE = "Write requires data (-d) OR link (-l) (-h for help)."
 ERR_BADDATA = "Data to write is invalid (-h for help)."
 ERR_BADLINK = "Link is invalid (-h for help)."
+ERR_LINKEXISTS = "Link '{0}' already exists."
 ERR_NOFIELD = "Field '{0}' does not exist in any protocol."
+ERR_PACKETEXISTS = "Packet '{0}' already exists for protocol {1}."
 ERR_OPENAI = "OpenAI not found (pip install openai)."
 ERR_SEARCHMETHOD = "Search method not found. Choose between {0} (-h for help)."
 ERR_NODISSECTOR = "No dissector found for protocol {0}."
@@ -98,11 +105,15 @@ class CLI(object):
     protocols = None
     links = None
 
+    #-------------------------------------------------------------------------#
+    # Prepare arguments and run                                               #
+    #-------------------------------------------------------------------------#
+    
     def __init__(self):
         self.functions = {
-            "list": self.__cmd_list,
             "filter": self.__cmd_filter,
             "view": self.__cmd_view,
+            "list": self.__cmd_list,
             "add": self.__cmd_add,
             "read": self.__cmd_read,
             "write": self.__cmd_write,
@@ -113,6 +124,9 @@ class CLI(object):
             "read_link": self.__cmd_read_link,
             "write_link": self.__cmd_write_link,
             "delete_link": self.__cmd_delete_link,
+            "list_packets": self.__cmd_list_packets,
+            "add_packet": self.__cmd_add_packet,
+            "read_packet": self.__cmd_read_packet,
             "gen": self.__cmd_gen,
             "check": self.__cmd_check,
             "search": self.__cmd_search,
@@ -127,7 +141,23 @@ class CLI(object):
                 ERROR(dbe, will_exit=True)
         self.protocols = Protocols()
         self.links = Links()
+        self.packets = Packets()
 
+    def __init_options(self) -> object:
+        """Parse command line arguments."""
+        options = ArgumentParser(description=TOOL_DESCRIPTION)
+        for opt in OPTIONS:
+            if not opt[4]: # Options takes no argument (so no meta)
+                options.add_argument(opt[0], opt[1], help=opt[2],
+                                     action="store_true", default=opt[3])
+            elif len(opt) == 6:
+                options.add_argument(opt[0], opt[1], help=opt[2], nargs=opt[5],
+                                     metavar=opt[4], default=opt[3])
+            else:
+                options.add_argument(opt[0], opt[1], help=opt[2],
+                                     metavar=opt[4], default=opt[3])
+        return options.parse_args()
+        
     def run(self):
         """Use arguments for command line to launch commands."""
         is_function = False
@@ -142,32 +172,8 @@ class CLI(object):
             ERROR(ERR_ACTION.format(", ".join(self.functions)), will_exit=True)
 
     #-------------------------------------------------------------------------#
-    # Private                                                                 #
+    # Show and filter                                                         #
     #-------------------------------------------------------------------------#
-
-    def __init_options(self) -> object:
-        options = ArgumentParser(description=TOOL_DESCRIPTION)
-        for opt in OPTIONS:
-            if not opt[4]: # Options takes no argument (so no meta)
-                options.add_argument(opt[0], opt[1], help=opt[2],
-                                     action="store_true", default=opt[3])
-            elif len(opt) == 6:
-                options.add_argument(opt[0], opt[1], help=opt[2], nargs=opt[5],
-                                     metavar=opt[4], default=opt[3])
-            else:
-                options.add_argument(opt[0], opt[1], help=opt[2],
-                                     metavar=opt[4], default=opt[3])
-        return options.parse_args()
-
-    #--- Commands ------------------------------------------------------------#
-
-    def __cmd_list(self) -> None:
-        """-L / --list"""
-        pdict = {x.name: x.description for x in self.protocols.all_as_objects}
-        self.__print_table(pdict, nocap=True)
-        # Stats
-        print(MSG_PROTO_COUNT.format(self.protocols.count))
-        print(MSG_LINKS_COUNT.format(self.links.count))
 
     def __cmd_filter(self, filter = None) -> None:
         """-F / --filter"""
@@ -204,7 +210,33 @@ class CLI(object):
         if not at_least_one_proto_has_field:
             ERROR(ERR_NOFIELD.format(field), will_exit=True)
         self.__print_table(pdict, nocap=True)
+
+    #-------------------------------------------------------------------------#
+    # Protocols                                                               #
+    #-------------------------------------------------------------------------#
+
+    def __get_protocol(self, protocol: str) -> Protocol:
+        """Helper: Return a Protocol object from its name, or create it."""
+        try:
+            self.protocols.get(protocol)
+        except DBException as dbe: # Does not exist or multiple matches
+            ERROR(str(dbe), will_exit=False)
+            self.__cmd_add(protocol)
+        # We check again if the protocol exists now.
+        try:
+            protocol = self.protocols.get(protocol)
+        except DBException as dbe:
+            ERROR(str(dbe), will_exit=True)
+        return protocol
     
+    def __cmd_list(self) -> None:
+        """-L / --list"""
+        pdict = {x.name: x.description for x in self.protocols.all_as_objects}
+        self.__print_table(pdict, nocap=True)
+        # Stats
+        print(MSG_PROTO_COUNT.format(self.protocols.count))
+        print(MSG_LINKS_COUNT.format(self.links.count))
+        
     def __cmd_add(self, new: str = None) -> bool:
         """-A / --add"""
         new = new if new else self.options.add
@@ -275,10 +307,14 @@ class CLI(object):
                           self.options.force):
             self.protocols.delete(protocol)
 
+    #-------------------------------------------------------------------------#
+    # Links                                                                   #
+    #-------------------------------------------------------------------------#
+            
     def __cmd_list_links(self) -> None:
-        """-LL / --links"""
-        for links in self.links.all_as_objects:
-            print(links)
+        """-LL / --list-links"""
+        for link in self.links.all_as_objects:
+            print(link)
 
     def __cmd_add_link(self, name: str = None, url: str = None,
                        description: str = None, type: str = None) -> Link:
@@ -288,6 +324,7 @@ class CLI(object):
         try:
             # links.add checks that too but we need to do that before confirmation
             link = self.links.get(url)
+            ERROR(ERR_LINKEXISTS.format(link.url))
             return link
         except DBException: # Link does not exist, we can continue
             pass
@@ -326,7 +363,7 @@ class CLI(object):
     def __cmd_delete_link(self) -> None:
         """-DL / --delete-link"""
         try:
-            links = self.links.get(self.options.delete_link, no_raise=True) # Will raise if unknown
+            links = self.links.get(self.options.delete_link, no_raise=True)
         except DBException as dbe:
             ERROR(str(dbe), will_exit=True)
         links = links if isinstance(links, list) else [links]
@@ -335,6 +372,59 @@ class CLI(object):
                               self.options.force):
                 self.links.delete(link)
 
+    #-------------------------------------------------------------------------#
+    # Packets                                                                 #
+    #-------------------------------------------------------------------------#
+                
+    def __cmd_list_packets(self) -> None:
+        """-LP / --list-packets"""
+        for packet in self.packets.all_as_objects:
+            print(packet)
+                
+    def __cmd_add_packet(self, protocol: str = None, name: str = None,
+                         description: str = None, raw: str = None,
+                         scapy: str = None) -> Packet:
+        """-AL / --add-packet"""
+        if self.options.add_packet:
+            protocol, name = self.options.add_packet
+        try:
+            protocol = self.protocols.get(protocol)
+        except DBException as dbe:
+            ERROR(str(dbe), will_exit=True)
+        try:
+            # add_packet checks that too but we need to do that before confirmation
+            packet = self.packets.get(protocol, name)
+            ERROR(ERR_PACKETEXISTS.format(packet.name, protocol.name), will_exit=True)
+        except DBException: # Packet does not exist, we can continue
+            pass
+        if self.__confirm(MSG_CONFIRM_ADD_PACKET.format(name, protocol),
+                          self.options.force):
+            try:
+                packet = self.packets.add(protocol, name)
+                return packet
+            except DBException as dbe:
+                ERROR(str(dbe), will_exit=True)
+        return None
+
+    def __cmd_read_packet(self, protocol: str = None, name: str = None) -> None:
+        """-RP / --read-packet"""
+        protocol, name = protocol if protocol else self.options.read_packet
+        try:
+            protocol = self.protocols.get(protocol)
+        except DBException as dbe:
+            ERROR(str(dbe), will_exit=True)
+        try:
+            packets = self.packets.get(protocol, name)
+            packets = packets if isinstance(packets, list) else [packets]
+            for packet in packets:
+                self.__print_table(packet.to_dict())
+        except DBException as dbe:
+            ERROR(str(dbe), will_exit=False)
+
+    #-------------------------------------------------------------------------#
+    # Output                                                                  #
+    #-------------------------------------------------------------------------#
+            
     def __cmd_gen(self) -> None:
         """-G / --gen"""
         try:
@@ -368,6 +458,10 @@ class CLI(object):
         for issue in self.links.check():
             print(issue)
 
+    #-------------------------------------------------------------------------#
+    # Automated search                                                        #
+    #-------------------------------------------------------------------------#
+            
     def __cmd_search(self, method: str = None, protocol:str = None) -> None:
         """-S / --search"""
         methods = {
@@ -494,31 +588,47 @@ class CLI(object):
         except ModuleNotFoundError:
             ERROR(ERR_GOOGLEAPI, will_exit=True)
 
+    #-------------------------------------------------------------------------#
+    # Notes                                                                   #
+    #-------------------------------------------------------------------------#
+            
     def __cmd_note(self) -> None:
         """-N / --note"""
         raise NotImplementedError("CLI: note")
 
+    #-------------------------------------------------------------------------#
+    # Database                                                                #
+    #-------------------------------------------------------------------------#
+    
     def __cmd_mongoimport(self) -> None:
         "-MI / --mongoimport"
         cmd = ["mongoimport", "--db=\"{0}\"".format(mongodb.database), "--drop"]
         protofile = join(mongodb.dbfile_path, mongodb.dbfile_protocols)
         linksfile = join(mongodb.dbfile_path, mongodb.dbfile_links)
+        packetsfile = join(mongodb.dbfile_path, mongodb.dbfile_packets)
         proto = ["--collection=protocols", "--file=\"{0}\"".format(protofile)]
         links = ["--collection=links", "--file=\"{0}\"".format(linksfile)]
+        packets = ["--collection=packets", "--file=\"{0}\"".format(packetsfile)]
         subprocess_run(cmd + proto)
         subprocess_run(cmd + links)
+        subprocess_run(cmd + packets)
 
     def __cmd_mongoexport(self) -> None:
         "-ME / --mongoexport"
         cmd = ["mongoexport", "--db=\"{0}\"".format(mongodb.database)]
         protofile = join(mongodb.dbfile_path, mongodb.dbfile_protocols)
         linksfile = join(mongodb.dbfile_path, mongodb.dbfile_links)
+        packetsfile = join(mongodb.dbfile_path, mongodb.dbfile_packets)
         proto = ["--collection=protocols", "--out=\"{0}\"".format(protofile)]
         links = ["--collection=links", "--out=\"{0}\"".format(linksfile)]
+        packets = ["--collection=packets", "--out=\"{0}\"".format(packetsfile)]
         subprocess_run(cmd + proto)
         subprocess_run(cmd + links)
+        subprocess_run(cmd + packets)
 
-    #--- Helpers -------------------------------------------------------------#
+    #-------------------------------------------------------------------------#
+    # Terminal display                                                        #
+    #-------------------------------------------------------------------------#
 
     def __box_print(self, title: str, url: str, description: str) -> None:
         """Display information in ASCII boxes."""
@@ -573,20 +683,6 @@ class CLI(object):
                     k = k if nocap else k.capitalize()
                 print(table_format.format(k, v))
         print("-" * (full_table_size - 1))
-
-    def __get_protocol(self, protocol: str) -> Protocol:
-        """Helper: Return a Protocol object from its name, or create it."""
-        try:
-            self.protocols.get(protocol)
-        except DBException as dbe: # Does not exist or multiple matches
-            ERROR(str(dbe), will_exit=False)
-            self.__cmd_add(protocol)
-        # We check again if the protocol exists now.
-        try:
-            protocol = self.protocols.get(protocol)
-        except DBException as dbe:
-            ERROR(str(dbe), will_exit=True)
-        return protocol
 
     def __confirm(self, msg: str, force: bool):
         """Interactively ask for confirmation from the user."""

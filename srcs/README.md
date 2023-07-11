@@ -225,6 +225,7 @@ Roadmap
 * [ ] Add information about how to set up a test environment for each protocol
 * [ ] Automated search on research papers databases (arxiv, else ?)
 * [ ] Improve the "Security features" field (or replace it)
+* [ ] Methods from Collection and Document-inherited objects can be refactored
 
 ### Fixes
 

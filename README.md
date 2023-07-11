@@ -1,6 +1,6 @@
 # Awesome Industrial Protocols
 
-Offensive security-oriented list of industrial network protocols resources.
+Compilation of industrial network protocols resources focusing on offensive security.
 
 ![Awesome Industrial Protocols](srcs/out/templates/logo-awesome-industrial-protocols.png)
 
@@ -450,6 +450,8 @@ or contributions.
 | Specifications | [IEC 61850 Specification](https://webstore.iec.ch/publication/6028) |
 | Wireshark dissector | [packet-goose.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-goose.c), [packet-sv.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-sv.c) |
 | Detailed page | [iec-61850.md](protocols/iec-61850.md) |
+### Conferences
+- [Fuzz Testing IEC 61850](https://www.youtube.com/watch?v=QehBHZyy4W4) - Markus Mahrla @ CS3STHLM 2019
 ### Tools
 - [libiec61850](https://github.com/mz-automation/libiec61850) - Open-source library for the IEC 61850 protocols
 

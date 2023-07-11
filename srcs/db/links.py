@@ -12,7 +12,7 @@ from socket import timeout as socket_timeout
 from re import match as re_match
 # Internal
 from config import mongodb, links as l
-from . import MongoDB, DBException, find
+from . import MongoDB, DBException, Collection, Document, find
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -34,7 +34,7 @@ ERR_UNKFIELD = "Field '{0}' not found."
 # Link class                                                              #
 #-----------------------------------------------------------------------------#
 
-class Link(object):
+class Link(Document):
     """Class representing a single link."""
     __db = None
     id = None
@@ -61,13 +61,6 @@ class Link(object):
     def __str__(self):
         return "[{0}] {1}: {2}: {3}".format(self.type.capitalize(), self.name,
                                             self.description, self.url)
-
-    def get(self, field: str) -> str:
-        """Return value associated to field."""
-        field = field.lower()
-        if field not in self.fields_dict.keys():
-            raise DBException(ERR_UNKFIELD.format(field))
-        return self.fields_dict[field]
 
     def set(self, field: str, value: str) -> None:
         """Set value to field."""
@@ -120,12 +113,6 @@ class Link(object):
         """URL is internally handled as ParseResult (urllib), returned as str."""
         return self.__url.geturl()
 
-    @property
-    def fields(self) -> list:
-        """Return fields in protocol object (public class attributes)."""
-        return (self.url, self.description, self.type)
-
-
     #--- Private -------------------------------------------------------------#
 
     @staticmethod
@@ -145,13 +132,13 @@ class Link(object):
 # Links class                                                                 #
 #-----------------------------------------------------------------------------#
 
-class Links(object):
+class Links(Collection):
     """Interface with database to handle the links' collection"""
     __db = None
 
     def __init__(self):
         self.__db = MongoDB()
-
+    
     def get(self, url: str, no_raise: bool = False) -> Link:
         """Get a link object by its URL."""
         match = []
@@ -174,7 +161,6 @@ class Links(object):
 
     def get_id(self, id: object) -> Link:
         """Get a link object by its ID in database."""
-        # TMP: replace with filter
         for link in self.all:
             if link[l.id] == id:
                 return Link(**link)
@@ -194,7 +180,7 @@ class Links(object):
         try:
             self.get(url)
         except DBException:
-            pass # The protocol does not exist, we can continue
+            pass # The link does not exist, we can continue
         else:
             raise DBException(ERR_EXIURL.format(url))
         link = Link(name=name, url=url, description=description, type=type)
