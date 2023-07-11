@@ -115,6 +115,7 @@ class Packets(Collection):
 
     def add(self, protocol: Protocol, name: str, description: str = None,
             raw: bytes = None, scapy: str = None):
+        """Add a packet to the collection."""
         try:
             self.get(protocol, name)
         except DBException:
@@ -125,6 +126,12 @@ class Packets(Collection):
                         description=description, raw=raw, scapy=scapy)
         self.__db.packets.insert_one(packet.to_dict())
 
+    def delete(self, protocol: Protocol, packet: Packet) -> None:
+        """Delete an existing packet."""
+        self.get(protocol, packet.name) # Will raise if unknown
+        self.__db.packets.delete_one({p.name: packet.name,
+                                      p.protocol: protocol.name})
+        
     @property
     def all_as_objects(self) -> list:
         """Return the list of packets as Packet objects."""

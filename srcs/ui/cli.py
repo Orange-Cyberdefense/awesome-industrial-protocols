@@ -26,26 +26,37 @@ from search import SearchException, AI, Wireshark, Scapy, CVEList, Youtube
 #-----------------------------------------------------------------------------#
 
 OPTIONS = (
+    # Behavior
+    ("-f", "--force", "never ask for confirmation", False, None),
+    # View
     ("-F", "--filter", "list protocols matching a filter", None, "filter"),
     ("-V", "--view", "view only a field of each protocol", None, "field"),
+    # Protocols
     ("-L", "--list", "list all protocols", None, None),
     ("-A", "--add", "add a new protocol", None, "protocol"),
     ("-R", "--read", "read data of a protocol", None, "protocol"),
     ("-W", "--write", "write data to a protocol", None, ("protocol", "field", "value"), 3),
     ("-D", "--delete", "delete a protocol", None, "protocol"),
-    ("-N", "--note", "add personal notes for a protocol", None, "protocol"),
+    # Links
     ("-LL", "--list-links", "list all links", None, None),
     ("-AL", "--add-link", "add a new link", None, ("name", "url"), 2),
     ("-RL", "--read-link", "read data of a link", None, "url"),
     ("-WL", "--write-link", "change data of a link", None, ("url", "field", "value"), 3),
     ("-DL", "--delete-link", "delete a link", None, "url"),
+    # Packets
     ("-LP", "--list-packets", "list all packets", None, None),
     ("-RP", "--read-packet", "read a packet from a protocol", None, ("protocol", "name"), 2),
     ("-AP", "--add-packet", "add a new packet", None, ("protocol", "name"), 2),
+    ("-WP", "--write-packet", "change data of a packet", None, ("protocol", "name"), 2),
+    ("-DP", "--delete-packet", "delete a packet", None, ("protocol", "name"), 2),
+    # Output
     ("-G", "--gen", "generate Markdown files with protocols' data", None, None),
     ("-C", "--check", "check the database's content", None, None),
+    # Note
+    ("-N", "--note", "add personal notes for a protocol", None, "protocol"),
+    # Automated search
     ("-S", "--search", "search for data from various sources", None, ("method", "protocol"), 2),
-    ("-f", "--force", "do not ask for confirmation (with -W)", False, None),
+    # Database
     ("-MI", "--mongoimport", "Import database from JSON files in repository.", False, None),
     ("-ME", "--mongoexport", "Export database to JSON files in repository.", False, None)
 )
@@ -67,6 +78,7 @@ MSG_CONFIRM_WRITE_LINK = "Do you want to write '{0}: {1}' to '{2}' (previous val
 MSG_CONFIRM_APPEND = "Do you want to append '{0}' to field '{1}'?"
 MSG_CONFIRM_DELETE = "Do you really want to delete protocol '{0}'? (ALL DATA WILL BE LOST)"
 MSG_CONFIRM_DELETE_LINK = "Do you really want to delete '{0}'?"
+MSG_CONFIRM_DELETE_PACKET = "Do you really want to delete '{0}' ({1})?"
 MSG_CONFIRM_OVERWRITE = "File '{0}' already exists. Overwrite?"
 MSG_CONFIRM_ADDDISSECTOR = "Do you want to set dissector {0} for protocol {1}?"
 MSG_CONFIRM_ADDLAYER = "Do you want to set layer {0} for protocol {1}?"
@@ -127,6 +139,8 @@ class CLI(object):
             "list_packets": self.__cmd_list_packets,
             "add_packet": self.__cmd_add_packet,
             "read_packet": self.__cmd_read_packet,
+            "write_packet": self.__cmd_write_packet,
+            "delete_packet": self.__cmd_delete_packet,
             "gen": self.__cmd_gen,
             "check": self.__cmd_check,
             "search": self.__cmd_search,
@@ -215,12 +229,12 @@ class CLI(object):
     # Protocols                                                               #
     #-------------------------------------------------------------------------#
 
-    def __get_protocol(self, protocol: str) -> Protocol:
+    def __get_protocol(self, protocol: str, noadd: bool = False) -> Protocol:
         """Helper: Return a Protocol object from its name, or create it."""
         try:
             self.protocols.get(protocol)
         except DBException as dbe: # Does not exist or multiple matches
-            ERROR(str(dbe), will_exit=False)
+            ERROR(str(dbe), will_exit=True if noadd else False)
             self.__cmd_add(protocol)
         # We check again if the protocol exists now.
         try:
@@ -299,10 +313,7 @@ class CLI(object):
 
     def __cmd_delete(self) -> None:
         """-D / --delete"""
-        try:
-            protocol = self.protocols.get(self.options.delete) # Will raise if unknown
-        except DBException as dbe:
-            ERROR(str(dbe), will_exit=True)
+        protocol = self.__get_protocol(self.options.delete, noadd=True)
         if self.__confirm(MSG_CONFIRM_DELETE.format(protocol.name),
                           self.options.force):
             self.protocols.delete(protocol)
@@ -387,12 +398,9 @@ class CLI(object):
         """-AL / --add-packet"""
         if self.options.add_packet:
             protocol, name = self.options.add_packet
+        protocol = self.__get_protocol(protocol)
         try:
-            protocol = self.protocols.get(protocol)
-        except DBException as dbe:
-            ERROR(str(dbe), will_exit=True)
-        try:
-            # add_packet checks that too but we need to do that before confirmation
+            # packets.add checks that too but we need to do that before confirmation
             packet = self.packets.get(protocol, name)
             ERROR(ERR_PACKETEXISTS.format(packet.name, protocol.name), will_exit=True)
         except DBException: # Packet does not exist, we can continue
@@ -409,10 +417,7 @@ class CLI(object):
     def __cmd_read_packet(self, protocol: str = None, name: str = None) -> None:
         """-RP / --read-packet"""
         protocol, name = protocol if protocol else self.options.read_packet
-        try:
-            protocol = self.protocols.get(protocol)
-        except DBException as dbe:
-            ERROR(str(dbe), will_exit=True)
+        protocol = self.__get_protocol(protocol, noadd=True)
         try:
             packets = self.packets.get(protocol, name)
             packets = packets if isinstance(packets, list) else [packets]
@@ -421,6 +426,23 @@ class CLI(object):
         except DBException as dbe:
             ERROR(str(dbe), will_exit=False)
 
+    def __cmd_write_packet(self):
+        """-WP / --write-packet"""
+        pass
+
+    def __cmd_delete_packet(self):
+        """-DP / --delete-packet"""
+        protocol, name = self.options.delete_packet
+        protocol = self.__get_protocol(protocol, noadd=True)
+        try:
+            packet = self.packets.get(protocol, name)
+        except DBException as dbe:
+            ERROR(str(dbe), will_exit=True)
+        if self.__confirm(MSG_CONFIRM_DELETE_PACKET.format(packet.name,
+                                                           protocol.name),
+                          self.options.force):
+            self.packets.delete(protocol, packet)
+            
     #-------------------------------------------------------------------------#
     # Output                                                                  #
     #-------------------------------------------------------------------------#
