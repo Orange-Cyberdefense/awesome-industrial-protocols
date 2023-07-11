@@ -17,6 +17,7 @@ ERR_EMPTY = "A packet must have at least a name and a protocol."
 ERR_NOPACKET = "No packet found for protocol {0}."
 ERR_UNKPACKET = "The packet '{0}' does not exists for protocol {1}."
 ERR_EXIPACKET = "The packet '{0}' already exists for protocol {1}."
+ERR_UNKFIELD = "Field '{0}' not found."
 
 #-----------------------------------------------------------------------------#
 # Packet class                                                                #
@@ -60,7 +61,14 @@ class Packet(Document):
     #--- Public --------------------------------------------------------------#
 
     def set(self, field: str, value: str) -> None:
-        pass
+        """Set value to field."""
+        field = field.lower()
+        if field not in self.fields_dict.keys():
+            raise DBException(ERR_UNKFIELD.format(field))
+        self.fields_dict[field] = value
+        document = {p.name: self.name, p.protocol: self.protocol}
+        newvalue = {field: value}
+        self.__db.packets.update_one(document, {"$set": newvalue})
     
     def check(self):
         self.__check()

@@ -72,7 +72,7 @@ class Link(Document):
             if value not in l.TYPES:
                 raise DBException(ERR_LINKTYPE.format(", ".join(l.TYPES)))
         self.fields_dict[field] = value
-        document = {"url": self.url}
+        document = {l.url: self.url}
         newvalue = {field: value}
         self.__db.links.update_one(document, {"$set": newvalue})
 

@@ -47,7 +47,7 @@ OPTIONS = (
     ("-LP", "--list-packets", "list all packets", None, None),
     ("-RP", "--read-packet", "read a packet from a protocol", None, ("protocol", "name"), 2),
     ("-AP", "--add-packet", "add a new packet", None, ("protocol", "name"), 2),
-    ("-WP", "--write-packet", "change data of a packet", None, ("protocol", "name"), 2),
+    ("-WP", "--write-packet", "change data of a packet", None, ("protocol", "name", "field", "value"), 4),
     ("-DP", "--delete-packet", "delete a packet", None, ("protocol", "name"), 2),
     # Output
     ("-G", "--gen", "generate Markdown files with protocols' data", None, None),
@@ -74,7 +74,6 @@ MSG_CONFIRM_ADD_FIELD = "Do you want to add field '{0}' to protocol '{1}'?"
 MSG_CONFIRM_ADD_LINK = "Do you want to add link '{0}'?"
 MSG_CONFIRM_ADD_PACKET = "Do you want to add packet '{0}'?"
 MSG_CONFIRM_WRITE = "Do you want to write '{0}: {1}' to '{2}' (previous value: '{3}')?"
-MSG_CONFIRM_WRITE_LINK = "Do you want to write '{0}: {1}' to '{2}' (previous value: '{3}')?"
 MSG_CONFIRM_APPEND = "Do you want to append '{0}' to field '{1}'?"
 MSG_CONFIRM_DELETE = "Do you really want to delete protocol '{0}'? (ALL DATA WILL BE LOST)"
 MSG_CONFIRM_DELETE_LINK = "Do you really want to delete '{0}'?"
@@ -364,7 +363,7 @@ class CLI(object):
         try:
             link = self.links.get(url)
             oldvalue = link.get(field)
-            if self.__confirm(MSG_CONFIRM_WRITE_LINK.format(field, value, link.url, oldvalue),
+            if self.__confirm(MSG_CONFIRM_WRITE.format(field, value, link.url, oldvalue),
                               self.options.force):
                 link.set(field, value)
                 self.__cmd_read_link(link.url)
@@ -416,7 +415,8 @@ class CLI(object):
 
     def __cmd_read_packet(self, protocol: str = None, name: str = None) -> None:
         """-RP / --read-packet"""
-        protocol, name = protocol if protocol else self.options.read_packet
+        if self.options.read_packet:
+            protocol, name = self.options.read_packet
         protocol = self.__get_protocol(protocol, noadd=True)
         try:
             packets = self.packets.get(protocol, name)
@@ -426,10 +426,24 @@ class CLI(object):
         except DBException as dbe:
             ERROR(str(dbe), will_exit=False)
 
-    def __cmd_write_packet(self):
+    def __cmd_write_packet(self, protocol: str = None, name: str = None,
+                           field: str = None, value: str = None) -> None:
         """-WP / --write-packet"""
-        pass
-
+        if self.options.write_packet:
+            protocol, name, field, value = self.options.write_packet
+        protocol = self.__get_protocol(protocol)
+        try:
+            packet = self.packets.get(protocol, name)
+            oldvalue = packet.get(field)
+            print(packet, oldvalue)
+            if self.__confirm(MSG_CONFIRM_WRITE.format(
+                    field, value, packet.name, oldvalue),
+                              self.options.force):
+                packet.set(field, value)
+            self.__cmd_read_packet(protocol.name, packet.name)
+        except DBException as dbe:
+            ERROR(str(dbe), will_exit=True)
+    
     def __cmd_delete_packet(self):
         """-DP / --delete-packet"""
         protocol, name = self.options.delete_packet
