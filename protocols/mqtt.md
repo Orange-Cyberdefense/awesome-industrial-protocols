@@ -19,8 +19,8 @@
 ## Articles
 - [Not Just Another IIoT Article: MQTT for Pneumatic Cylinder Maintenance](https://control.com/technical-articles/not-just-another-iiot-article-mqtt-for-pneumatic-cylinder-maintenance/) - Shawn Dietrich, Control Automation (2023)
 ## Conferences
-- [Choo Choo, Network Train - The One to Rule Your Perimeter](https://www.youtube.com/watch?v=RpXoVwCSHA0) - @ Black Hat (2023)
-- [DEF CON 24 - Lucas Lundgren, Neal Hindocha - Light Weight Protocol: Critical Implications](https://www.youtube.com/watch?v=o7qDVZr0t2c) - @ DEF CON (2016)
-- [When Machines Can&#39;t Talk](https://www.youtube.com/watch?v=X3fUNWRgeao) - @ Black Hat (2020)
+- [Choo Choo, Network Train - The One to Rule Your Perimeter](https://www.youtube.com/watch?v=RpXoVwCSHA0) - Martin Hron @ Black Hat Europe (2022)
+- [Light Weight Protocol: Critical Implications](https://www.youtube.com/watch?v=o7qDVZr0t2c) - Lucas Lundgren, Neal Hindocha @ DEF CON 24 (2016)
+- [When Machines Can't Talk](https://www.youtube.com/watch?v=X3fUNWRgeao) - Federico Maggi & Davide Quarta @ Black Hat Europe (2018)
 
 > All unreviewed AI-generated data is marked with `*`.
