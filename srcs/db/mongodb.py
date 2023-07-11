@@ -144,6 +144,11 @@ class MongoDB(object):
         return self.db[mongodb.packets]
 
     @property
+    def packets_count(self):
+        """Return number of packets in collection."""
+        return self.db[mongodb.packets].count_documents({})
+
+    @property
     def packets_all(self):
         """Return all packets in collection."""
         return [x for x in self.db[mongodb.packets].find()]

@@ -145,3 +145,8 @@ class Packets(Collection):
         """Return the list of packets as Packet objects."""
         objects = [Packet(**x) for x in self.__db.packets_all]
         return sorted(objects, key=lambda x: x.protocol.lower())
+
+    @property
+    def count(self) -> int:
+        """Return the total number of packets."""
+        return self.__db.packets_count

@@ -63,6 +63,7 @@ OPTIONS = (
 
 MSG_PROTO_COUNT = "[*] Total number of protocols: {0}"
 MSG_LINKS_COUNT = "[*] Total number of links: {0}"
+MSG_PACKETS_COUNT = "[*] Total number of packets: {0}"
 MSG_WRITE_ALIST = "Awesome list written to {0}."
 MSG_WRITE_PPAGE = "{0} protocol page written to {1}."
 MSG_MULTIDISSECTOR = "Multiple matching dissectors found: {0}."
@@ -249,6 +250,7 @@ class CLI(object):
         # Stats
         print(MSG_PROTO_COUNT.format(self.protocols.count))
         print(MSG_LINKS_COUNT.format(self.links.count))
+        print(MSG_PACKETS_COUNT.format(self.packets.count))
         
     def __cmd_add(self, new: str = None) -> bool:
         """-A / --add"""
