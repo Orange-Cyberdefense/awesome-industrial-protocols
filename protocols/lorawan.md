@@ -6,14 +6,9 @@
 | Aliases | LoRa |
 | Description | Long-range IoT communication protocol with low power requirements |
 | Keywords | Wireless |
-| Port(s) |  |
 | Access to specs | Free |
 | Specifications | [LoRaWAN specification](https://lora-alliance.org/resource_hub/lorawan-specification-v1-1/) |
-| Security features |  |
-| Nmap script(s) |  |
 | Wireshark dissector | [packet-lorawan.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-lorawan.c) |
-| Scapy layer |  |
-| Example Pcap(s) |  |
 | Related CVE | [CVE-2022-39274](https://nvd.nist.gov/vuln/detail/CVE-2022-39274) |
 
 ## Conferences

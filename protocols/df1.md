@@ -6,15 +6,8 @@
 | Aliases | DF-1 |
 | Description | Allen-Bradley serial communication protocol for industrial automation devices |
 | Keywords | PCCC, Allen-Bradley |
-| Port(s) |  |
 | Access to specs | Free |
 | Specifications | [DF1 specification](https://literature.rockwellautomation.com/idc/groups/literature/documents/rm/1770-rm516_-en-p.pdf) |
-| Security features |  |
-| Nmap script(s) |  |
-| Wireshark dissector |  |
-| Scapy layer |  |
-| Example Pcap(s) |  |
-| Related CVE |  |
 
 ## Articles
 - [AB/DF1 Protocol Tips](http://iatips.com/df1_tips.html) - Lynn's Industrial Automation Protocol Tips blog

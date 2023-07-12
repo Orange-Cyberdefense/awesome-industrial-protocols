@@ -6,16 +6,8 @@
 | Aliases | Common Industrial Protocol |
 | Description | ODVA's protocol suite for industrial automation communication |
 | Keywords | ODVA, Ethernet/IP, DeviceNet, ControlNet, CompoNet |
-| Port(s) |  |
-| Access to specs |  |
-| Specifications |  |
-| Security features |  |
-| Nmap script(s) |  |
 | Wireshark dissector | [packet-cip.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-cip.c) |
-| Scapy layer |  |
-| Example Pcap(s) |  |
 | Related CVE | [CVE-2012-6435](https://nvd.nist.gov/vuln/detail/CVE-2012-6435), [CVE-2012-6436](https://nvd.nist.gov/vuln/detail/CVE-2012-6436), [CVE-2012-6438](https://nvd.nist.gov/vuln/detail/CVE-2012-6438), [CVE-2012-6439](https://nvd.nist.gov/vuln/detail/CVE-2012-6439), [CVE-2012-6441](https://nvd.nist.gov/vuln/detail/CVE-2012-6441), [CVE-2012-6442](https://nvd.nist.gov/vuln/detail/CVE-2012-6442), [CVE-2016-9343](https://nvd.nist.gov/vuln/detail/CVE-2016-9343), [CVE-2017-12233](https://nvd.nist.gov/vuln/detail/CVE-2017-12233), [CVE-2017-12234](https://nvd.nist.gov/vuln/detail/CVE-2017-12234), [CVE-2017-3812](https://nvd.nist.gov/vuln/detail/CVE-2017-3812), [CVE-2018-14821](https://nvd.nist.gov/vuln/detail/CVE-2018-14821), [CVE-2018-14829](https://nvd.nist.gov/vuln/detail/CVE-2018-14829), [CVE-2018-17924](https://nvd.nist.gov/vuln/detail/CVE-2018-17924), [CVE-2018-19282](https://nvd.nist.gov/vuln/detail/CVE-2018-19282), [CVE-2020-3225](https://nvd.nist.gov/vuln/detail/CVE-2020-3225), [CVE-2020-6998](https://nvd.nist.gov/vuln/detail/CVE-2020-6998), [CVE-2021-1392](https://nvd.nist.gov/vuln/detail/CVE-2021-1392), [CVE-2022-20919](https://nvd.nist.gov/vuln/detail/CVE-2022-20919), [CVE-2022-3157](https://nvd.nist.gov/vuln/detail/CVE-2022-3157) |
-| Keywods | CompoNet |
 
 ## Documentations
 - [Common Industrial Protocol (CIP)](https://www.odva.org/technology-standards/key-technologies/common-industrial-protocol-cip/) - Overview on ODVA.org

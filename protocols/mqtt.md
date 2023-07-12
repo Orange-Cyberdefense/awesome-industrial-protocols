@@ -3,17 +3,11 @@
 | Protocol | MQTT |
 |---|---|
 | Name | MQTT |
-| Aliases |  |
 | Description | Publish-suscribe network protocol for message queue |
 | Keywords | Telemetry |
-| Port(s) |  |
-| Access to specs |  |
-| Specifications |  |
-| Security features |  |
 | Nmap script(s) | [mqtt-suscribe.nse](https://nmap.org/nsedoc/scripts/mqtt-subscribe.html) |
 | Wireshark dissector | [packet-mqtt.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-mqtt.c) |
 | Scapy layer | [mqtt.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/mqtt.py) |
-| Example Pcap(s) |  |
 | Related CVE | [CVE-2019-5432](https://nvd.nist.gov/vuln/detail/CVE-2019-5432), [CVE-2021-21962](https://nvd.nist.gov/vuln/detail/CVE-2021-21962), [CVE-2021-21967](https://nvd.nist.gov/vuln/detail/CVE-2021-21967), [CVE-2021-21968](https://nvd.nist.gov/vuln/detail/CVE-2021-21968), [CVE-2021-21971](https://nvd.nist.gov/vuln/detail/CVE-2021-21971), [CVE-2021-44222](https://nvd.nist.gov/vuln/detail/CVE-2021-44222), [CVE-2023-29105](https://nvd.nist.gov/vuln/detail/CVE-2023-29105), [CVE-2023-3028](https://nvd.nist.gov/vuln/detail/CVE-2023-3028) |
 
 ## Articles

@@ -5,15 +5,8 @@
 | Name | OPC-UA |
 | Aliases | OPCUA |
 | Description | Open communication standard for industrial automation and control |
-| Keywords |  |
 | Port(s) | 4840/tcp, 4840/udp, 4843/tcp (TLS) |
-| Access to specs |  |
-| Specifications |  |
-| Security features |  |
-| Nmap script(s) |  |
 | Wireshark dissector | [OPC-UA Plugin](https://github.com/wireshark/wireshark/tree/master/plugins/epan/opcua) |
-| Scapy layer |  |
-| Example Pcap(s) |  |
 | Related CVE | [CVE-2019-13542](https://nvd.nist.gov/vuln/detail/CVE-2019-13542), [CVE-2021-23230](https://nvd.nist.gov/vuln/detail/CVE-2021-23230), [CVE-2021-42262](https://nvd.nist.gov/vuln/detail/CVE-2021-42262), [CVE-2022-25304](https://nvd.nist.gov/vuln/detail/CVE-2022-25304), [CVE-2022-25888](https://nvd.nist.gov/vuln/detail/CVE-2022-25888), [CVE-2022-25903](https://nvd.nist.gov/vuln/detail/CVE-2022-25903) |
 
 ## Articles

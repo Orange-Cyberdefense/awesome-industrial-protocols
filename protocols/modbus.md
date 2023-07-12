@@ -5,11 +5,8 @@
 | Name | Modbus |
 | Aliases | Modbus TCP |
 | Description | Widely used industrial communication protocol |
-| Keywords |  |
 | Port(s) | 502/tcp |
-| Access to specs |  |
 | Specifications | [Modbus TCP Specification](https://modbus.org/specs.php) |
-| Security features |  |
 | Nmap script(s) | [modbus-discover.nse](https://nmap.org/nsedoc/scripts/modbus-discover.html), [modicon-info.nse](https://github.com/digitalbond/Redpoint/blob/master/modicon-info.nse) |
 | Wireshark dissector | [packet-mbtcp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-mbtcp.c) |
 | Scapy layer | [modbus.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/modbus.py) |

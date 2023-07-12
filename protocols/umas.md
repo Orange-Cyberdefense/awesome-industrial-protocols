@@ -3,18 +3,8 @@
 | Protocol | UMAS |
 |---|---|
 | Name | UMAS |
-| Aliases |  |
 | Description | Schneider Electric's proprietary protocol for communication systems |
-| Keywords |  |
-| Port(s) |  |
-| Access to specs |  |
-| Specifications |  |
-| Security features |  |
 | Nmap script(s) | [modicon-info.nse](https://github.com/digitalbond/Redpoint/blob/master/modicon-info.nse) |
-| Wireshark dissector |  |
-| Scapy layer |  |
-| Example Pcap(s) |  |
-| Related CVE |  |
 
 ## Articles
 - [The secrets of Schneider Electric’s UMAS protocol](https://ics-cert.kaspersky.com/publications/reports/2022/09/29/the-secrets-of-schneider-electrics-umas-protocol/) - Kaspersky ICS CERT (2022)

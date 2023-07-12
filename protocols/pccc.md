@@ -6,15 +6,6 @@
 | Aliases | AB/PCCC |
 | Description | Legacy command/response protocol for Allen-Bradley PLC communication |
 | Keywords | Allen-Bradley |
-| Port(s) |  |
-| Access to specs |  |
-| Specifications |  |
-| Security features |  |
-| Nmap script(s) |  |
-| Wireshark dissector |  |
-| Scapy layer |  |
-| Example Pcap(s) |  |
-| Related CVE |  |
 
 ## Articles
 - [AB/PCCC Protocol Tips](http://iatips.com/pccc_tips.html) - Lynn's Industrial Automation Protocol Tips blog
