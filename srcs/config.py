@@ -157,8 +157,15 @@ packets.id = "_id"
 packets.name = "name"
 packets.protocol = "protocol"
 packets.description = "description"
-packets.scapy = "scapy"
-packets.raw = "raw"
+packets.scapy_pkt = "scapy_pkt"
+packets.raw_pkt = "raw_pkt"
+packets.FIELDS = {
+    packets.name: "Name",
+    packets.protocol: "Protocol",
+    packets.description: "Description",
+    packets.scapy_pkt: "Scapy format",
+    packets.raw_pkt: "Raw format"
+}
 
 #-----------------------------------------------------------------------------#
 # AUTOMATED SEARCH                                                            #

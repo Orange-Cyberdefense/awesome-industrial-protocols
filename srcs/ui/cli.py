@@ -14,7 +14,7 @@ from subprocess import run as subprocess_run
 from textwrap import fill
 from bson.objectid import ObjectId
 # Internal
-from config import TOOL_DESCRIPTION, AI_WARNING, protocols as p
+from config import TOOL_DESCRIPTION, AI_WARNING, protocols as p, packets as pk
 from config import links, types, mongodb, wireshark, scapy
 from db import MongoDB, DBException
 from db import Protocols, Protocol, Links, Link, Packets, Packet
@@ -288,6 +288,8 @@ class CLI(object):
                         value = link.id
                     elif p.TYPE(field) == types.PKTLIST:
                         packet = self.packets.get(protocol, value)
+                        if not packet or isinstance(packet, list):
+                            return
                         value = packet.id
                     protocol.set(field, value)
             else:
@@ -397,8 +399,8 @@ class CLI(object):
             print(packet)
                 
     def __cmd_add_packet(self, protocol: str = None, name: str = None,
-                         description: str = None, raw: str = None,
-                         scapy: str = None) -> Packet:
+                         description: str = None, scapy_pkt: str = None,
+                         raw_pkt: str = None) -> Packet:
         """-AL / --add-packet"""
         if self.options.add_packet:
             protocol, name = self.options.add_packet
@@ -412,7 +414,8 @@ class CLI(object):
         if self.__confirm(MSG_CONFIRM_ADD_PACKET.format(name, protocol),
                           self.options.force):
             try:
-                packet = self.packets.add(protocol, name)
+                packet = self.packets.add(protocol, name, description,
+                                          scapy_pkt, raw_pkt)
                 return packet
             except DBException as dbe:
                 ERROR(str(dbe), will_exit=True)
@@ -436,11 +439,10 @@ class CLI(object):
         """-WP / --write-packet"""
         if self.options.write_packet:
             protocol, name, field, value = self.options.write_packet
-        protocol = self.__get_protocol(protocol)
         try:
+            protocol = self.protocols.get(protocol)
             packet = self.packets.get(protocol, name)
             oldvalue = packet.get(field)
-            print(packet, oldvalue)
             if self.__confirm(MSG_CONFIRM_WRITE.format(
                     field, value, packet.name, oldvalue),
                               self.options.force):
@@ -481,7 +483,8 @@ class CLI(object):
                 print(MSG_WRITE_ALIST.format(path))
             # Protocol pages
             for protocol in self.protocols.all_as_objects:
-                path = md_generator.gen_protocol_page(protocol, self.links, write=False)
+                path = md_generator.gen_protocol_page(protocol, self.links,
+                                                      self.packets, write=False)
                 if exists(path):
                     if self.__confirm(MSG_CONFIRM_OVERWRITE.format(path), self.options.force):
                         md_generator.write_protocol_page()
@@ -725,6 +728,8 @@ class CLI(object):
                 v = v if len(v) < table_size else v[:table_size-3]+"..."
                 if k in p.ALL_FIELDS:
                     k = p.NAME(k)
+                elif k in pk.FIELDS.keys(): # Packets
+                    k = pk.FIELDS[k]
                 else:
                     k = k if nocap else k.capitalize()
                 print(table_format.format(k, v))

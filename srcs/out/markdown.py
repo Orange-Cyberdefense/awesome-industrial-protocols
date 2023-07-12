@@ -9,8 +9,8 @@ from os.path import join, exists
 from re import sub
 # Internal
 from config import markdown as m, LIST_TITLE, LIST_DESCRIPTION, LIST_LOGO, \
-    protocols as p, types, links as l
-from db import DBException, Protocols, Protocol, Links
+    protocols as p, types, links as l, packets as pk
+from db import DBException, Protocols, Protocol, Links, Packets
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -29,6 +29,8 @@ IMG = lambda x, y: "![{0}]({1})".format(x, y)
 
 LINKOBJ = lambda x: "[{0}]({1})".format(x.name, x.url)
 LINKOBJDESC = lambda x: "[{0}]({1}) - {2}".format(x.name, x.url, x.description)
+
+PACKETOBJ = lambda x: "**{0}**: {1}".format(x.name, x.description)
 
 LINK = lambda x, y: "[{0}]({1})".format(x, y)
 TABLE = lambda x, y: "| {0} | {1} |".format(x, y)
@@ -98,17 +100,11 @@ class Markdown(object):
             self.write_awesome()
         return self.alist_file
 
-    def gen_protocol_pages(self, protocols: Protocols, links: Links) -> str:
-        """Convert all protocols to a set of protocol pages in Markdown."""
-        all_path = []
-        for protocol in protocols.all_as_objects:
-            path = self.gen_protocol_page(protocol, links)
-            all_path.append(path)
-        return all_path
-
-    def gen_protocol_page(self, protocol: Protocol, links: Links, write=True) -> str:
+    def gen_protocol_page(self, protocol: Protocol, links: Links, packets: Packets,
+                          write=True) -> str:
         """Convert a protocol object to a nice protocol page in Markdown."""
         self.links = links
+        self.packets = packets
         filename = "{0}.md".format(LINK_FORMAT(protocol.name))
         self.ppage_file = join(m.protocolpage_path, filename)
         keywords = {
@@ -183,12 +179,23 @@ class Markdown(object):
 
     def __f_linklist(self, key: str, linklist: list) -> list:
         """Format Link objects in Markdown to insert in Markdown tables."""
-        content = []
         key = p.ALL_FIELDS[key][0] if key in p.ALL_FIELDS.keys() else key.capitalize()
         value = [LINKOBJ(self.links.get_id(l)) for l in linklist]
-        content.append(TABLE(key, ", ".join(value)))
-        return content
+        return [TABLE(key, ", ".join(value))]
 
+    def __f_packetlist(self, key: str, pktlist: list) -> list:
+        content = []
+        key = pk.FIELDS[key] if key in pk.FIELDS.keys() else key.capitalize()
+        for pkt in pktlist:
+            pkt = self.packets.get_id(pkt)
+            value = [PACKETOBJ(pkt)]
+            if pkt.scapy_pkt:
+                value += ["| | Scapy: `{0}`".format(pkt.scapy_pkt)]
+            if pkt.raw_pkt:
+                value += ["| | Raw: `{0}`".format(pkt.raw_pkt)]
+            content.append(TABLE(key, "\n".join(value)))
+        return content
+    
     def __f_name(self, protocol: Protocol) -> str:
         """Return name as a head title."""
         return H1(protocol.name)
@@ -199,9 +206,13 @@ class Markdown(object):
         current.append(TABLE("Protocol", protocol.name))
         current.append(BORDER_TABLE)
         for k, v in protocol.to_dict().items():
+            if not v:
+                continue
             if k != p.resources:
                 if p.TYPE(k) == types.LINKLIST:
                     current += self.__f_linklist(k, v)
+                elif p.TYPE(k) == types.PKTLIST:
+                    current += self.__f_packetlist(k, v)
                 else:
                     k = p.ALL_FIELDS[k][0] if k in p.ALL_FIELDS.keys() else k.capitalize()
                     v = ", ".join(v) if isinstance(v, list) else v

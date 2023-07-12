@@ -27,7 +27,7 @@ ERR_BADURL = "URL '{0}' cannot be accessed."
 ERR_HTTP = "URL '{0}' returned error: {1}."
 ERR_UNKURL = "Link '{0}' not found."
 ERR_EXIURL = "URL '{0}' already exists."
-ERR_UNKID = "This link ID does not match with any existing link ({0})."
+ERR_UNKID = "This ID does not match with any existing link ({0})."
 ERR_MULTIMATCH = "Multiple match found, please choose between {0}."
 ERR_UNKFIELD = "Field '{0}' not found."
 

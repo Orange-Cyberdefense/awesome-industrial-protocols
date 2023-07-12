@@ -18,6 +18,7 @@ ERR_NOPACKET = "No packet found for protocol {0}."
 ERR_UNKPACKET = "The packet '{0}' does not exists for protocol {1}."
 ERR_EXIPACKET = "The packet '{0}' already exists for protocol {1}."
 ERR_UNKFIELD = "Field '{0}' not found."
+ERR_UNKID = "This ID does not match with any existing packet ({0})."
 
 #-----------------------------------------------------------------------------#
 # Packet class                                                                #
@@ -30,8 +31,8 @@ class Packet(Document):
     name = None
     protocol = None # Protocol document id in database
     description = None
-    raw = None
-    scapy = None
+    scapy_pkt = None
+    raw_pkt = None
 
     def __init__(self, **kwargs):
         self.__db = MongoDB()
@@ -39,23 +40,23 @@ class Packet(Document):
         self.name = kwargs[p.name] if p.name in kwargs else None
         self.protocol = kwargs[p.protocol] if p.protocol in kwargs else None
         self.description = kwargs[p.description] if p.description in kwargs else None
-        self.raw = kwargs[p.raw] if p.raw in kwargs else None
-        self.scapy = kwargs[p.scapy] if p.scapy in kwargs else None
+        self.scapy_pkt = kwargs[p.scapy_pkt] if p.scapy_pkt in kwargs else None
+        self.raw = kwargs[p.raw_pkt] if p.raw_pkt in kwargs else None
         self.fields_dict = {
             p.name: self.name,
             p.protocol: self.protocol,
             p.description: self.description,
-            p.raw: self.raw,
-            p.scapy: self.scapy
+            p.scapy_pkt: self.scapy_pkt,
+            p.raw_pkt: self.raw_pkt
         }
         self.__check()
 
     def __str__(self):
         s = ["[{0}] {1}: {2}".format(self.protocol, self.name, self.description)]
-        if self.raw:
-            s += ["\tRaw packet: {0}".format(self.raw)]
-        if self.scapy:
-            s += ["\tScapy format: {0}".format(self.scapy)]
+        if self.scapy_pkt:
+            s += ["\tScapy format: {0}".format(self.scapy_pkt)]
+        if self.raw_pkt:
+            s += ["\tRaw packet: {0}".format(self.raw_pkt)]
         return "\n".join(s)
 
     #--- Public --------------------------------------------------------------#
@@ -79,8 +80,8 @@ class Packet(Document):
             p.name: self.name,
             p.protocol: self.protocol,
             p.description: self.description,
-            p.raw: self.raw,
-            p.scapy: self.scapy
+            p.scapy_pkt: self.scapy_pkt,
+            p.raw_pkt: self.raw_pkt
         }
         if not exclude_id:
             pdict[p.id] = self.id
@@ -129,7 +130,7 @@ class Packets(Collection):
         raise DBException(ERR_UNKID.format(id))
 
     def add(self, protocol: Protocol, name: str, description: str = None,
-            raw: bytes = None, scapy: str = None):
+            scapy_pkt: str = None, raw_pkt: bytes = None):
         """Add a packet to the collection."""
         try:
             self.get(protocol, name)
@@ -138,7 +139,7 @@ class Packets(Collection):
         else:
             raise DBException(ERR_EXIPACKET.format(name, protocol.name))
         packet = Packet(name=name, protocol=protocol.name,
-                        description=description, raw=raw, scapy=scapy)
+                        description=description, scapy_pkt=scapy_pkt, raw_pkt=raw_pkt)
         self.__db.packets.insert_one(packet.to_dict())
 
     def delete(self, protocol: Protocol, packet: Packet) -> None:
