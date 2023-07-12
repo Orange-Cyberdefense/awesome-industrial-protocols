@@ -8,6 +8,7 @@
 from urllib.parse import urlparse, ParseResult
 from urllib.request import urlopen, Request
 from urllib.error import URLError, HTTPError
+from http.client import InvalidURL
 from socket import timeout as socket_timeout
 from re import match as re_match
 # Internal
@@ -89,7 +90,7 @@ class Link(Document):
             urlopen(request, timeout=TIMEOUT)
         except HTTPError as he:
             raise DBException(ERR_HTTP.format(url, str(he))) from None
-        except (URLError, socket_timeout):
+        except (URLError, InvalidURL, socket_timeout):
             raise DBException(ERR_BADURL.format(url)) from None
 
     def check(self):

@@ -121,6 +121,13 @@ class Packets(Collection):
         raise DBException(ERR_UNKPACKET.format(name, protocol.name) if name \
                           else ERR_NOPACKET.format(protocol.name))
 
+    def get_id(self, id: object) -> Packet:
+        """Get a packet object by its ID in database."""
+        for packet in self.all:
+            if packet[p.id] == id:
+                return Packet(**packet)
+        raise DBException(ERR_UNKID.format(id))
+
     def add(self, protocol: Protocol, name: str, description: str = None,
             raw: bytes = None, scapy: str = None):
         """Add a packet to the collection."""
@@ -140,6 +147,12 @@ class Packets(Collection):
         self.__db.packets.delete_one({p.name: packet.name,
                                       p.protocol: protocol.name})
         
+
+    @property
+    def all(self) -> list:
+        """Return the list of packets as JSON."""
+        return [x for x in self.__db.packets_all]
+
     @property
     def all_as_objects(self) -> list:
         """Return the list of packets as Packet objects."""

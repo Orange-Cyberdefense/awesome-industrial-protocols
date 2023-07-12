@@ -88,7 +88,7 @@ MSG_CONFIRM_ADDVIDEO = "Do you want to add video '{0}' to protocol {1}?"
 ERR_ACTION = "No action is defined. Choose between {0} (-h for help)."
 ERR_WRITE = "Write requires data (-d) OR link (-l) (-h for help)."
 ERR_BADDATA = "Data to write is invalid (-h for help)."
-ERR_BADLINK = "Link is invalid (-h for help)."
+ERR_BADID = "The ID is invalid (-h for help)."
 ERR_LINKEXISTS = "Link '{0}' already exists."
 ERR_NOFIELD = "Field '{0}' does not exist in any protocol."
 ERR_PACKETEXISTS = "Packet '{0}' already exists for protocol {1}."
@@ -277,7 +277,7 @@ class CLI(object):
                       oldvalue: str):
         """Used by -W"""
         try:
-            if p.TYPE(field) in (types.LIST, types.LINKLIST):
+            if p.TYPE(field) in (types.LIST, types.LINKLIST, types.PKTLIST):
                 # If it's a link, we need a link object
                 if self.__confirm(MSG_CONFIRM_APPEND.format(value, p.NAME(field)),
                                   self.options.force):
@@ -286,6 +286,9 @@ class CLI(object):
                         if not link:
                             return
                         value = link.id
+                    elif p.TYPE(field) == types.PKTLIST:
+                        packet = self.packets.get(protocol, value)
+                        value = packet.id
                     protocol.set(field, value)
             else:
                 if self.__confirm(MSG_CONFIRM_WRITE.format(p.NAME(field), value,
@@ -683,22 +686,28 @@ class CLI(object):
             print(table_format.format(d))
         print("-" * (table_size - 1))
 
-    def __print_links(self, table_format, key, link_ids: list) -> None:
-        """Print links from ID."""
+    def __print_ids(self, table_format: str, ptype: str, key: str,
+                      ids: list) -> None:
+        """Print documents from their ID."""
         full_table_size = get_terminal_size().columns
         table_size = full_table_size - 20 - 8
-        if not isinstance(link_ids, list):
-            print(table_format.format(key, ERR_BADLINK))
+        if not isinstance(ids, list):
+            print(table_format.format(key, ERR_BADID))
             return
-        for id in link_ids:
+        for id in ids:
             try:
-                link = self.links.get_id(id).url
-                link = link if len(link) < table_size else link[:table_size-3]+"..."
+                if ptype == types.LINKLIST:
+                    link = self.links.get_id(id)
+                    text = "{0}: {1}".format(link.name, link.url)
+                elif ptype == types.PKTLIST:
+                    packet = self.packets.get_id(id)
+                    text = "{0}: {1}".format(packet.name, packet.description)
             except DBException as dbe:
-                link = str(dbe)
-            print(table_format.format(key, link))
+                text = str(dbe)
+            text = text if len(text) < table_size else text[:table_size-3]+"..."
+            print(table_format.format(key, text))
             key = "" # We only want to print the key for the first line
-
+            
     def __print_table(self, protocol: dict, nocap: bool = False) -> None:
         """Displays the protocol table on terminal."""
         full_table_size = get_terminal_size().columns
@@ -708,10 +717,9 @@ class CLI(object):
         for k, v in protocol.items():
             if k == mongodb.id:
                 continue
-            elif k in p.ALL_FIELDS and p.TYPE(k) == types.LINKLIST and v:
-                self.__print_links(table_format, p.NAME(k), v)
-            elif v and isinstance(v, list) and isinstance(v[0], ObjectId):
-                self.__print_links(table_format, p.NAME(k), v)
+            elif k in p.ALL_FIELDS and v and \
+                 p.TYPE(k) in (types.LINKLIST, types.PKTLIST):
+                self.__print_ids(table_format, p.TYPE(k), p.NAME(k), v)
             else:
                 v = ", ".join(v) if isinstance(v, list) else str(v)
                 v = v if len(v) < table_size else v[:table_size-3]+"..."
