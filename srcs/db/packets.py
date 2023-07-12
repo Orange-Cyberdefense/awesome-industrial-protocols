@@ -41,7 +41,7 @@ class Packet(Document):
         self.protocol = kwargs[p.protocol] if p.protocol in kwargs else None
         self.description = kwargs[p.description] if p.description in kwargs else None
         self.scapy_pkt = kwargs[p.scapy_pkt] if p.scapy_pkt in kwargs else None
-        self.raw = kwargs[p.raw_pkt] if p.raw_pkt in kwargs else None
+        self.raw_pkt = kwargs[p.raw_pkt] if p.raw_pkt in kwargs else None
         self.fields_dict = {
             p.name: self.name,
             p.protocol: self.protocol,

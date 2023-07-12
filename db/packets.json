@@ -1,1 +1,2 @@
+{"_id":{"$oid":"64aeb8c58188f5b55a606878"},"name":"Module Scan","protocol":"HICP","description":"Request to discover devices, usually sent via broadcast","scapy_pkt":"HICPModuleScan()","raw_pkt":"Module scan\\x00"}
 {"_id":{"$oid":"64ae5c9d696b96e1f8e58706"},"name":"Search Request","protocol":"KNXnet/IP","description":"Send on KNXnet/IP's multicast address to discover devices","scapy_pkt":null,"raw_pkt":null}
