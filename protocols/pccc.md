@@ -11,4 +11,4 @@
 - [AB/PCCC Protocol Tips](http://iatips.com/pccc_tips.html) - Lynn's Industrial Automation Protocol Tips blog
 - [Ethernet/IP PCCC Service Codes](https://iatip.blogspot.com/2008/11/ethernetip-pccc-service-codes.html) - Lynn's Industrial protocols over IP blog
 
-> All unreviewed AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

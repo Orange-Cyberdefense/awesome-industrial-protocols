@@ -26,4 +26,4 @@
 ## Tools
 - [BACnet Stack](https://github.com/bacnet-stack/bacnet-stack) - BACnet open source protocol stack
 
-> All unreviewed AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

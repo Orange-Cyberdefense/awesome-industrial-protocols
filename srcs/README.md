@@ -211,7 +211,7 @@ What is AI used for then?
   text generator. It is never used to find resources because it does not find
   them, it invents them.**
 
-The list of queries to OpenAI is [here](config.py#L156). It has been narrowed
+The list of queries to OpenAI is [here](config.py#L174). It has been narrowed
 down to 4 queries due to the inconsistency of responses. The remaining ones are
 closed questions related to some basic characteristics of the protocols.
 

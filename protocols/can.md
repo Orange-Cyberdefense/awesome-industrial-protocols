@@ -24,4 +24,4 @@
 - [Hopping on the CAN Bus](https://www.youtube.com/watch?v=U1yecKUmnFo) - Eric Evenchick @ Black Hat USA (2015)
 - [Self-Driving and Connected Cars: Fooling Sensors and Tracking Drivers](https://www.youtube.com/watch?v=C29UGFsIWVI) - Jonathan Petit @ Black Hat Europe (2015)
 
-> All unreviewed AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

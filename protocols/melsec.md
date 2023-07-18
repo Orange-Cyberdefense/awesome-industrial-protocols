@@ -11,4 +11,4 @@
 ## Conferences
 - [Taking Apart and Taking Over ICS & SCADA Ecosystems](https://www.youtube.com/watch?v=L0w_aE4jRFw) - Mars Cheng & Selmon Yang @ DEF CON 29 (2021)
 
-> All unreviewed AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

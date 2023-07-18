@@ -32,4 +32,4 @@
 - [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
 - [PyModbus](https://github.com/pymodbus-dev/pymodbus) - A full modbus protocol written in python
 
-> All unreviewed AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

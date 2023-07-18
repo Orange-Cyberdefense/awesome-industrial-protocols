@@ -23,4 +23,4 @@
 - [s7scan](https://github.com/klsecservices/s7scan) - Scan networks to gather basic information about Siemens PLCs
 - [Snap7](https://snap7.sourceforge.net/) - Step7 Open Source Ethernet Communication Suite
 
-> All unreviewed AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

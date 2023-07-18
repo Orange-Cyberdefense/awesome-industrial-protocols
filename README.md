@@ -873,7 +873,7 @@ or contributions.
 ### Tools
 - [KillerBee](https://github.com/riverloopsec/killerbee) - IEEE 802.15.4/ZigBee Security Research Toolkit
 
-> All unreviewed AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`. ([Why?](./srcs/README.md#note-on-ai-generated-content))
 
 **awesome-industrial-protocols** is licensed under
 [CC0](https://creativecommons.org/publicdomain/zero/1.0/). **Turn/IP** is

@@ -13,4 +13,4 @@
 ## Articles
 - [DeviceNet and Ethernet/IP](https://www.rtautomation.com/rtas-blog/devicenet-and-ethernet-ip/) - Blog post on RTAutomation
 
-> All unreviewed AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

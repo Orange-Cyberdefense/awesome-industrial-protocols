@@ -22,7 +22,7 @@ In this repository:
 
 %content%
 
-> All unreviewed AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`. ([Why?](./srcs/README.md#note-on-ai-generated-content))
 
 **awesome-industrial-protocols** is licensed under
 [CC0](https://creativecommons.org/publicdomain/zero/1.0/). **Turn/IP** is
