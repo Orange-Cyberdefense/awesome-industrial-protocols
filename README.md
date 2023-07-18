@@ -388,6 +388,7 @@ or contributions.
 | Keywords | Anybus |
 | Port | 3250/udp |
 | Wireshark dissector | [packet-hicp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hicp.c), [packet-shicp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-shicp.c) |
+| Scapy layer | [hicp.py](https://github.com/claire-lex/anybus-hicp/blob/main/hicp.py) |
 | Detailed page | [hicp.md](protocols/hicp.md) |
 
 

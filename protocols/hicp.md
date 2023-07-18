@@ -8,11 +8,12 @@
 | Keywords | Anybus |
 | Port(s) | 3250/udp |
 | Wireshark dissector | [packet-hicp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hicp.c), [packet-shicp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-shicp.c) |
+| Scapy layer | [hicp.py](https://github.com/claire-lex/anybus-hicp/blob/main/hicp.py) |
 | Related CVE | [CVE-2009-4463](https://nvd.nist.gov/vuln/detail/CVE-2009-4463) |
 | Multicast address | None |
 | Discovery | **Module Scan**: Request to discover devices, usually sent via broadcast
 | | Scapy: `HICPModuleScan()`
-| | Raw: `Module scan\x00` |
+| | Raw: `MODULE SCAN\x00` |
 
 
 
