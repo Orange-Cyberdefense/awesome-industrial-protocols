@@ -81,9 +81,6 @@ class AI(object):
             if attribute == p.port:
                 response = ", ".join(findall(r'\d+', response))
             yield attribute, response+"*"
-        # Multi-level questions about security features
-        response = self.__security_questions(name)
-        yield p.security, response+"*"
 
     #--- Private -------------------------------------------------------------#
 
@@ -96,22 +93,3 @@ class AI(object):
             max_tokens=ai.max_tokens
         )
         return response.choices[0].text.strip()
-
-    def __security_questions(self, name: str) -> str:
-        """Prepare and format answer to security-related questions."""
-        q_security = {
-            "encryption": (ai.has_encryption, ai.has_mandatory_encryption),
-            "authentication": (ai.has_authentication, ai.has_mandatory_authentication),
-            "integrity checks": (ai.has_integrity, ai.has_mandatory_integrity)
-        }
-        answer = []
-        for security, question in q_security.items():
-            r = self.request(ai.yes_no_question.format(name, question[0]))
-            if r.lower().startswith("yes"):
-                r = self.request(ai.yes_no_question.format(name, question[1]))
-                if r.lower().startswith("yes"):
-                    r = "Mandatory " + security
-                else:
-                    r = "Optional " + security
-                answer.append(r)
-        return ", ".join(answer) if answer else ""

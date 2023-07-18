@@ -192,11 +192,42 @@ following search mode are supported:
 - `scapy`: Search a layer on Scapy's GitHub repository
 - `cve`: Search associated CVE on NIST's vulnerability database (slow)
 - `youtube`: Search Youtube videos on selected channels (list in `config.py`)
-- `openai`: Ask basic questions OpenAI's models (not so reliable)
+- `openai`: Ask basic questions to OpenAI's models (not so reliable, more
+  information [below](#note-on-ai-generated-content))
 - `all`: Run all modes except OpenAI
 
 > Modes `youtube` and `openai` require API keys for Google API (free) and OpenAI
   (chargeable).
+
+Note on AI-generated content
+----------------------------
+
+Turn/IP contains code to gather AI-generated data using OpenAI's API. That's why
+every page contains this warning: `All unreviewed AI-generated data is marked
+with *`. However, you might notice that no data is actually marked with `*`.
+What is AI used for then?
+
+**TL;DR: AI is used for what it is: a search engine with an extra step and a
+  text generator. It is never used to find resources because it does not find
+  them, it invents them.**
+
+The list of queries to OpenAI is [here](config.py#L156). It has been narrowed
+down to 4 queries due to the inconsistency of responses. The remaining ones are
+closed questions related to some basic characteristics of the protocols.
+
+AI-generated data is mostly found in two types of fields:
+
+- Description: AI is a fine text generator, so it generates fine descriptions.
+
+- Port: AI helps restricting the search. It's much easier to find out if
+  protocol A uses port 1234 rather than blindly searching for the port it uses
+  (try it, you'll see). However, this really needs to be double-checked.
+
+Also, my mother tongue is not English so I sometimes rely on it to correct some
+mistakes.
+
+> In the beginning there were also queries to retrieve basic information about
+  the security of a protocol but the results were terrible so I removed it.
 
 Contribute
 ----------

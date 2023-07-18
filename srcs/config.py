@@ -188,13 +188,6 @@ ai.description = "description in 10 words"
 ai.default_port = "default port"
 # Documentation
 ai.is_spec_free = "specification is available for free"
-# Security
-ai.has_encryption = "has encryption"
-ai.has_mandatory_encryption = "has mandatory encryption"
-ai.has_authentication = "has authentication"
-ai.has_mandatory_authentication = "has mandatory authentication"
-ai.has_integrity = "has integrity checks"
-ai.has_mandatory_integrity = "has mandatory integrity checks"
 
 #--- Data extracted from Wireshark dissectors --------------------------------#
 

@@ -77,7 +77,7 @@ class Protocol(Document):
         newvalue = {field: value}
         self.__db.protocols.update_one(document, {"$set": newvalue})
         setattr(self, field, value)
-        self.__check()
+        # self.__check()
 
     def add(self, field: str, value: object) -> None:
         """Add a new field to protocol."""
@@ -132,11 +132,11 @@ class Protocol(Document):
 
     def __check(self):
         """Check that all mandatory fields are set for protocol objects."""
-        try:
-            for attr in p.ALL_FIELDS:
+        for attr in p.FIELDS:
+            try:
                 getattr(self, attr)
-        except AttributeError:
-            raise DBException(ERR_MANDFIELD.format(attr, self.name)) from None
+            except AttributeError:
+                raise DBException(ERR_MANDFIELD.format(attr, self.name)) from None
 
 #-----------------------------------------------------------------------------#
 # Protocols class                                                             #
