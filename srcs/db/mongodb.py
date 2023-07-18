@@ -13,6 +13,7 @@ Each collection contains one document per protocol/link.
 Each document contains varying fields with values.
 """
 
+from abc import ABC, abstractmethod
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
 # Internal
@@ -27,7 +28,48 @@ ERR_NODB = "Database {0} not found, please import it with 'python turn-ip.py "\
            "--mongoimport'"
 ERR_NOSRV = "Could not connect to MongoDB server {0}:{1}."
 ERR_DBCONNECT = "Connection to database failed."
+ERR_UNKFIELD = "Field '{0}' not found."
 
+#-----------------------------------------------------------------------------#
+# Abstract classes                                                            #
+#-----------------------------------------------------------------------------#
+
+class Document(ABC):
+    """Abstract class for document items."""
+    __db = None
+
+    def get(self, field: str) -> str:
+        """Return value associated to field."""
+        field = field.lower()
+        if field not in self.fields_dict.keys():
+            raise DBException(ERR_UNKFIELD.format(field))
+        return self.fields_dict[field]
+
+    @abstractmethod
+    def set(self, field: str, value: str) -> None:
+        raise NotImplementedError("Document: set")
+
+    @abstractmethod
+    def to_dict(self, exclude_id: bool = True) -> dict:
+        """Convert document's content to dictionary."""
+        raise NotImplementedError("Document: to_dict")
+    
+    @abstractmethod
+    def check(self) -> None:
+        raise NotImplementedError("Document: check")
+
+class Collection(ABC):
+    """Abstract clas for database collections."""
+    __db = None
+
+    @abstractmethod
+    def get(self, field: str) -> Document:
+        raise NotImplementedError("Collection: get")
+
+    @abstractmethod
+    def add(self, **kwargs) -> None:
+        raise NotImplementedError("Collection: add")
+    
 #-----------------------------------------------------------------------------#
 # MongoDB classes                                                             #
 #-----------------------------------------------------------------------------#
@@ -96,6 +138,21 @@ class MongoDB(object):
         """Return all links in collection."""
         return [x for x in self.db[mongodb.links].find()]
 
+    @property
+    def packets(self):
+        """Return packets collection."""
+        return self.db[mongodb.packets]
+
+    @property
+    def packets_count(self):
+        """Return number of packets in collection."""
+        return self.db[mongodb.packets].count_documents({})
+
+    @property
+    def packets_all(self):
+        """Return all packets in collection."""
+        return [x for x in self.db[mongodb.packets].find()]
+    
     #-------------------------------------------------------------------------#
     # Private                                                                 #
     #-------------------------------------------------------------------------#

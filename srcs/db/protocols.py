@@ -7,7 +7,7 @@
 """
 
 from config import protocols as p, types, mongodb
-from . import MongoDB, DBException, find, exact_find
+from . import MongoDB, DBException, Collection, Document, find, exact_find
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -20,17 +20,17 @@ ERR_UNKFIELD = "Protocol '{0}' has no field '{1}'."
 ERR_EXIVALUE = "Field '{0}' already contains this value."
 ERR_MULTIMATCH = "Multiple match found, please choose between {0}."
 ERR_BOOLVALUE = "This field only accept 'true' or 'false'"
+
 #-----------------------------------------------------------------------------#
 # Protocol class                                                              #
 #-----------------------------------------------------------------------------#
 
-class Protocol(object):
+class Protocol(Document):
     """Class representing a single protocol document."""
     __db = None
     name = None
 
     def __init__(self, **kwargs):
-        """All entries from dictionary kwargs is converted to an attribute."""
         self.__db = MongoDB()
         for k, v in kwargs.items():
             setattr(self, k, v)
@@ -62,7 +62,7 @@ class Protocol(object):
         """Update existing field in protocol."""
         field, oldvalue = self.get(field)
         # Different behavior if linklist
-        if p.TYPE(field) in (types.LINKLIST, types.LIST):
+        if p.TYPE(field) in (types.LINKLIST, types.LIST, types.PKTLIST):
             if not replace and oldvalue: # We append
                 oldvalue = [oldvalue] if not isinstance(oldvalue, list) else oldvalue
                 if value not in oldvalue:
@@ -77,7 +77,7 @@ class Protocol(object):
         newvalue = {field: value}
         self.__db.protocols.update_one(document, {"$set": newvalue})
         setattr(self, field, value)
-        self.__check()
+        # self.__check()
 
     def add(self, field: str, value: object) -> None:
         """Add a new field to protocol."""
@@ -132,17 +132,17 @@ class Protocol(object):
 
     def __check(self):
         """Check that all mandatory fields are set for protocol objects."""
-        try:
-            for attr in p.ALL_FIELDS:
+        for attr in p.FIELDS:
+            try:
                 getattr(self, attr)
-        except AttributeError:
-            raise DBException(ERR_MANDFIELD.format(attr, self.name)) from None
+            except AttributeError:
+                raise DBException(ERR_MANDFIELD.format(attr, self.name)) from None
 
 #-----------------------------------------------------------------------------#
 # Protocols class                                                             #
 #-----------------------------------------------------------------------------#
 
-class Protocols(object):
+class Protocols(Collection):
     """Interface with database to handle the protocols' collection."""
     __db = None
 

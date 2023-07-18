@@ -1,6 +1,6 @@
 # Awesome Industrial Protocols
 
-Offensive security-oriented list of industrial network protocols resources.
+Compilation of industrial network protocols resources focusing on offensive security.
 
 ![Awesome Industrial Protocols](srcs/out/templates/logo-awesome-industrial-protocols.png)
 
@@ -8,8 +8,9 @@ In this repository:
 * You are currently viewing the **Awesome Industrial Protocols** page.
 * Detailed pages for protocols are available in `protocols`.
 * All data is stored in MongoDB databases in `db`.
-* **Turn/IP** (in `srcs`) is a handy tool to manipulate this data and simplify
-the research and test process on industrial protocols.
+* **Turn/IP** (in `srcs`) is a handy tool to manipulate this data, generate the
+awesome list and protocol pages, and simplify the research and test process
+on industrial protocols.
 
 > Note: Sometimes it is unclear whether a name refers to a protocol, a standard,
 or a complete environment, or if a protocol on a serial link can be accessed
@@ -21,7 +22,7 @@ or contributions.
 
 - [BACnet/IP](#bacnetip)
 - [CAN](#can)
-- [CC-Link IE](#cclinkie)
+- [CC-Link IE](#cc-link-ie)
 - [CIP](#cip)
 - [CODESYS](#codesys)
 - [CSPv4](#cspv4)
@@ -29,41 +30,41 @@ or contributions.
 - [DF1](#df1)
 - [DICOM](#dicom)
 - [DNP3](#dnp3)
-- [Ether-S-I/O](#ethersio)
+- [Ether-S-I/O](#ether-s-io)
 - [EtherCAT](#ethercat)
 - [Ethernet/IP](#ethernetip)
 - [ETP](#etp)
-- [FF-HSE](#ffhse)
+- [FF-HSE](#ff-hse)
 - [FINS](#fins)
-- [FL-net](#flnet)
-- [GE-SRTP](#gesrtp)
-- [HART-IP](#hartip)
+- [FL-net](#fl-net)
+- [GE-SRTP](#ge-srtp)
+- [HART-IP](#hart-ip)
 - [HICP](#hicp)
 - [HL7](#hl7)
 - [ICCP](#iccp)
-- [IEC-60870-5-104](#iec608705104)
-- [IEC-61850](#iec61850)
-- [IEEE-C37.118](#ieeec37118)
+- [IEC-60870-5-104](#iec-60870-5-104)
+- [IEC-61850](#iec-61850)
+- [IEEE-C37.118](#ieee-c37118)
 - [ISA100.11a](#isa10011a)
 - [KNXnet/IP](#knxnetip)
 - [LoRaWAN](#lorawan)
-- [M-Bus](#mbus)
+- [M-Bus](#m-bus)
 - [MELSEC](#melsec)
 - [Modbus](#modbus)
 - [MQTT](#mqtt)
-- [Niagara Fox](#niagarafox)
-- [OPC-DA](#opcda)
-- [OPC-UA](#opcua)
-- [PC-WORX](#pcworx)
+- [Niagara Fox](#niagara-fox)
+- [OPC-DA](#opc-da)
+- [OPC-UA](#opc-ua)
+- [PC-WORX](#pc-worx)
 - [PCCC](#pccc)
 - [POWERLINK](#powerlink)
 - [ProConOs](#proconos)
-- [Profinet-DCP](#profinetdcp)
-- [Profinet-IO](#profinetio)
-- [S-Bus](#sbus)
+- [Profinet-DCP](#profinet-dcp)
+- [Profinet-IO](#profinet-io)
+- [S-Bus](#s-bus)
 - [S7comm](#s7comm)
 - [SECS/GEM](#secsgem)
-- [SERCOS-III](#sercosiii)
+- [SERCOS-III](#sercos-iii)
 - [SLMP](#slmp)
 - [TriStation](#tristation)
 - [TSAA](#tsaa)
@@ -112,6 +113,7 @@ or contributions.
 ### Conferences
 - [(Pen)Testing Vehicles with CANToolz](https://www.youtube.com/watch?v=-p47IYz-H-k) - Alexey Sintsov @ Black Hat Europe (2016)
 - [All Aboard the CAN Bus or Motorcycle](https://www.youtube.com/watch?v=YSApvBDIVCM) - Derrick @ DEF CON Safe Mode Car Hacking Village (2020)
+- [CAN Bus in Aviation Investigating CAN Bus in Avionics](https://www.youtube.com/watch?v=bydy7lbFyFU) - Patrick Kiley @ DEF CON 27 Aviation Village (2019)
 - [CANSPY: Auditing CAN Devices](https://www.youtube.com/watch?v=vTsdxNGS_xc) - Jonathan Christofer Demay, Arnaud Lebrun @ DEF CON 24 (2016)
 - [Cantact: An Open Tool for Automative Exploitation](https://www.youtube.com/watch?v=HzDW8ptMkDk) - Eric Evenchick @ Black Hat Asia (2016)
 - [canTot A CAN Bus Hacking Framework](https://www.youtube.com/watch?v=OBC0v5KDcJg) - Jay Turla @ DEF CON 30 Car Hacking Village (2022)
@@ -119,7 +121,6 @@ or contributions.
 - [Free-Fall: Hacking Tesla from Wireless to CAN Bus](https://www.youtube.com/watch?v=0w8J9bmCI54) - Ling Liu, Sen Nie & Yuefeng Du @ Black Hat USA (2017)
 - [Fuzzing CAN / CAN FD ECU's and Network](https://www.youtube.com/watch?v=IMZ8DD4lTAY) - Samir Bhagwat @ DEF CON 29 Car Hacking Village (2021)
 - [Hopping on the CAN Bus](https://www.youtube.com/watch?v=U1yecKUmnFo) - Eric Evenchick @ Black Hat USA (2015)
-- [Patrick Kiley - CAN Bus in Aviation Investigating CAN Bus in Avionics - DEF CON 27 Aviation Village](https://www.youtube.com/watch?v=bydy7lbFyFU) - @ DEF CON (2019)
 - [Self-Driving and Connected Cars: Fooling Sensors and Tracking Drivers](https://www.youtube.com/watch?v=C29UGFsIWVI) - Jonathan Petit @ Black Hat Europe (2015)
 
 
@@ -131,7 +132,7 @@ or contributions.
 | Keywords | Mitsubishi, CLPA |
 | Access | Free |
 | Specifications | [CSP+ specification](https://www.cc-link.org/en/downloads/index.html) |
-| Detailed page | [cclinkie.md](protocols/cclinkie.md) |
+| Detailed page | [cc-link-ie.md](protocols/cc-link-ie.md) |
 ### Documentations
 - [CC-Link IE Field Network playlist](https://www.youtube.com/watch?v=h8QXlx2Xv9M&list=PL2zpUSDLjMt-J1HGOdzR1blv1z1s-eF03) - Mitsubishi Training
 
@@ -161,7 +162,7 @@ or contributions.
 | Port | 1200/tcp |
 | Detailed page | [codesys.md](protocols/codesys.md) |
 ### Conferences
-- [DEF CON 30 -  Jimmy Wylie - Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - @ DEF CON (2022)
+- [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
 
 
 ## CSPv4
@@ -260,7 +261,7 @@ or contributions.
 | Port | 6060/udp |
 | Wireshark dissector | [packet-esio.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-esio.c) |
 | Example Pcap(s) | [ICS-pcap Ether-S-I/O](https://github.com/automayt/ICS-pcap/tree/master/ETHERSIO) |
-| Detailed page | [ethersio.md](protocols/ethersio.md) |
+| Detailed page | [ether-s-io.md](protocols/ether-s-io.md) |
 
 
 
@@ -323,7 +324,7 @@ or contributions.
 | Description | Ethernet-based communication for industrial process automation devices |
 | Port | 1089/tcp, 1090/tcp, 1091/tcp, 1089/udp, 1090/udp, 1091/udp |
 | Wireshark dissector | [packet-ff.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-ff.c) |
-| Detailed page | [ffhse.md](protocols/ffhse.md) |
+| Detailed page | [ff-hse.md](protocols/ff-hse.md) |
 
 
 
@@ -337,7 +338,7 @@ or contributions.
 | Wireshark dissector | [packet-omron-fins.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-omron-fins.c) |
 | Detailed page | [fins.md](protocols/fins.md) |
 ### Conferences
-- [DEF CON 30 -  Jimmy Wylie - Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - @ DEF CON (2022)
+- [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
 
 
 ## FL-net
@@ -349,7 +350,7 @@ or contributions.
 | Port | 55000/udp, 55001/udp, 55002/udp, 55003/udp |
 | Access | Free |
 | Specifications | [FL-net specification](https://www.jema-net.or.jp/English/businessfields/standarization/opcn/standard/) |
-| Detailed page | [flnet.md](protocols/flnet.md) |
+| Detailed page | [fl-net.md](protocols/fl-net.md) |
 
 
 
@@ -358,7 +359,7 @@ or contributions.
 |---|---|
 | Description | General Electric's protocol for communication between GE devices and SCADA |
 | Port | 18245/tcp |
-| Detailed page | [gesrtp.md](protocols/gesrtp.md) |
+| Detailed page | [ge-srtp.md](protocols/ge-srtp.md) |
 
 
 
@@ -369,7 +370,7 @@ or contributions.
 | Description | IP-based communication protocol for HART (ICS) data transmission |
 | Wireshark dissector | [packet-hartip.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hartip.c) |
 | Example Pcap(s) | [ICS-pcap HART-IP](https://github.com/automayt/ICS-pcap/tree/master/HART%20IP/hart_ip) |
-| Detailed page | [hartip.md](protocols/hartip.md) |
+| Detailed page | [hart-ip.md](protocols/hart-ip.md) |
 ### Articles
 - [WirelessHART Radio Communication Standard](https://control.com/textbook/wireless-instrumentation/wirelesshart/) - Lessons in Industrial Automation textbook, Control Automation
 ### Conferences
@@ -387,6 +388,7 @@ or contributions.
 | Keywords | Anybus |
 | Port | 3250/udp |
 | Wireshark dissector | [packet-hicp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hicp.c), [packet-shicp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-shicp.c) |
+| Scapy layer | [hicp.py](https://github.com/claire-lex/anybus-hicp/blob/main/hicp.py) |
 | Detailed page | [hicp.md](protocols/hicp.md) |
 
 
@@ -398,9 +400,9 @@ or contributions.
 | Wireshark dissector | [packet-hl7.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hl7.c) |
 | Detailed page | [hl7.md](protocols/hl7.md) |
 ### Conferences
-- [DEF CON 29 Biohacking Village - Alissa Knight, Mitch Parker - Playing with FHIR](https://www.youtube.com/watch?v=wrNyd60XPMg) - @ DEF CON (2021)
-- [Pestilential Protocol: How Unsecure HL7 Messages Threaten Patient Lives](https://www.youtube.com/watch?v=66x3vfac8rA) - @ Black Hat (2020)
-- [Understanding HL7 2.X Standards, Pen Testing, and Defending HL7 2.X Messages](https://www.youtube.com/watch?v=MR7cH44fjrc) - @ Black Hat (2016)
+- [Pestilential Protocol: How Unsecure HL7 Messages Threaten Patient Lives](https://www.youtube.com/watch?v=66x3vfac8rA) - Christian Dameff, Jeffrey Tully & Maxwell Bland @ Black Hat USA (2018)
+- [Playing with FHIR](https://www.youtube.com/watch?v=wrNyd60XPMg) - Alissa Knight, Mitch Parker @ DEF CON 29 Biohacking Village (2021)
+- [Understanding HL7 2.X Standards, Pen Testing, and Defending HL7 2.X Messages](https://www.youtube.com/watch?v=MR7cH44fjrc) - Anirudh Duggal @ Black Hat USA (2016)
 
 
 ## ICCP
@@ -429,10 +431,10 @@ or contributions.
 | Wireshark dissector | [packet-iec104.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-iec104.c) |
 | Scapy layer | [iec104.py](https://github.com/secdev/scapy/tree/master/scapy/contrib/scada/iec104) |
 | Example Pcap(s) | [ICS-pcap IEC-60870-5-104](https://github.com/automayt/ICS-pcap/tree/master/IEC%2060870) |
-| Detailed page | [iec608705104.md](protocols/iec608705104.md) |
+| Detailed page | [iec-60870-5-104.md](protocols/iec-60870-5-104.md) |
 ### Conferences
-- [Industroyer/Crashoverride: Zero Things Cool About a Threat Group Targeting the Power Grid](https://www.youtube.com/watch?v=TH17hSH1PGQ) - @ Black Hat (2020)
-- [Industroyer2: Sandworm&#39;s Cyberwarfare Targets Ukraine&#39;s Power Grid Again](https://www.youtube.com/watch?v=xC9iM5wVedQ) - @ Black Hat (2022)
+- [Industroyer/Crashoverride: Zero Things Cool About a Threat Group Targeting the Power Grid](https://www.youtube.com/watch?v=TH17hSH1PGQ) - Anton Cherepanov, Ben Miller, Joe Slowik,  Robert Lee, and Robert Lipovsky @ Black Hat USA (2017)
+- [Industroyer2: Sandworm&#39;s Cyberwarfare Targets Ukraine&#39;s Power Grid Again](https://www.youtube.com/watch?v=xC9iM5wVedQ) - Robert Lipovsky & Anton Cherepanov @ Black Hat USA (2022)
 ### Papers
 - [Description and analysis of IEC 104 Protocol](https://www.fit.vut.cz/research/publication/11570/.en) - Technical report by Petr Matousek @ Faculty of Information Techology, Czech Republic (2017)
 ### Tools
@@ -449,7 +451,9 @@ or contributions.
 | Access | Paid |
 | Specifications | [IEC 61850 Specification](https://webstore.iec.ch/publication/6028) |
 | Wireshark dissector | [packet-goose.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-goose.c), [packet-sv.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-sv.c) |
-| Detailed page | [iec61850.md](protocols/iec61850.md) |
+| Detailed page | [iec-61850.md](protocols/iec-61850.md) |
+### Conferences
+- [Fuzz Testing IEC 61850](https://www.youtube.com/watch?v=QehBHZyy4W4) - Markus Mahrla @ CS3STHLM 2019
 ### Tools
 - [libiec61850](https://github.com/mz-automation/libiec61850) - Open-source library for the IEC 61850 protocols
 
@@ -461,7 +465,7 @@ or contributions.
 | Description | Standard for synchrophasor data exchange in power systems |
 | Keywords | Power |
 | Wireshark dissector | [packet-synphasor.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-synphasor.c) |
-| Detailed page | [ieeec37118.md](protocols/ieeec37118.md) |
+| Detailed page | [ieee-c37118.md](protocols/ieee-c37118.md) |
 ### Tools
 - [OpenPDC](https://github.com/GridProtectionAlliance/openPDC) - Open Source Phasor Data Concentrator
 - [PyMU](https://github.com/iti/pymu) - Library based on the C37.118.2-2011 standard used for accessing PMU data in real-time
@@ -497,7 +501,7 @@ or contributions.
 - [InSecurity in Building Automation](https://www.youtube.com/watch?v=G9ESeUWfYbs) - Thomas Brandsetter @ DEF CON 25 ICS Village (2017)
 - [Learn how to control every room at a luxury hotel remotely](https://www.youtube.com/watch?v=RX-O4XuCW1Y) - Jesus Molina @ DEF CON 22 (2015)
 - [Learn How to Control Every Room at a Luxury Hotel Remotely](https://www.youtube.com/watch?v=xomtYrcTSgU) - Jesus Nomeames @ Black Hat USA (2014)
-- [Sneak into buildings with KNXnetIP](https://www.youtube.com/watch?v=QofeTV39kQE) - Claire Vacherot @ DEF CON 29 (2020)
+- [Sneak into buildings with KNXnet/IP](https://www.youtube.com/watch?v=QofeTV39kQE) - Claire Vacherot @ DEF CON 29 (2021)
 ### Papers
 - [An Overview of Wireless IoT Protocol Security in the Smart Home Domain](https://arxiv.org/abs/1801.07090) - Stefan Marksteiner, Víctor Juan Expósito Jiménez, Heribert Vallant, Herwig Zeiner (2018)
 ### Tools
@@ -520,10 +524,10 @@ or contributions.
 | Wireshark dissector | [packet-lorawan.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-lorawan.c) |
 | Detailed page | [lorawan.md](protocols/lorawan.md) |
 ### Conferences
-- [DEF CON 24 Wireless Village - Matt Knight - Reversting LoRa Deconstructing a Next Gen Proprietary LP](https://www.youtube.com/watch?v=KEjlkZA2olE) - @ DEF CON (2016)
-- [DEF CON 26 - Zeng and Panel -  Lora Smart Water Meter Security Analysis](https://www.youtube.com/watch?v=b7ekygjC3so) - @ DEF CON (2018)
-- [DEF CON 26 WIRELESS VILLAGE - wasabi - Can you hear me now DEF CON](https://www.youtube.com/watch?v=lhHM6TX2RrI) - @ DEF CON (2018)
-- [Outsmarting the Smart City](https://www.youtube.com/watch?v=Opjb5hPlxtY) - @ Black Hat (2020)
+- [Can you hear me now DEF CON](https://www.youtube.com/watch?v=lhHM6TX2RrI) - wasabi @ DEF CON 26 Wireless Village (2018)
+- [Lora Smart Water Meter Security Analysis](https://www.youtube.com/watch?v=b7ekygjC3so) - Zeng and Panel @ DEF CON 26 (2018)
+- [Outsmarting the Smart City](https://www.youtube.com/watch?v=Opjb5hPlxtY) - Daniel Crowley, Jennifer Savage and Mauro Paredes @ Black Hat USA (2018)
+- [Reversting LoRa Deconstructing a Next Gen Proprietary LP](https://www.youtube.com/watch?v=KEjlkZA2olE) - Matt Knight @ DEF CON 24 Wireless Village (2016)
 ### Tools
 - [ChirpOTLE](https://github.com/seemoo-lab/chirpotle) - LoRaWAN Security Evaluation Framework
 - [ChirpStack Network Server](https://github.com/brocaar/chirpstack-network-server) - Open-source LoRaWAN network-server
@@ -538,7 +542,7 @@ or contributions.
 | Description | Communication protocol for utility metering devices |
 | Access | The old specification is free, not the current one |
 | Specifications | [M-Bus specification](https://m-bus.com/documentation) |
-| Detailed page | [mbus.md](protocols/mbus.md) |
+| Detailed page | [m-bus.md](protocols/m-bus.md) |
 
 
 
@@ -568,17 +572,17 @@ or contributions.
 ### Articles
 - [Introduction to Modbus and Modbus Function Codes](https://control.com/technical-articles/introduction-to-modbus-and-modbus-function-codes/) - Shawn Dietrich, Control Automation (2023)
 ### Conferences
-- [Black Hat USA 2013 - Out of Control: Demonstrating SCADA device exploitation](https://www.youtube.com/watch?v=FTzAkEnwx_c) - @ Black Hat (2013)
-- [Black Hat USA 2013 - The SCADA That Didn&#39;t Cry Wolf- Who&#39;s Really Attacking Your ICS Devices](https://www.youtube.com/watch?v=0M8nVv0bz6k) - @ Black Hat (2013)
-- [DEF CON 16 - Mark Bristow: ModScan: A SCADA MODBUS Network Scanner](https://www.youtube.com/watch?v=O_trNBh31lM) - @ DEF CON (2013)
-- [DEF CON 25 ICS Village - Arnaud Soullié  - Fun with Modbus 0x5a   Nothing New  Still Relevant?](https://www.youtube.com/watch?v=A_B69Rifu1g) - @ DEF CON (2017)
-- [DEF CON 30 -  Jimmy Wylie - Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - @ DEF CON (2022)
+- [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
+- [Fun with Modbus 0x5a Nothing New Still Relevant?](https://www.youtube.com/watch?v=A_B69Rifu1g) - Arnaud Soullié @ DEF CON 25 ICS Village (2017)
 - [Industrial Control Systems : Pentesting PLCs 101 (Part 1/2)](https://www.youtube.com/watch?v=iGwm6-lyn2Y) - Arnaud Soullie @ Black Hat Europe (2014)
 - [Industrial Control Systems : Pentesting PLCs 101 (Part 2/2)](https://www.youtube.com/watch?v=rP_Jys1_OJk) - Arnaud Soullie @ Black Hat Europe (2014)
-- [Industrial Protocol Gateways Under Analysis](https://www.youtube.com/watch?v=Rbkw_jsTBsY) - @ Black Hat (2021)
+- [Industrial Protocol Gateways Under Analysis](https://www.youtube.com/watch?v=Rbkw_jsTBsY) - Marco Balduzzi @ Black Hat USA (2020)
 - [Modbus Enumeration | SANS ICS Concepts](https://www.youtube.com/watch?v=QO99yojavvE) - @ SANS ICS Security (2021)
 - [Modbus Man-In-The-Middle | SANS ICS Concepts](https://www.youtube.com/watch?v=-1WbegoU8i0) - @ SANS ICS Security (2021)
-- [Understanding SCADA&#39;s Modbus Protocol](https://www.youtube.com/watch?v=oVDYaG2HInU) - @ Black Hat (2016)
+- [ModScan: A SCADA MODBUS Network Scanner](https://www.youtube.com/watch?v=O_trNBh31lM) - Mark Bristow @ DEF CON 16 (2013)
+- [Out of Control: Demonstrating SCADA device exploitation](https://www.youtube.com/watch?v=FTzAkEnwx_c) - Eric Forner & Brian Meixell @ Black Hat USA (2013)
+- [The SCADA That Didn't Cry Wolf- Who's Really Attacking Your ICS Devices](https://www.youtube.com/watch?v=0M8nVv0bz6k) - Kyle Wilhoit @ Black Hat USA (2013)
+- [Understanding SCADA's Modbus Protocol](https://www.youtube.com/watch?v=oVDYaG2HInU) - Justin Searle @ Black Hat Asia (2015)
 - [Unraveling SCADA Protocols Using Sulley Fuzzer](https://www.youtube.com/watch?v=UUta_Ord8GI) - Ganesh Devarajan @ DEF CON 15 (2014)
 ### Tools
 - [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
@@ -597,9 +601,9 @@ or contributions.
 ### Articles
 - [Not Just Another IIoT Article: MQTT for Pneumatic Cylinder Maintenance](https://control.com/technical-articles/not-just-another-iiot-article-mqtt-for-pneumatic-cylinder-maintenance/) - Shawn Dietrich, Control Automation (2023)
 ### Conferences
-- [Choo Choo, Network Train - The One to Rule Your Perimeter](https://www.youtube.com/watch?v=RpXoVwCSHA0) - @ Black Hat (2023)
-- [DEF CON 24 - Lucas Lundgren, Neal Hindocha - Light Weight Protocol: Critical Implications](https://www.youtube.com/watch?v=o7qDVZr0t2c) - @ DEF CON (2016)
-- [When Machines Can&#39;t Talk](https://www.youtube.com/watch?v=X3fUNWRgeao) - @ Black Hat (2020)
+- [Choo Choo, Network Train - The One to Rule Your Perimeter](https://www.youtube.com/watch?v=RpXoVwCSHA0) - Martin Hron @ Black Hat Europe (2022)
+- [Light Weight Protocol: Critical Implications](https://www.youtube.com/watch?v=o7qDVZr0t2c) - Lucas Lundgren, Neal Hindocha @ DEF CON 24 (2016)
+- [When Machines Can't Talk](https://www.youtube.com/watch?v=X3fUNWRgeao) - Federico Maggi & Davide Quarta @ Black Hat Europe (2018)
 
 
 ## Niagara Fox
@@ -610,7 +614,7 @@ or contributions.
 | Keywords | Tridium |
 | Port | 1911/tcp, 3011/tcp, 4911/tcp, 5011/tcp |
 | Nmap script(s) | [fox-info.nse](https://nmap.org/nsedoc/scripts/fox-info.html) |
-| Detailed page | [niagarafox.md](protocols/niagarafox.md) |
+| Detailed page | [niagara-fox.md](protocols/niagara-fox.md) |
 ### Tools
 - [foxdissector](https://github.com/MartinoTommasini/foxdissector) - Wireshark dissector for the Niagara Fox protocol in Lua
 
@@ -621,7 +625,7 @@ or contributions.
 | Alias | OPCDA |
 | Description | Legacy protocol for real-time data exchange in industrial systems |
 | Scapy layer | [opc_da.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/opc_da.py) |
-| Detailed page | [opcda.md](protocols/opcda.md) |
+| Detailed page | [opc-da.md](protocols/opc-da.md) |
 ### Papers
 - [Exploring the OPC attack surface](https://claroty.com/team82/research/white-papers/exploring-the-opc-attack-surface) - Claroty Team82 (2021)
 
@@ -633,7 +637,7 @@ or contributions.
 | Description | Open communication standard for industrial automation and control |
 | Port | 4840/tcp, 4840/udp, 4843/tcp (TLS) |
 | Wireshark dissector | [OPC-UA Plugin](https://github.com/wireshark/wireshark/tree/master/plugins/epan/opcua) |
-| Detailed page | [opcua.md](protocols/opcua.md) |
+| Detailed page | [opc-ua.md](protocols/opc-ua.md) |
 ### Articles
 - [OPC UA Deep Dive (Part 1): History of the OPC UA Protocol](https://claroty.com/team82/research/opc-ua-deep-dive-history-of-the-opc-ua-protocol) - Claroty Team82 (2023)
 - [OPC UA Deep Dive (Part 2): What is OPC UA?](https://claroty.com/team82/research/opc-deep-dive-part-2-what-is-opc-ua) - Claroty Team82 (2023)
@@ -641,8 +645,8 @@ or contributions.
 - [Practical example of fuzzing OPC UA applications](https://ics-cert.kaspersky.com/publications/reports/2020/10/19/practical-example-of-fuzzing-opc-ua-applications/) - Kaspersky ICS-CERT (2020)
 - [Understanding the OPC Unified Architecture (OPC UA) Protocol](https://control.com/technical-articles/understanding-the-opc-ua-protocol/) - Anthony King Ho, Control Automation (2023)
 ### Conferences
-- [A Broken Chain: Discovering OPC UA Attack Surface and Exploiting the Supply Chain](https://www.youtube.com/watch?v=bWJ6DY86hkc) - @ Black Hat (2021)
-- [DEF CON 30 -  Jimmy Wylie - Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - @ DEF CON (2022)
+- [A Broken Chain: Discovering OPC UA Attack Surface and Exploiting the Supply Chain](https://www.youtube.com/watch?v=bWJ6DY86hkc) - Eran Jacob @ Black Hat USA (2021)
+- [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
 - [Resting on Feet of Clay: Securely Bootstrapping OPC UA Deployments](https://www.youtube.com/watch?v=8RUVB9eeITQ) - Alessandro Erba & Nils Ole Tippenhauer @ Black Hat Europe (2021)
 ### Papers
 - [Exploring the OPC attack surface](https://claroty.com/team82/research/white-papers/exploring-the-opc-attack-surface) - Claroty Team82 (2021)
@@ -661,7 +665,7 @@ or contributions.
 | Keywords | Phoenix Contact |
 | Port | 1962/tcp |
 | Nmap script(s) | [pcworx-info.nse](https://github.com/digitalbond/Redpoint/blob/master/pcworx-info.nse) |
-| Detailed page | [pcworx.md](protocols/pcworx.md) |
+| Detailed page | [pc-worx.md](protocols/pc-worx.md) |
 
 
 
@@ -710,7 +714,7 @@ or contributions.
 | Description | Device identification, configuration, and network management protocol |
 | Port | Ethernet |
 | Scapy layer | [pnio_dcp.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/pnio_dcp.py) |
-| Detailed page | [profinetdcp.md](protocols/profinetdcp.md) |
+| Detailed page | [profinet-dcp.md](protocols/profinet-dcp.md) |
 
 
 
@@ -721,7 +725,7 @@ or contributions.
 | Description | Real-time communication between controllers and I/O devices |
 | Port | 34962/udp, 34963/udp, 34964/udp |
 | Scapy layer | [pnio.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/pnio.py) |
-| Detailed page | [profinetio.md](protocols/profinetio.md) |
+| Detailed page | [profinet-io.md](protocols/profinet-io.md) |
 ### Articles
 - [What Is the Difference Between Profibus and Profinet?](https://control.com/technical-articles/understanding-profibus-vs-profinet/) - Antonio Armenta, Control Automation (2021)
 
@@ -735,7 +739,7 @@ or contributions.
 | Access | Free |
 | Wireshark dissector | [packet-sbus.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-sbus.c) |
 | Example Pcap(s) | [ICS-pcap Ether-S-Bus](https://github.com/automayt/ICS-pcap/tree/master/ETHERSBUS/sbus) |
-| Detailed page | [sbus.md](protocols/sbus.md) |
+| Detailed page | [s-bus.md](protocols/s-bus.md) |
 
 
 
@@ -780,7 +784,7 @@ or contributions.
 | Alias | SERCOS |
 | Description | IEC standard universal bus for Ethernet-based real-time communication |
 | Wireshark dissector | [packet-sercosiii.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-sercosiii.c) |
-| Detailed page | [sercosiii.md](protocols/sercosiii.md) |
+| Detailed page | [sercos-iii.md](protocols/sercos-iii.md) |
 
 
 
@@ -808,8 +812,8 @@ or contributions.
 ### Articles
 - [Attackers Deploy New ICS Attack Framework “TRITON” and Cause Operational Disruption to Critical Infrastructure](https://www.mandiant.com/resources/blog/attackers-deploy-new-ics-attack-framework-triton) - Blake Johnson, Dan Caban, Marina Krotofil, Dan Scali, Nathan Brubaker, Christopher Glyer @ Mandiant (2017, updated 2022)
 ### Conferences
-- [DEF CON 26 -  Krotofil , Wetzels - Thru the Eyes of the Attacker Designing Embedded Systems for ICS](https://www.youtube.com/watch?v=3x4MukvjEm8) - @ DEF CON (2018)
 - [How TRITON Disrupted Safety Systems & Changed the Threat Landscape of Industrial Control Systems](https://www.youtube.com/watch?v=Hw2HclZV2Kw) - Andrea Carcano, Marina Krotofil & Younes Dragoni @ Black Hat USA (2018)
+- [Thru the Eyes of the Attacker Designing Embedded Systems for ICS](https://www.youtube.com/watch?v=3x4MukvjEm8) - Krotofil, Wetzels @ DEF CON 26 (2018)
 ### Tools
 - [tricotools](https://github.com/NozomiNetworks/tricotools) - Triconex TriStation utilities and tools
 
@@ -870,7 +874,7 @@ or contributions.
 ### Tools
 - [KillerBee](https://github.com/riverloopsec/killerbee) - IEEE 802.15.4/ZigBee Security Research Toolkit
 
-> All unreviewed AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`. ([Why?](./srcs/README.md#note-on-ai-generated-content))
 
 **awesome-industrial-protocols** is licensed under
 [CC0](https://creativecommons.org/publicdomain/zero/1.0/). **Turn/IP** is

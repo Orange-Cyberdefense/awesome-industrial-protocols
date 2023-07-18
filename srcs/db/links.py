@@ -8,11 +8,12 @@
 from urllib.parse import urlparse, ParseResult
 from urllib.request import urlopen, Request
 from urllib.error import URLError, HTTPError
+from http.client import InvalidURL
 from socket import timeout as socket_timeout
 from re import match as re_match
 # Internal
 from config import mongodb, links as l
-from . import MongoDB, DBException, find
+from . import MongoDB, DBException, Collection, Document, find
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -26,7 +27,7 @@ ERR_BADURL = "URL '{0}' cannot be accessed."
 ERR_HTTP = "URL '{0}' returned error: {1}."
 ERR_UNKURL = "Link '{0}' not found."
 ERR_EXIURL = "URL '{0}' already exists."
-ERR_UNKID = "This link ID does not match with any existing link ({0})."
+ERR_UNKID = "This ID does not match with any existing link ({0})."
 ERR_MULTIMATCH = "Multiple match found, please choose between {0}."
 ERR_UNKFIELD = "Field '{0}' not found."
 
@@ -34,7 +35,7 @@ ERR_UNKFIELD = "Field '{0}' not found."
 # Link class                                                              #
 #-----------------------------------------------------------------------------#
 
-class Link(object):
+class Link(Document):
     """Class representing a single link."""
     __db = None
     id = None
@@ -62,13 +63,6 @@ class Link(object):
         return "[{0}] {1}: {2}: {3}".format(self.type.capitalize(), self.name,
                                             self.description, self.url)
 
-    def get(self, field: str) -> str:
-        """Return value associated to field."""
-        field = field.lower()
-        if field not in self.fields_dict.keys():
-            raise DBException(ERR_UNKFIELD.format(field))
-        return self.fields_dict[field]
-
     def set(self, field: str, value: str) -> None:
         """Set value to field."""
         field = field.lower()
@@ -79,7 +73,7 @@ class Link(object):
             if value not in l.TYPES:
                 raise DBException(ERR_LINKTYPE.format(", ".join(l.TYPES)))
         self.fields_dict[field] = value
-        document = {"url": self.url}
+        document = {l.url: self.url}
         newvalue = {field: value}
         self.__db.links.update_one(document, {"$set": newvalue})
 
@@ -96,7 +90,7 @@ class Link(object):
             urlopen(request, timeout=TIMEOUT)
         except HTTPError as he:
             raise DBException(ERR_HTTP.format(url, str(he))) from None
-        except (URLError, socket_timeout):
+        except (URLError, InvalidURL, socket_timeout):
             raise DBException(ERR_BADURL.format(url)) from None
 
     def check(self):
@@ -120,12 +114,6 @@ class Link(object):
         """URL is internally handled as ParseResult (urllib), returned as str."""
         return self.__url.geturl()
 
-    @property
-    def fields(self) -> list:
-        """Return fields in protocol object (public class attributes)."""
-        return (self.url, self.description, self.type)
-
-
     #--- Private -------------------------------------------------------------#
 
     @staticmethod
@@ -145,13 +133,13 @@ class Link(object):
 # Links class                                                                 #
 #-----------------------------------------------------------------------------#
 
-class Links(object):
+class Links(Collection):
     """Interface with database to handle the links' collection"""
     __db = None
 
     def __init__(self):
         self.__db = MongoDB()
-
+    
     def get(self, url: str, no_raise: bool = False) -> Link:
         """Get a link object by its URL."""
         match = []
@@ -174,7 +162,6 @@ class Links(object):
 
     def get_id(self, id: object) -> Link:
         """Get a link object by its ID in database."""
-        # TMP: replace with filter
         for link in self.all:
             if link[l.id] == id:
                 return Link(**link)
@@ -194,7 +181,7 @@ class Links(object):
         try:
             self.get(url)
         except DBException:
-            pass # The protocol does not exist, we can continue
+            pass # The link does not exist, we can continue
         else:
             raise DBException(ERR_EXIURL.format(url))
         link = Link(name=name, url=url, description=description, type=type)

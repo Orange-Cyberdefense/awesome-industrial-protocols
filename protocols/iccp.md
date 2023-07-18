@@ -9,14 +9,9 @@
 | Port(s) | 102/tcp |
 | Access to specs | Paid |
 | Specifications | [ICCP (TASE.2) specification](https://webstore.iec.ch/publication/3760) |
-| Security features |  |
-| Nmap script(s) |  |
-| Wireshark dissector |  |
-| Scapy layer |  |
-| Example Pcap(s) |  |
 | Related CVE | [CVE-2005-4812](https://nvd.nist.gov/vuln/detail/CVE-2005-4812), [CVE-2006-6489](https://nvd.nist.gov/vuln/detail/CVE-2006-6489), [CVE-2015-6574](https://nvd.nist.gov/vuln/detail/CVE-2015-6574), [CVE-2022-2277](https://nvd.nist.gov/vuln/detail/CVE-2022-2277) |
 
 ## Conferences
 - [Unraveling SCADA Protocols Using Sulley Fuzzer](https://www.youtube.com/watch?v=UUta_Ord8GI) - Ganesh Devarajan @ DEF CON 15 (2014)
 
-> All unreviewed AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

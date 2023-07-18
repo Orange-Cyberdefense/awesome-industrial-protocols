@@ -31,7 +31,7 @@ GOOGLE_API_KEY = key # Insert your Google API key, don't push it.
 #-----------------------------------------------------------------------------#
 
 LIST_TITLE = "Awesome Industrial Protocols"
-LIST_DESCRIPTION = "Offensive security-oriented list of industrial network protocols resources."
+LIST_DESCRIPTION = "Compilation of industrial network protocols resources focusing on offensive security."
 LIST_LOGO = "srcs/out/templates/logo-awesome-industrial-protocols.png"
 
 # Markdown pages
@@ -84,11 +84,13 @@ mongodb.id = "_id"
 # Collections
 mongodb.protocols = "protocols"
 mongodb.links = "links"
+mongodb.packets = "packets"
 
 # Database files
 mongodb.dbfile_path = abspath(join(dirname(abspath(__file__)), pardir, "db"))
 mongodb.dbfile_protocols = "protocols.json"
 mongodb.dbfile_links = "links.json"
+mongodb.dbfile_packets = "packets.json"
 
 # Protocols collection types
 types = SimpleNamespace()
@@ -149,6 +151,22 @@ links.type = "type"
 links.TYPES = ("documentation", "article", "conference", "paper", "tool", "other", "cve")
 links.DEFAULT_TYPE = "other"
 
+# Packets collection content
+packets = SimpleNamespace()
+packets.id = "_id"
+packets.name = "name"
+packets.protocol = "protocol"
+packets.description = "description"
+packets.scapy_pkt = "scapy_pkt"
+packets.raw_pkt = "raw_pkt"
+packets.FIELDS = {
+    packets.name: "Name",
+    packets.protocol: "Protocol",
+    packets.description: "Description",
+    packets.scapy_pkt: "Scapy format",
+    packets.raw_pkt: "Raw format"
+}
+
 #-----------------------------------------------------------------------------#
 # AUTOMATED SEARCH                                                            #
 #-----------------------------------------------------------------------------#
@@ -170,13 +188,6 @@ ai.description = "description in 10 words"
 ai.default_port = "default port"
 # Documentation
 ai.is_spec_free = "specification is available for free"
-# Security
-ai.has_encryption = "has encryption"
-ai.has_mandatory_encryption = "has mandatory encryption"
-ai.has_authentication = "has authentication"
-ai.has_mandatory_authentication = "has mandatory authentication"
-ai.has_integrity = "has integrity checks"
-ai.has_mandatory_integrity = "has mandatory integrity checks"
 
 #--- Data extracted from Wireshark dissectors --------------------------------#
 

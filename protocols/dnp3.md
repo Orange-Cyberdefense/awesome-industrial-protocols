@@ -12,7 +12,6 @@
 | Security features | Optional authentication, optional encryption with TLS |
 | Nmap script(s) | [dnp3-info.nse](https://github.com/digitalbond/Redpoint/blob/master/dnp3-info.nse) |
 | Wireshark dissector | [packet-dnp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-dnp.c) |
-| Scapy layer |  |
 | Example Pcap(s) | [ICS-pcap DNP3](https://github.com/automayt/ICS-pcap/tree/master/DNP3) |
 | Related CVE | [CVE-2013-2783](https://nvd.nist.gov/vuln/detail/CVE-2013-2783), [CVE-2013-2787](https://nvd.nist.gov/vuln/detail/CVE-2013-2787), [CVE-2013-2788](https://nvd.nist.gov/vuln/detail/CVE-2013-2788), [CVE-2013-2789](https://nvd.nist.gov/vuln/detail/CVE-2013-2789), [CVE-2013-2790](https://nvd.nist.gov/vuln/detail/CVE-2013-2790), [CVE-2013-2791](https://nvd.nist.gov/vuln/detail/CVE-2013-2791), [CVE-2013-2792](https://nvd.nist.gov/vuln/detail/CVE-2013-2792), [CVE-2013-2793](https://nvd.nist.gov/vuln/detail/CVE-2013-2793), [CVE-2013-2809](https://nvd.nist.gov/vuln/detail/CVE-2013-2809), [CVE-2013-2811](https://nvd.nist.gov/vuln/detail/CVE-2013-2811), [CVE-2013-2813](https://nvd.nist.gov/vuln/detail/CVE-2013-2813), [CVE-2013-2821](https://nvd.nist.gov/vuln/detail/CVE-2013-2821), [CVE-2013-2829](https://nvd.nist.gov/vuln/detail/CVE-2013-2829), [CVE-2013-6143](https://nvd.nist.gov/vuln/detail/CVE-2013-6143), [CVE-2014-0761](https://nvd.nist.gov/vuln/detail/CVE-2014-0761), [CVE-2014-2342](https://nvd.nist.gov/vuln/detail/CVE-2014-2342), [CVE-2014-2345](https://nvd.nist.gov/vuln/detail/CVE-2014-2345), [CVE-2014-5425](https://nvd.nist.gov/vuln/detail/CVE-2014-5425), [CVE-2014-5426](https://nvd.nist.gov/vuln/detail/CVE-2014-5426), [CVE-2015-1521](https://nvd.nist.gov/vuln/detail/CVE-2015-1521), [CVE-2015-1522](https://nvd.nist.gov/vuln/detail/CVE-2015-1522), [CVE-2020-6996](https://nvd.nist.gov/vuln/detail/CVE-2020-6996) |
 
@@ -28,4 +27,4 @@
 - [opendnp3](https://github.com/dnp3/opendnp3) - DNP3 (IEEE-1815) protocol stack. Modern C++ with bindings for .NET and Java
 - [Step Function I/O DNP3](https://github.com/stepfunc/dnp3) - Rust implementation of DNP3 (IEEE 1815) with idiomatic bindings for C, .NET, C++, and Java
 
-> All unreviewed AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

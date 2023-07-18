@@ -9,13 +9,8 @@
 | Port(s) | 55000/udp, 55001/udp, 55002/udp, 55003/udp |
 | Access to specs | Free |
 | Specifications | [FL-net specification](https://www.jema-net.or.jp/English/businessfields/standarization/opcn/standard/) |
-| Security features |  |
-| Nmap script(s) |  |
-| Wireshark dissector |  |
-| Scapy layer |  |
-| Example Pcap(s) |  |
 | Related CVE | [CVE-2021-27477](https://nvd.nist.gov/vuln/detail/CVE-2021-27477) |
 
 
 
-> All unreviewed AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

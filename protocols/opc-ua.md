@@ -5,15 +5,8 @@
 | Name | OPC-UA |
 | Aliases | OPCUA |
 | Description | Open communication standard for industrial automation and control |
-| Keywords |  |
 | Port(s) | 4840/tcp, 4840/udp, 4843/tcp (TLS) |
-| Access to specs |  |
-| Specifications |  |
-| Security features |  |
-| Nmap script(s) |  |
 | Wireshark dissector | [OPC-UA Plugin](https://github.com/wireshark/wireshark/tree/master/plugins/epan/opcua) |
-| Scapy layer |  |
-| Example Pcap(s) |  |
 | Related CVE | [CVE-2019-13542](https://nvd.nist.gov/vuln/detail/CVE-2019-13542), [CVE-2021-23230](https://nvd.nist.gov/vuln/detail/CVE-2021-23230), [CVE-2021-42262](https://nvd.nist.gov/vuln/detail/CVE-2021-42262), [CVE-2022-25304](https://nvd.nist.gov/vuln/detail/CVE-2022-25304), [CVE-2022-25888](https://nvd.nist.gov/vuln/detail/CVE-2022-25888), [CVE-2022-25903](https://nvd.nist.gov/vuln/detail/CVE-2022-25903) |
 
 ## Articles
@@ -23,8 +16,8 @@
 - [Practical example of fuzzing OPC UA applications](https://ics-cert.kaspersky.com/publications/reports/2020/10/19/practical-example-of-fuzzing-opc-ua-applications/) - Kaspersky ICS-CERT (2020)
 - [Understanding the OPC Unified Architecture (OPC UA) Protocol](https://control.com/technical-articles/understanding-the-opc-ua-protocol/) - Anthony King Ho, Control Automation (2023)
 ## Conferences
-- [A Broken Chain: Discovering OPC UA Attack Surface and Exploiting the Supply Chain](https://www.youtube.com/watch?v=bWJ6DY86hkc) - @ Black Hat (2021)
-- [DEF CON 30 -  Jimmy Wylie - Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - @ DEF CON (2022)
+- [A Broken Chain: Discovering OPC UA Attack Surface and Exploiting the Supply Chain](https://www.youtube.com/watch?v=bWJ6DY86hkc) - Eran Jacob @ Black Hat USA (2021)
+- [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
 - [Resting on Feet of Clay: Securely Bootstrapping OPC UA Deployments](https://www.youtube.com/watch?v=8RUVB9eeITQ) - Alessandro Erba & Nils Ole Tippenhauer @ Black Hat Europe (2021)
 ## Papers
 - [Exploring the OPC attack surface](https://claroty.com/team82/research/white-papers/exploring-the-opc-attack-surface) - Claroty Team82 (2021)
@@ -35,4 +28,4 @@
 - [python-opcua](https://github.com/FreeOpcUa/python-opcua) - OPC UA Client and Server in Python
 - [UA-.NETStandard](https://github.com/OPCFoundation/UA-.NETStandard) - Official OPC UA .NET Standard Stack from the OPC Foundation
 
-> All unreviewed AI-generated data is marked with `*`.
+> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))
