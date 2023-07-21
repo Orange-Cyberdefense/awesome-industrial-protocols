@@ -2,7 +2,7 @@
 
 | Protocol | CAN |
 |---|---|
-| Name | CAN |
+| Name | CAN / CAN-FD |
 | Aliases | CANbus, CANopen |
 | Description | Communication protocol enabling data exchange between electronic components in vehicles |
 | Keywords | CANbus |
@@ -25,3 +25,18 @@
 - [Self-Driving and Connected Cars: Fooling Sensors and Tracking Drivers](https://www.youtube.com/watch?v=C29UGFsIWVI) - Jonathan Petit @ Black Hat Europe (2015)
 
 > All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))
+
+## Articles
+
+- [CAN-FD, the basic idea](https://www.can-cia.org/can-knowledge/can/can-fd/)
+- [Car hacking 101](djnn.sh/click-here-to-download-more-cars/)
+- [CAN fuzzing paper](https://pure.coventry.ac.uk/ws/portalfiles/portal/37979533/Fowler_PhD.pdf)
+- [Linux SocketCAN documentation](https://www.kernel.org/doc/html/latest/networking/can.html)
+- [CAN injetion, keyless car theft](https://kentindell.github.io/2023/04/03/can-injection/)
+
+## Projects
+
+- [CANpy](https://github.com/stefanhoelzl/CANpy): a description of CAN database layout
+- [python-can](https://github.com/hardbyte/python-can): a library that can plug to various CAN connectors (ODB-II, Vektor, etc.)
+- [cantools](https://github.com/cantools/cantools): a Python library to play with CAN databases & messages
+- [opendbc](https://github.com/commaai/opendbc): a list of CAN database retrieved from reverse-engineered cars
