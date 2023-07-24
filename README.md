@@ -98,6 +98,7 @@ or contributions.
 - [Owning a Building: Exploiting Access Control and Facility Management Systems](https://www.youtube.com/watch?v=wvO3puWSGgQ) - Billy Rios @ Black Hat Asia (2014)
 ### Tools
 - [BACnet Stack](https://github.com/bacnet-stack/bacnet-stack) - BACnet open source protocol stack
+- [bacnet-docker](https://github.com/mnp/bacnet-docker) - BACnet Tools in Docker
 
 
 ## CAN
@@ -263,6 +264,8 @@ or contributions.
 - [dnp-info](https://github.com/sjhilt/Nmap-NSEs/blob/master/dnp3-info.nse) - Nmap discovery script for DNP3
 - [dnp3-simulator](https://github.com/dnp3/dnp3-simulator) - .NET DNP3 simulator with GUI 
 - [FreyrSCADA DNP3](https://github.com/FreyrSCADA/DNP3) - DNP3 Protocol - Outstation Server and Client Master Simulator
+- [gec/dnp3](https://github.com/gec/dnp3) - Open source Distributed Network Protocol
+- [gec/dnp3slavesim](https://github.com/gec/dnp3slavesim) - Parallel dnp3 slave simulator
 - [opendnp3](https://github.com/dnp3/opendnp3) - DNP3 (IEEE-1815) protocol stack. Modern C++ with bindings for .NET and Java
 - [Step Function I/O DNP3](https://github.com/stepfunc/dnp3) - Rust implementation of DNP3 (IEEE 1815) with idiomatic bindings for C, .NET, C++, and Java
 
@@ -586,6 +589,7 @@ or contributions.
 | Example Pcap(s) | [ICS-pcap Modbus](https://github.com/automayt/ICS-pcap/tree/master/MODBUS) |
 | Detailed page | [modbus.md](protocols/modbus.md) |
 ### Articles
+- [Articles about Modbus](https://ozeki.hu/p_5841-modbus-protocol.html) - Ozeki
 - [Introduction to Modbus and Modbus Function Codes](https://control.com/technical-articles/introduction-to-modbus-and-modbus-function-codes/) - Shawn Dietrich, Control Automation (2023)
 ### Conferences
 - [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
@@ -601,6 +605,7 @@ or contributions.
 - [Understanding SCADA's Modbus Protocol](https://www.youtube.com/watch?v=oVDYaG2HInU) - Justin Searle @ Black Hat Asia (2015)
 - [Unraveling SCADA Protocols Using Sulley Fuzzer](https://www.youtube.com/watch?v=UUta_Ord8GI) - Ganesh Devarajan @ DEF CON 15 (2014)
 ### Tools
+- [ctmodbus](https://github.com/ControlThings-io/ctmodbus) - A tool to interact with the Modbus protocol
 - [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
 - [PyModbus](https://github.com/pymodbus-dev/pymodbus) - A full modbus protocol written in python
 
@@ -666,6 +671,7 @@ or contributions.
 - [Resting on Feet of Clay: Securely Bootstrapping OPC UA Deployments](https://www.youtube.com/watch?v=8RUVB9eeITQ) - Alessandro Erba & Nils Ole Tippenhauer @ Black Hat Europe (2021)
 ### Papers
 - [Exploring the OPC attack surface](https://claroty.com/team82/research/white-papers/exploring-the-opc-attack-surface) - Claroty Team82 (2021)
+- [OPC UA Security Analysis](https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/Studies/OPCUA/OPCUA_2022_EN.pdf?__blob=publicationFile&v=4) - German Federal office for Information Security (2022)
 - [Security Analysis of Vendor Implementations of the OPC UA Protocol for Industrial Control Systems](https://arxiv.org/abs/2104.06051) - Alessandro Erba, Anne Müller, Nils Ole Tippenhauer (2021)
 ### Tools
 - [freeopcua](https://github.com/FreeOpcUa/freeopcua) - Open Source C++ OPC-UA Server and Client Library
@@ -779,6 +785,7 @@ or contributions.
 - [The spear to break the security wall of S7CommPlus](https://www.youtube.com/watch?v=93lyRgZYxKw) - Cheng Lei @ DEF CON 25 (2017)
 ### Tools
 - [python-snap7](https://github.com/gijzelaerr/python-snap7) - A Python wrapper for the snap7 PLC communication library
+- [s7-pcaps](https://github.com/gymgit/s7-pcaps) - Traffic captures between STEP7/WinCC and S7-300/S7-400 PLCs
 - [s7scan](https://github.com/klsecservices/s7scan) - Scan networks to gather basic information about Siemens PLCs
 - [Snap7](https://snap7.sourceforge.net/) - Step7 Open Source Ethernet Communication Suite
 
@@ -849,8 +856,10 @@ or contributions.
 |---|---|
 | Description | Schneider Electric's proprietary protocol for communication systems |
 | Nmap script(s) | [modicon-info.nse](https://github.com/digitalbond/Redpoint/blob/master/modicon-info.nse) |
+| Wireshark dissector | [modbus-umas-schneider.lua](https://github.com/biero-el-corridor/Wireshark-UMAS-Modicon-M340-protocol/blob/main/modbus-umas-schneider.lua) |
 | Detailed page | [umas.md](protocols/umas.md) |
 ### Articles
+- [Reverse of a schneider network protocol](https://medium.com/@biero-llagas/reverse-of-a-schneider-network-protocol-1e94980faa57) - biero llagas (2022)
 - [The secrets of Schneider Electric’s UMAS protocol](https://ics-cert.kaspersky.com/publications/reports/2022/09/29/the-secrets-of-schneider-electrics-umas-protocol/) - Kaspersky ICS CERT (2022)
 - [The Unity (UMAS) protocol (Part I)](http://lirasenlared.blogspot.com/2017/08/the-unity-umas-protocol-part-i.html) - Liras en la red (2017)
 - [The Unity (UMAS) protocol (Part II)](http://lirasenlared.blogspot.com/2017/08/the-unity-umas-protocol-part-ii.html) - Liras en la red (2017)
@@ -889,6 +898,7 @@ or contributions.
 - [An Overview of Wireless IoT Protocol Security in the Smart Home Domain](https://arxiv.org/abs/1801.07090) - Stefan Marksteiner, Víctor Juan Expósito Jiménez, Heribert Vallant, Herwig Zeiner (2018)
 ### Tools
 - [KillerBee](https://github.com/riverloopsec/killerbee) - IEEE 802.15.4/ZigBee Security Research Toolkit
+- [Mirage](https://github.com/RCayre/mirage) - Framework dedicated to the security analysis of wireless communications
 
 > All unreviewed AI-generated data is marked with `*`.<br>
 AI is used as a search engine with an extra step. It is never used to find
