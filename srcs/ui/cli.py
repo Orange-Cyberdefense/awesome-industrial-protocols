@@ -197,11 +197,16 @@ class CLI(object):
         results = {}
         for protocol in self.protocols.all_as_objects:
             for key in searched_fields:
-                _, value = protocol.get(key)
-                if p.TYPE(key) == types.LINKLIST:
-                    links = [self.links.get_id(x) for x in value]
-                    value = " ".join([x.name for x in links] + \
-                                     [x.description for x in links])
+                _, value = protocol.get(key, noraise=True)
+                if not value:
+                    continue
+                if p.TYPE(key)in [types.LINKLIST, types.PKTLIST]:
+                    if p.TYPE(key) == types.LINKLIST:
+                        lst = [self.links.get_id(x) for x in value]
+                    elif p.TYPE(key) == types.PKTLIST:
+                        lst = [self.packets.get_id(x) for x in value]
+                    value = " ".join([x.name for x in lst] + \
+                                     [x.description for x in lst])                    
                 else:
                     value = " ".join(value) if isinstance(value, list) else str(value)
                 if filter in value.lower():
@@ -689,24 +694,24 @@ class CLI(object):
             print(table_format.format(d))
         print("-" * (table_size - 1))
 
-    def __print_ids(self, table_format: str, ptype: str, key: str,
-                      ids: list) -> None:
+    def __print_ids(self, table_format: str, key: str, ids: list) -> None:
         """Print documents from their ID."""
         full_table_size = get_terminal_size().columns
         table_size = full_table_size - 20 - 8
+        key = p.NAME(key) if key in p.ALL_FIELDS else key
         if not isinstance(ids, list):
             print(table_format.format(key, ERR_BADID))
             return
         for id in ids:
             try:
-                if ptype == types.LINKLIST:
-                    link = self.links.get_id(id)
-                    text = "{0}: {1}".format(link.name, link.url)
-                elif ptype == types.PKTLIST:
+                link = self.links.get_id(id)
+                text = "{0}: {1}".format(link.name, link.url)
+            except DBException as dbe:
+                try:
                     packet = self.packets.get_id(id)
                     text = "{0}: {1}".format(packet.name, packet.description)
-            except DBException as dbe:
-                text = str(dbe)
+                except DBException as dbe:
+                    text = str(dbe)
             text = text if len(text) < table_size else text[:table_size-3]+"..."
             print(table_format.format(key, text))
             key = "" # We only want to print the key for the first line
@@ -720,9 +725,8 @@ class CLI(object):
         for k, v in protocol.items():
             if k == mongodb.id:
                 continue
-            elif k in p.ALL_FIELDS and v and \
-                 p.TYPE(k) in (types.LINKLIST, types.PKTLIST):
-                self.__print_ids(table_format, p.TYPE(k), p.NAME(k), v)
+            elif isinstance(v, list) and isinstance(v[0], ObjectId):
+                self.__print_ids(table_format, k, v)
             else:
                 v = ", ".join(v) if isinstance(v, list) else str(v)
                 v = v if len(v) < table_size else v[:table_size-3]+"..."

@@ -1,6 +1,15 @@
 Changelog
 =========
 
+## 2023-08-01
+
+### Added
+
+- PR #1: CAN / CAN-FD resources by @bogdzn
+- New resources for: HICP, Ethernet/IP, OPC-UA
+- Fix filter issues with unknown fields
+- Fix filter issues when printing links and packets
+
 ## 2023-07-18
 
 ### Added

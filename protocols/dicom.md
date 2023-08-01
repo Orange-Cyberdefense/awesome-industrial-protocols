@@ -13,6 +13,8 @@
 | Wireshark dissector | [packet-dcm.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-dcm.c) |
 | Related CVE | [CVE-2015-8979](https://nvd.nist.gov/vuln/detail/CVE-2015-8979), [CVE-2019-1010228](https://nvd.nist.gov/vuln/detail/CVE-2019-1010228), [CVE-2019-11687](https://nvd.nist.gov/vuln/detail/CVE-2019-11687), [CVE-2019-5085](https://nvd.nist.gov/vuln/detail/CVE-2019-5085), [CVE-2019-5090](https://nvd.nist.gov/vuln/detail/CVE-2019-5090), [CVE-2019-5093](https://nvd.nist.gov/vuln/detail/CVE-2019-5093), [CVE-2020-6152](https://nvd.nist.gov/vuln/detail/CVE-2020-6152) |
 
+## Conferences
+- [I Am Not a Doctor but I Play One on Your Network](https://www.youtube.com/watch?v=g11BSRfBw2Y) - Tim Elrod & Stefan Morris @ DEF CON 19 (2011)
 ## Tools
 - [DCMTK](https://dcmtk.org/en/) - DICOM ToolKit
 - [dicom-server](https://github.com/microsoft/dicom-server) - Microsoft's OSS Implementation of DICOMweb standard
