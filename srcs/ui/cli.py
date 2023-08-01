@@ -197,11 +197,16 @@ class CLI(object):
         results = {}
         for protocol in self.protocols.all_as_objects:
             for key in searched_fields:
-                _, value = protocol.get(key)
-                if p.TYPE(key) == types.LINKLIST:
-                    links = [self.links.get_id(x) for x in value]
-                    value = " ".join([x.name for x in links] + \
-                                     [x.description for x in links])
+                _, value = protocol.get(key, noraise=True)
+                if not value:
+                    continue
+                if p.TYPE(key)in [types.LINKLIST, types.PKTLIST]:
+                    if p.TYPE(key) == types.LINKLIST:
+                        lst = [self.links.get_id(x) for x in value]
+                    elif p.TYPE(key) == types.PKTLIST:
+                        lst = [self.packets.get_id(x) for x in value]
+                    value = " ".join([x.name for x in lst] + \
+                                     [x.description for x in lst])                    
                 else:
                     value = " ".join(value) if isinstance(value, list) else str(value)
                 if filter in value.lower():
