@@ -406,7 +406,7 @@ or contributions.
 | Keywords | Anybus |
 | Port | 3250/udp |
 | Wireshark dissector | [packet-hicp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hicp.c), [packet-shicp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-shicp.c) |
-| Scapy layer | [hicp.py](https://github.com/claire-lex/anybus-hicp/blob/main/hicp.py) |
+| Scapy layer | [hicp.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/hicp.py) |
 | Detailed page | [hicp.md](protocols/hicp.md) |
 
 
@@ -663,6 +663,8 @@ or contributions.
 - [OPC UA Deep Dive (Part 1): History of the OPC UA Protocol](https://claroty.com/team82/research/opc-ua-deep-dive-history-of-the-opc-ua-protocol) - Claroty Team82 (2023)
 - [OPC UA Deep Dive (Part 2): What is OPC UA?](https://claroty.com/team82/research/opc-deep-dive-part-2-what-is-opc-ua) - Claroty Team82 (2023)
 - [OPC UA Deep Dive (Part 3): Exploring the OPC UA Protocol](https://claroty.com/team82/research/opc-ua-deep-dive-part-3-exploring-the-opc-ua-protocol) - Claroty Team82 (2023)
+- [OPC UA Deep Dive Series (Part 4): Targeting Core OPC UA Components](https://claroty.com/team82/research/opc-ua-deep-dive-series-part-4-targeting-core-opc-ua-components) - Claroty Team82 (2023)
+- [OPC UA Deep Dive Series (Part 5): Inside Team82’s Research Methodology](https://claroty.com/team82/research/opc-ua-deep-dive-series-part-5-inside-team82-s-research-methodology) - Claroty Team82 (2023)
 - [Practical example of fuzzing OPC UA applications](https://ics-cert.kaspersky.com/publications/reports/2020/10/19/practical-example-of-fuzzing-opc-ua-applications/) - Kaspersky ICS-CERT (2020)
 - [Understanding the OPC Unified Architecture (OPC UA) Protocol](https://control.com/technical-articles/understanding-the-opc-ua-protocol/) - Anthony King Ho, Control Automation (2023)
 ### Conferences

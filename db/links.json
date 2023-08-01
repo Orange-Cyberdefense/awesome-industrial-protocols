@@ -566,3 +566,6 @@
 {"_id":{"$oid":"64be646901c07eb933b0a20b"},"name":"gec/dnp3slavesim","url":"https://github.com/gec/dnp3slavesim","description":"Parallel dnp3 slave simulator","type":"tool"}
 {"_id":{"$oid":"64be6599c0b1b044284a2d84"},"name":"Articles about Modbus","url":"https://ozeki.hu/p_5841-modbus-protocol.html","description":"Ozeki","type":"article"}
 {"_id":{"$oid":"64be663b1fb7775e492867b5"},"name":"Reverse of a schneider network protocol","url":"https://medium.com/@biero-llagas/reverse-of-a-schneider-network-protocol-1e94980faa57","description":"biero llagas (2022)","type":"article"}
+{"_id":{"$oid":"64c12e094da2e1b513a5add0"},"name":"hicp.py","url":"https://github.com/secdev/scapy/blob/master/scapy/contrib/hicp.py","description":"Scapy layer for HICP","type":"tool"}
+{"_id":{"$oid":"64c3c645d19836437743fdf0"},"name":"OPC UA Deep Dive Series (Part 4): Targeting Core OPC UA Components","url":"https://claroty.com/team82/research/opc-ua-deep-dive-series-part-4-targeting-core-opc-ua-components","description":"Claroty Team82 (2023)","type":"article"}
+{"_id":{"$oid":"64c3c69b70a6ef5da5d96281"},"name":"OPC UA Deep Dive Series (Part 5): Inside Team82’s Research Methodology","url":"https://claroty.com/team82/research/opc-ua-deep-dive-series-part-5-inside-team82-s-research-methodology","description":"Claroty Team82 (2023)","type":"article"}
