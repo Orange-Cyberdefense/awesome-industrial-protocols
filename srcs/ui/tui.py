@@ -1,6 +1,8 @@
 # Turn/IP
 # Claire-lex - 2023
 # Terminal user interface
+# pylint: disable=invalid-name,too-many-instance-attributes,too-many-arguments
+# pylint: disable=attribute-defined-outside-init,no-self-use
 
 """Terminal user interface
 """
@@ -19,24 +21,26 @@ from db import Protocols, Links, Packets
 #-----------------------------------------------------------------------------#
 
 class Screen(Enum):
+    """ID to select screens."""
     MAIN = 1
     PROT = 2
 
 # Main screen focus
 class Focus(IntEnum):
+    """ID to change focus on screen items."""
     MAIN_LIST = 0
     MAIN_MENU = 1
 
 ERR_TERMSIZE = "Terminal is to small to display user interface."
-    
+
 #-----------------------------------------------------------------------------#
 # TUI classes                                                                 #
 #-----------------------------------------------------------------------------#
 
 class TUIError(Exception):
-    pass
+    """Exception class for curses-related errors."""
 
-class TUI(object):
+class TUI():
     """Terminal User Interface main class.
 
     Important note: y = lines & x = cols. y comes first in curses.
@@ -61,10 +65,10 @@ class TUI(object):
 
     # tmp
     def nop(self):
-        pass
+        """Does nothing, will be removed."""
 
     #--- Init ----------------------------------------------------------------#
-    
+
     def __init__(self):
         self.__init_content()
         self.search = []
@@ -91,7 +95,7 @@ class TUI(object):
     def __init_menu(self):
         """Prepare the main menu with appropriate actions."""
         self.menu = {
-            t.menu_view: self.nop,
+            t.menu_view: self.__view_protocol,
             t.menu_edit: self.nop,
             t.menu_quit: self.__end_loop
         }
@@ -101,9 +105,9 @@ class TUI(object):
         curses.start_color()
         curses.use_default_colors()
         curses.curs_set(0) # Invisible cursor
-        
+
     #--- Run -----------------------------------------------------------------#
-        
+
     def run(self, screen):
         """Display init and main loop."""
         self.__screen = screen
@@ -128,6 +132,17 @@ class TUI(object):
         elif self.screen == Screen.PROT:
             self.__set_prot_screen()
 
+    def __run_menu(self):
+        """Run the appropriate operation according to the selected menu item."""
+        if self.cursors[Focus.MAIN_MENU] in range(len(self.menu)):
+            list(self.menu.values())[self.cursors[Focus.MAIN_MENU]]()
+
+    def __view_protocol(self):
+        """Switch to protocol view according to protocol under cursor."""
+        if self.cursors[Focus.MAIN_LIST] < len(self.filtered_list):
+            self.protocol = self.filtered_list[self.cursors[Focus.MAIN_LIST]]
+            self.__run_screen(Screen.PROT)
+
     #--- Events --------------------------------------------------------------#
 
     def __process_events(self, key) -> None:
@@ -147,9 +162,7 @@ class TUI(object):
         # ENTER
         if key in (curses.KEY_ENTER, 10, 13):
             if self.focus == Focus.MAIN_LIST: # Switch to protocol page
-                if self.cursors[Focus.MAIN_LIST] < len(self.filtered_list):
-                    self.protocol = self.filtered_list[self.cursors[Focus.MAIN_LIST]]
-                    self.__run_screen(Screen.PROT)
+                self.__view_protocol()
             elif self.focus == Focus.MAIN_MENU:
                 self.__run_menu()
         # ESCAPE
@@ -168,7 +181,7 @@ class TUI(object):
         # ESCAPE
         if key == 27:
             self.__run_screen(Screen.MAIN)
-            
+
     def __move_cursor(self, value: int) -> None:
         """Move the cursor of the focused vertical list."""
         max_value = {
@@ -213,7 +226,7 @@ class TUI(object):
                 window.addstr(
                     i + 1, 1, fmt.format(content[i + self.startpos[focus]][:w - 4])
                 )
-            
+
     #--- Main screen ---------------------------------------------------------#
 
     def __set_main_screen(self) -> None:
@@ -222,18 +235,24 @@ class TUI(object):
         self.height, self.width = self.__screen.getmaxyx()
         curses.setsyx(0, 0)
         # Calculate subwindows' sizes
+        # search = 2/3 width, filter = 1/3 width
         h_search, w_search = 3, self.width - int(self.width / 3) - 2
         h_filter, w_filter = 3, int(self.width / 3) - 2
-        h_menu, w_menu = int(self.height / 4), self.width - 2
-        h_list, w_list = self.height - h_search - h_menu - 5, int(self.width / 2) - 2
-        h_info, w_info = h_list, int(self.width / 2) - 2
+        # menu = 1/3 width ; notes = 2/3 width
+        h_menu, w_menu = int(self.height / 4), int(self.width / 3) - 2
+        h_note, w_note = h_menu, self.width - int(self.width / 3) - 2
+        # list = 1/3 width ; info = 2/3 width
+        h_list, w_list = self.height - h_search - h_menu - 5, int(self.width / 3) - 2
+        h_info, w_info = h_list, int(self.width - self.width / 3) - 2
         # Create subwindows
         self.__f_header(0, 0, TOOL_TITLE)
         self.__f_search(h_search, w_search, 2, 1, t.title_search)
         self.__f_filter(h_filter, w_filter, 2, self.width - w_filter - 1, t.title_filter)
         self.__f_list(h_list, w_list, 6, 1, t.title_list_prot,
-                           self.filtered_list, Focus.MAIN_LIST)
+                      self.filtered_list, Focus.MAIN_LIST)
         self.__f_info_prot(h_info, w_info, 6, self.width - w_info - 1, t.title_info_prot)
+        self.__f_info_note(h_note, w_note - 1, self.height - h_menu - 1,
+                           self.width - w_note, t.title_info_note)
         self.__f_list(h_menu, w_menu, self.height - h_menu - 1, 1, t.title_menu,
                       list(self.menu.keys()), Focus.MAIN_MENU)
         self.__f_footer(self.height - 1, 0,
@@ -241,11 +260,6 @@ class TUI(object):
                                             self.protocols.count))
         self.__screen.refresh()
 
-    def __run_menu(self):
-        """Run the appropriate operation according to the selected menu item."""
-        if self.cursors[Focus.MAIN_MENU] in range(len(self.menu)):
-            list(self.menu.values())[self.cursors[Focus.MAIN_MENU]]()
-    
     #--- Protocol screen -----------------------------------------------------#
 
     def __set_prot_screen(self) -> None:
@@ -262,7 +276,8 @@ class TUI(object):
     def __f_header(self, y: int, x: int, title: str) -> None:
         """Header line with title."""
         format_header = "{{0: ^{0}}}".format(str(self.width))
-        self.__screen.addstr(y, x, format_header.format(title.upper()), curses.A_STANDOUT)
+        self.__screen.addstr(y, x, format_header.format(title.upper()),
+                             curses.A_STANDOUT)
 
     def __f_footer(self, y: int, x: int, footer) -> None:
         """Footer line with text."""
@@ -288,7 +303,7 @@ class TUI(object):
         winfilter.refresh()
 
     def __f_list(self, h: int, w: int, y: int, x: int, title: str,
-                      dlist: list, focus: int) -> None:
+                 dlist: list, focus: int) -> None:
         """Vertical list of items."""
         winlist = self.__screen.subwin(h, w, y, x)
         winlist.border()
@@ -313,16 +328,15 @@ class TUI(object):
                 # Format
                 if k == mongodb.id or not v:
                     continue
-                elif isinstance(v, list) and isinstance(v[0], ObjectId):
+                if k in p.ALL_FIELDS:
+                    k = p.NAME(k)
+                elif k in pk.FIELDS.keys(): # Packets
+                    k = pk.FIELDS[k]
+                else:
+                    k = k.capitalize()
+                if isinstance(v, list) and isinstance(v[0], ObjectId):
                     # self.__print_ids(table_format, k, v)
                     continue
-                else:
-                    if k in p.ALL_FIELDS:
-                        k = p.NAME(k)
-                    elif k in pk.FIELDS.keys(): # Packets
-                        k = pk.FIELDS[k]
-                    else:
-                        k = k if nocap else k.capitalize()
                 if isinstance(v, list):
                     v = ", ".join(v)
                 if isinstance(v, str):
@@ -334,15 +348,22 @@ class TUI(object):
                         k = ""
                         line += 1
         winprotoinfo.refresh()
-        
+
+    # TODO
+    def __f_info_note(self, h: int, w: int, y: int, x: int, title: str) -> None:
+        """Text box to display information."""
+        # max_len = w - 6 # Size of key + size of border
+        winnoteinfo = self.__screen.subwin(h, w, y, x)
+        winnoteinfo.border()
+        winnoteinfo.addstr(0, 1, " {0} ".format(title))
+        # Display content
+        winnoteinfo.refresh()
+
     #--- Helpers -------------------------------------------------------------#
 
     def __out_of_bounds(self) -> bool:
         """Check the size of the screen."""
         return self.height < t.min_height or self.width < t.min_width
-
-    def __end_loop(self)-> None:
-        self.__loop = False
 
     def __filter_list(self, ilist: list) -> list:
         """Returned a filtered list according to parameters search and filter."""
@@ -352,3 +373,6 @@ class TUI(object):
             if search in item.lower():
                 olist.append(item)
         return olist
+
+    def __end_loop(self)-> None:
+        self.__loop = False
