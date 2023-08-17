@@ -96,6 +96,7 @@ class Link(Document):
     def check(self):
         """Check visitor."""
         self.__check()
+        self.check_url(self.url)
 
     def to_dict(self, exclude_id: bool = True) -> dict:
         """Convert link object's content to dictionary."""

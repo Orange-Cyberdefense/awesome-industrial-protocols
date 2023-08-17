@@ -15,12 +15,16 @@ research phases:
 """
 
 from sys import argv
+from curses import wrapper
 # Internal
-from ui import CLI, TUI
+from ui import CLI, TUI, TUIError, ERROR
 
-if len(argv) < 2:
-    interface = TUI()
-else:
-    interface = CLI()
-
-interface.run()
+try:
+    if len(argv) < 2:
+        wrapper(TUI().run)
+    else:
+        CLI().run()
+except KeyboardInterrupt:
+    pass
+except TUIError as tuie:
+    ERROR(tuie)

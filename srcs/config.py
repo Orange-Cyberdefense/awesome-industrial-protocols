@@ -9,7 +9,7 @@ Most of the constants are here and can be modified by the user.
 """
 
 from types import SimpleNamespace
-from os import pardir
+from os import pardir, environ
 from os.path import abspath, dirname, join
 
 #-----------------------------------------------------------------------------#
@@ -63,11 +63,32 @@ markdown.t_details = "Detailed page"
 # TOOL CONFIGURATION                                                          #
 #-----------------------------------------------------------------------------#
 
+TOOL_TITLE = "Turn/IP (awesome-industrial-protocols)"
 TOOL_DESCRIPTION = "Industrial network protocols browser and more."
 
 # Sensitivity for search engine, relying on the Levenshtein distance.
 # Higher threshold means less sensitivity and less precise matches.
 LEVENSHTEIN_THRESHOLD = 2
+
+#-----------------------------------------------------------------------------#
+# USER INTERFACE CONFIGURATION                                                #
+#-----------------------------------------------------------------------------#
+
+# Avoid delay when pressing ESC to exit
+environ.setdefault('ESCDELAY', '25')
+
+tui = SimpleNamespace()
+tui.min_height = 20 # Arbitrary
+tui.min_width = 100 # Arbitrary
+tui.title_search = "Search"
+tui.title_filter = "Filter"
+tui.title_list_prot = "Protocols"
+tui.title_info_prot = "Details"
+tui.title_menu = "Menu"
+tui.menu_view = "View"
+tui.menu_edit = "Edit"
+tui.menu_quit = "Quit"
+tui.footer_fmt = "{0}/{1} protocols"
 
 #-----------------------------------------------------------------------------#
 # DATABASE MANAGEMENT                                                         #

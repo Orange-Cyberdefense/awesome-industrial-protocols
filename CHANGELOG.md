@@ -6,6 +6,7 @@ Changelog
 ### Added
 
 - PR #1: CAN / CAN-FD resources by @bogdzn
+- New resources for: BACnet/IP, DNP3, Modbus, S7, UMAS, Zigbee by @biero-el-corridor
 - New resources for: HICP, Ethernet/IP, OPC-UA
 - Fix filter issues with unknown fields
 - Fix filter issues when printing links and packets
