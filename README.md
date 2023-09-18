@@ -66,6 +66,7 @@ or contributions.
 - [SECS/GEM](#secsgem)
 - [SERCOS-III](#sercos-iii)
 - [SLMP](#slmp)
+- [SOME/IP](#someip)
 - [TriStation](#tristation)
 - [TSAA](#tsaa)
 - [UMAS](#umas)
@@ -126,6 +127,7 @@ or contributions.
 - [Cantact: An Open Tool for Automative Exploitation](https://www.youtube.com/watch?v=HzDW8ptMkDk) - Eric Evenchick @ Black Hat Asia (2016)
 - [canTot A CAN Bus Hacking Framework](https://www.youtube.com/watch?v=OBC0v5KDcJg) - Jay Turla @ DEF CON 30 Car Hacking Village (2022)
 - [Deep Learning on CAN BUS](https://www.youtube.com/watch?v=1QSo5sOfXtI) - Jun Li @ DEF CON 24 Car Hacking Village (2016)
+- [DEF CON 31 Car Hacking Village - Abusing CAN Bus Spec for DoS in Embedded Systems  - Martin Petran](https://www.youtube.com/watch?v=okrzUNDLgbo) - @ DEF CON (2023)
 - [Free-Fall: Hacking Tesla from Wireless to CAN Bus](https://www.youtube.com/watch?v=0w8J9bmCI54) - Ling Liu, Sen Nie & Yuefeng Du @ Black Hat USA (2017)
 - [Fuzzing CAN / CAN FD ECU's and Network](https://www.youtube.com/watch?v=IMZ8DD4lTAY) - Samir Bhagwat @ DEF CON 29 Car Hacking Village (2021)
 - [Hopping on the CAN Bus](https://www.youtube.com/watch?v=U1yecKUmnFo) - Eric Evenchick @ Black Hat USA (2015)
@@ -402,7 +404,7 @@ or contributions.
 | Name | HICP |
 |---|---|
 | Alias | SHICP |
-| Description | Anybus' Host Interface Control Protocol |
+| Description | HMS IP Configuration Protocol |
 | Keywords | Anybus |
 | Port | 3250/udp |
 | Wireshark dissector | [packet-hicp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hicp.c), [packet-shicp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-shicp.c) |
@@ -418,6 +420,7 @@ or contributions.
 | Wireshark dissector | [packet-hl7.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hl7.c) |
 | Detailed page | [hl7.md](protocols/hl7.md) |
 ### Conferences
+- [HL7Magic Medical Data Hacking Made Easy](https://www.youtube.com/watch?v=YFbAuhnUEQQ) - Katie Inns @ DEF CON 31 (2023)
 - [I Am Not a Doctor but I Play One on Your Network](https://www.youtube.com/watch?v=g11BSRfBw2Y) - Tim Elrod & Stefan Morris @ DEF CON 19 (2011)
 - [Pestilential Protocol: How Unsecure HL7 Messages Threaten Patient Lives](https://www.youtube.com/watch?v=66x3vfac8rA) - Christian Dameff, Jeffrey Tully & Maxwell Bland @ Black Hat USA (2018)
 - [Playing with FHIR](https://www.youtube.com/watch?v=wrNyd60XPMg) - Alissa Knight, Mitch Parker @ DEF CON 29 Biohacking Village (2021)
@@ -449,7 +452,7 @@ or contributions.
 | Nmap script(s) | [iec-identify.nse](https://nmap.org/nsedoc/scripts/iec-identify.html) |
 | Wireshark dissector | [packet-iec104.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-iec104.c) |
 | Scapy layer | [iec104.py](https://github.com/secdev/scapy/tree/master/scapy/contrib/scada/iec104) |
-| Example Pcap(s) | [ICS-pcap IEC-60870-5-104](https://github.com/automayt/ICS-pcap/tree/master/IEC%2060870) |
+| Example Pcap(s) | [ICS-pcap IEC-60870-5-104](https://github.com/automayt/ICS-pcap/tree/master/IEC%2060870), [Industroyer2 pcap samples](https://github.com/eset/malware-research/tree/master/industroyer2) |
 | Detailed page | [iec-60870-5-104.md](protocols/iec-60870-5-104.md) |
 ### Conferences
 - [Industroyer/Crashoverride: Zero Things Cool About a Threat Group Targeting the Power Grid](https://www.youtube.com/watch?v=TH17hSH1PGQ) - Anton Cherepanov, Ben Miller, Joe Slowik,  Robert Lee, and Robert Lipovsky @ Black Hat USA (2017)
@@ -649,6 +652,8 @@ or contributions.
 | Detailed page | [opc-da.md](protocols/opc-da.md) |
 ### Papers
 - [Exploring the OPC attack surface](https://claroty.com/team82/research/white-papers/exploring-the-opc-attack-surface) - Claroty Team82 (2021)
+### Tools
+- [OPC Data Access IDAPython script](https://github.com/eset/malware-research/tree/master/industroyer) - IDA Pro script to reverse engineer binaries containing OPC DA (ESET)
 
 
 ## OPC-UA
@@ -670,6 +675,7 @@ or contributions.
 ### Conferences
 - [A Broken Chain: Discovering OPC UA Attack Surface and Exploiting the Supply Chain](https://www.youtube.com/watch?v=bWJ6DY86hkc) - Eran Jacob @ Black Hat USA (2021)
 - [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
+- [Exploiting OPC UA - Practical Attacks Against OPC UA Architectures](https://www.youtube.com/watch?v=de6kpQVvFL0) - Sharon Brizinov, Noam Moshe @ DEF CON 31 (2023)
 - [Resting on Feet of Clay: Securely Bootstrapping OPC UA Deployments](https://www.youtube.com/watch?v=8RUVB9eeITQ) - Alessandro Erba & Nils Ole Tippenhauer @ Black Hat Europe (2021)
 ### Papers
 - [Exploring the OPC attack surface](https://claroty.com/team82/research/white-papers/exploring-the-opc-attack-surface) - Claroty Team82 (2021)
@@ -714,7 +720,7 @@ or contributions.
 | Wireshark dissector | [packet-epl.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-epl.c) |
 | Detailed page | [powerlink.md](protocols/powerlink.md) |
 ### Articles
-- [Quick Start - POWERLINK on Raspberry Pi2](https://www.kalycito.com/quick-start-powerlink-on-raspberry-pi2/) - Kalycito (2018)
+- [Quick Start - POWERLINK on Raspberry Pi2](https://web.archive.org/web/20230130182001/https://www.kalycito.com/quick-start-powerlink-on-raspberry-pi2/) - Kalycito, 2018 (Web Archive, domain expired)
 ### Tools
 - [openCONFIGURATOR](https://sourceforge.net/projects/openconf/) - Open-source POWERLINK network configuration toolkit
 - [openPOWERLINK](https://openpowerlink.sourceforge.net/web/) - Open-source POWERLINK protocol stack
@@ -824,6 +830,20 @@ or contributions.
 | Detailed page | [slmp.md](protocols/slmp.md) |
 ### Tools
 - [PySLMPClient](https://github.com/masahase0117/PySLMPClient) - Python client for SLMP
+
+
+## SOME/IP
+| Name | SOME/IP |
+|---|---|
+| Description | Automotive Ethernet protocol for ECU communication over IP networks |
+| Keywords | Automotive, ECU |
+| Port | 30490 |
+| Wireshark dissector | [packet-someip.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-someip.c) |
+| Detailed page | [someip.md](protocols/someip.md) |
+### Documentations
+- [SOME-IP.com](https://some-ip.com/) - Main website with resources about SOME/IP
+### Conferences
+- [Automotive Ethernet Fuzzing](https://www.youtube.com/watch?v=sJGJqpflEJI) - Jonghyuk Song, Soohwan Oh, Woongjo Choi @ DEF CON 30 (2022)
 
 
 ## TriStation

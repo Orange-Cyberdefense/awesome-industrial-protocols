@@ -4,7 +4,7 @@
 |---|---|
 | Name | HICP |
 | Aliases | SHICP |
-| Description | Anybus' Host Interface Control Protocol |
+| Description | HMS IP Configuration Protocol |
 | Keywords | Anybus |
 | Port(s) | 3250/udp |
 | Wireshark dissector | [packet-hicp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hicp.c), [packet-shicp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-shicp.c) |

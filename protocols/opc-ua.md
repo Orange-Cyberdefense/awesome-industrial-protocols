@@ -20,6 +20,7 @@
 ## Conferences
 - [A Broken Chain: Discovering OPC UA Attack Surface and Exploiting the Supply Chain](https://www.youtube.com/watch?v=bWJ6DY86hkc) - Eran Jacob @ Black Hat USA (2021)
 - [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
+- [Exploiting OPC UA - Practical Attacks Against OPC UA Architectures](https://www.youtube.com/watch?v=de6kpQVvFL0) - Sharon Brizinov, Noam Moshe @ DEF CON 31 (2023)
 - [Resting on Feet of Clay: Securely Bootstrapping OPC UA Deployments](https://www.youtube.com/watch?v=8RUVB9eeITQ) - Alessandro Erba & Nils Ole Tippenhauer @ Black Hat Europe (2021)
 ## Papers
 - [Exploring the OPC attack surface](https://claroty.com/team82/research/white-papers/exploring-the-opc-attack-surface) - Claroty Team82 (2021)

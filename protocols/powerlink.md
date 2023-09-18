@@ -9,7 +9,7 @@
 | Wireshark dissector | [packet-epl.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-epl.c) |
 
 ## Articles
-- [Quick Start - POWERLINK on Raspberry Pi2](https://www.kalycito.com/quick-start-powerlink-on-raspberry-pi2/) - Kalycito (2018)
+- [Quick Start - POWERLINK on Raspberry Pi2](https://web.archive.org/web/20230130182001/https://www.kalycito.com/quick-start-powerlink-on-raspberry-pi2/) - Kalycito, 2018 (Web Archive, domain expired)
 ## Tools
 - [openCONFIGURATOR](https://sourceforge.net/projects/openconf/) - Open-source POWERLINK network configuration toolkit
 - [openPOWERLINK](https://openpowerlink.sourceforge.net/web/) - Open-source POWERLINK protocol stack
