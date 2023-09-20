@@ -58,6 +58,15 @@ class TUI():
     links = None
     packets = None
 
+    def __filter_list(self, ilist: list) -> list:
+        """Returned a filtered list according to parameters search and filter."""
+        olist = []
+        search = "".join(self.search).lower().strip()
+        for item in ilist:
+            if search in item.lower():
+                olist.append(item)
+        return olist
+    
     @property
     def filtered_list(self):
         """List filtered according to the values of search and filter."""
@@ -364,15 +373,6 @@ class TUI():
     def __out_of_bounds(self) -> bool:
         """Check the size of the screen."""
         return self.height < t.min_height or self.width < t.min_width
-
-    def __filter_list(self, ilist: list) -> list:
-        """Returned a filtered list according to parameters search and filter."""
-        olist = []
-        search = "".join(self.search).lower().strip()
-        for item in ilist:
-            if search in item.lower():
-                olist.append(item)
-        return olist
 
     def __end_loop(self)-> None:
         self.__loop = False

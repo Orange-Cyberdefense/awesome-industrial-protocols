@@ -212,7 +212,11 @@ class Protocols(Collection):
     
     @property
     def all_as_objects(self) -> list:
-        """Return the list of protocols as Protocol objects."""
+        """Return the list of protocols as Protocol objects.
+
+        We choose to rebuild it everytime even though it's slower because
+        we need it to be up to date with the database.
+        """
         objects = [Protocol(**x) for x in self.__db.protocols_all]
         return sorted(objects, key=lambda x: x.name.lower())
 

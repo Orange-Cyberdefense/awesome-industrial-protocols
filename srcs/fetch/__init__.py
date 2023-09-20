@@ -1,11 +1,11 @@
 # Turn/IP
 # Claire-lex - 2023
-# Search module default file
+# Fetch module default file
 # pylint: disable=wildcard-import,redefined-builtin
 
-"""File for automated data search for protocols."""
+"""Automatically fetch protocols-related data from various sources."""
 
-from .search import *
+from .fetch import *
 from .ai import *
 from .wireshark import *
 from .scapy import *

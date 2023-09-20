@@ -8,7 +8,7 @@ list.
 Features:
 - Manage and search through protocols' data
 - Generate awesome list and protocols' pages
-- Scrap information about protocols from various sources
+- Fetch information about protocols from various sources
 
 Soon:
 - Add personal research notes on protocols
@@ -47,20 +47,23 @@ but the (almost) graphical interface is under development. Here is an overview
 of the options (described below).
 
 ```
-usage: turn-ip.py [-h] [-L] [-F filter] [-V field] [-A protocol] [-R protocol]
-                  [-W protocol field value] [-D protocol] [-N protocol] [-LL]
-                  [-AL name url] [-RL url] [-WL url field value] [-DL url] [-G]
-                  [-C] [-S method protocol] [-f] [-MI] [-ME]
+Usage: turn-ip.py [-h] [-f] [-S search] [-V field] [-L] [-A protocol] [-R
+                  protocol] [-W protocol field value] [-D protocol] [-LL] [-AL
+                  name url] [-RL url] [-WL url field value] [-DL url] [-LP] [-RP
+                  protocol name] [-AP protocol name] [-WP protocol name field
+                  value] [-DP protocol name] [-G] [-C] [-N protocol] [-F method
+                  protocol] [-MI] [-ME]
 
 Industrial network protocols browser and more.
 
 optional arguments:
   -h, --help            show this help message and exit
-  -L, --list            list all protocols
-  -F filter, --filter filter
-                        list protocols matching a filter
+  -f, --force           never ask for confirmation
+  -S search, --search search
+                        list protocols matching the search
   -V field, --view field
                         view only a field of each protocol
+  -L, --list            list all protocols
   -A protocol, --add protocol
                         add a new protocol
   -R protocol, --read protocol
@@ -69,8 +72,6 @@ optional arguments:
                         write data to a protocol
   -D protocol, --delete protocol
                         delete a protocol
-  -N protocol, --note protocol
-                        add personal notes for a protocol
   -LL, --list-links     list all links
   -AL name url, --add-link name url
                         add a new link
@@ -80,11 +81,21 @@ optional arguments:
                         change data of a link
   -DL url, --delete-link url
                         delete a link
+  -LP, --list-packets   list all packets
+  -RP protocol name, --read-packet protocol name
+                        read a packet from a protocol
+  -AP protocol name, --add-packet protocol name
+                        add a new packet
+  -WP protocol name field value, --write-packet protocol name field value
+                        change data of a packet
+  -DP protocol name, --delete-packet protocol name
+                        delete a packet
   -G, --gen             generate Markdown files with protocols' data
   -C, --check           check the database's content
-  -S method protocol, --search method protocol
-                        search for data from various sources
-  -f, --force           do not ask for confirmation (with -W)
+  -N protocol, --note protocol
+                        add personal notes for a protocol
+  -F source protocol, --fetch source protocol
+                        fetch data from various sources
   -MI, --mongoimport    Import database from JSON files in repository.
   -ME, --mongoexport    Export database to JSON files in repository.
 ```
@@ -104,7 +115,7 @@ python turn-ip.py -R MyProt
 Protocol data can be filtered:
 
 - Option `-V` displays the value of one specific field for each protocol.
-- Option `-F` displays the protocol avec value matching with the filter.
+- Option `-S` displays the protocol avec value matching with the search text.
 
 #### Add and modify a protocol
 
@@ -182,21 +193,21 @@ main Awesome List is created in `README.md` along with one page per protocol in
 
 Pages are built relying on a template in `srcs/out/templates`.
 
-### Search
+### Fetch
 
-The option `-S` can be used for automated search on various websites. Format:
-`-S <mode> <protocol>`. `mode` is the type of search to perform. Currently, the
-following search mode are supported:
+The option `-F` can be used to fetch data from various websites. Format:
+`-F <source> <protocol>`. `source` is the source to use. Currently, the
+following sources are supported:
 
-- `wireshark`: Search a dissector on Wireshark's GitHub repository
-- `scapy`: Search a layer on Scapy's GitHub repository
-- `cve`: Search associated CVE on NIST's vulnerability database (slow)
-- `youtube`: Search Youtube videos on selected channels (list in `config.py`)
+- `wireshark`: Fetch a dissector on Wireshark's GitHub repository
+- `scapy`: Fetch a layer on Scapy's GitHub repository
+- `cve`: Fetch associated CVE on NIST's vulnerability database (slow)
+- `youtube`: Fetch Youtube videos on selected channels (list in `config.py`)
 - `openai`: Ask basic questions to OpenAI's models (not so reliable, more
   information [below](#note-on-ai-generated-content))
 - `all`: Run all modes except OpenAI
 
-> Modes `youtube` and `openai` require API keys for Google API (free) and OpenAI
+> Sources `youtube` and `openai` require API keys for Google API (free) and OpenAI
   (chargeable).
 
 Note on AI-generated content
@@ -249,12 +260,12 @@ Roadmap
 
 ### Improvements
 
-* [ ] Filter option (search by name, port, number of CVE, etc.)
+* [ ] Search option (search by name, port, number of CVE, etc.)
 * [ ] Graphical user interface
 * [ ] Add general notes (public) and personal notes (private) about protocols
 * [ ] Add Scapy-based discovery packets for each protocol
 * [ ] Add information about how to set up a test environment for each protocol
-* [ ] Automated search on research papers databases (arxiv, else ?)
+* [ ] Automatically fetch research papers databases (arxiv, else ?)
 * [ ] Improve the "Security features" field (or replace it)
 * [ ] Methods from Collection and Document-inherited objects can be refactored
 

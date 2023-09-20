@@ -19,7 +19,7 @@ from config import links, types, mongodb, wireshark, scapy
 from db import MongoDB, DBException
 from db import Protocols, Protocol, Links, Link, Packets, Packet
 from out import Markdown, MDException
-from search import SearchException, AI, Wireshark, Scapy, CVEList, Youtube
+from fetch import FetchException, AI, Wireshark, Scapy, CVEList, Youtube
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -29,7 +29,7 @@ OPTIONS = (
     # Behavior
     ("-f", "--force", "never ask for confirmation", False, None),
     # View
-    ("-F", "--filter", "list protocols matching a filter", None, "filter"),
+    ("-S", "--search", "list protocols matching the search", None, "search"),
     ("-V", "--view", "view only a field of each protocol", None, "field"),
     # Protocols
     ("-L", "--list", "list all protocols", None, None),
@@ -54,8 +54,8 @@ OPTIONS = (
     ("-C", "--check", "check the database's content", None, None),
     # Note
     ("-N", "--note", "add personal notes for a protocol", None, "protocol"),
-    # Automated search
-    ("-S", "--search", "search for data from various sources", None, ("method", "protocol"), 2),
+    # Automated fetch
+    ("-F", "--fetch", "fetch data from various sources", None, ("source", "protocol"), 2),
     # Database
     ("-MI", "--mongoimport", "Import database from JSON files in repository.", False, None),
     ("-ME", "--mongoexport", "Export database to JSON files in repository.", False, None)
@@ -68,7 +68,7 @@ MSG_WRITE_ALIST = "Awesome list written to {0}."
 MSG_WRITE_PPAGE = "{0} protocol page written to {1}."
 MSG_MULTIDISSECTOR = "Multiple matching dissectors found: {0}."
 MSG_MULTILAYER = "Multiple matching layers found: {0}."
-MSG_CVE_WAIT = "Searching for CVEs in NIST's database (it may take some time)."
+MSG_CVE_WAIT = "Fetching CVEs in NIST's database (it may take some time)."
 
 MSG_CONFIRM_ADD_PROTO = "Do you want to add protocol '{0}'?"
 MSG_CONFIRM_ADD_FIELD = "Do you want to add field '{0}' to protocol '{1}'?"
@@ -93,7 +93,7 @@ ERR_LINKEXISTS = "Link '{0}' already exists."
 ERR_NOFIELD = "Field '{0}' does not exist in any protocol."
 ERR_PACKETEXISTS = "Packet '{0}' already exists for protocol {1}."
 ERR_OPENAI = "OpenAI not found (pip install openai)."
-ERR_SEARCHMETHOD = "Search method not found. Choose between {0} (-h for help)."
+ERR_FETCHSOURCE = "Fetch source not found. Choose between {0} (-h for help)."
 ERR_NODISSECTOR = "No dissector found for protocol {0}."
 ERR_NOLAYER = "No layer found for protocol {0}."
 ERR_GOOGLEAPI = "To use Youtube search you need google-api-python-client." \
@@ -123,7 +123,7 @@ class CLI(object):
     
     def __init__(self):
         self.functions = {
-            "filter": self.__cmd_filter,
+            "search": self.__cmd_search,
             "view": self.__cmd_view,
             "list": self.__cmd_list,
             "add": self.__cmd_add,
@@ -143,7 +143,7 @@ class CLI(object):
             "delete_packet": self.__cmd_delete_packet,
             "gen": self.__cmd_gen,
             "check": self.__cmd_check,
-            "search": self.__cmd_search,
+            "fetch": self.__cmd_fetch,
             "mongoimport": self.__cmd_mongoimport,
             "mongoexport": self.__cmd_mongoexport
         }
@@ -186,13 +186,13 @@ class CLI(object):
             ERROR(ERR_ACTION.format(", ".join(self.functions)), will_exit=True)
 
     #-------------------------------------------------------------------------#
-    # Show and filter                                                         #
+    # View and search                                                         #
     #-------------------------------------------------------------------------#
 
-    def __cmd_filter(self, filter = None) -> None:
-        """-F / --filter"""
-        filter = filter if filter else self.options.filter
-        filter = filter.lower()
+    def __cmd_search(self, search:str = None) -> None:
+        """-S / --search"""
+        search = search if search else self.options.search
+        search = search.lower()
         searched_fields = p.ALL_FIELDS.keys()
         results = {}
         for protocol in self.protocols.all_as_objects:
@@ -209,7 +209,7 @@ class CLI(object):
                                      [x.description for x in lst])                    
                 else:
                     value = " ".join(value) if isinstance(value, list) else str(value)
-                if filter in value.lower():
+                if search in value.lower():
                     results[protocol.name] = protocol.get(key)[1]
         if results:
             self.__print_table(results, nocap=True)
@@ -221,8 +221,7 @@ class CLI(object):
         pdict = {}
         for protocol in self.protocols.all_as_objects:
             try:
-                _, content = protocol.get(field)
-                pdict[protocol.name] = content
+                pdict[protocol.name] = protocol.get(field)[1]
                 at_least_one_proto_has_field = True
             except DBException as dbe:
                 pass
@@ -508,49 +507,49 @@ class CLI(object):
             print(issue)
 
     #-------------------------------------------------------------------------#
-    # Automated search                                                        #
+    # Automated fetch                                                        #
     #-------------------------------------------------------------------------#
             
-    def __cmd_search(self, method: str = None, protocol:str = None) -> None:
-        """-S / --search"""
-        methods = {
-            "openai": self.__cmd_search_openai,
-            "wireshark": self.__cmd_search_wireshark,
-            "scapy": self.__cmd_search_scapy,
-            "cve": self.__cmd_search_cve,
-            "youtube": self.__cmd_search_youtube
+    def __cmd_fetch(self, source: str = None, protocol:str = None) -> None:
+        """-F / --fetch"""
+        sources = {
+            "openai": self.__cmd_fetch_openai,
+            "wireshark": self.__cmd_fetch_wireshark,
+            "scapy": self.__cmd_fetch_scapy,
+            "cve": self.__cmd_fetch_cve,
+            "youtube": self.__cmd_fetch_youtube
         }
-        if not method and not protocol:
-            method, protocol = self.options.search
+        if not source and not protocol:
+            source, protocol = self.options.fetch
         if protocol == "all":
             for p in self.protocols.all_as_objects:
-                self.__cmd_search(method, p)
+                self.__cmd_fetch(source, p)
         else:
             if not isinstance(protocol, Protocol):
                 protocol = self.__get_protocol(protocol)
-            if method.lower() == "all":
-                for method in methods:
-                    if method != "openai":
-                        methods[method.lower()](protocol)
-            elif method.lower() not in methods.keys():
-                ERROR(ERR_SEARCHMETHOD.format(", ".join(methods.keys())), will_exit=True)
+            if source.lower() == "all":
+                for source in sources:
+                    if source != "openai":
+                        sources[source.lower()](protocol)
+            elif source.lower() not in sources.keys():
+                ERROR(ERR_FETCHSOURCE.format(", ".join(sources.keys())), will_exit=True)
             else:
-                methods[method.lower()](protocol)
+                sources[source.lower()](protocol)
 
-    def __cmd_search_openai(self, protocol: Protocol) -> None:
-        """-S openai / --search openai"""
+    def __cmd_fetch_openai(self, protocol: Protocol) -> None:
+        """-F openai / --fetch openai"""
         try:
             ai = AI()
             print(AI_WARNING)
             for q, a in ai.protocol_generator(protocol.name):
                 self.__write_field(protocol, q, a, getattr(protocol, q))
-        except SearchException as se:
+        except FetchException as se:
             ERROR(str(se), will_exit=True)
         except ModuleNotFoundError:
             ERROR(ERR_OPENAI, will_exit=True)
 
-    def __cmd_search_wireshark(self, protocol: Protocol) -> None:
-        """-S wireshark / --search wireshark"""
+    def __cmd_fetch_wireshark(self, protocol: Protocol) -> None:
+        """-F wireshark / --fetch wireshark"""
         try:
             candidates = Wireshark().get_dissector(protocol)
             if len(candidates) < 1:
@@ -567,11 +566,11 @@ class CLI(object):
                                                description, "tool")
                     if link:
                         protocol.set(p.wireshark, link.id, replace=True)
-        except SearchException as se:
+        except FetchException as se:
             ERROR(str(se), will_exit=True)
 
-    def __cmd_search_scapy(self, protocol: Protocol) -> None:
-        """-S scapy / --search scapy"""
+    def __cmd_fetch_scapy(self, protocol: Protocol) -> None:
+        """-F scapy / --fetch scapy"""
         try:
             candidates = Scapy().get_layer(protocol)
             if len(candidates) < 1:
@@ -589,15 +588,15 @@ class CLI(object):
                                                description, "tool")
                     if link:
                         protocol.set(p.scapy, link.id, replace=True)
-        except SearchException as se:
+        except FetchException as se:
             ERROR(str(se), will_exit=True)
 
-    def __cmd_search_cve(self, protocol: Protocol) -> None:
-        """-S cve / --search cve"""
+    def __cmd_fetch_cve(self, protocol: Protocol) -> None:
+        """-F cve / --fetch cve"""
         try:
             current_list = [self.links.get_id(x).name for x in protocol.get(p.cve)[1]]
             print(MSG_CVE_WAIT)
-            candidates = CVEList().search_by_keywords(protocol)
+            candidates = CVEList().fetch_by_keywords(protocol)
             for c in candidates:
                 if self.links.has(c.url) and c.id in current_list:
                     continue # Skipping the ones we already have
@@ -612,11 +611,11 @@ class CLI(object):
                             protocol.set(p.cve, link.id)
                         except DBException as dbe:
                             ERROR(str(dbe))
-        except SearchException as se:
+        except FetchException as se:
             ERROR(str(se), will_exit=True)
 
-    def __cmd_search_youtube(self, protocol: Protocol) -> None:
-        """-S youtube / --search youtube"""
+    def __cmd_fetch_youtube(self, protocol: Protocol) -> None:
+        """-F youtube / --fetch youtube"""
         try:
             candidates = Youtube().get_videos(protocol)
             for c in candidates:
@@ -632,7 +631,7 @@ class CLI(object):
                             protocol.set(p.resources, link.id)
                         except DBException as dbe:
                             ERROR(str(dbe))
-        except SearchException as se:
+        except FetchException as se:
             ERROR(str(se), will_exit=True)
         except ModuleNotFoundError:
             ERROR(ERR_GOOGLEAPI, will_exit=True)

@@ -21,7 +21,7 @@ with open("openai_api_key") as fd:
     key = fd.read().strip()
 OPENAI_API_KEY = key # Insert your OpenAI API key, don't push it.
 
-# Used for searching videos on Youtube
+# Used for fetching videos on Youtube
 with open("google_api_key") as fd:
     key = fd.read().strip()
 GOOGLE_API_KEY = key # Insert your Google API key, don't push it.
@@ -160,6 +160,11 @@ protocols.EXTENDED_FIELDS = {
     protocols.discovery: ("Discovery packet", types.PKTLIST)
 }
 protocols.ALL_FIELDS = {**protocols.FIELDS, **protocols.EXTENDED_FIELDS}
+protocols.SEARCHED_FIELDS = [ # Fields to look in when filtering
+    protocols.name, protocols.alias, protocols.port, # Text
+    protocols.nmap, protocols.wireshark, protocols.scapy, # Links
+    protocols.discovery # Packets
+]
 protocols.NAME = lambda x: protocols.ALL_FIELDS[x][0] if x in protocols.ALL_FIELDS else x
 protocols.TYPE = lambda x: protocols.ALL_FIELDS[x][1] if x in protocols.ALL_FIELDS else None
 
@@ -190,7 +195,7 @@ packets.FIELDS = {
 }
 
 #-----------------------------------------------------------------------------#
-# AUTOMATED SEARCH                                                            #
+# AUTOMATED FETCH                                                             #
 #-----------------------------------------------------------------------------#
 
 #--- OpenAI-generated data ---------------------------------------------------#
@@ -217,7 +222,7 @@ wireshark = SimpleNamespace()
 # URL to Wireshark data using Github's REST API
 wireshark.api_epan_folder = "https://api.github.com/repositories/21329550/contents/epan"
 wireshark.dissectors_url = "https://github.com/wireshark/wireshark/blob/master/epan/dissectors/"
-# Search data in Wireshark repository's tree
+# Fetch data in Wireshark repository's tree
 wireshark.dissectors_folder = "dissectors"
 wireshark.regex_dissector_name = r"^packet-([^\.]+)\.c$" # packet-*.c
 wireshark.naming_function = "proto_register_protocol"

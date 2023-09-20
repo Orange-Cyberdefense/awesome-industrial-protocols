@@ -1,6 +1,19 @@
 Changelog
 =========
 
+## ????-??-??
+
+### Added
+
+- First version of the terminal user interface to view protocols
+- New resources for: CAN, HICP, HL7, IEC-104, OPC-DA, OPC-UA, Powerlink
+- New protocol: SOME/IP
+
+### Changed
+
+- Option `search` is now `fetch`
+- Option `filter` is now `search`
+
 ## 2023-08-01
 
 ### Added

@@ -22,7 +22,7 @@ except ModuleNotFoundError:
     pass
 # Internal
 from config import ai, protocols as p
-from . import SearchException
+from . import FetchException
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -41,7 +41,7 @@ class AI(object):
     def __init__(self):
         # It will raise an exception (not caught this time) if not installed.
         if not find_spec('openai'):
-            raise SearchException(ERR_OAPI)
+            raise FetchException(ERR_OAPI)
         openai.api_key = ai.key
 
     #--- Public --------------------------------------------------------------#
@@ -51,9 +51,9 @@ class AI(object):
         try:
             return self.__openai_request(request)
         except AuthenticationError:
-            raise SearchException(ERR_AIAUTH) from None
+            raise FetchException(ERR_AIAUTH) from None
         except RateLimitError as rle:
-            raise SearchException(str(rle)) from None
+            raise FetchException(str(rle)) from None
 
     def protocol_generator(self, name: str) -> str:
         """Sequence a list of questions about a protocol to request."""

@@ -10,7 +10,7 @@ from os.path import dirname
 # Internal
 from config import scapy as s
 from db import find, Protocol
-from . import SearchException, get_api_json
+from . import FetchException, get_api_json
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -54,12 +54,12 @@ class Scapy(object):
             self.local_install = dirname(scapy.__file__)
 
     def get_layer(self, protocol: Protocol) -> list:
-        """Get the Scapy layer corresponding to protocol from Github's API."""
+        """Fetch the Scapy layer corresponding to protocol from Github's API."""
         candidates = []
         layers = get_api_json(s.api_layers_folder)
         contrib = get_api_json(s.api_contrib_folder)
         if not isinstance(layers, list) or not isinstance(contrib, list):
-            raise SearchException(ERR_BADTREE)
+            raise FetchException(ERR_BADTREE)
         for layer in layers + contrib:
             if isinstance(layer, dict) and "name" in layer.keys():
                 match = find(layer["name"].replace(".py", ""), protocol.names, threshold=1)

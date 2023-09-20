@@ -26,7 +26,7 @@ from config import mongodb
 # Errors
 ERR_NODB = "Database {0} not found, please import it with 'python turn-ip.py "\
            "--mongoimport'"
-ERR_NOSRV = "Could not connect to MongoDB server {0}:{1}."
+ERR_NOSRV = "Could not connect to MongoDB server {0}:{1} (sudo systemctl start mongodb)."
 ERR_DBCONNECT = "Connection to database failed."
 ERR_UNKFIELD = "Field '{0}' not found."
 

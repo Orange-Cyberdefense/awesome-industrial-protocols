@@ -1,14 +1,14 @@
 # Turn/IP
 # Claire-lex - 2023
-# Interface to search for CVE (Common Vulnerabilities and Exposures)
+# Interface to fetch CVE (Common Vulnerabilities and Exposures)
 # pylint: disable=invalid-name,too-few-public-methods,no-self-use
 
-"""Search for CVE related to a protocol."""
+"""Fetch CVE related to a protocol."""
 
 # Internal
 from config import cvelist as c
 from db import Protocol, find
-from . import SearchException, get_api_json
+from . import FetchException, get_api_json
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -17,7 +17,7 @@ from . import SearchException, get_api_json
 ERR_BADRET = "Invalid format for result."
 
 #-----------------------------------------------------------------------------#
-# CVE search classes                                                          #
+# CVE fetch classes                                                          #
 #-----------------------------------------------------------------------------#
 
 class CVE(object):
@@ -42,14 +42,14 @@ class CVEList(object):
     def __init__(self):
         pass
 
-    def search_by_keywords(self, protocol: Protocol) -> list:
-        """Search CVE based on keywords."""
+    def fetch_by_keywords(self, protocol: Protocol) -> list:
+        """Fetch CVE based on keywords."""
         results = []
         for name in protocol.names:
             search_url = c.api_keywords_search.format(name)
             cvelist = get_api_json(search_url)
             if not "vulnerabilities" in cvelist.keys():
-                raise SearchException(ERR_BADRET)
+                raise FetchException(ERR_BADRET)
             if not cvelist["vulnerabilities"]:
                 continue
             for cve in cvelist["vulnerabilities"]:
