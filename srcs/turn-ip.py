@@ -17,7 +17,7 @@ research phases:
 from sys import argv
 from curses import wrapper
 # Internal
-from ui import CLI, TUI, TUIError, ERROR
+from ui import CLI, TUI, UIError, ERROR
 
 try:
     if len(argv) < 2:
@@ -26,5 +26,5 @@ try:
         CLI().run()
 except KeyboardInterrupt:
     pass
-except TUIError as tuie:
+except UIError as tuie:
     ERROR(tuie)

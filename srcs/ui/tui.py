@@ -11,10 +11,9 @@ import curses
 from enum import Enum, IntEnum
 from bson.objectid import ObjectId
 # Internal
+from .ui import UI, UIError, ERROR
 from config import tui as t, protocols as p, packets as pk, mongodb
 from config import TOOL_TITLE
-from db import MongoDB, DBException
-from db import Protocols, Links, Packets
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -37,10 +36,7 @@ ERR_TERMSIZE = "Terminal is to small to display user interface."
 # TUI classes                                                                 #
 #-----------------------------------------------------------------------------#
 
-class TUIError(Exception):
-    """Exception class for curses-related errors."""
-
-class TUI():
+class TUI(UI):
     """Terminal User Interface main class.
 
     Important note: y = lines & x = cols. y comes first in curses.
@@ -93,13 +89,7 @@ class TUI():
 
     def __init_content(self):
         """Extract required data from the database."""
-        try:
-            self.db = MongoDB()
-        except DBException as dbe:
-            raise TUIError(dbe) from None
-        self.protocols = Protocols()
-        self.links = Links()
-        self.packets = Packets()
+        super().__init__()
 
     def __init_menu(self):
         """Prepare the main menu with appropriate actions."""
@@ -126,7 +116,7 @@ class TUI():
         self.__run_screen(Screen.MAIN)
         while self.__loop:
             if self.__out_of_bounds():
-                raise TUIError(ERR_TERMSIZE)
+                raise UIError(ERR_TERMSIZE)
             self.__screen.refresh()
             self.__process_events(self.__screen.getch())
             self.__run_screen()

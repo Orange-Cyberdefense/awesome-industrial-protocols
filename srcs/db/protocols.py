@@ -44,21 +44,19 @@ class Protocol(Document):
         self.__fill() # Add mandatory field to the object if missing
         return self
 
-    def get(self, field: str, noraise=False) -> tuple:
+    def get(self, field: str) -> tuple:
         """Get the exact name and value associated to field.
 
         The research is case-insensitive.
 
-        :raises DBException: if the field does not exist except if
-        noraise == True, or if the requested fields matches multiple ones.
+        :raises DBException: if the field does not exist or if the
+        requested fields matches multiple ones.
         """
         match = search(field, self.fields, threshold=0)
         if len(match) == 1:
             return match[0], getattr(self, match[0])
         if len(match) > 1:
             raise DBException(ERR_MULTIMATCH.format(", ".join(match)))
-        if noraise:
-            return None, None
         raise DBException(ERR_UNKFIELD.format(self.name, field)) from None
 
     def set(self, field: str, value: object, replace: bool = False) -> None:

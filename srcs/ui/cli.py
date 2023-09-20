@@ -9,15 +9,15 @@
 from argparse import ArgumentParser
 from os import get_terminal_size
 from os.path import exists, join
-from sys import stderr
 from subprocess import run as subprocess_run
 from textwrap import fill
 from bson.objectid import ObjectId
 # Internal
+from .ui import UI, UIError, ERROR
 from config import TOOL_DESCRIPTION, AI_WARNING, protocols as p, packets as pk
 from config import links, types, mongodb, wireshark, scapy
-from db import MongoDB, DBException
-from db import Protocols, Protocol, Links, Link, Packets, Packet
+from db import DBException
+from db import Protocol, Link, Packet
 from out import Markdown, MDException
 from fetch import FetchException, AI, Wireshark, Scapy, CVEList, Youtube
 
@@ -99,29 +99,22 @@ ERR_NOLAYER = "No layer found for protocol {0}."
 ERR_GOOGLEAPI = "To use Youtube search you need google-api-python-client." \
                 "(pip install google-api-python-client)."
 
-def ERROR(msg: str, will_exit: bool = False):
-    """Display error messages to terminal."""
-    print("ERROR:", msg, file=stderr)
-    if will_exit:
-        exit(-1)
-
 #-----------------------------------------------------------------------------#
 # CLI                                                                         #
 #-----------------------------------------------------------------------------#
 
-class CLI(object):
+class CLI(UI):
     """Parse and run commands gathered from the command-line interface."""
     db = None
     options = None
     functions = None
-    protocols = None
-    links = None
 
     #-------------------------------------------------------------------------#
     # Prepare arguments and run                                               #
     #-------------------------------------------------------------------------#
     
     def __init__(self):
+        super().__init__()
         self.functions = {
             "search": self.__cmd_search,
             "view": self.__cmd_view,
@@ -148,14 +141,6 @@ class CLI(object):
             "mongoexport": self.__cmd_mongoexport
         }
         self.options = self.__init_options()
-        try:
-            self.db = MongoDB()
-        except DBException as dbe:
-            if not self.options.mongoimport:
-                ERROR(dbe, will_exit=True)
-        self.protocols = Protocols()
-        self.links = Links()
-        self.packets = Packets()
 
     def __init_options(self) -> object:
         """Parse command line arguments."""
@@ -193,12 +178,14 @@ class CLI(object):
         """-S / --search"""
         search = search if search else self.options.search
         search = search.lower()
+        # self.search(search)
         searched_fields = p.ALL_FIELDS.keys()
         results = {}
         for protocol in self.protocols.all_as_objects:
             for key in searched_fields:
-                _, value = protocol.get(key, noraise=True)
-                if not value:
+                try:
+                    _, value = protocol.get(key)
+                except DBException:
                     continue
                 if p.TYPE(key)in [types.LINKLIST, types.PKTLIST]:
                     if p.TYPE(key) == types.LINKLIST:
@@ -210,6 +197,8 @@ class CLI(object):
                 else:
                     value = " ".join(value) if isinstance(value, list) else str(value)
                 if search in value.lower():
+                    # This sucks: very new matching field for the protocol
+                    # erases the previous one...
                     results[protocol.name] = protocol.get(key)[1]
         if results:
             self.__print_table(results, nocap=True)
@@ -217,17 +206,9 @@ class CLI(object):
     def __cmd_view(self, field = None) -> None:
         """-V / --view"""
         field = field if field else self.options.view
-        at_least_one_proto_has_field = False
-        pdict = {}
-        for protocol in self.protocols.all_as_objects:
-            try:
-                pdict[protocol.name] = protocol.get(field)[1]
-                at_least_one_proto_has_field = True
-            except DBException as dbe:
-                pass
-        if not at_least_one_proto_has_field:
-            ERROR(ERR_NOFIELD.format(field), will_exit=True)
-        self.__print_table(pdict, nocap=True)
+        result = self.view(field)
+        if result:
+            self.__print_table(result, nocap=True)
 
     #-------------------------------------------------------------------------#
     # Protocols                                                               #
@@ -256,17 +237,14 @@ class CLI(object):
         print(MSG_LINKS_COUNT.format(self.links.count))
         print(MSG_PACKETS_COUNT.format(self.packets.count))
         
-    def __cmd_add(self, new: str = None) -> bool:
+    def __cmd_add(self, protocol: str = None) -> bool:
         """-A / --add"""
-        new = new if new else self.options.add
-        if not self.__confirm(MSG_CONFIRM_ADD_PROTO.format(new), self.options.force):
+        protocol = protocol if protocol else self.options.add
+        if not self.__confirm(MSG_CONFIRM_ADD_PROTO.format(protocol),
+                              self.options.force):
             return False
-        protocol = Protocol().create(name=new)
-        try:
-            self.protocols.add(protocol)
-        except DBException as dbe:
-            ERROR(dbe, will_exit=True)
-        self.__cmd_read(new)
+        self.add(protocol)    
+        self.__cmd_read(protocol)
         return True
 
     def __cmd_read(self, protocol: str = None) -> None:
