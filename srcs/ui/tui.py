@@ -58,8 +58,8 @@ class TUI():
     links = None
     packets = None
 
-    def __filter_list(self, ilist: list) -> list:
-        """Returned a filtered list according to parameters search and filter."""
+    def __search_list(self, ilist: list) -> list:
+        """Returned a filtered list according to parameters search."""
         olist = []
         search = "".join(self.search).lower().strip()
         for item in ilist:
@@ -69,8 +69,8 @@ class TUI():
     
     @property
     def filtered_list(self):
-        """List filtered according to the values of search and filter."""
-        return self.__filter_list([x.name for x in self.protocols.all_as_objects])
+        """List filtered according to the values of search."""
+        return self.__search_list([x.name for x in self.protocols.all_as_objects])
 
     # tmp
     def nop(self):
@@ -246,7 +246,7 @@ class TUI():
         # Calculate subwindows' sizes
         # search = 2/3 width, filter = 1/3 width
         h_search, w_search = 3, self.width - int(self.width / 3) - 2
-        h_filter, w_filter = 3, int(self.width / 3) - 2
+        h_view, w_view = 3, int(self.width / 3) - 2
         # menu = 1/3 width ; notes = 2/3 width
         h_menu, w_menu = int(self.height / 4), int(self.width / 3) - 2
         h_note, w_note = h_menu, self.width - int(self.width / 3) - 2
@@ -256,7 +256,7 @@ class TUI():
         # Create subwindows
         self.__f_header(0, 0, TOOL_TITLE)
         self.__f_search(h_search, w_search, 2, 1, t.title_search)
-        self.__f_filter(h_filter, w_filter, 2, self.width - w_filter - 1, t.title_filter)
+        self.__f_view(h_view, w_view, 2, self.width - w_view - 1, t.title_view)
         self.__f_list(h_list, w_list, 6, 1, t.title_list_prot,
                       self.filtered_list, Focus.MAIN_LIST)
         self.__f_info_prot(h_info, w_info, 6, self.width - w_info - 1, t.title_info_prot)
@@ -304,12 +304,12 @@ class TUI():
         winsearch.refresh()
 
     # TODO
-    def __f_filter(self, h: int, w: int, y: int, x: int, title: str) -> None:
-        """Filter bar, can only contain a list of preset values."""
-        winfilter = self.__screen.subwin(h, w, y, x)
-        winfilter.border()
-        winfilter.addstr(0, 1, " {0} ".format(title))
-        winfilter.refresh()
+    def __f_view(self, h: int, w: int, y: int, x: int, title: str) -> None:
+        """View bar, can only contain a list of preset values."""
+        winview = self.__screen.subwin(h, w, y, x)
+        winview.border()
+        winview.addstr(0, 1, " {0} ".format(title))
+        winview.refresh()
 
     def __f_list(self, h: int, w: int, y: int, x: int, title: str,
                  dlist: list, focus: int) -> None:
