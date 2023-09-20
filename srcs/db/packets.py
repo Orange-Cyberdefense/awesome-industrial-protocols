@@ -7,7 +7,7 @@
 """
 
 from config import packets as p, mongodb
-from . import MongoDB, DBException, Collection, Document, Protocol, find
+from . import MongoDB, DBException, Collection, Document, Protocol, search
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -112,10 +112,10 @@ class Packets(Collection):
         """
         match = []
         for packet in self.all_as_objects:
-            if find(protocol.name, packet.protocol):
+            if search(protocol.name, packet.protocol):
                 if not name:
                     match.append(packet)
-                elif find(name, packet.name):
+                elif search(name, packet.name):
                     return packet
         if len(match):
             return match

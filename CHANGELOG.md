@@ -13,6 +13,7 @@ Changelog
 
 - Option `search` is now `fetch`
 - Option `filter` is now `search`
+- Feature (code) `find` is now `search`
 
 ## 2023-08-01
 

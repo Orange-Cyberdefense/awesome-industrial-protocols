@@ -9,7 +9,7 @@ from importlib.util import find_spec
 from os.path import dirname
 # Internal
 from config import scapy as s
-from db import find, Protocol
+from db import search, Protocol
 from . import FetchException, get_api_json
 
 #-----------------------------------------------------------------------------#
@@ -62,7 +62,7 @@ class Scapy(object):
             raise FetchException(ERR_BADTREE)
         for layer in layers + contrib:
             if isinstance(layer, dict) and "name" in layer.keys():
-                match = find(layer["name"].replace(".py", ""), protocol.names, threshold=1)
+                match = search(layer["name"].replace(".py", ""), protocol.names, threshold=1)
                 if match:
                     candidates.append(Layer(layer))
         return candidates

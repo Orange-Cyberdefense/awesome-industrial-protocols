@@ -7,7 +7,7 @@
 """
 
 from config import protocols as p, types, mongodb
-from . import MongoDB, DBException, Collection, Document, find, exact_find
+from . import MongoDB, DBException, Collection, Document, search, exact_search
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -52,7 +52,7 @@ class Protocol(Document):
         :raises DBException: if the field does not exist except if
         noraise == True, or if the requested fields matches multiple ones.
         """
-        match = find(field, self.fields, threshold=0)
+        match = search(field, self.fields, threshold=0)
         if len(match) == 1:
             return match[0], getattr(self, match[0])
         if len(match) > 1:
@@ -170,10 +170,10 @@ class Protocols(Collection):
         match = []
         # We do that all the time (I know it sucks) to be up to date with db
         for protocol in self.all:
-            if exact_find(protocol_name, all_names(protocol)):
+            if exact_search(protocol_name, all_names(protocol)):
                 match = [Protocol(**protocol)]
                 break # We found the exact match
-            elif find(protocol_name, all_names(protocol)):
+            elif search(protocol_name, all_names(protocol)):
                 match.append(Protocol(**protocol))
         if len(match) == 1:
             return match[0]

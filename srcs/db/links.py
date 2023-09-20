@@ -13,7 +13,7 @@ from socket import timeout as socket_timeout
 from re import match as re_match
 # Internal
 from config import mongodb, links as l
-from . import MongoDB, DBException, Collection, Document, find
+from . import MongoDB, DBException, Collection, Document, search
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -145,10 +145,10 @@ class Links(Collection):
         """Get a link object by its URL."""
         match = []
         for link in self.all_as_objects:
-            if find(Link.to_url(url), link.url, threshold=0):
+            if search(Link.to_url(url), link.url, threshold=0):
                 match.append(link)
             # We also search by name
-            elif find(url, link.name, threshold=0):
+            elif search(url, link.name, threshold=0):
                 match.append(link)
         if len(match) == 1:
             return match[0]

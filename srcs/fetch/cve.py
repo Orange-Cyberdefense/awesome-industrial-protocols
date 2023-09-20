@@ -7,7 +7,7 @@
 
 # Internal
 from config import cvelist as c
-from db import Protocol, find
+from db import Protocol, search
 from . import FetchException, get_api_json
 
 #-----------------------------------------------------------------------------#
@@ -57,6 +57,6 @@ class CVEList(object):
                 # We check that we don't have it already and that the keyword we
                 # are looking for is in description to avoid false positives.
                 if cve.id not in [x.id for x in results] and \
-                   find(name, cve.description.split(" "), threshold=1):
+                   search(name, cve.description.split(" "), threshold=1):
                     results.append(cve)
         return sorted(results, key=lambda x: x.id)
