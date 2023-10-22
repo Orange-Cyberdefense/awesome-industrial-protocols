@@ -680,6 +680,7 @@ or contributions.
 - [opcua-client-gui](https://github.com/FreeOpcUa/opcua-client-gui) - Simple OPC-UA GUI client
 - [python-opcua](https://github.com/FreeOpcUa/python-opcua) - OPC UA Client and Server in Python
 - [UA-.NETStandard](https://github.com/OPCFoundation/UA-.NETStandard) - Official OPC UA .NET Standard Stack from the OPC Foundation
+- [OpalOPC](https://opalopc.com/) - OPC UA vulnerability and misconfiguration scanner
 
 
 ## PC-WORX
