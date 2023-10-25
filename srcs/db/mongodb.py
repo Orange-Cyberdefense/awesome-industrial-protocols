@@ -36,9 +36,15 @@ ERR_UNKFIELD = "Field '{0}' not found."
 
 class Document(ABC):
     """Abstract class for document items."""
-    __db = None
+    _db = None
+    _id = None
     fields_dict = None
+    name = None
 
+    def __init__(self, **kwargs):
+        self._db = MongoDB()
+        self._id = kwargs[mongodb.id] if mongodb.id in kwargs else None
+    
     def get(self, field: str) -> str:
         """Return value associated to field."""
         field = field.lower()
@@ -63,7 +69,10 @@ class Document(ABC):
 
 class Collection(ABC):
     """Abstract clas for database collections."""
-    __db = None
+    _db = None
+
+    def __init__(self):
+        self._db = MongoDB()
 
     @abstractmethod
     def get(self, field: str) -> Document:
@@ -74,6 +83,14 @@ class Collection(ABC):
     def add(self, **kwargs) -> None:
         """Add an entry to the collection."""
         raise NotImplementedError("Collection: add")
+
+    def has(self, content) -> bool:
+        """Return true if this content already exists."""
+        try:
+            self.get(url)
+        except DBException:
+            return False
+        return True
 
 #-----------------------------------------------------------------------------#
 # MongoDB classes                                                             #

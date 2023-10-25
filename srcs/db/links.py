@@ -37,16 +37,12 @@ ERR_UNKFIELD = "Field '{0}' not found."
 
 class Link(Document):
     """Class representing a single link."""
-    __db = None
-    id = None
-    name = None
     __url: None # ParseResult from urllib
     type: None
     description: None
 
     def __init__(self, **kwargs):
-        self.__db = MongoDB()
-        self.id = kwargs[mongodb.id] if mongodb.id in kwargs else None
+        super().__init__(**kwargs)
         self.name = kwargs[l.name] if l.name in kwargs else None
         self.__url = self.__set_url(kwargs[l.url]) if l.url in kwargs else None
         self.type = kwargs[l.type] if l.type in kwargs else l.DEFAULT_TYPE
@@ -75,7 +71,7 @@ class Link(Document):
         self.fields_dict[field] = value
         document = {l.url: self.url}
         newvalue = {field: value}
-        self.__db.links.update_one(document, {"$set": newvalue})
+        self._db.links.update_one(document, {"$set": newvalue})
 
     @staticmethod
     def to_url(url: str) -> str:
@@ -107,7 +103,7 @@ class Link(Document):
             l.type: self.type
         }
         if not exclude_id:
-            ldict[l.id] = self.id
+            ldict[l.id] = self._id
         return ldict
 
     @property
@@ -136,10 +132,9 @@ class Link(Document):
 
 class Links(Collection):
     """Interface with database to handle the links' collection"""
-    __db = None
 
     def __init__(self):
-        self.__db = MongoDB()
+        super().__init__()
 
     def get(self, url: str, multimatch: bool = False) -> Link:
         """Get a link object by its URL."""
@@ -159,20 +154,12 @@ class Links(Collection):
             raise DBException(ERR_MULTIMATCH.format(", ".join(match)))
         raise DBException(ERR_UNKURL.format(url))
 
-    def get_id(self, id: object) -> Link:
+    def get_id(self, iddb: object) -> Link:
         """Get a link object by its ID in database."""
         for link in self.all:
-            if link[l.id] == id:
+            if link[l.id] == iddb:
                 return Link(**link)
-        raise DBException(ERR_UNKID.format(id))
-
-    def has(self, url: str) -> bool:
-        """Return true if this URL is already in link list."""
-        try:
-            self.get(url)
-        except DBException:
-            return False
-        return True
+        raise DBException(ERR_UNKID.format(iddb))
 
     def add(self, name: str, url: str, description: str,
             type: str = l.DEFAULT_TYPE) -> Link:
@@ -186,7 +173,7 @@ class Links(Collection):
         link = Link(name=name, url=url, description=description, type=type)
         # Check if link is valid and exists before inserting it to DB
         Link.check_url(link.url) # Will raise exception if invalid
-        self.__db.links.insert_one(link.to_dict())
+        self._db.links.insert_one(link.to_dict())
         # We don't return link directly because we need the updated _id after db
         # insert, so we read it again from the db
         return self.get(link.url)
@@ -194,7 +181,7 @@ class Links(Collection):
     def delete(self, link: Link) -> None:
         """Delete an existing link."""
         self.get(link.url) # Will raise if unknown
-        self.__db.links.delete_one({l.url: link.url})
+        self._db.links.delete_one({l.url: link.url})
 
     def check(self):
         """Check generator."""
@@ -207,15 +194,15 @@ class Links(Collection):
     @property
     def all(self) -> list:
         """Return the list of links as JSON."""
-        return self.__db.links_all
+        return self._db.links_all
 
     @property
     def all_as_objects(self) -> list:
         """Return the list of links as Link objects."""
-        objects = [Link(**x) for x in self.__db.links_all]
+        objects = [Link(**x) for x in self._db.links_all]
         return sorted(objects, key=lambda x: x.name.lower())
 
     @property
     def count(self) -> int:
         """Return the total number of protocols."""
-        return self.__db.links_count
+        return self._db.links_count

@@ -102,6 +102,7 @@ mongodb.port = 27017
 mongodb.timeout = 1000
 mongodb.database = "awesome-industrial-protocols"
 mongodb.id = "_id"
+mongodb.obj = "_db"
 
 # Collections
 mongodb.protocols = "protocols"
