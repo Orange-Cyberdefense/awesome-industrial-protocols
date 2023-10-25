@@ -2,24 +2,24 @@
 # Claire-lex - 2023
 # Command-line interface
 # pylint: disable=invalid-name,too-few-public-methods,redefined-builtin,no-self-use
-# pylint: disable=redefined-outer-name
+# pylint: disable=redefined-outer-name,too-many-arguments,simplifiable-if-expression
 
 """Command-line interface."""
 
 from argparse import ArgumentParser
 from os import get_terminal_size
 from os.path import exists, join
-from subprocess import run as subprocess_run
+from subprocess import run as subprocess_run, CalledProcessError
 from textwrap import fill
 from bson.objectid import ObjectId
 # Internal
-from .ui import UI, UIError, ERROR
 from config import TOOL_DESCRIPTION, AI_WARNING, protocols as p, packets as pk
 from config import links, types, mongodb, wireshark, scapy
 from db import DBException
-from db import Protocol, Link, Packet
+from db import Protocol, Link
 from out import Markdown, MDException
 from fetch import FetchException, AI, Wireshark, Scapy, CVEList, Youtube
+from .ui import UI, ERROR
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -47,7 +47,8 @@ OPTIONS = (
     ("-LP", "--list-packets", "list all packets", None, None),
     ("-RP", "--read-packet", "read a packet from a protocol", None, ("protocol", "name"), 2),
     ("-AP", "--add-packet", "add a new packet", None, ("protocol", "name"), 2),
-    ("-WP", "--write-packet", "change data of a packet", None, ("protocol", "name", "field", "value"), 4),
+    ("-WP", "--write-packet", "change data of a packet", None,
+     ("protocol", "name", "field", "value"), 4),
     ("-DP", "--delete-packet", "delete a packet", None, ("protocol", "name"), 2),
     # Output
     ("-G", "--gen", "generate Markdown files with protocols' data", None, None),
@@ -112,7 +113,7 @@ class CLI(UI):
     #-------------------------------------------------------------------------#
     # Prepare arguments and run                                               #
     #-------------------------------------------------------------------------#
-    
+
     def __init__(self):
         super().__init__()
         self.functions = {
@@ -156,7 +157,7 @@ class CLI(UI):
                 options.add_argument(opt[0], opt[1], help=opt[2],
                                      metavar=opt[4], default=opt[3])
         return options.parse_args()
-        
+
     def run(self):
         """Use arguments for command line to launch commands."""
         is_function = False
@@ -174,7 +175,7 @@ class CLI(UI):
     # View and search                                                         #
     #-------------------------------------------------------------------------#
 
-    def __cmd_search(self, search:str = None) -> None:
+    def __cmd_search(self, search: str = None) -> None:
         """-S / --search"""
         search = search if search else self.options.search
         search = search.lower()
@@ -193,7 +194,7 @@ class CLI(UI):
                     elif p.TYPE(key) == types.PKTLIST:
                         lst = [self.packets.get_id(x) for x in value]
                     value = " ".join([x.name for x in lst] + \
-                                     [x.description for x in lst])                    
+                                     [x.description for x in lst])
                 else:
                     value = " ".join(value) if isinstance(value, list) else str(value)
                 if search in value.lower():
@@ -202,8 +203,8 @@ class CLI(UI):
                     results[protocol.name] = protocol.get(key)[1]
         if results:
             self.__print_table(results, nocap=True)
-    
-    def __cmd_view(self, field = None) -> None:
+
+    def __cmd_view(self, field: str = None) -> None:
         """-V / --view"""
         field = field if field else self.options.view
         result = self.view(field)
@@ -219,7 +220,7 @@ class CLI(UI):
         try:
             self.protocols.get(protocol)
         except DBException as dbe: # Does not exist or multiple matches
-            ERROR(str(dbe), will_exit=True if noadd else False)
+            ERROR(str(dbe), will_exit=bool(noadd))
             self.__cmd_add(protocol)
         # We check again if the protocol exists now.
         try:
@@ -227,7 +228,7 @@ class CLI(UI):
         except DBException as dbe:
             ERROR(str(dbe), will_exit=True)
         return protocol
-    
+
     def __cmd_list(self) -> None:
         """-L / --list"""
         pdict = {x.name: x.description for x in self.protocols.all_as_objects}
@@ -236,14 +237,14 @@ class CLI(UI):
         print(MSG_PROTO_COUNT.format(self.protocols.count))
         print(MSG_LINKS_COUNT.format(self.links.count))
         print(MSG_PACKETS_COUNT.format(self.packets.count))
-        
+
     def __cmd_add(self, protocol: str = None) -> bool:
         """-A / --add"""
         protocol = protocol if protocol else self.options.add
         if not self.__confirm(MSG_CONFIRM_ADD_PROTO.format(protocol),
                               self.options.force):
             return False
-        self.add(protocol)    
+        self.add(protocol)
         self.__cmd_read(protocol)
         return True
 
@@ -309,7 +310,7 @@ class CLI(UI):
     #-------------------------------------------------------------------------#
     # Links                                                                   #
     #-------------------------------------------------------------------------#
-            
+
     def __cmd_list_links(self) -> None:
         """-LL / --list-links"""
         for link in self.links.all_as_objects:
@@ -362,7 +363,7 @@ class CLI(UI):
     def __cmd_delete_link(self) -> None:
         """-DL / --delete-link"""
         try:
-            links = self.links.get(self.options.delete_link, no_raise=True)
+            links = self.links.get(self.options.delete_link, multimatch=True)
         except DBException as dbe:
             ERROR(str(dbe), will_exit=True)
         links = links if isinstance(links, list) else [links]
@@ -374,16 +375,16 @@ class CLI(UI):
     #-------------------------------------------------------------------------#
     # Packets                                                                 #
     #-------------------------------------------------------------------------#
-                
+
     def __cmd_list_packets(self) -> None:
         """-LP / --list-packets"""
         for packet in self.packets.all_as_objects:
             print(packet)
-                
+
     def __cmd_add_packet(self, protocol: str = None, name: str = None,
                          description: str = None, scapy_pkt: str = None,
-                         raw_pkt: str = None) -> Packet:
-        """-AL / --add-packet"""
+                         raw_pkt: str = None):
+        """-AP / --add-packet"""
         if self.options.add_packet:
             protocol, name = self.options.add_packet
         protocol = self.__get_protocol(protocol)
@@ -396,12 +397,9 @@ class CLI(UI):
         if self.__confirm(MSG_CONFIRM_ADD_PACKET.format(name, protocol),
                           self.options.force):
             try:
-                packet = self.packets.add(protocol, name, description,
-                                          scapy_pkt, raw_pkt)
-                return packet
+                self.packets.add(protocol, name, description, scapy_pkt, raw_pkt)
             except DBException as dbe:
                 ERROR(str(dbe), will_exit=True)
-        return None
 
     def __cmd_read_packet(self, protocol: str = None, name: str = None) -> None:
         """-RP / --read-packet"""
@@ -432,7 +430,7 @@ class CLI(UI):
             self.__cmd_read_packet(protocol.name, packet.name)
         except DBException as dbe:
             ERROR(str(dbe), will_exit=True)
-    
+
     def __cmd_delete_packet(self):
         """-DP / --delete-packet"""
         protocol, name = self.options.delete_packet
@@ -445,11 +443,11 @@ class CLI(UI):
                                                            protocol.name),
                           self.options.force):
             self.packets.delete(protocol, packet)
-            
+
     #-------------------------------------------------------------------------#
     # Output                                                                  #
     #-------------------------------------------------------------------------#
-            
+
     def __cmd_gen(self) -> None:
         """-G / --gen"""
         try:
@@ -485,10 +483,10 @@ class CLI(UI):
             print(issue)
 
     #-------------------------------------------------------------------------#
-    # Automated fetch                                                        #
+    # Automated fetch                                                         #
     #-------------------------------------------------------------------------#
-            
-    def __cmd_fetch(self, source: str = None, protocol:str = None) -> None:
+
+    def __cmd_fetch(self, source: str = None, protocol: str = None) -> None:
         """-F / --fetch"""
         sources = {
             "openai": self.__cmd_fetch_openai,
@@ -506,9 +504,9 @@ class CLI(UI):
             if not isinstance(protocol, Protocol):
                 protocol = self.__get_protocol(protocol)
             if source.lower() == "all":
-                for source in sources:
-                    if source != "openai":
-                        sources[source.lower()](protocol)
+                for src in sources:
+                    if src != "openai":
+                        sources[src.lower()](protocol)
             elif source.lower() not in sources.keys():
                 ERROR(ERR_FETCHSOURCE.format(", ".join(sources.keys())), will_exit=True)
             else:
@@ -617,7 +615,7 @@ class CLI(UI):
     #-------------------------------------------------------------------------#
     # Notes                                                                   #
     #-------------------------------------------------------------------------#
-            
+
     def __cmd_note(self) -> None:
         """-N / --note"""
         raise NotImplementedError("CLI: note")
@@ -625,7 +623,7 @@ class CLI(UI):
     #-------------------------------------------------------------------------#
     # Database                                                                #
     #-------------------------------------------------------------------------#
-    
+
     def __cmd_mongoimport(self) -> None:
         "-MI / --mongoimport"
         cmd = ["mongoimport", "--db=\"{0}\"".format(mongodb.database), "--drop"]
@@ -635,9 +633,12 @@ class CLI(UI):
         proto = ["--collection=protocols", "--file=\"{0}\"".format(protofile)]
         links = ["--collection=links", "--file=\"{0}\"".format(linksfile)]
         packets = ["--collection=packets", "--file=\"{0}\"".format(packetsfile)]
-        subprocess_run(cmd + proto)
-        subprocess_run(cmd + links)
-        subprocess_run(cmd + packets)
+        try:
+            subprocess_run(cmd + proto, check=True)
+            subprocess_run(cmd + links, check=True)
+            subprocess_run(cmd + packets, check=True)
+        except CalledProcessError as cpe:
+            ERROR(str(cpe))
 
     def __cmd_mongoexport(self) -> None:
         "-ME / --mongoexport"
@@ -648,9 +649,12 @@ class CLI(UI):
         proto = ["--collection=protocols", "--out=\"{0}\"".format(protofile)]
         links = ["--collection=links", "--out=\"{0}\"".format(linksfile)]
         packets = ["--collection=packets", "--out=\"{0}\"".format(packetsfile)]
-        subprocess_run(cmd + proto)
-        subprocess_run(cmd + links)
-        subprocess_run(cmd + packets)
+        try:
+            subprocess_run(cmd + proto, check=True)
+            subprocess_run(cmd + links, check=True)
+            subprocess_run(cmd + packets, check=True)
+        except CalledProcessError as cpe:
+            ERROR(str(cpe))
 
     #-------------------------------------------------------------------------#
     # Terminal display                                                        #
@@ -692,7 +696,7 @@ class CLI(UI):
             text = text if len(text) < table_size else text[:table_size-3]+"..."
             print(table_format.format(key, text))
             key = "" # We only want to print the key for the first line
-            
+
     def __print_table(self, protocol: dict, nocap: bool = False) -> None:
         """Displays the protocol table on terminal."""
         full_table_size = get_terminal_size().columns
@@ -702,7 +706,7 @@ class CLI(UI):
         for k, v in protocol.items():
             if k == mongodb.id:
                 continue
-            elif isinstance(v, list) and isinstance(v[0], ObjectId):
+            if isinstance(v, list) and isinstance(v[0], ObjectId):
                 self.__print_ids(table_format, k, v)
             else:
                 v = ", ".join(v) if isinstance(v, list) else str(v)

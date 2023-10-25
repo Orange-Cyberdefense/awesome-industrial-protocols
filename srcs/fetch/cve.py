@@ -20,7 +20,7 @@ ERR_BADRET = "Invalid format for result."
 # CVE fetch classes                                                          #
 #-----------------------------------------------------------------------------#
 
-class CVE(object):
+class CVE():
     """Object representing data about a CVE."""
     raw = None
 
@@ -36,7 +36,7 @@ class CVE(object):
     def __str__(self):
         return "{0}: {1}".format(self.id, self.url)
 
-class CVEList(object):
+class CVEList():
     """Interface to CVE Lit APIs."""
 
     def __init__(self):

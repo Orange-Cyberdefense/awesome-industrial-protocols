@@ -25,7 +25,6 @@ ERR_DLCODE = "Code could not be retrieved from API ({0})."
 
 class FetchException(Exception):
     """Exception class for automated fetch-related errors."""
-    pass
 
 #--- Extract data from JSON APIs ---------------------------------------------#
 

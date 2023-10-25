@@ -1,7 +1,7 @@
 # Turn/IP
 # Claire-lex - 2023
 # Protocols and Protocol class
-# pylint: disable=invalid-name,no-member
+# pylint: disable=invalid-name,no-member,arguments-differ
 
 """Classes that represent and handle protocols' info from the database.
 """
@@ -171,7 +171,7 @@ class Protocols(Collection):
             if exact_search(protocol_name, all_names(protocol)):
                 match = [Protocol(**protocol)]
                 break # We found the exact match
-            elif search(protocol_name, all_names(protocol)):
+            if search(protocol_name, all_names(protocol)):
                 match.append(Protocol(**protocol))
         if len(match) == 1:
             return match[0]
@@ -206,8 +206,8 @@ class Protocols(Collection):
     @property
     def all(self) -> list:
         """Return the list of protocols as JSON."""
-        return [x for x in self.__db.protocols_all]
-    
+        return self.__db.protocols_all
+
     @property
     def all_as_objects(self) -> list:
         """Return the list of protocols as Protocol objects.

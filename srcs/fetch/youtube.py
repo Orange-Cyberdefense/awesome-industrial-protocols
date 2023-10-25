@@ -2,6 +2,7 @@
 # Claire-lex - 2023
 # Interface to fetch protocols-related videos on Youtube
 # pylint: disable=invalid-name,import-error,too-few-public-methods
+# pylint: disable=no-member
 
 """Fetch protocols-related videos on Youtube."""
 
@@ -28,7 +29,7 @@ ERR_BADRET = "Invalid format for result."
 # Youtube classes                                                             #
 #-----------------------------------------------------------------------------#
 
-class Video(object):
+class Video():
     """Object representing a Youtube video."""
     raw = None
     title = None
@@ -68,7 +69,7 @@ class Video(object):
         ).execute()
         return description["items"][0]["snippet"]["description"]
 
-class Youtube(object):
+class Youtube():
     """Interface to Google API to retrieve Youtube videos."""
     youtube_api = None
 
@@ -86,6 +87,7 @@ class Youtube(object):
         """
         candidates = []
         found_titles = []
+        # Refactor to remove pylint too-many-nested-block
         try:
             for channel in y.selected_channels:
                 for name in protocol.names:

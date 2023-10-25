@@ -1,10 +1,11 @@
 # Turn/IP
 # Claire-lex - 2023
 # Main features for all user interfaces
+# pylint: disable=invalid-name
 
 """Main features for all user interfaces with common commands."""
 
-from sys import stderr
+from sys import stderr, exit as sys_exit
 # Internal
 from config import protocols as p, types
 from db import MongoDB, DBException, exact_search
@@ -19,7 +20,7 @@ def ERROR(msg: str, will_exit: bool = False):
     """Display error messages to terminal."""
     print("ERROR:", msg, file=stderr)
     if will_exit:
-        exit(-1)
+        sys_exit(-1)
 
 #-----------------------------------------------------------------------------#
 # UI                                                                         #
@@ -28,7 +29,7 @@ def ERROR(msg: str, will_exit: bool = False):
 class UIError(Exception):
     """Exception class for user interface errors."""
 
-class UI(object):
+class UI():
     """Main class for user interfaces."""
 
     def __init__(self):
@@ -53,7 +54,7 @@ class UI(object):
         for protocol in self.protocols.all_as_objects:
             try:
                 vdict[protocol.name] = protocol.get(field)[1]
-            except DBException as dbe:
+            except DBException:
                 pass
         return vdict
 
@@ -81,7 +82,7 @@ class UI(object):
                             sdict[protocol.name] = {}
                         sdict[protocol.name][key] = value
         # Debug
-        for name, match in sdict:
+        for name, match in sdict.items():
             for k, v in match:
                 print(name, k, v)
         return sdict

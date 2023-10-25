@@ -36,7 +36,7 @@ ERR_NOPROTO = "AI does not recognize {0} as a protocol (message: {1})."
 # AI class                                                                    #
 #-----------------------------------------------------------------------------#
 
-class AI(object):
+class AI():
     """Handle requests to OpenAI to extract data for protocols."""
     def __init__(self):
         # It will raise an exception (not caught this time) if not installed.
@@ -68,7 +68,7 @@ class AI(object):
         question = ai.yes_no_question.format(name, ai.is_protocol)
         response = self.request(question)
         if not response.lower().startswith("yes"):
-            raise SearchException(ERR_NOPROTO.format(name, response))
+            raise FetchException(ERR_NOPROTO.format(name, response))
         # Questions where answer should be yes or no
         for attribute, question in q_yes_no.items():
             question = ai.yes_no_question.format(name, question)

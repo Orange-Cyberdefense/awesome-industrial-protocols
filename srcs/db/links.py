@@ -1,7 +1,7 @@
 # Turn/IP
 # Claire-lex - 2023
 # Links and Link class
-# pylint: disable=invalid-name,redefined-builtin
+# pylint: disable=invalid-name,redefined-builtin,arguments-differ
 
 """Classes that represent and handle links in the database."""
 
@@ -140,8 +140,8 @@ class Links(Collection):
 
     def __init__(self):
         self.__db = MongoDB()
-    
-    def get(self, url: str, no_raise: bool = False) -> Link:
+
+    def get(self, url: str, multimatch: bool = False) -> Link:
         """Get a link object by its URL."""
         match = []
         for link in self.all_as_objects:
@@ -153,12 +153,10 @@ class Links(Collection):
         if len(match) == 1:
             return match[0]
         if len(match) > 1:
-            if no_raise:
+            if multimatch:
                 return match
             match = [x.name for x in match]
             raise DBException(ERR_MULTIMATCH.format(", ".join(match)))
-        if no_raise:
-            return None
         raise DBException(ERR_UNKURL.format(url))
 
     def get_id(self, id: object) -> Link:
@@ -209,7 +207,7 @@ class Links(Collection):
     @property
     def all(self) -> list:
         """Return the list of links as JSON."""
-        return [x for x in self.__db.links_all]
+        return self.__db.links_all
 
     @property
     def all_as_objects(self) -> list:

@@ -1,7 +1,7 @@
 # Turn/IP
 # Claire-lex - 2023
 # Interface to search for data in Scapy layers
-# pylint: disable=too-few-public-methods,no-self-use
+# pylint: disable=too-few-public-methods,no-self-use,import-outside-toplevel
 
 """Search for data in Scapy layers."""
 
@@ -22,7 +22,7 @@ ERR_BADTREE = "Invalid GitHub tree format."
 # Scapy classes                                                               #
 #-----------------------------------------------------------------------------#
 
-class Layer(object):
+class Layer():
     """Object representing data about a layer."""
     raw = None
 
@@ -40,7 +40,7 @@ class Layer(object):
     def __str__(self):
         return "Layer {0}: {1}".format(self.name, self.url)
 
-class Scapy(object):
+class Scapy():
     """Interface to Scapy layers using GitHub's API and current install."""
     local_install = None
 

@@ -22,7 +22,7 @@ ERR_BADTREE = "Invalid GitHub tree format."
 # Wireshark classes                                                           #
 #-----------------------------------------------------------------------------#
 
-class Dissector(object):
+class Dissector():
     """Object representing data about a dissector."""
     raw = None
 
@@ -55,7 +55,7 @@ class Dissector(object):
                     return names
         return None
 
-class Wireshark(object):
+class Wireshark():
     """Interface to Wireshark dissectors code using GitHub's API."""
 
     def __init__(self):

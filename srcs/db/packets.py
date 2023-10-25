@@ -1,7 +1,8 @@
 # Turn/IP
 # Claire-lex - 2023
 # Packets and Packet class
-# pylint: disable=invalid-name,no-member
+# pylint: disable=invalid-name,no-member,too-many-instance-attributes
+# pylint: disable=arguments-differ,too-many-arguments
 
 """Classes that represent and handle packets' info from the database.
 """
@@ -70,7 +71,7 @@ class Packet(Document):
         document = {p.name: self.name, p.protocol: self.protocol}
         newvalue = {field: value}
         self.__db.packets.update_one(document, {"$set": newvalue})
-    
+
     def check(self):
         self.__check()
 
@@ -86,13 +87,13 @@ class Packet(Document):
         if not exclude_id:
             pdict[p.id] = self.id
         return pdict
-    
+
     #--- Private -------------------------------------------------------------#
 
     def __check(self):
         if not self.name or not self.protocol:
             raise DBException(ERR_EMPTY)
-        
+
 #-----------------------------------------------------------------------------#
 # Packets                                                                     #
 #-----------------------------------------------------------------------------#
@@ -117,17 +118,17 @@ class Packets(Collection):
                     match.append(packet)
                 elif search(name, packet.name):
                     return packet
-        if len(match):
+        if match:
             return match
         raise DBException(ERR_UNKPACKET.format(name, protocol.name) if name \
                           else ERR_NOPACKET.format(protocol.name))
 
-    def get_id(self, id: object) -> Packet:
+    def get_id(self, iddb: object) -> Packet:
         """Get a packet object by its ID in database."""
         for packet in self.all:
-            if packet[p.id] == id:
+            if packet[p.id] == iddb:
                 return Packet(**packet)
-        raise DBException(ERR_UNKID.format(id))
+        raise DBException(ERR_UNKID.format(iddb))
 
     def add(self, protocol: Protocol, name: str, description: str = None,
             scapy_pkt: str = None, raw_pkt: bytes = None):
@@ -147,12 +148,12 @@ class Packets(Collection):
         self.get(protocol, packet.name) # Will raise if unknown
         self.__db.packets.delete_one({p.name: packet.name,
                                       p.protocol: protocol.name})
-        
+
 
     @property
     def all(self) -> list:
         """Return the list of packets as JSON."""
-        return [x for x in self.__db.packets_all]
+        return self.__db.packets_all
 
     @property
     def all_as_objects(self) -> list:
