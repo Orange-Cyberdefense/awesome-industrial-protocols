@@ -577,3 +577,6 @@
 {"_id":{"$oid":"650834df1c3d2ca35c88b096"},"name":"SOME-IP.com","url":"https://some-ip.com/","description":"Main website with resources about SOME/IP","type":"documentation"}
 {"_id":{"$oid":"65083574192e80bbcec88096"},"name":"Automotive Ethernet Fuzzing","url":"https://www.youtube.com/watch?v=sJGJqpflEJI","description":"Jonghyuk Song, Soohwan Oh, Woongjo Choi @ DEF CON 30 (2022)","type":"conference"}
 {"_id":{"$oid":"650835c04e654be3a6dff712"},"name":"packet-someip.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-someip.c","description":"Wireshark dissector for SOME/IP","type":"tool"}
+{"_id":{"$oid":"652695a05b40a5b8359c933c"},"name":"CLSI LIS01-A1 Specifications","url":"https://webstore.ansi.org/standards/clsi/clsilis01a2","description":"Buy LIS01-A2 specifications on ANSI webstore","type":"documentation"}
+{"_id":{"$oid":"65269671dbc52d21316b2142"},"name":"elle","url":"https://github.com/rcarbone/elle","description":"C toolkit for CLSI LIS01-A2 and LIS02-A2 protocols","type":"tool"}
+{"_id":{"$oid":"6538c00d3a2e3821f4c1ed00"},"name":"OpalOPC","url":"https://opalopc.com","description":"OPC UA vulnerability and misconfiguration scanner","type":"tool"}
