@@ -28,6 +28,7 @@
 - [Security Analysis of Vendor Implementations of the OPC UA Protocol for Industrial Control Systems](https://arxiv.org/abs/2104.06051) - Alessandro Erba, Anne Müller, Nils Ole Tippenhauer (2021)
 ## Tools
 - [freeopcua](https://github.com/FreeOpcUa/freeopcua) - Open Source C++ OPC-UA Server and Client Library
+- [OpalOPC](https://opalopc.com) - OPC UA vulnerability and misconfiguration scanner
 - [opcua-client-gui](https://github.com/FreeOpcUa/opcua-client-gui) - Simple OPC-UA GUI client
 - [python-opcua](https://github.com/FreeOpcUa/python-opcua) - OPC UA Client and Server in Python
 - [UA-.NETStandard](https://github.com/OPCFoundation/UA-.NETStandard) - Official OPC UA .NET Standard Stack from the OPC Foundation

@@ -47,6 +47,7 @@ or contributions.
 - [IEEE-C37.118](#ieee-c37118)
 - [ISA100.11a](#isa10011a)
 - [KNXnet/IP](#knxnetip)
+- [LIS](#lis)
 - [LoRaWAN](#lorawan)
 - [M-Bus](#m-bus)
 - [MELSEC](#melsec)
@@ -535,6 +536,19 @@ or contributions.
 - [XKNX](https://github.com/XKNX/xknx) - A KNX library written in Python
 
 
+## LIS
+| Name | LIS |
+|---|---|
+| Alias | LIS01-A2, LIS02-A2 |
+| Description | Protocol to transfer messages between clinical laboratory instruments and computer systems. |
+| Keywords | CLSI, Healthcare, Medical |
+| Port | 1520 |
+| Access | Paid |
+| Specifications | [CLSI LIS01-A1 Specifications](https://webstore.ansi.org/standards/clsi/clsilis01a2) |
+| Detailed page | [lis.md](protocols/lis.md) |
+
+
+
 ## LoRaWAN
 | Name | LoRaWAN |
 |---|---|
@@ -683,10 +697,10 @@ or contributions.
 - [Security Analysis of Vendor Implementations of the OPC UA Protocol for Industrial Control Systems](https://arxiv.org/abs/2104.06051) - Alessandro Erba, Anne Müller, Nils Ole Tippenhauer (2021)
 ### Tools
 - [freeopcua](https://github.com/FreeOpcUa/freeopcua) - Open Source C++ OPC-UA Server and Client Library
+- [OpalOPC](https://opalopc.com) - OPC UA vulnerability and misconfiguration scanner
 - [opcua-client-gui](https://github.com/FreeOpcUa/opcua-client-gui) - Simple OPC-UA GUI client
 - [python-opcua](https://github.com/FreeOpcUa/python-opcua) - OPC UA Client and Server in Python
 - [UA-.NETStandard](https://github.com/OPCFoundation/UA-.NETStandard) - Official OPC UA .NET Standard Stack from the OPC Foundation
-- [OpalOPC](https://opalopc.com/) - OPC UA vulnerability and misconfiguration scanner
 
 
 ## PC-WORX
