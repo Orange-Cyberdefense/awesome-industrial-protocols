@@ -268,12 +268,12 @@ class CLI(UI):
                         link = self.__cmd_add_link(value, value)
                         if not link:
                             return
-                        value = link.id
+                        value = link._id
                     elif p.TYPE(field) == types.PKTLIST:
                         packet = self.packets.get(protocol, value)
                         if not packet or isinstance(packet, list):
                             return
-                        value = packet.id
+                        value = packet._id
                     protocol.set(field, value)
             else:
                 if self.__confirm(MSG_CONFIRM_WRITE.format(p.NAME(field), value,
@@ -541,7 +541,7 @@ class CLI(UI):
                     link = self.__cmd_add_link(dissector.name, dissector.url,
                                                description, "tool")
                     if link:
-                        protocol.set(p.wireshark, link.id, replace=True)
+                        protocol.set(p.wireshark, link._id, replace=True)
         except FetchException as se:
             ERROR(str(se), will_exit=True)
 
@@ -563,7 +563,7 @@ class CLI(UI):
                     link = self.__cmd_add_link(layer.name, layer.url,
                                                description, "tool")
                     if link:
-                        protocol.set(p.scapy, link.id, replace=True)
+                        protocol.set(p.scapy, link._id, replace=True)
         except FetchException as se:
             ERROR(str(se), will_exit=True)
 
@@ -584,7 +584,7 @@ class CLI(UI):
                                                "cve")
                     if link:
                         try:
-                            protocol.set(p.cve, link.id)
+                            protocol.set(p.cve, link._id)
                         except DBException as dbe:
                             ERROR(str(dbe))
         except FetchException as se:
@@ -604,7 +604,7 @@ class CLI(UI):
                                                "conference")
                     if link:
                         try:
-                            protocol.set(p.resources, link.id)
+                            protocol.set(p.resources, link._id)
                         except DBException as dbe:
                             ERROR(str(dbe))
         except FetchException as se:

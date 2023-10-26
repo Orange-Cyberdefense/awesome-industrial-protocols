@@ -87,7 +87,7 @@ class Collection(ABC):
     def has(self, content) -> bool:
         """Return true if this content already exists."""
         try:
-            self.get(url)
+            self.get(content)
         except DBException:
             return False
         return True
