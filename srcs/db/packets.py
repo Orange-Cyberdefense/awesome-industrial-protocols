@@ -1,13 +1,14 @@
 # Turn/IP
 # Claire-lex - 2023
 # Packets and Packet class
-# pylint: disable=invalid-name,no-member
+# pylint: disable=invalid-name,no-member,too-many-instance-attributes
+# pylint: disable=arguments-differ,too-many-arguments
 
 """Classes that represent and handle packets' info from the database.
 """
 
 from config import packets as p, mongodb
-from . import MongoDB, DBException, Collection, Document, Protocol, find
+from . import MongoDB, DBException, Collection, Document, Protocol, search
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -26,17 +27,13 @@ ERR_UNKID = "This ID does not match with any existing packet ({0})."
 
 class Packet(Document):
     """Class representing a single packet document."""
-    __db = None
-    id = None
-    name = None
     protocol = None # Protocol document id in database
     description = None
     scapy_pkt = None
     raw_pkt = None
 
     def __init__(self, **kwargs):
-        self.__db = MongoDB()
-        self.id = kwargs[mongodb.id] if mongodb.id in kwargs else None
+        super().__init__(**kwargs)
         self.name = kwargs[p.name] if p.name in kwargs else None
         self.protocol = kwargs[p.protocol] if p.protocol in kwargs else None
         self.description = kwargs[p.description] if p.description in kwargs else None
@@ -69,8 +66,8 @@ class Packet(Document):
         self.fields_dict[field] = value
         document = {p.name: self.name, p.protocol: self.protocol}
         newvalue = {field: value}
-        self.__db.packets.update_one(document, {"$set": newvalue})
-    
+        self._db.packets.update_one(document, {"$set": newvalue})
+
     def check(self):
         self.__check()
 
@@ -84,25 +81,24 @@ class Packet(Document):
             p.raw_pkt: self.raw_pkt
         }
         if not exclude_id:
-            pdict[p.id] = self.id
+            pdict[p.id] = self._id
         return pdict
-    
+
     #--- Private -------------------------------------------------------------#
 
     def __check(self):
         if not self.name or not self.protocol:
             raise DBException(ERR_EMPTY)
-        
+
 #-----------------------------------------------------------------------------#
 # Packets                                                                     #
 #-----------------------------------------------------------------------------#
 
 class Packets(Collection):
     """Interface with database to handle the packets' collection."""
-    __db = None
 
     def __init__(self):
-        self.__db = MongoDB()
+        super().__init__()
 
     def get(self, protocol: Protocol, name: str = None) -> object:
         """Get a Packet object by its name and protocol.
@@ -112,22 +108,22 @@ class Packets(Collection):
         """
         match = []
         for packet in self.all_as_objects:
-            if find(protocol.name, packet.protocol):
+            if search(protocol.name, packet.protocol):
                 if not name:
                     match.append(packet)
-                elif find(name, packet.name):
+                elif search(name, packet.name):
                     return packet
-        if len(match):
+        if match:
             return match
         raise DBException(ERR_UNKPACKET.format(name, protocol.name) if name \
                           else ERR_NOPACKET.format(protocol.name))
 
-    def get_id(self, id: object) -> Packet:
+    def get_id(self, iddb: object) -> Packet:
         """Get a packet object by its ID in database."""
         for packet in self.all:
-            if packet[p.id] == id:
+            if packet[p.id] == iddb:
                 return Packet(**packet)
-        raise DBException(ERR_UNKID.format(id))
+        raise DBException(ERR_UNKID.format(iddb))
 
     def add(self, protocol: Protocol, name: str, description: str = None,
             scapy_pkt: str = None, raw_pkt: bytes = None):
@@ -140,27 +136,27 @@ class Packets(Collection):
             raise DBException(ERR_EXIPACKET.format(name, protocol.name))
         packet = Packet(name=name, protocol=protocol.name,
                         description=description, scapy_pkt=scapy_pkt, raw_pkt=raw_pkt)
-        self.__db.packets.insert_one(packet.to_dict())
+        self._db.packets.insert_one(packet.to_dict())
 
     def delete(self, protocol: Protocol, packet: Packet) -> None:
         """Delete an existing packet."""
         self.get(protocol, packet.name) # Will raise if unknown
-        self.__db.packets.delete_one({p.name: packet.name,
+        self._db.packets.delete_one({p.name: packet.name,
                                       p.protocol: protocol.name})
-        
+
 
     @property
     def all(self) -> list:
         """Return the list of packets as JSON."""
-        return [x for x in self.__db.packets_all]
+        return self._db.packets_all
 
     @property
     def all_as_objects(self) -> list:
         """Return the list of packets as Packet objects."""
-        objects = [Packet(**x) for x in self.__db.packets_all]
+        objects = [Packet(**x) for x in self._db.packets_all]
         return sorted(objects, key=lambda x: x.protocol.lower())
 
     @property
     def count(self) -> int:
         """Return the total number of packets."""
-        return self.__db.packets_count
+        return self._db.packets_count

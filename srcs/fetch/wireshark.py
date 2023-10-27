@@ -1,16 +1,16 @@
 # Turn/IP
 # Claire-lex - 2023
-# Interface to search for data in Wireshark dissectors
+# Fetch data in Wireshark dissectors
 # pylint: disable=too-few-public-methods,no-self-use
 
-"""Search for data in Wireshark dissectors."""
+"""Fetch data in Wireshark dissectors."""
 
 from re import search as re_search
 from os.path import join
 # Internal
 from config import wireshark as w
-from db import find, has_common_items, Protocol
-from . import SearchException, get_api_json, search_json, get_code_from_github
+from db import search, has_common_items, Protocol
+from . import FetchException, get_api_json, search_json, get_code_from_github
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -22,7 +22,7 @@ ERR_BADTREE = "Invalid GitHub tree format."
 # Wireshark classes                                                           #
 #-----------------------------------------------------------------------------#
 
-class Dissector(object):
+class Dissector():
     """Object representing data about a dissector."""
     raw = None
 
@@ -55,7 +55,7 @@ class Dissector(object):
                     return names
         return None
 
-class Wireshark(object):
+class Wireshark():
     """Interface to Wireshark dissectors code using GitHub's API."""
 
     def __init__(self):
@@ -65,13 +65,13 @@ class Wireshark(object):
         """Get the dissector corresponding to the protocol."""
         dissectors = self.__get_dissectors_tree()
         if "tree" not in dissectors.keys():
-            raise SearchException(ERR_BADTREE)
+            raise FetchException(ERR_BADTREE)
         results = []
         for entry in dissectors["tree"]:
             if isinstance(entry, dict) and "path" in entry.keys():
                 path = re_search(r"^packet-([^\.]+)\.c$", entry["path"])
                 if path and path.groups():
-                    match = find(path.group(1), protocol.names, threshold=1)
+                    match = search(path.group(1), protocol.names, threshold=1)
                     if match:
                         results.append(Dissector(entry))
         # If multiple dissectors found, we want to check the list of names
@@ -95,6 +95,6 @@ class Wireshark(object):
         dissectors_tree = search_json("name", w.dissectors_folder, "git_url",
                                       epan_tree)
         if not dissectors_tree:
-            raise SearchException("Dissector's tree could not be retrieved.")
+            raise FetchException("Dissector's tree could not be retrieved.")
         # Get the tree corresponding to the SHA
         return get_api_json(dissectors_tree)

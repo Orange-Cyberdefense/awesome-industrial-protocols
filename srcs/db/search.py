@@ -1,9 +1,9 @@
 # Turn/IP
 # Claire-lex - 2023
-# Find functions
+# Search functions
 # pylint: disable=invalid-name
 
-"""Functions to find things in other things."""
+"""Functions to search things in other things."""
 
 from re import sub
 # Internal
@@ -35,44 +35,44 @@ def levenshtein(s: str, t: str) -> int:
                           d[i - 1][j - 1] + cost) # substitution
     return d[m][n]
 
-def format_for_find(value: str) -> str:
+def format_for_search(value: str) -> str:
     """Standardize input to make case and character independent match."""
     if isinstance(value, str):
         return sub('[^0-9a-zA-Z]+', '', value.lower().strip())
     return value
 
-def find(needle: str, haystack: object, threshold: int = LEVENSHTEIN_THRESHOLD) -> list:
-    """Find needle in haystack (a list or a string).
+def search(needle: str, haystack: object, threshold: int = LEVENSHTEIN_THRESHOLD) -> list:
+    """Search for needle in haystack (a list or a string).
 
     The function uses the Levenshtein distance and may return several results.
     """
     results = []
-    needle = format_for_find(needle)
+    needle = format_for_search(needle)
     if isinstance(haystack, str):
-        haystack = format_for_find(haystack)
+        haystack = format_for_search(haystack)
         if levenshtein(needle, haystack) <= threshold:
             results.append(needle)
     elif isinstance(haystack, (list, tuple)):
         for entry in haystack:
-            entry = format_for_find(entry)
+            entry = format_for_search(entry)
             if levenshtein(needle, entry) <= threshold:
                 results.append(entry)
     return results
 
-def exact_find(needle: str, haystack: object) -> list:
+def exact_search(needle: str, haystack: object) -> list:
     """Search for exact case-insensitive match."""
     needle = needle.lower()
     if isinstance(haystack, str):
         haystack = haystack.lower()
     elif isinstance(haystack, (list, tuple)):
         haystack = [x.lower() for x in haystack]
-    return find(needle, haystack, 0)
+    return search(needle, haystack, 0)
 
 def has_common_items(list1: str, list2: str) -> bool:
     """Returns true if at least one item for list1 is also in list2."""
     if not list1 or not list2:
         return False
     for item in list1:
-        if exact_find(item, list2):
+        if exact_search(item, list2):
             return True
     return False

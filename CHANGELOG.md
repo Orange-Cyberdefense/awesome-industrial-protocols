@@ -1,11 +1,26 @@
 Changelog
 =========
 
+## ????-??-??
+
+### Added
+
+- First version of the terminal user interface to view and search protocols
+- New resources for: CAN, HICP, HL7, IEC-104, OPC-DA, OPC-UA, Powerlink, KNX
+- New protocol: SOME/IP, LIS01/02-A2
+
+### Changed
+
+- Option `search` is now `fetch`
+- Option `filter` is now `search`
+- Feature (code) `find` is now `search`
+
 ## 2023-08-01
 
 ### Added
 
 - PR #1: CAN / CAN-FD resources by @bogdzn
+- New resources for: BACnet/IP, DNP3, Modbus, S7, UMAS, Zigbee by @biero-el-corridor
 - New resources for: HICP, Ethernet/IP, OPC-UA
 - Fix filter issues with unknown fields
 - Fix filter issues when printing links and packets

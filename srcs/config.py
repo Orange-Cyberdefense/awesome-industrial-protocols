@@ -9,7 +9,7 @@ Most of the constants are here and can be modified by the user.
 """
 
 from types import SimpleNamespace
-from os import pardir
+from os import pardir, environ
 from os.path import abspath, dirname, join
 
 #-----------------------------------------------------------------------------#
@@ -21,7 +21,7 @@ with open("openai_api_key") as fd:
     key = fd.read().strip()
 OPENAI_API_KEY = key # Insert your OpenAI API key, don't push it.
 
-# Used for searching videos on Youtube
+# Used for fetching videos on Youtube
 with open("google_api_key") as fd:
     key = fd.read().strip()
 GOOGLE_API_KEY = key # Insert your Google API key, don't push it.
@@ -63,11 +63,33 @@ markdown.t_details = "Detailed page"
 # TOOL CONFIGURATION                                                          #
 #-----------------------------------------------------------------------------#
 
+TOOL_TITLE = "Turn/IP (awesome-industrial-protocols)"
 TOOL_DESCRIPTION = "Industrial network protocols browser and more."
 
 # Sensitivity for search engine, relying on the Levenshtein distance.
 # Higher threshold means less sensitivity and less precise matches.
 LEVENSHTEIN_THRESHOLD = 2
+
+#-----------------------------------------------------------------------------#
+# USER INTERFACE CONFIGURATION                                                #
+#-----------------------------------------------------------------------------#
+
+# Avoid delay when pressing ESC to exit
+environ.setdefault('ESCDELAY', '25')
+
+tui = SimpleNamespace()
+tui.min_height = 20 # Arbitrary
+tui.min_width = 100 # Arbitrary
+tui.title_search = "Search"
+tui.title_view = "View"
+tui.title_list_prot = "Protocols"
+tui.title_info_prot = "Details"
+tui.title_info_note = "Notes"
+tui.title_menu = "Menu"
+tui.menu_view = "View"
+tui.menu_edit = "(Edit)"
+tui.menu_quit = "Quit"
+tui.footer_fmt = "{0}/{1} protocols"
 
 #-----------------------------------------------------------------------------#
 # DATABASE MANAGEMENT                                                         #
@@ -80,6 +102,7 @@ mongodb.port = 27017
 mongodb.timeout = 1000
 mongodb.database = "awesome-industrial-protocols"
 mongodb.id = "_id"
+mongodb.obj = "_db"
 
 # Collections
 mongodb.protocols = "protocols"
@@ -138,6 +161,11 @@ protocols.EXTENDED_FIELDS = {
     protocols.discovery: ("Discovery packet", types.PKTLIST)
 }
 protocols.ALL_FIELDS = {**protocols.FIELDS, **protocols.EXTENDED_FIELDS}
+protocols.SEARCHED_FIELDS = [ # Fields to look in when filtering
+    protocols.name, protocols.alias, protocols.port, # Text
+    protocols.nmap, protocols.wireshark, protocols.scapy, # Links
+    protocols.discovery # Packets
+]
 protocols.NAME = lambda x: protocols.ALL_FIELDS[x][0] if x in protocols.ALL_FIELDS else x
 protocols.TYPE = lambda x: protocols.ALL_FIELDS[x][1] if x in protocols.ALL_FIELDS else None
 
@@ -168,7 +196,7 @@ packets.FIELDS = {
 }
 
 #-----------------------------------------------------------------------------#
-# AUTOMATED SEARCH                                                            #
+# AUTOMATED FETCH                                                             #
 #-----------------------------------------------------------------------------#
 
 #--- OpenAI-generated data ---------------------------------------------------#
@@ -195,7 +223,7 @@ wireshark = SimpleNamespace()
 # URL to Wireshark data using Github's REST API
 wireshark.api_epan_folder = "https://api.github.com/repositories/21329550/contents/epan"
 wireshark.dissectors_url = "https://github.com/wireshark/wireshark/blob/master/epan/dissectors/"
-# Search data in Wireshark repository's tree
+# Fetch data in Wireshark repository's tree
 wireshark.dissectors_folder = "dissectors"
 wireshark.regex_dissector_name = r"^packet-([^\.]+)\.c$" # packet-*.c
 wireshark.naming_function = "proto_register_protocol"

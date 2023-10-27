@@ -1,13 +1,13 @@
 # Turn/IP
 # Claire-lex - 2023
 # Protocols and Protocol class
-# pylint: disable=invalid-name,no-member
+# pylint: disable=invalid-name,no-member,arguments-differ
 
 """Classes that represent and handle protocols' info from the database.
 """
 
 from config import protocols as p, types, mongodb
-from . import MongoDB, DBException, Collection, Document, find, exact_find
+from . import MongoDB, DBException, Collection, Document, search, exact_search
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -27,11 +27,9 @@ ERR_BOOLVALUE = "This field only accept 'true' or 'false'"
 
 class Protocol(Document):
     """Class representing a single protocol document."""
-    __db = None
-    name = None
 
     def __init__(self, **kwargs):
-        self.__db = MongoDB()
+        super().__init__(**kwargs)
         for k, v in kwargs.items():
             setattr(self, k, v)
 
@@ -44,21 +42,19 @@ class Protocol(Document):
         self.__fill() # Add mandatory field to the object if missing
         return self
 
-    def get(self, field: str, noraise=False) -> tuple:
+    def get(self, field: str) -> tuple:
         """Get the exact name and value associated to field.
 
         The research is case-insensitive.
 
-        :raises DBException: if the field does not exist except if
-        noraise == True, or if the requested fields matches multiple ones.
+        :raises DBException: if the field does not exist or if the
+        requested fields matches multiple ones.
         """
-        match = find(field, self.fields, threshold=0)
+        match = search(field, self.fields, threshold=0)
         if len(match) == 1:
             return match[0], getattr(self, match[0])
         if len(match) > 1:
             raise DBException(ERR_MULTIMATCH.format(", ".join(match)))
-        if noraise:
-            return None, None
         raise DBException(ERR_UNKFIELD.format(self.name, field)) from None
 
     def set(self, field: str, value: object, replace: bool = False) -> None:
@@ -78,7 +74,7 @@ class Protocol(Document):
         # Store
         document = {"name": self.name}
         newvalue = {field: value}
-        self.__db.protocols.update_one(document, {"$set": newvalue})
+        self._db.protocols.update_one(document, {"$set": newvalue})
         setattr(self, field, value)
         # self.__check()
 
@@ -107,7 +103,8 @@ class Protocol(Document):
         for item in self.fields:
             if exclude_id and item == mongodb.id:
                 continue
-            pdict[item] = getattr(self, item)
+            if item != mongodb.obj:
+                pdict[item] = getattr(self, item)
         return pdict
 
     @property
@@ -147,10 +144,9 @@ class Protocol(Document):
 
 class Protocols(Collection):
     """Interface with database to handle the protocols' collection."""
-    __db = None
 
     def __init__(self):
-        self.__db = MongoDB()
+        super().__init__()
 
     def get(self, protocol_name: str) -> Protocol:
         """Get a protocol by its name. Returns data as a Protocol object.
@@ -168,12 +164,12 @@ class Protocols(Collection):
             return [protocol[p.name]] + alias
 
         match = []
-        # We do that all the time (I know it sucks) to be up to date with db
+        # We extract from the db everytime even if it's heavy to be up to date
         for protocol in self.all:
-            if exact_find(protocol_name, all_names(protocol)):
+            if exact_search(protocol_name, all_names(protocol)):
                 match = [Protocol(**protocol)]
                 break # We found the exact match
-            elif find(protocol_name, all_names(protocol)):
+            if search(protocol_name, all_names(protocol)):
                 match.append(Protocol(**protocol))
         if len(match) == 1:
             return match[0]
@@ -185,17 +181,17 @@ class Protocols(Collection):
     def add(self, protocol: Protocol) -> None:
         """Add a new protocol."""
         try:
-            proto2 = self.get(protocol.name)
+            proto = self.get(protocol.name)
         except DBException:
             pass # The protocol does not exist, we can continue
         else:
-            raise DBException(ERR_EXIPROTO.format(proto2.name))
-        self.__db.protocols.insert_one(protocol.to_dict())
+            raise DBException(ERR_EXIPROTO.format(proto.name))
+        self._db.protocols.insert_one(protocol.to_dict())
 
     def delete(self, protocol: Protocol) -> None:
         """Delete an existing protocol."""
         self.get(protocol.name) # Will raise if unknown
-        self.__db.protocols.delete_one({p.name: protocol.name})
+        self._db.protocols.delete_one({p.name: protocol.name})
 
     def check(self):
         """Check generator."""
@@ -208,20 +204,24 @@ class Protocols(Collection):
     @property
     def all(self) -> list:
         """Return the list of protocols as JSON."""
-        return [x for x in self.__db.protocols_all]
-    
+        return self._db.protocols_all
+
     @property
     def all_as_objects(self) -> list:
-        """Return the list of protocols as Protocol objects."""
-        objects = [Protocol(**x) for x in self.__db.protocols_all]
+        """Return the list of protocols as Protocol objects.
+
+        We choose to rebuild it everytime even though it's slower because
+        we need it to be up to date with the database.
+        """
+        objects = [Protocol(**x) for x in self._db.protocols_all]
         return sorted(objects, key=lambda x: x.name.lower())
 
     @property
     def list(self) -> list:
         """Return the list of protocol names."""
-        return [x["name"] for x in self.__db.protocols_all]
+        return [x["name"] for x in self._db.protocols_all]
 
     @property
     def count(self) -> int:
         """Return the total number of protocols."""
-        return self.__db.protocols_count
+        return self._db.protocols_count

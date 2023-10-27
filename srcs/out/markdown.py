@@ -22,7 +22,7 @@ H1 = lambda x: "# {0}".format(x)
 H2 = lambda x: "## {0}".format(x)
 H3 = lambda x: "### {0}".format(x)
 
-LINK_FORMAT = lambda x: sub('[^0-9a-zA-Z\-]+', '', x.lower().strip().replace(" ", "-"))
+LINK_FORMAT = lambda x: sub(r'[^0-9a-zA-Z\-]+', '', x.lower().strip().replace(" ", "-"))
 
 INTLINK = lambda x: "[{0}](#{1})".format(x, LINK_FORMAT(x))
 IMG = lambda x, y: "![{0}]({1})".format(x, y)
@@ -42,12 +42,12 @@ BORDER_TABLE = "|---|---|"
 
 class MDException(Exception):
     """Exception class for Markdown generated-related errors."""
-    pass
 
-class Markdown(object):
+class Markdown():
     """Class to convert data to Markdown."""
     alist_template = None
     alist_file = None
+    packets = None
     ppage_template = None
     ppage_file = None
     protocols = None
@@ -195,7 +195,7 @@ class Markdown(object):
                 value += ["| | Raw: `{0}`".format(pkt.raw_pkt)]
             content.append(TABLE(key, "\n".join(value)))
         return content
-    
+
     def __f_name(self, protocol: Protocol) -> str:
         """Return name as a head title."""
         return H1(protocol.name)

@@ -1,9 +1,9 @@
 # Turn/IP
 # Claire-lex - 2023
-# Interface to search for data in Scapy layers
+# Interface to fetch data from various sources.
 # pylint: disable=redefined-builtin
 
-"""Functions for data search using JSON APIs (GitHub)."""
+"""Functions to fetch data using JSON APIs (GitHub)."""
 
 from base64 import b64decode
 from json import loads
@@ -20,12 +20,11 @@ ERR_APIJSON = "Could not extract JSON."
 ERR_DLCODE = "Code could not be retrieved from API ({0})."
 
 #-----------------------------------------------------------------------------#
-# Search helpers                                                              #
+# Fetch helpers                                                              #
 #-----------------------------------------------------------------------------#
 
-class SearchException(Exception):
-    """Exception class for automated search-related errors."""
-    pass
+class FetchException(Exception):
+    """Exception class for automated fetch-related errors."""
 
 #--- Extract data from JSON APIs ---------------------------------------------#
 
@@ -36,9 +35,9 @@ def get_api_json(url: str) -> list:
         json = loads(api.content)
         return json
     except ConnectionError:
-        raise SearchException(ERR_APICONN) from None
+        raise FetchException(ERR_APICONN) from None
     except JSONDecodeError:
-        raise SearchException(ERR_APIJSON) from None
+        raise FetchException(ERR_APIJSON) from None
     return None
 
 def search_json(searchkey: str, searchvalue: str, requestedkey: str, listdict:
@@ -61,6 +60,6 @@ def get_code_from_github(api_url: str) -> str:
     """Retrieve a component's complete code from GitHub API."""
     component = get_api_json(api_url)
     if "content" not in component.keys():
-        raise SearchException(ERR_DLCODE.format(api_url))
+        raise FetchException(ERR_DLCODE.format(api_url))
     content = b64decode(component["content"]).decode('utf-8')
     return content

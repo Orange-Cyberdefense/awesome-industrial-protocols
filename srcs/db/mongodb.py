@@ -1,7 +1,7 @@
 # Turn/IP
 # Claire-lex - 2023
 # MongoDB database manager
-# pylint: disable=invalid-name,import-error
+# pylint: disable=invalid-name,import-error,unsubscriptable-object
 
 """Interface with MongoDB database
 
@@ -26,7 +26,7 @@ from config import mongodb
 # Errors
 ERR_NODB = "Database {0} not found, please import it with 'python turn-ip.py "\
            "--mongoimport'"
-ERR_NOSRV = "Could not connect to MongoDB server {0}:{1}."
+ERR_NOSRV = "Could not connect to MongoDB server {0}:{1} (sudo systemctl start mongodb)."
 ERR_DBCONNECT = "Connection to database failed."
 ERR_UNKFIELD = "Field '{0}' not found."
 
@@ -36,8 +36,15 @@ ERR_UNKFIELD = "Field '{0}' not found."
 
 class Document(ABC):
     """Abstract class for document items."""
-    __db = None
+    _db = None
+    _id = None
+    fields_dict = None
+    name = None
 
+    def __init__(self, **kwargs):
+        self._db = MongoDB()
+        self._id = kwargs[mongodb.id] if mongodb.id in kwargs else None
+    
     def get(self, field: str) -> str:
         """Return value associated to field."""
         field = field.lower()
@@ -47,29 +54,44 @@ class Document(ABC):
 
     @abstractmethod
     def set(self, field: str, value: str) -> None:
+        """Set a value to a field."""
         raise NotImplementedError("Document: set")
 
     @abstractmethod
     def to_dict(self, exclude_id: bool = True) -> dict:
         """Convert document's content to dictionary."""
         raise NotImplementedError("Document: to_dict")
-    
+
     @abstractmethod
     def check(self) -> None:
+        """Check that the content of the Document is valid."""
         raise NotImplementedError("Document: check")
 
 class Collection(ABC):
     """Abstract clas for database collections."""
-    __db = None
+    _db = None
+
+    def __init__(self):
+        self._db = MongoDB()
 
     @abstractmethod
     def get(self, field: str) -> Document:
+        """Get the value associated to the field."""
         raise NotImplementedError("Collection: get")
 
     @abstractmethod
     def add(self, **kwargs) -> None:
+        """Add an entry to the collection."""
         raise NotImplementedError("Collection: add")
-    
+
+    def has(self, content) -> bool:
+        """Return true if this content already exists."""
+        try:
+            self.get(content)
+        except DBException:
+            return False
+        return True
+
 #-----------------------------------------------------------------------------#
 # MongoDB classes                                                             #
 #-----------------------------------------------------------------------------#
@@ -77,9 +99,8 @@ class Collection(ABC):
 # Error handling
 class DBException(Exception):
     """Exception class for access to database-related errors."""
-    pass
 
-class MongoDB(object):
+class MongoDB():
     """MongoDB manager as a singleton class."""
     client = None
     db = None
@@ -121,7 +142,7 @@ class MongoDB(object):
     @property
     def protocols_all(self) -> list:
         """Return all protocols in collection."""
-        return [x for x in self.db[mongodb.protocols].find()]
+        return self.db[mongodb.protocols].find()
 
     @property
     def links(self):
@@ -136,7 +157,7 @@ class MongoDB(object):
     @property
     def links_all(self) -> list:
         """Return all links in collection."""
-        return [x for x in self.db[mongodb.links].find()]
+        return self.db[mongodb.links].find()
 
     @property
     def packets(self):
@@ -151,8 +172,8 @@ class MongoDB(object):
     @property
     def packets_all(self):
         """Return all packets in collection."""
-        return [x for x in self.db[mongodb.packets].find()]
-    
+        return self.db[mongodb.packets].find()
+
     #-------------------------------------------------------------------------#
     # Private                                                                 #
     #-------------------------------------------------------------------------#

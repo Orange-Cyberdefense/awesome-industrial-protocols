@@ -1,9 +1,10 @@
 # Turn/IP
 # Claire-lex - 2023
-# Interface to search for protocols-related videos on Youtube
+# Interface to fetch protocols-related videos on Youtube
 # pylint: disable=invalid-name,import-error,too-few-public-methods
+# pylint: disable=no-member
 
-"""Search for protocols-related videos on Youtube."""
+"""Fetch protocols-related videos on Youtube."""
 
 from importlib.util import find_spec
 try:
@@ -14,7 +15,7 @@ except ModuleNotFoundError as mnfe:
 # Internal
 from config import GOOGLE_API_KEY, youtube as y
 from db import Protocol
-from . import SearchException
+from . import FetchException
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -28,7 +29,7 @@ ERR_BADRET = "Invalid format for result."
 # Youtube classes                                                             #
 #-----------------------------------------------------------------------------#
 
-class Video(object):
+class Video():
     """Object representing a Youtube video."""
     raw = None
     title = None
@@ -51,7 +52,7 @@ class Video(object):
             self.channelId = raw["snippet"]["channelId"]
             self.channel = y.selected_channels[self.channelId]
         except KeyError:
-            raise SearchException(ERR_BADRET)
+            raise FetchException(ERR_BADRET)
 
     def __str__(self):
         return "{0} @ {1} ({2})".format(
@@ -62,30 +63,31 @@ class Video(object):
         If we don't do that the description we have is truncated.
         """
         if not youtube_api:
-            raise SearchException(ERR_YTAPI)
+            raise FetchException(ERR_YTAPI)
         description = youtube_api.videos().list(
             id=self.raw["id"]["videoId"], part="snippet"
         ).execute()
         return description["items"][0]["snippet"]["description"]
 
-class Youtube(object):
+class Youtube():
     """Interface to Google API to retrieve Youtube videos."""
     youtube_api = None
 
     def __init__(self):
         # It will raise an exception (not caught this time) if not installed.
         if not find_spec('googleapiclient'):
-            raise SearchException(ERR_GAPI)
+            raise FetchException(ERR_GAPI)
         self.youtube_api = build(y.api_service_name, y.api_version,
                                  developerKey=GOOGLE_API_KEY)
 
     def get_videos(self, protocol: Protocol) -> list:
-        """Get videos about a protocol from selected Youtube channels.
+        """Fetch videos about a protocol from selected Youtube channels.
 
         The list of channels can be modified from config.py.
         """
         candidates = []
         found_titles = []
+        # Refactor to remove pylint too-many-nested-block
         try:
             for channel in y.selected_channels:
                 for name in protocol.names:
@@ -98,11 +100,11 @@ class Youtube(object):
                         if item["snippet"]["title"] not in found_titles:
                             try:
                                 video = Video(item, self.youtube_api)
-                            except SearchException:
+                            except FetchException:
                                 pass # Video was invalid
                             else:
                                 candidates.append(video)
                                 found_titles.append(item["snippet"]["title"])
         except HttpError as he:
-            raise SearchException(str(he)) from None
+            raise FetchException(str(he)) from None
         return sorted(set(candidates), key=lambda x: x.year)

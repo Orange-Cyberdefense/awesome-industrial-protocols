@@ -22,7 +22,7 @@ except ModuleNotFoundError:
     pass
 # Internal
 from config import ai, protocols as p
-from . import SearchException
+from . import FetchException
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -36,12 +36,12 @@ ERR_NOPROTO = "AI does not recognize {0} as a protocol (message: {1})."
 # AI class                                                                    #
 #-----------------------------------------------------------------------------#
 
-class AI(object):
+class AI():
     """Handle requests to OpenAI to extract data for protocols."""
     def __init__(self):
         # It will raise an exception (not caught this time) if not installed.
         if not find_spec('openai'):
-            raise SearchException(ERR_OAPI)
+            raise FetchException(ERR_OAPI)
         openai.api_key = ai.key
 
     #--- Public --------------------------------------------------------------#
@@ -51,9 +51,9 @@ class AI(object):
         try:
             return self.__openai_request(request)
         except AuthenticationError:
-            raise SearchException(ERR_AIAUTH) from None
+            raise FetchException(ERR_AIAUTH) from None
         except RateLimitError as rle:
-            raise SearchException(str(rle)) from None
+            raise FetchException(str(rle)) from None
 
     def protocol_generator(self, name: str) -> str:
         """Sequence a list of questions about a protocol to request."""
@@ -68,7 +68,7 @@ class AI(object):
         question = ai.yes_no_question.format(name, ai.is_protocol)
         response = self.request(question)
         if not response.lower().startswith("yes"):
-            raise SearchException(ERR_NOPROTO.format(name, response))
+            raise FetchException(ERR_NOPROTO.format(name, response))
         # Questions where answer should be yes or no
         for attribute, question in q_yes_no.items():
             question = ai.yes_no_question.format(name, question)
