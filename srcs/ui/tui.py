@@ -94,8 +94,8 @@ class TUI(UI):
     def __init_menu(self):
         """Prepare the main menu with appropriate actions."""
         self.menu = {
-            t.menu_view: self.__view_protocol,
-            t.menu_edit: self.nop,
+            # t.menu_view: self.__view_protocol,
+            # t.menu_edit: self.nop,
             t.menu_quit: self.__end_loop
         }
 
@@ -140,7 +140,7 @@ class TUI(UI):
         """Switch to protocol view according to protocol under cursor."""
         if self.cursors[Focus.MAIN_LIST] < len(self.filtered_list):
             self.protocol = self.filtered_list[self.cursors[Focus.MAIN_LIST]]
-            self.__run_screen(Screen.PROT)
+            # self.__run_screen(Screen.PROT)
 
     #--- Events --------------------------------------------------------------#
 

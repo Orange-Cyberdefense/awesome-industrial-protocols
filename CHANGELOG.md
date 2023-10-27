@@ -5,7 +5,7 @@ Changelog
 
 ### Added
 
-- First version of the terminal user interface to view protocols
+- First version of the terminal user interface to view and search protocols
 - New resources for: CAN, HICP, HL7, IEC-104, OPC-DA, OPC-UA, Powerlink, KNX
 - New protocol: SOME/IP, LIS01/02-A2
 
