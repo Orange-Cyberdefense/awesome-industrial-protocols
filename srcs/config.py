@@ -101,6 +101,7 @@ mongodb.host = "127.0.0.1"
 mongodb.port = 27017
 mongodb.timeout = 1000
 mongodb.database = "awesome-industrial-protocols"
+mongodb.test_database = "test-aip"
 mongodb.id = "_id"
 mongodb.obj = "_db"
 

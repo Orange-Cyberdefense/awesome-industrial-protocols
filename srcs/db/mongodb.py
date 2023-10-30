@@ -102,26 +102,23 @@ class DBException(Exception):
 
 class MongoDB():
     """MongoDB manager as a singleton class."""
+    _instance = None
     client = None
     db = None
+    host = None
+    port = 0
+    timeout = 0
+    database = None
 
     # Singleton stuff
-    def __new__(cls):
-        if not hasattr(cls, 'instance'):
-            cls.instance = super(MongoDB, cls).__new__(cls)
-            # Setting only one MongoDB Client
-            try:
-                cls.instance.client = MongoClient(mongodb.host, mongodb.port,
-                                                  serverSelectionTimeoutMS=mongodb.timeout)
-                databases = cls.instance.client.list_database_names()
-            except ServerSelectionTimeoutError:
-                raise DBException(ERR_NOSRV.format(mongodb.host, mongodb.port)) from None
-            if mongodb.database not in databases:
-                raise DBException(ERR_NODB.format(mongodb.database))
-            cls.instance.db = cls.instance.client[mongodb.database]
-        return cls.instance
+    def __new__(cls, *args, **kwargs):
+        if not isinstance(cls._instance, cls):
+            cls._instance = super(MongoDB, cls).__new__(cls)
+            # We only want to init the database once.
+            cls._instance.__init_db(*args, **kwargs)
+        return cls._instance
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         # We want to check that the connection is OK every time.
         self.__check_connection()
 
@@ -178,9 +175,38 @@ class MongoDB():
     # Private                                                                 #
     #-------------------------------------------------------------------------#
 
+    def __init_db(self, host: str = None, port: int = 0, timeout: int = 0,
+                database: str = None):
+        """Initialize database information, only called once.
+        We set values that are not default ones in unittests.
+        """
+        self.host = host if host else mongodb.host
+        self.port = port if port else mongodb.port
+        self.timeout = timeout if timeout else mongodb.timeout
+        self.database = database if database else mongodb.database
+        try:
+            self.client = MongoClient(self.host,
+                                      self.port,
+                                      serverSelectionTimeoutMS=self.timeout)
+            databases = self.client.list_database_names()
+        except ServerSelectionTimeoutError:
+            raise DBException(ERR_NOSRV.format(self.host, self.port)) from None
+        if self.database not in databases:
+            raise DBException(ERR_NODB.format(self.database))
+        self.db = self.client[mongodb.database]
+
     def __check_connection(self):
         """Check that we are connected to the database server."""
         try:
             self.client.admin.command('ping')
         except ConnectionFailure:
             raise DBException(ERR_DBCONNECT) from None
+
+    #-------------------------------------------------------------------------#
+    # Public                                                                  #
+    #-------------------------------------------------------------------------#
+
+    @classmethod
+    def reset(cls):
+        cls._instance = None
+        
