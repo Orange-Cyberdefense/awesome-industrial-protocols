@@ -32,15 +32,9 @@ class Protocol(Document):
         super().__init__(**kwargs)
         for k, v in kwargs.items():
             setattr(self, k, v)
+        self.__fill()
 
     #--- Public --------------------------------------------------------------#
-
-    def create(self, **kwargs):
-        """Create a new protocol object."""
-        for k, v in kwargs.items():
-            setattr(self, k, v)
-        self.__fill() # Add mandatory field to the object if missing
-        return self
 
     def get(self, field: str) -> tuple:
         """Get the exact name and value associated to field.

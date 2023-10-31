@@ -330,8 +330,10 @@ class CLI(UI):
             pass
         if self.__confirm(MSG_CONFIRM_ADD_LINK.format(url), self.options.force):
             try:
-                link = self.links.add(name, url, description if description else
-                                      "", type if type else links.DEFAULT_TYPE)
+                description = description if description else ""
+                type = type if type else links.DEFAULT_TYPE
+                link = self.links.add(Link(name=name, url=url,
+                                           description=description, type=type))
                 return link
             except DBException as dbe:
                 ERROR(str(dbe), will_exit=True)

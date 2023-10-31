@@ -23,6 +23,7 @@ TIMEOUT = 2
 
 ERR_LINKTYPE = "Invalid link type, choose between: {0}."
 ERR_EMPTY = "A link must have at least a name and a url."
+ERR_NOTSTR = "Argument must be a string."
 ERR_BADURL = "URL '{0}' cannot be accessed."
 ERR_HTTP = "URL '{0}' returned error: {1}."
 ERR_UNKURL = "Link '{0}' not found."
@@ -139,6 +140,8 @@ class Links(Collection):
     def get(self, url: str, multimatch: bool = False) -> Link:
         """Get a link object by its URL."""
         match = []
+        if not isinstance(url, str):
+            raise DBException(ERR_NOTSTR)
         for link in self.all_as_objects:
             if search(Link.to_url(url), link.url, threshold=0):
                 match.append(link)
@@ -161,16 +164,14 @@ class Links(Collection):
                 return Link(**link)
         raise DBException(ERR_UNKID.format(iddb))
 
-    def add(self, name: str, url: str, description: str,
-            type: str = l.DEFAULT_TYPE) -> Link:
+    def add(self, link: Link) -> Link:
         """Add a link to link collection."""
         try:
-            self.get(url)
+            self.get(link.url)
         except DBException:
             pass # The link does not exist, we can continue
         else:
-            raise DBException(ERR_EXIURL.format(url))
-        link = Link(name=name, url=url, description=description, type=type)
+            raise DBException(ERR_EXIURL.format(link.url))
         # Check if link is valid and exists before inserting it to DB
         Link.check_url(link.url) # Will raise exception if invalid
         self._db.links.insert_one(link.to_dict())

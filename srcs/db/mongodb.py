@@ -122,6 +122,10 @@ class MongoDB():
         # We want to check that the connection is OK every time.
         self.__check_connection()
 
+    @classmethod
+    def reset(cls):
+        cls._instance = None
+
     #-------------------------------------------------------------------------#
     # Properties                                                              #
     #-------------------------------------------------------------------------#
@@ -193,7 +197,7 @@ class MongoDB():
             raise DBException(ERR_NOSRV.format(self.host, self.port)) from None
         if self.database not in databases:
             raise DBException(ERR_NODB.format(self.database))
-        self.db = self.client[mongodb.database]
+        self.db = self.client[self.database]
 
     def __check_connection(self):
         """Check that we are connected to the database server."""
@@ -201,12 +205,3 @@ class MongoDB():
             self.client.admin.command('ping')
         except ConnectionFailure:
             raise DBException(ERR_DBCONNECT) from None
-
-    #-------------------------------------------------------------------------#
-    # Public                                                                  #
-    #-------------------------------------------------------------------------#
-
-    @classmethod
-    def reset(cls):
-        cls._instance = None
-        

@@ -92,8 +92,7 @@ class UI():
 
         Used by -A (CLI) and TODO (TUI).
         """
-        protocol = Protocol().create(name=protocol)
         try:
-            self.protocols.add(protocol)
+            self.protocols.add(Protocol(name=protocol))
         except DBException as dbe:
             raise UIError(dbe) from None
