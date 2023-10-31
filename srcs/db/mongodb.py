@@ -84,6 +84,11 @@ class Collection(ABC):
         """Add an entry to the collection."""
         raise NotImplementedError("Collection: add")
 
+    @abstractmethod
+    def delete(self, **kwargs) -> None:
+        """Delete an entry from the collection."""
+        raise NotImplementedError("Collection: delete")
+
     def has(self, content) -> bool:
         """Return true if this content already exists."""
         try:

@@ -389,7 +389,6 @@ class CLI(UI):
         """-AP / --add-packet"""
         if self.options.add_packet:
             protocol, name = self.options.add_packet
-        protocol = self.__get_protocol(protocol)
         try:
             # packets.add checks that too but we need to do that before confirmation
             packet = self.packets.get(protocol, name)
@@ -399,7 +398,10 @@ class CLI(UI):
         if self.__confirm(MSG_CONFIRM_ADD_PACKET.format(name, protocol),
                           self.options.force):
             try:
-                self.packets.add(protocol, name, description, scapy_pkt, raw_pkt)
+                protocol = self.__get_protocol(protocol)
+                self.packets.add(Packet(protocol=protocol.name, name=name,
+                                        description=description,
+                                        scapy_pkt=scapy_pkt, raw_pkt=raw_pkt))
             except DBException as dbe:
                 ERROR(str(dbe), will_exit=True)
 
@@ -436,9 +438,9 @@ class CLI(UI):
     def __cmd_delete_packet(self):
         """-DP / --delete-packet"""
         protocol, name = self.options.delete_packet
-        protocol = self.__get_protocol(protocol, noadd=True)
         try:
-            packet = self.packets.get(protocol, name)
+            protocol = self.__get_protocol(protocol, noadd=True)
+            packet = self.packets.get(protocol.name, name)
         except DBException as dbe:
             ERROR(str(dbe), will_exit=True)
         if self.__confirm(MSG_CONFIRM_DELETE_PACKET.format(packet.name,
