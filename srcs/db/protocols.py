@@ -7,7 +7,8 @@
 """
 
 from config import protocols as p, types, mongodb
-from . import MongoDB, DBException, Collection, Document, search, exact_search
+from . import MongoDB, DBException, Collection, Document
+from . import search, exact_search
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -18,6 +19,7 @@ ERR_UNKPROTO = "Protocol '{0}' not found."
 ERR_EXIPROTO = "Protocol '{0}' already exists."
 ERR_UNKFIELD = "Protocol '{0}' has no field '{1}'."
 ERR_EXIVALUE = "Field '{0}' already contains this value."
+ERR_INVVALUE = "Field '{0}' does not accept Documents."
 ERR_MULTIMATCH = "Multiple match found, please choose between {0}."
 ERR_BOOLVALUE = "This field only accept 'true' or 'false'"
 
@@ -56,6 +58,8 @@ class Protocol(Document):
         field, oldvalue = self.get(field)
         # Different behavior if linklist
         if p.TYPE(field) in (types.LINKLIST, types.LIST, types.PKTLIST):
+            if isinstance(value, Document): # Link or Packet
+                value = value._id
             if not replace and oldvalue: # We append
                 oldvalue = [oldvalue] if not isinstance(oldvalue, list) else oldvalue
                 if value not in oldvalue:
@@ -65,12 +69,13 @@ class Protocol(Document):
                     raise DBException(ERR_EXIVALUE.format(p.NAME(field)))
             else:
                 value = value if isinstance(value, list) else [value]
+        if isinstance(value, Document): # Link or Packet
+            raise DBException(ERR_INVVALUE.format(p.NAME(field)))
         # Store
         document = {"name": self.name}
         newvalue = {field: value}
         self._db.protocols.update_one(document, {"$set": newvalue})
         setattr(self, field, value)
-        # self.__check()
 
     def add(self, field: str, value: object) -> None:
         """Add a new field to protocol."""
@@ -89,7 +94,12 @@ class Protocol(Document):
 
     def check(self):
         """Check visitor."""
-        self.__check()
+        # Check that all mandatory fields are set.
+        for attr in p.FIELDS:
+            try:
+                getattr(self, attr)
+            except AttributeError:
+                raise DBException(ERR_MANDFIELD.format(attr, self.name)) from None
 
     def to_dict(self, exclude_id: bool = True) -> dict:
         """Convert protocol object's content to dictionary."""
@@ -120,17 +130,7 @@ class Protocol(Document):
                 getattr(self, attr)
             except AttributeError:
                 setattr(self, attr, "")
-        self.__check()
-
-    #--- Private -------------------------------------------------------------#
-
-    def __check(self):
-        """Check that all mandatory fields are set for protocol objects."""
-        for attr in p.FIELDS:
-            try:
-                getattr(self, attr)
-            except AttributeError:
-                raise DBException(ERR_MANDFIELD.format(attr, self.name)) from None
+        self.check()
 
 #-----------------------------------------------------------------------------#
 # Protocols class                                                             #
@@ -149,22 +149,14 @@ class Protocols(Collection):
 
         :raises DBException: If the protocol does not exist.
         """
-        def all_names(protocol: dict) -> list:
-            """Return all the names (regular name and aliases) for a protocol."""
-            alias = []
-            if p.alias in protocol.keys():
-                alias = protocol[p.alias] if isinstance(protocol[p.alias], list) \
-                        else [protocol[p.alias]]
-            return [protocol[p.name]] + alias
-
         match = []
         # We extract from the db everytime even if it's heavy to be up to date
-        for protocol in self.all:
-            if exact_search(protocol_name, all_names(protocol)):
-                match = [Protocol(**protocol)]
+        for protocol in self.all_as_objects:
+            if exact_search(protocol_name, protocol.names):
+                match = [protocol]
                 break # We found the exact match
-            if search(protocol_name, all_names(protocol)):
-                match.append(Protocol(**protocol))
+            if search(protocol_name, protocol.names):
+                match.append(protocol)
         if len(match) == 1:
             return match[0]
         if len(match) > 1:
@@ -186,14 +178,6 @@ class Protocols(Collection):
         """Delete an existing protocol."""
         self.get(protocol.name) # Will raise if unknown
         self._db.protocols.delete_one({p.name: protocol.name})
-
-    def check(self):
-        """Check generator."""
-        for protocol in self.all_as_objects:
-            try:
-                protocol.check()
-            except DBException as dbe:
-                yield str(dbe)
 
     @property
     def all(self) -> list:

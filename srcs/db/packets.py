@@ -8,7 +8,8 @@
 """
 
 from config import packets as p, mongodb
-from . import MongoDB, DBException, Collection, Document, Protocol, search
+from . import MongoDB, DBException, Collection, Document, Protocols, Protocol
+from . import search
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -96,9 +97,11 @@ class Packet(Document):
 
 class Packets(Collection):
     """Interface with database to handle the packets' collection."""
+    protocols = None
 
     def __init__(self):
         super().__init__()
+        self.protocols = Protocols()
 
     def get(self, protocol: str, name: str = None) -> object:
         """Get a Packet object by its name and protocol.
@@ -127,6 +130,10 @@ class Packets(Collection):
 
     def add(self, packet: Packet):
         """Add a packet to the collection."""
+        # Does the protocol exist? will raise if not
+        protocol = self.protocols.get(packet.protocol)
+        # Otherwise the protocol name is replaced with the main one
+        packet.protocol = protocol.name
         try:
             self.get(packet.protocol, packet.name)
         except DBException:

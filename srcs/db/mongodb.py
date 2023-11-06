@@ -45,8 +45,8 @@ class Document(ABC):
         self._db = MongoDB()
         self._id = kwargs[mongodb.id] if mongodb.id in kwargs else None
     
-    def get(self, field: str) -> str:
-        """Return value associated to field."""
+    def get(self, field: str) -> tuple:
+        """Return value associated to field with format (key, value)."""
         field = field.lower()
         if field not in self.fields_dict.keys():
             raise DBException(ERR_UNKFIELD.format(field))
@@ -97,6 +97,20 @@ class Collection(ABC):
             return False
         return True
 
+    def check(self) -> None:
+        """Check that the content of the Collection is valid."""
+        print("UNLAPIN")
+        for obj in self.all_as_objects:
+            try:
+                obj.check()
+            except DBException as dbe:
+                yield str(dbe)
+
+    @property
+    @abstractmethod
+    def all_as_objects(self):
+        raise NotImplementedError("Collection: all_as_objects")
+        
 #-----------------------------------------------------------------------------#
 # MongoDB classes                                                             #
 #-----------------------------------------------------------------------------#

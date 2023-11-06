@@ -244,7 +244,10 @@ class CLI(UI):
         if not self.__confirm(MSG_CONFIRM_ADD_PROTO.format(protocol),
                               self.options.force):
             return False
-        self.add(protocol)
+        try:
+            self.protocols.add(Protocol(name=protocol))
+        except DBException as dbe:
+            raise UIError(dbe) from None
         self.__cmd_read(protocol)
         return True
 

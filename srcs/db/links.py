@@ -184,14 +184,6 @@ class Links(Collection):
         self.get(link.url) # Will raise if unknown
         self._db.links.delete_one({l.url: link.url})
 
-    def check(self):
-        """Check generator."""
-        for link in self.all_as_objects:
-            try:
-                link.check()
-            except DBException as dbe:
-                yield str(dbe)
-
     @property
     def all(self) -> list:
         """Return the list of links as JSON."""

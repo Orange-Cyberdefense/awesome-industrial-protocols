@@ -86,13 +86,3 @@ class UI():
             for k, v in match:
                 print(name, k, v)
         return sdict
-
-    def add(self, protocol: str) -> None:
-        """Add protocol to the list of protocols.
-
-        Used by -A (CLI) and TODO (TUI).
-        """
-        try:
-            self.protocols.add(Protocol(name=protocol))
-        except DBException as dbe:
-            raise UIError(dbe) from None
