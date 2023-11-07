@@ -9,7 +9,7 @@
 
 from config import packets as p, mongodb
 from . import MongoDB, DBException, Collection, Document, Protocols, Protocol
-from . import search
+from . import search, exact_search
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -114,10 +114,12 @@ class Packets(Collection):
             if search(protocol, packet.protocol):
                 if not name:
                     match.append(packet)
+                elif exact_search(name, packet.name):
+                    return packet # Exact match
                 elif search(name, packet.name):
-                    return packet
+                    match.append(packet)
         if match:
-            return match
+            return "".join(match) if len(match) == 1 else match
         raise DBException(ERR_UNKPACKET.format(name, protocol) if name \
                           else ERR_NOPACKET.format(protocol))
 

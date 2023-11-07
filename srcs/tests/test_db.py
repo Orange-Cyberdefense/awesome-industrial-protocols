@@ -39,12 +39,15 @@ TEST_COLL_LINKS = (
 LINKS = [x["name"] for x in TEST_COLL_LINKS]
 
 TEST_COLL_PACKETS = (
-    {"protocol": PROTOCOLS[0], "name": "ANicePacket0",
-     "description": "ANiceDescription0", "scapy_pkt": "A()/Nice()/Pkt0()",
-     "raw_pkt": "0xANicePacket0"},
-    {"protocol": PROTOCOLS[1], "name": "ANicePacket1",
-     "description": "ANiceDescription1", "scapy_pkt": "A()/Nice()/Pkt1()",
-     "raw_pkt": "0xANicePacket1"},
+    {"protocol": PROTOCOLS[0], "name": "Seagull",
+     "description": "Noisy", "scapy_pkt": "Seagull()",
+     "raw_pkt": "0xAMOI"},
+    {"protocol": PROTOCOLS[0], "name": "Owl",
+     "description": "Surprised", "scapy_pkt": "Owl()",
+     "raw_pkt": "0xHOU"},
+    {"protocol": PROTOCOLS[0], "name": "Raven",
+     "description": "Dark", "scapy_pkt": "Raven()",
+     "raw_pkt": "0xCROA"},
 )
 PACKETS = [x["name"] for x in TEST_COLL_PACKETS]
 
@@ -299,12 +302,40 @@ class Test04DBProtocolDocument(DBTest):
         self.assertEqual(protocol.get("discovery"), ("discovery", [packet._id]))
     def test_0414_setprotocol_nopkt(self):
         """We cannot set a link to a field that is not a link list."""
-        populate(self.packets)
         protocol = self.protocols.get(PROTOCOLS[0])
         packet = self.packets.get(PROTOCOLS[0], PACKETS[0])
         with self.assertRaises(DBException):
             protocol.set("port", packet)
-    # A new packet is appended to existing values in a packet list.
-    # Content can be replaced in packet list fields if replace=True.
-    # We cannot add a packet to a link list
-    # We cannot add a link to a packet list
+    def test_0415_setprotocol_pktlist(self):
+        """A new packet is appended to existing values in a packet list."""
+        protocol = self.protocols.get(PROTOCOLS[0])
+        packet0 = self.packets.get(PROTOCOLS[0], PACKETS[0])
+        packet = self.packets.get(PROTOCOLS[0], PACKETS[1])
+        protocol.set("discovery", packet)
+        self.assertEqual(protocol.get("discovery"),
+                         ("discovery", [packet0._id, packet._id]))
+    def test_0417_setprotocol_pktlistrep(self):
+        """Content can be replaced in packet list fields if replace=True."""
+        protocol = self.protocols.get(PROTOCOLS[0])
+        packet = self.packets.get(PROTOCOLS[0], PACKETS[2])
+        protocol.set("discovery", packet, replace=True)
+        self.assertEqual(protocol.get("discovery"),
+                         ("discovery", [packet._id]))
+    def test_0418_setprotocol_pktlistdup(self):
+        """We cannot add a packet that already exist in a protocol."""
+        protocol = self.protocols.get(PROTOCOLS[0])
+        packet = self.packets.get(PROTOCOLS[0], PACKETS[2])
+        with self.assertRaises(DBException):
+            protocol.set("discovery", packet)
+    def test_0419_setprotocol_nopktlink(self):
+        """We cannot add a packet to a link list."""
+        protocol = self.protocols.get(PROTOCOLS[1])
+        packet = self.packets.get(PROTOCOLS[0], PACKETS[0])
+        with self.assertRaises(DBException):
+            protocol.set("nmap", packet)
+    def test_0420_setprotocol_nolinkpkt(self):
+        """We cannot add a link to a packet list."""
+        protocol = self.protocols.get(PROTOCOLS[1])
+        link = self.links.get(LINKS[0])
+        with self.assertRaises(DBException):
+            protocol.set("nmap", link)
