@@ -163,14 +163,14 @@ class Test03DBProtocolsCollection(DBTest):
         """All protocols can be returned as JSON."""
         self.assertEqual(self.protocols.all[0]["name"], PROTOCOLS[0])
     def test_0304_getprotocols_all(self):
-        """All protocols can be returned as JSON."""
+        """All protocols can be returned as objects."""
         self.assertTrue(isinstance(self.protocols.all_as_objects[0], Protocol))
         self.assertEqual(self.protocols.all_as_objects[0].name, PROTOCOLS[0])
     def test_0305_getprotocols_list(self):
-        """All protocols can be returned as JSON."""
+        """All protocols can be returned as list."""
         self.assertEqual(self.protocols.list[0], PROTOCOLS[0])
     def test_0306_getprotocols_count(self):
-        """All protocols can be returned as JSON."""
+        """The number of protocols can be returned."""
         self.assertEqual(self.protocols.count, 1)
     def test_0307_getprotocols(self):
         """We can get a protocol by its name."""
@@ -218,7 +218,6 @@ class Test04DBProtocolDocument(DBTest):
     @classmethod
     def setUpClass(self):
         super().setUpClass()
-        # We need to init protocols because a packet is attached to one.
         populate(self.protocols)
     def test_0401_getprotocol_field(self):
         """We can get a value from its field."""
@@ -338,4 +337,29 @@ class Test04DBProtocolDocument(DBTest):
         protocol = self.protocols.get(PROTOCOLS[1])
         link = self.links.get(LINKS[0])
         with self.assertRaises(DBException):
-            protocol.set("nmap", link)
+            protocol.set("discovery", link)
+
+class Test05DBLinksCollection(DBTest):
+    """Test class to get and set data in links' collection."""
+    def test_0501_addlinks(self):
+        """A new link can be added."""
+        self.links.add(Link(**TEST_COLL_LINKS[0]))
+        link = self.links.get(TEST_COLL_LINKS[0]["name"])
+        self.assertEqual(link.name, LINKS[0])
+    def test_0502_addlinks_exists(self):
+        """We can't add a link that already exists."""
+        with self.assertRaises(DBException):
+            self.links.add(Link(**TEST_COLL_LINKS[0]))
+    # """All links can be returned as JSON."""
+    # """All links can be returned as objects."""
+    # """All links can be returned as list."""
+    # """The number of links can be returned."""
+    # """We can get a link by its name."""
+    # """We can get a link by its name."""
+    # """We can't get a link that does not exists."""
+    # """A search can return several links."""
+    # """Method has() tells us if the link exists or not."""
+    # """An complete link passes check()."""
+    # """We can delete an existing link."""
+    # """We cannot delete a link that does not exist."""
+    # """Deleting a link erases all its references in protocols."""

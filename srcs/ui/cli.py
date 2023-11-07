@@ -247,7 +247,7 @@ class CLI(UI):
         try:
             self.protocols.add(Protocol(name=protocol))
         except DBException as dbe:
-            raise UIError(dbe) from None
+            ERROR(str(dbe), will_exit=True)
         self.__cmd_read(protocol)
         return True
 

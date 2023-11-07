@@ -155,6 +155,11 @@ class MongoDB():
         return self.db[mongodb.protocols]
 
     @property
+    def protocols_id(self):
+        """Return the list of IDs in protocols collection."""
+        return [x[mongodb.id] for x in self.db[mongodb.protocols].find()]
+
+    @property
     def protocols_count(self):
         """Return number of protocols in collection."""
         return self.db[mongodb.protocols].count_documents({})
@@ -170,6 +175,11 @@ class MongoDB():
         return self.db[mongodb.links]
 
     @property
+    def links_id(self):
+        """Return the list of IDs in links collection."""
+        return [x[mongodb.id] for x in self.db[mongodb.links].find()]
+    
+    @property
     def links_count(self):
         """Return number of links in collection."""
         return self.db[mongodb.links].count_documents({})
@@ -184,6 +194,11 @@ class MongoDB():
         """Return packets collection."""
         return self.db[mongodb.packets]
 
+    @property
+    def packets_id(self):
+        """Return the list of IDs in packets collection."""
+        return [x[mongodb.id] for x in self.db[mongodb.packets].find()]
+    
     @property
     def packets_count(self):
         """Return number of packets in collection."""

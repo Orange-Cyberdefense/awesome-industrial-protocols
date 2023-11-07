@@ -19,7 +19,9 @@ ERR_UNKPROTO = "Protocol '{0}' not found."
 ERR_EXIPROTO = "Protocol '{0}' already exists."
 ERR_UNKFIELD = "Protocol '{0}' has no field '{1}'."
 ERR_EXIVALUE = "Field '{0}' already contains this value."
-ERR_INVVALUE = "Field '{0}' does not accept Documents."
+ERR_INVVALUE = "Field '{0}' does not accept links or packets."
+ERR_INVLINK = "Field '{0}' only accepts valid links."
+ERR_INVPACKET = "Field '{0}' only accepts valid packets."
 ERR_MULTIMATCH = "Multiple match found, please choose between {0}."
 ERR_BOOLVALUE = "This field only accept 'true' or 'false'"
 
@@ -36,6 +38,15 @@ class Protocol(Document):
             setattr(self, k, v)
         self.__fill()
 
+    def __store(self, field: str, value: object) -> None:
+        """Save value to the Document in DB and in this class."""
+        if isinstance(value, Document):
+            raise DBException(ERR_INVVALUE.format(p.NAME(field)))
+        document = {"name": self.name}
+        newvalue = {field: value}
+        self._db.protocols.update_one(document, {"$set": newvalue})
+        setattr(self, field, value)
+        
     #--- Public --------------------------------------------------------------#
 
     def get(self, field: str) -> tuple:
@@ -56,26 +67,27 @@ class Protocol(Document):
     def set(self, field: str, value: object, replace: bool = False) -> None:
         """Update existing field in protocol."""
         field, oldvalue = self.get(field)
-        # Different behavior if linklist
-        if p.TYPE(field) in (types.LINKLIST, types.LIST, types.PKTLIST):
-            if isinstance(value, Document): # Link or Packet
-                value = value._id
-            if not replace and oldvalue: # We append
-                oldvalue = [oldvalue] if not isinstance(oldvalue, list) else oldvalue
-                if value not in oldvalue:
-                    value = [value] if not isinstance(value, list) else value
-                    value = [x for x in oldvalue + value if x != '']
-                else:
-                    raise DBException(ERR_EXIVALUE.format(p.NAME(field)))
-            else:
-                value = value if isinstance(value, list) else [value]
-        if isinstance(value, Document): # Link or Packet
-            raise DBException(ERR_INVVALUE.format(p.NAME(field)))
-        # Store
-        document = {"name": self.name}
-        newvalue = {field: value}
-        self._db.protocols.update_one(document, {"$set": newvalue})
-        setattr(self, field, value)
+        ftype = p.TYPE(field)
+        # We deal with the simplest case first
+        if not ftype or ftype == types.STR:
+            return self.__store(field, value)
+        # Is the value a link or a packet ?
+        if isinstance(value, Document):
+            value = value._id
+            if ftype == types.LINKLIST and value not in self._db.links_id:
+                raise DBException(ERR_INVLINK.format(p.NAME(field)))
+            elif ftype == types.PKTLIST and value not in self._db.packets_id:
+                raise DBException(ERR_INVPACKET.format(p.NAME(field)))
+        # All other fields are lists (LIST, LINKLIST, PKTLIST)
+        value = value if isinstance(value, list) else [value]
+        if replace:
+            value = value if isinstance(value, list) else [value]
+        elif not replace and oldvalue:
+            oldvalue = oldvalue if isinstance(oldvalue, list) else [oldvalue]
+            if set(oldvalue) & set(value):
+                raise DBException(ERR_EXIVALUE.format(p.NAME(field)))
+            value = [x for x in oldvalue + value if x != '']
+        self.__store(field, value)
 
     def add(self, field: str, value: object) -> None:
         """Add a new field to protocol."""
