@@ -2,6 +2,8 @@
 # Claire-lex - 2023
 # unittest : Database management (MongoDB)
 
+# python -m unittest discover -s tests
+
 import unittest
 from os import system
 
@@ -36,7 +38,7 @@ TEST_COLL_LINKS = (
     {"name": "George Abitbol", "url": "http://george-abitbol.fr/", "description": "Inspiration"},
     {"name": "Magic button", "url": "http://make-everything-ok.com/", "description": "Make everything OK"},
 )
-LINKS = [x["name"] for x in TEST_COLL_LINKS]
+LINKS = [x["url"] for x in TEST_COLL_LINKS]
 
 TEST_COLL_PACKETS = (
     {"protocol": PROTOCOLS[0], "name": "Seagull",
@@ -177,7 +179,7 @@ class Test03DBProtocolsCollection(DBTest):
         protocol = self.protocols.get(PROTOCOLS[0])
         self.assertEqual(protocol.name, PROTOCOLS[0])
     def test_0308_getprotocols_alias(self):
-        """We can get a protocol by its name."""
+        """We can get a protocol by its alias."""
         p = self.protocols.get(PROTOCOLS[0])
         p.set("alias", "ANiceAlias")
         protocol = self.protocols.get("ANiceAlias")
@@ -344,22 +346,67 @@ class Test05DBLinksCollection(DBTest):
     def test_0501_addlinks(self):
         """A new link can be added."""
         self.links.add(Link(**TEST_COLL_LINKS[0]))
-        link = self.links.get(TEST_COLL_LINKS[0]["name"])
-        self.assertEqual(link.name, LINKS[0])
+        link = self.links.get(TEST_COLL_LINKS[0]["url"])
+        self.assertEqual(link.url, LINKS[0])
     def test_0502_addlinks_exists(self):
         """We can't add a link that already exists."""
         with self.assertRaises(DBException):
             self.links.add(Link(**TEST_COLL_LINKS[0]))
-    # """All links can be returned as JSON."""
-    # """All links can be returned as objects."""
-    # """All links can be returned as list."""
-    # """The number of links can be returned."""
-    # """We can get a link by its name."""
-    # """We can get a link by its name."""
-    # """We can't get a link that does not exists."""
-    # """A search can return several links."""
-    # """Method has() tells us if the link exists or not."""
-    # """An complete link passes check()."""
-    # """We can delete an existing link."""
-    # """We cannot delete a link that does not exist."""
-    # """Deleting a link erases all its references in protocols."""
+    def test_0503_addlinks_incomplete(self):
+        """We can't add a link if we don't specify its URL."""
+        with self.assertRaises(DBException):
+            self.links.add(Link(name="test"))
+    def test_0504_getlinks_all(self):
+        """All links can be returned as JSON."""
+        self.assertEqual(self.links.all[0]["url"], LINKS[0])
+    def test_0505_getlinks_all(self):
+        """All links can be returned as objects."""
+        self.assertTrue(isinstance(self.links.all_as_objects[0], Link))
+        self.assertEqual(self.links.all_as_objects[0].url, LINKS[0])
+    def test_0506_getlinks_list(self):
+        """All links can be returned as list."""
+        self.assertEqual(self.links.list[0], LINKS[0])
+    def test_0507_links_count(self):
+        """The number of links can be returned."""
+        self.assertEqual(self.links.count, 1)
+    def test_0508_getlinks_name(self):
+        """We can get a link by its name."""
+        link = self.links.get(TEST_COLL_LINKS[0]["name"])
+        self.assertEqual(link.url, LINKS[0])
+    def test_0509_getlinks_url(self):
+        """We can get a protocol by its URL."""
+        link = self.links.get(LINKS[0])
+        self.assertEqual(link.name, TEST_COLL_LINKS[0]["name"])
+    def test_0510_getlinks_noexists(self):
+        """We can't get a link that does not exists."""
+        with self.assertRaises(DBException):
+            link = self.links.get("poulet")
+    def test_0511_getlinks_multi(self):
+        """A search can return several links."""
+        populate(self.links)
+        self.links.get(LINKS[1]).set("name", "Toto")
+        self.links.get(LINKS[2]).set("name", "Toto")
+        try:
+            links = self.links.get("Toto")
+        except DBException as e:
+            self.assertEqual(str(e)[:44], ERR_MULTIMATCH[:44])
+    def test_0512_haslinks(self):
+        """Method has() tells us if the link exists or not."""
+        self.assertTrue(self.links.has(LINKS[0]))
+        self.assertFalse(self.links.has("poulet"))
+    def test_0513_checklinks(self):
+        """An complete link passes check()."""
+        self.links.check()
+    def test_0514_deletelinks(self):
+        """We can delete an existing link."""
+        link = self.links.get(LINKS[0])
+        self.links.delete(link)
+        with self.assertRaises(DBException):
+            self.protocols.get(LINKS[0])
+    def test_0515_deletelinks_noexist(self):
+        """We cannot delete a link that does not exist."""
+        with self.assertRaises(DBException):
+            self.links.delete(Link(name="pi", url="geon"))
+    def test_0516_deletelinks_allref(self):
+        """Deleting a link erases all its references in protocols."""
+        raise NotImplementedError("deletelinks_allref")

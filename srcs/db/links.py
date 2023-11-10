@@ -48,13 +48,13 @@ class Link(Document):
         self.__url = self.__set_url(kwargs[l.url]) if l.url in kwargs else None
         self.type = kwargs[l.type] if l.type in kwargs else l.DEFAULT_TYPE
         self.description = kwargs[l.description] if l.description in kwargs else None
+        self.check(url=False)
         self.fields_dict = {
             l.name: self.name,
             l.url: self.url,
             l.description: self.description,
             l.type: self.type
         }
-        self.__check()
 
     def __str__(self):
         return "[{0}] {1}: {2}: {3}".format(self.type.capitalize(), self.name,
@@ -90,10 +90,12 @@ class Link(Document):
         except (URLError, InvalidURL, socket_timeout):
             raise DBException(ERR_BADURL.format(url)) from None
 
-    def check(self):
+    def check(self, url=True):
         """Check visitor."""
-        self.__check()
-        self.check_url(self.url)
+        if not self.name or not self.__url:
+            raise DBException(ERR_EMPTY)
+        if url:
+            self.check_url(self.url)
 
     def to_dict(self, exclude_id: bool = True) -> dict:
         """Convert link object's content to dictionary."""
@@ -122,10 +124,6 @@ class Link(Document):
         if not url.scheme:
             url._replace(scheme="https")
         return url
-
-    def __check(self):
-        if not self.name or not self.__url:
-            raise DBException(ERR_EMPTY)
 
 #-----------------------------------------------------------------------------#
 # Links class                                                                 #
@@ -195,6 +193,11 @@ class Links(Collection):
         objects = [Link(**x) for x in self._db.links_all]
         return sorted(objects, key=lambda x: x.name.lower())
 
+    @property
+    def list(self) -> list:
+        """Return the list of links' URLs."""
+        return [x["url"] for x in self._db.links_all]
+    
     @property
     def count(self) -> int:
         """Return the total number of protocols."""
