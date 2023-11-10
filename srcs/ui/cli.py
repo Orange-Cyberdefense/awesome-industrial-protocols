@@ -244,7 +244,10 @@ class CLI(UI):
         if not self.__confirm(MSG_CONFIRM_ADD_PROTO.format(protocol),
                               self.options.force):
             return False
-        self.add(protocol)
+        try:
+            self.protocols.add(Protocol(name=protocol))
+        except DBException as dbe:
+            ERROR(str(dbe), will_exit=True)
         self.__cmd_read(protocol)
         return True
 
@@ -330,8 +333,10 @@ class CLI(UI):
             pass
         if self.__confirm(MSG_CONFIRM_ADD_LINK.format(url), self.options.force):
             try:
-                link = self.links.add(name, url, description if description else
-                                      "", type if type else links.DEFAULT_TYPE)
+                description = description if description else ""
+                type = type if type else links.DEFAULT_TYPE
+                link = self.links.add(Link(name=name, url=url,
+                                           description=description, type=type))
                 return link
             except DBException as dbe:
                 ERROR(str(dbe), will_exit=True)
@@ -387,7 +392,6 @@ class CLI(UI):
         """-AP / --add-packet"""
         if self.options.add_packet:
             protocol, name = self.options.add_packet
-        protocol = self.__get_protocol(protocol)
         try:
             # packets.add checks that too but we need to do that before confirmation
             packet = self.packets.get(protocol, name)
@@ -397,7 +401,10 @@ class CLI(UI):
         if self.__confirm(MSG_CONFIRM_ADD_PACKET.format(name, protocol),
                           self.options.force):
             try:
-                self.packets.add(protocol, name, description, scapy_pkt, raw_pkt)
+                protocol = self.__get_protocol(protocol)
+                self.packets.add(Packet(protocol=protocol.name, name=name,
+                                        description=description,
+                                        scapy_pkt=scapy_pkt, raw_pkt=raw_pkt))
             except DBException as dbe:
                 ERROR(str(dbe), will_exit=True)
 
@@ -434,9 +441,9 @@ class CLI(UI):
     def __cmd_delete_packet(self):
         """-DP / --delete-packet"""
         protocol, name = self.options.delete_packet
-        protocol = self.__get_protocol(protocol, noadd=True)
         try:
-            packet = self.packets.get(protocol, name)
+            protocol = self.__get_protocol(protocol, noadd=True)
+            packet = self.packets.get(protocol.name, name)
         except DBException as dbe:
             ERROR(str(dbe), will_exit=True)
         if self.__confirm(MSG_CONFIRM_DELETE_PACKET.format(packet.name,

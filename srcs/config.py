@@ -101,6 +101,7 @@ mongodb.host = "127.0.0.1"
 mongodb.port = 27017
 mongodb.timeout = 1000
 mongodb.database = "awesome-industrial-protocols"
+mongodb.test_database = "test-aip"
 mongodb.id = "_id"
 mongodb.obj = "_db"
 
@@ -250,5 +251,7 @@ youtube.watch_url = "https://www.youtube.com/watch?v="
 youtube.selected_channels = {
     "UC6Om9kAkl32dWlDSNlDS9Iw": "DEF CON",
     "UCJ6q9Ie29ajGqKApbLqfBOg": "Black Hat",
-    "UCcA_TRQ5sLtFC3pAkaVot3Q": "SANS ICS Security"
+    "UCcA_TRQ5sLtFC3pAkaVot3Q": "SANS ICS Security",
+    "UC0BJVNTIEbG8CLG-xVVWJnA": " Hack In The Box",
+    "UCGdJZb8OWZPrRK8PuEeoZuA": "Insomni'Hack"
 }

@@ -130,11 +130,11 @@ exist will create it. Predefined fields:
 - `alias` : List of alternative names
 - `description` : Short description
 - `keywords` : List of words associated to the protocol
-- ̀ port` : If TCP/IP (prefer format 1234/tcp or 5678/udp)
+- `port` : If TCP/IP (prefer format 1234/tcp or 5678/udp)
 - `access` : Is the specification available, for free or not
 - `specs` : Link to the specifications
 - `security` : Basic info about security features
-- ̀ nmap` : List of links to nmap scripts
+- `nmap` : List of links to nmap scripts
 - `wireshark` : Link to the wireshark dissector(s)
 - `scapy` : Link to the scapy layer(s)
 - `pcap` : List of links to PCAP samples
@@ -235,7 +235,7 @@ AI-generated data is mostly found in two types of fields:
   (try it, you'll see). However, this really needs to be double-checked.
 
 Also, my mother tongue is not English so I sometimes rely on it to correct some
-mistakes.
+mistakes, and I used Dall-e to generate the cool turnip in the logo.
 
 > In the beginning there were also queries to retrieve basic information about
   the security of a protocol but the results were terrible so I removed it.

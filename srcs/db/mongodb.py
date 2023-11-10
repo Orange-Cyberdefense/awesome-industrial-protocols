@@ -45,8 +45,8 @@ class Document(ABC):
         self._db = MongoDB()
         self._id = kwargs[mongodb.id] if mongodb.id in kwargs else None
     
-    def get(self, field: str) -> str:
-        """Return value associated to field."""
+    def get(self, field: str) -> tuple:
+        """Return value associated to field with format (key, value)."""
         field = field.lower()
         if field not in self.fields_dict.keys():
             raise DBException(ERR_UNKFIELD.format(field))
@@ -84,6 +84,11 @@ class Collection(ABC):
         """Add an entry to the collection."""
         raise NotImplementedError("Collection: add")
 
+    @abstractmethod
+    def delete(self, **kwargs) -> None:
+        """Delete an entry from the collection."""
+        raise NotImplementedError("Collection: delete")
+
     def has(self, content) -> bool:
         """Return true if this content already exists."""
         try:
@@ -92,6 +97,20 @@ class Collection(ABC):
             return False
         return True
 
+    def check(self) -> None:
+        """Check that the content of the Collection is valid."""
+        print("UNLAPIN")
+        for obj in self.all_as_objects:
+            try:
+                obj.check()
+            except DBException as dbe:
+                yield str(dbe)
+
+    @property
+    @abstractmethod
+    def all_as_objects(self):
+        raise NotImplementedError("Collection: all_as_objects")
+        
 #-----------------------------------------------------------------------------#
 # MongoDB classes                                                             #
 #-----------------------------------------------------------------------------#
@@ -102,28 +121,29 @@ class DBException(Exception):
 
 class MongoDB():
     """MongoDB manager as a singleton class."""
+    _instance = None
     client = None
     db = None
+    host = None
+    port = 0
+    timeout = 0
+    database = None
 
     # Singleton stuff
-    def __new__(cls):
-        if not hasattr(cls, 'instance'):
-            cls.instance = super(MongoDB, cls).__new__(cls)
-            # Setting only one MongoDB Client
-            try:
-                cls.instance.client = MongoClient(mongodb.host, mongodb.port,
-                                                  serverSelectionTimeoutMS=mongodb.timeout)
-                databases = cls.instance.client.list_database_names()
-            except ServerSelectionTimeoutError:
-                raise DBException(ERR_NOSRV.format(mongodb.host, mongodb.port)) from None
-            if mongodb.database not in databases:
-                raise DBException(ERR_NODB.format(mongodb.database))
-            cls.instance.db = cls.instance.client[mongodb.database]
-        return cls.instance
+    def __new__(cls, *args, **kwargs):
+        if not isinstance(cls._instance, cls):
+            cls._instance = super(MongoDB, cls).__new__(cls)
+            # We only want to init the database once.
+            cls._instance.__init_db(*args, **kwargs)
+        return cls._instance
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         # We want to check that the connection is OK every time.
         self.__check_connection()
+
+    @classmethod
+    def reset(cls):
+        cls._instance = None
 
     #-------------------------------------------------------------------------#
     # Properties                                                              #
@@ -133,6 +153,11 @@ class MongoDB():
     def protocols(self):
         """Return protocols collection."""
         return self.db[mongodb.protocols]
+
+    @property
+    def protocols_id(self):
+        """Return the list of IDs in protocols collection."""
+        return [x[mongodb.id] for x in self.db[mongodb.protocols].find()]
 
     @property
     def protocols_count(self):
@@ -150,6 +175,11 @@ class MongoDB():
         return self.db[mongodb.links]
 
     @property
+    def links_id(self):
+        """Return the list of IDs in links collection."""
+        return [x[mongodb.id] for x in self.db[mongodb.links].find()]
+    
+    @property
     def links_count(self):
         """Return number of links in collection."""
         return self.db[mongodb.links].count_documents({})
@@ -165,6 +195,11 @@ class MongoDB():
         return self.db[mongodb.packets]
 
     @property
+    def packets_id(self):
+        """Return the list of IDs in packets collection."""
+        return [x[mongodb.id] for x in self.db[mongodb.packets].find()]
+    
+    @property
     def packets_count(self):
         """Return number of packets in collection."""
         return self.db[mongodb.packets].count_documents({})
@@ -177,6 +212,26 @@ class MongoDB():
     #-------------------------------------------------------------------------#
     # Private                                                                 #
     #-------------------------------------------------------------------------#
+
+    def __init_db(self, host: str = None, port: int = 0, timeout: int = 0,
+                database: str = None):
+        """Initialize database information, only called once.
+        We set values that are not default ones in unittests.
+        """
+        self.host = host if host else mongodb.host
+        self.port = port if port else mongodb.port
+        self.timeout = timeout if timeout else mongodb.timeout
+        self.database = database if database else mongodb.database
+        try:
+            self.client = MongoClient(self.host,
+                                      self.port,
+                                      serverSelectionTimeoutMS=self.timeout)
+            databases = self.client.list_database_names()
+        except ServerSelectionTimeoutError:
+            raise DBException(ERR_NOSRV.format(self.host, self.port)) from None
+        if self.database not in databases:
+            raise DBException(ERR_NODB.format(self.database))
+        self.db = self.client[self.database]
 
     def __check_connection(self):
         """Check that we are connected to the database server."""
