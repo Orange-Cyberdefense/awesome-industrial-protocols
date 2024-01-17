@@ -607,6 +607,8 @@ or contributions.
 | Scapy layer | [modbus.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/modbus.py) |
 | Example Pcap(s) | [ICS-pcap Modbus](https://github.com/automayt/ICS-pcap/tree/master/MODBUS) |
 | Detailed page | [modbus.md](protocols/modbus.md) |
+### Documentations
+- [Modbus Mesulog Standard Functions Help](http://www.mesulog.fr/help/modbus/index.html?page=read-device-identification-f43.html) - Description for Modbus standard functions
 ### Articles
 - [Articles about Modbus](https://ozeki.hu/p_5841-modbus-protocol.html) - Ozeki
 - [Introduction to Modbus and Modbus Function Codes](https://control.com/technical-articles/introduction-to-modbus-and-modbus-function-codes/) - Shawn Dietrich, Control Automation (2023)
