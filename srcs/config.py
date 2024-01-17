@@ -16,11 +16,6 @@ from os.path import abspath, dirname, join
 # KEYS                                                                        #
 #-----------------------------------------------------------------------------#
 
-# Used to query OpenAI models to gather information about protocols
-with open("openai_api_key") as fd:
-    key = fd.read().strip()
-OPENAI_API_KEY = key # Insert your OpenAI API key, don't push it.
-
 # Used for fetching videos on Youtube
 with open("google_api_key") as fd:
     key = fd.read().strip()
@@ -199,24 +194,6 @@ packets.FIELDS = {
 #-----------------------------------------------------------------------------#
 # AUTOMATED FETCH                                                             #
 #-----------------------------------------------------------------------------#
-
-#--- OpenAI-generated data ---------------------------------------------------#
-
-AI_WARNING = "WARNING: AI-generated data is not reliable.\n" \
-"All AI-generated data is marked with *, please double-check it."
-
-ai = SimpleNamespace()
-ai.key = OPENAI_API_KEY
-ai.model = "text-davinci-003"
-ai.temperature = 0.5
-ai.max_tokens = 100
-
-ai.yes_no_question = "{0} {1}? yes or no"
-ai.is_protocol = "is a network protocol"
-ai.description = "description in 10 words"
-ai.default_port = "default port"
-# Documentation
-ai.is_spec_free = "specification is available for free"
 
 #--- Data extracted from Wireshark dissectors --------------------------------#
 

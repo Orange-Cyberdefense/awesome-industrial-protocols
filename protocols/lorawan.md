@@ -21,5 +21,3 @@
 - [ChirpStack Network Server](https://github.com/brocaar/chirpstack-network-server) - Open-source LoRaWAN network-server
 - [lorawan-server](https://github.com/gotthardp/lorawan-server) - Compact server for private LoRaWAN networks
 - [lorawan-stack](https://github.com/TheThingsNetwork/lorawan-stack) - Open Source LoRaWAN Network Server
-
-> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

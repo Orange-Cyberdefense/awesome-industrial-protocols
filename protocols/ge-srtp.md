@@ -7,5 +7,3 @@
 | Port(s) | 18245/tcp |
 
 
-
-> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

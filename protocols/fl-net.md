@@ -12,5 +12,3 @@
 | Related CVE | [CVE-2021-27477](https://nvd.nist.gov/vuln/detail/CVE-2021-27477) |
 
 
-
-> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

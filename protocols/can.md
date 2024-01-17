@@ -37,5 +37,3 @@
 - [cantools](https://github.com/cantools/cantools) - Python library to play with CAN databases & messages
 - [opendbc](https://github.com/commaai/opendbc) - A list of CAN databases retrieved from reverse-engineered cars
 - [python-can](https://github.com/hardbyte/python-can) - Python library to plug to various CAN connectors
-
-> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

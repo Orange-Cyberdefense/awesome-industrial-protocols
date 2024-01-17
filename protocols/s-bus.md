@@ -12,5 +12,3 @@
 | Related CVE | [CVE-2022-30319](https://nvd.nist.gov/vuln/detail/CVE-2022-30319), [CVE-2022-30320](https://nvd.nist.gov/vuln/detail/CVE-2022-30320) |
 
 
-
-> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

@@ -12,5 +12,3 @@
 - [Exploring the OPC attack surface](https://claroty.com/team82/research/white-papers/exploring-the-opc-attack-surface) - Claroty Team82 (2021)
 ## Tools
 - [OPC Data Access IDAPython script](https://github.com/eset/malware-research/tree/master/industroyer) - IDA Pro script to reverse engineer binaries containing OPC DA (ESET)
-
-> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

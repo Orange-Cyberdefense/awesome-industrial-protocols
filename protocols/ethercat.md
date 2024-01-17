@@ -12,5 +12,3 @@
 
 ## Articles
 - [Industrial Network Options: EtherCAT Advantages, Challenges, and Specs](https://control.com/technical-articles/introduction-to-ethercat/) - Carlos Aguilar, Control Automation (2023)
-
-> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

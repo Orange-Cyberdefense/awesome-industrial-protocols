@@ -20,6 +20,7 @@
 ## Documentations
 - [knx.org](https://www.knx.org/knx-en/for-professionals/index.php) - KNX official website
 ## Conferences
+- [#HITB2018AMS D1T2 - Pwning KNX &amp; ZigBee Networks - HuiYu Wu, YuXiang Li &amp; Yong Yang](https://www.youtube.com/watch?v=1Bv_xQ4A9ZQ) - @  Hack In The Box (2018)
 - [(in)Security in Building Automation: How to Create Dark Buildings with Light Speed](https://www.youtube.com/watch?v=PyOhwYgpGfM) - Thomas Brandstetter @ Black Hat USA (2017)
 - [InSecurity in Building Automation](https://www.youtube.com/watch?v=G9ESeUWfYbs) - Thomas Brandsetter @ DEF CON 25 ICS Village (2017)
 - [Learn how to control every room at a luxury hotel remotely](https://www.youtube.com/watch?v=RX-O4XuCW1Y) - Jesus Molina @ DEF CON 22 (2015)
@@ -36,5 +37,3 @@
 - [KNXmap](https://github.com/takeshixx/knxmap) - KNXnet/IP scanning and auditing tool
 - [Unpwning A Building](https://www.youtube.com/watch?v=PM-iyQPXXXs) - Peter Panholzer @ S4x22 (2022)
 - [XKNX](https://github.com/XKNX/xknx) - A KNX library written in Python
-
-> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

@@ -520,6 +520,7 @@ or contributions.
 ### Documentations
 - [knx.org](https://www.knx.org/knx-en/for-professionals/index.php) - KNX official website
 ### Conferences
+- [#HITB2018AMS D1T2 - Pwning KNX &amp; ZigBee Networks - HuiYu Wu, YuXiang Li &amp; Yong Yang](https://www.youtube.com/watch?v=1Bv_xQ4A9ZQ) - @  Hack In The Box (2018)
 - [(in)Security in Building Automation: How to Create Dark Buildings with Light Speed](https://www.youtube.com/watch?v=PyOhwYgpGfM) - Thomas Brandstetter @ Black Hat USA (2017)
 - [InSecurity in Building Automation](https://www.youtube.com/watch?v=G9ESeUWfYbs) - Thomas Brandsetter @ DEF CON 25 ICS Village (2017)
 - [Learn how to control every room at a luxury hotel remotely](https://www.youtube.com/watch?v=RX-O4XuCW1Y) - Jesus Molina @ DEF CON 22 (2015)
@@ -940,11 +941,6 @@ or contributions.
 ### Tools
 - [KillerBee](https://github.com/riverloopsec/killerbee) - IEEE 802.15.4/ZigBee Security Research Toolkit
 - [Mirage](https://github.com/RCayre/mirage) - Framework dedicated to the security analysis of wireless communications
-
-> All unreviewed AI-generated data is marked with `*`.<br>
-AI is used as a search engine with an extra step. It is never used to find
-resources because it does not find them, it invents them. More details
-[here](./srcs/README.md#note-on-ai-generated-content).
 
 **awesome-industrial-protocols** is licensed under
 [CC0](https://creativecommons.org/publicdomain/zero/1.0/). **Turn/IP** is

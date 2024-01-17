@@ -11,5 +11,3 @@
 | Specifications | [CLSI LIS01-A1 Specifications](https://webstore.ansi.org/standards/clsi/clsilis01a2) |
 
 
-
-> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

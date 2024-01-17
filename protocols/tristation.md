@@ -16,5 +16,3 @@
 - [Thru the Eyes of the Attacker Designing Embedded Systems for ICS](https://www.youtube.com/watch?v=3x4MukvjEm8) - Krotofil, Wetzels @ DEF CON 26 (2018)
 ## Tools
 - [tricotools](https://github.com/NozomiNetworks/tricotools) - Triconex TriStation utilities and tools
-
-> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

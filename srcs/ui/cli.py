@@ -13,12 +13,12 @@ from subprocess import run as subprocess_run, CalledProcessError
 from textwrap import fill
 from bson.objectid import ObjectId
 # Internal
-from config import TOOL_DESCRIPTION, AI_WARNING, protocols as p, packets as pk
+from config import TOOL_DESCRIPTION, protocols as p, packets as pk
 from config import links, types, mongodb, wireshark, scapy
 from db import DBException
 from db import Protocol, Link
 from out import Markdown, MDException
-from fetch import FetchException, AI, Wireshark, Scapy, CVEList, Youtube
+from fetch import FetchException, Wireshark, Scapy, CVEList, Youtube
 from .ui import UI, ERROR
 
 #-----------------------------------------------------------------------------#
@@ -93,7 +93,6 @@ ERR_BADID = "The ID is invalid (-h for help)."
 ERR_LINKEXISTS = "Link '{0}' already exists."
 ERR_NOFIELD = "Field '{0}' does not exist in any protocol."
 ERR_PACKETEXISTS = "Packet '{0}' already exists for protocol {1}."
-ERR_OPENAI = "OpenAI not found (pip install openai)."
 ERR_FETCHSOURCE = "Fetch source not found. Choose between {0} (-h for help)."
 ERR_NODISSECTOR = "No dissector found for protocol {0}."
 ERR_NOLAYER = "No layer found for protocol {0}."
@@ -496,7 +495,6 @@ class CLI(UI):
     def __cmd_fetch(self, source: str = None, protocol: str = None) -> None:
         """-F / --fetch"""
         sources = {
-            "openai": self.__cmd_fetch_openai,
             "wireshark": self.__cmd_fetch_wireshark,
             "scapy": self.__cmd_fetch_scapy,
             "cve": self.__cmd_fetch_cve,
@@ -512,24 +510,11 @@ class CLI(UI):
                 protocol = self.__get_protocol(protocol)
             if source.lower() == "all":
                 for src in sources:
-                    if src != "openai":
-                        sources[src.lower()](protocol)
+                    sources[src.lower()](protocol)
             elif source.lower() not in sources.keys():
                 ERROR(ERR_FETCHSOURCE.format(", ".join(sources.keys())), will_exit=True)
             else:
                 sources[source.lower()](protocol)
-
-    def __cmd_fetch_openai(self, protocol: Protocol) -> None:
-        """-F openai / --fetch openai"""
-        try:
-            ai = AI()
-            print(AI_WARNING)
-            for q, a in ai.protocol_generator(protocol.name):
-                self.__write_field(protocol, q, a, getattr(protocol, q))
-        except FetchException as se:
-            ERROR(str(se), will_exit=True)
-        except ModuleNotFoundError:
-            ERROR(ERR_OPENAI, will_exit=True)
 
     def __cmd_fetch_wireshark(self, protocol: Protocol) -> None:
         """-F wireshark / --fetch wireshark"""
