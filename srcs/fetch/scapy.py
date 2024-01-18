@@ -16,7 +16,7 @@ from . import FetchException, get_api_json
 # Constants                                                                   #
 #-----------------------------------------------------------------------------#
 
-ERR_BADTREE = "Invalid GitHub tree format."
+ERR_BADTREE = "Invalid GitHub tree for protocol {0} (API limit exceeded?)."
 
 #-----------------------------------------------------------------------------#
 # Scapy classes                                                               #
@@ -59,7 +59,7 @@ class Scapy():
         layers = get_api_json(s.api_layers_folder)
         contrib = get_api_json(s.api_contrib_folder)
         if not isinstance(layers, list) or not isinstance(contrib, list):
-            raise FetchException(ERR_BADTREE)
+            raise FetchException(ERR_BADTREE.format(protocol.name))
         for layer in layers + contrib:
             if isinstance(layer, dict) and "name" in layer.keys():
                 match = search(layer["name"].replace(".py", ""), protocol.names, threshold=1)

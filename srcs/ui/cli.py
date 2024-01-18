@@ -67,7 +67,8 @@ MSG_LINKS_COUNT = "[*] Total number of links: {0}"
 MSG_PACKETS_COUNT = "[*] Total number of packets: {0}"
 MSG_WRITE_ALIST = "Awesome list written to {0}."
 MSG_WRITE_PPAGE = "{0} protocol page written to {1}."
-MSG_MULTIDISSECTOR = "Multiple matching dissectors found: {0}."
+MSG_DISSECTOR_EXISTS = "Dissector {0} already exists for protocol {1}."
+MSG_LAYER_EXISTS = "Layer {0} already exists for protocol {1}."
 MSG_MULTILAYER = "Multiple matching layers found: {0}."
 MSG_CVE_WAIT = "Fetching CVEs in NIST's database (it may take some time)."
 
@@ -520,14 +521,14 @@ class CLI(UI):
         """-F wireshark / --fetch wireshark"""
         try:
             candidates = Wireshark().get_dissector(protocol)
+            current_list = [self.links.get_id(x).url for x in protocol.wireshark]
             if len(candidates) < 1:
                 ERROR(ERR_NODISSECTOR.format(protocol.name))
-            elif len(candidates) > 1:
-                d = ", ".join([x.name for x in candidates])
-                print(MSG_MULTIDISSECTOR.format(d))
-            else:
-                dissector = candidates[0]
-                if self.__confirm(MSG_CONFIRM_ADDDISSECTOR.format(
+                return
+            for dissector in candidates:
+                if dissector.url in current_list:
+                    print(MSG_DISSECTOR_EXISTS.format(dissector.name, protocol.name))
+                elif self.__confirm(MSG_CONFIRM_ADDDISSECTOR.format(
                         dissector.name, protocol.name), self.options.force):
                     description = wireshark.dissector_desc.format(protocol.name)
                     link = self.__cmd_add_link(dissector.name, dissector.url,
@@ -541,14 +542,14 @@ class CLI(UI):
         """-F scapy / --fetch scapy"""
         try:
             candidates = Scapy().get_layer(protocol)
+            current_list = [self.links.get_id(x).url for x in protocol.scapy]
             if len(candidates) < 1:
                 ERROR(ERR_NOLAYER.format(protocol.name))
-            elif len(candidates) > 1:
-                d = ", ".join([x.name for x in candidates])
-                print(MSG_MULTILAYER.format(d))
-            else:
-                layer = candidates[0]
-                if self.__confirm(MSG_CONFIRM_ADDLAYER.format(layer.name,
+                return
+            for layer in candidates:
+                if layer.url in current_list:
+                    print(MSG_LAYER_EXISTS.format(layer.name, protocol.name))
+                elif self.__confirm(MSG_CONFIRM_ADDLAYER.format(layer.name,
                                                               protocol.name),
                                   self.options.force):
                     description = scapy.layer_desc.format(protocol.name)
@@ -562,9 +563,9 @@ class CLI(UI):
     def __cmd_fetch_cve(self, protocol: Protocol) -> None:
         """-F cve / --fetch cve"""
         try:
-            current_list = [self.links.get_id(x).name for x in protocol.get(p.cve)[1]]
             print(MSG_CVE_WAIT)
             candidates = CVEList().fetch_by_keywords(protocol)
+            current_list = [self.links.get_id(x).name for x in protocol.get(p.cve)[1]]
             for c in candidates:
                 if self.links.has(c.url) and c.id in current_list:
                     continue # Skipping the ones we already have
@@ -586,7 +587,10 @@ class CLI(UI):
         """-F youtube / --fetch youtube"""
         try:
             candidates = Youtube().get_videos(protocol)
+            current_list = [self.links.get_id(x).url for x in protocol.resources]
             for c in candidates:
+                if c.url in current_list:
+                    continue
                 self.__box_print(str(c), c.url, c.description)
                 if self.__confirm(MSG_CONFIRM_ADDVIDEO.format(c.title,
                                                               protocol.name),
