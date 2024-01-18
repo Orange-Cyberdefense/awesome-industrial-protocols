@@ -5,9 +5,22 @@ Changelog
 
 ### Added
 
+- New resources for: CAN, Modbus, UMAS
+- New protocol : RTPS
+- 2 new YouTube channel to fetch content from
+
+### Changed
+
+- Fetch now omits results already existing in a protocol.
+
+## 2023-10-27
+
+### Added
+
 - First version of the terminal user interface to view and search protocols
 - New resources for: CAN, HICP, HL7, IEC-104, OPC-DA, OPC-UA, Powerlink, KNX
 - New protocol: SOME/IP, LIS01/02-A2
+- PR #2 by @ValtteriL ; PR #3 by @f0rw4rd
 
 ### Changed
 

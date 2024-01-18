@@ -19,9 +19,14 @@
 - [CAN-FD - The basic idea](https://www.can-cia.org/can-knowledge/can/can-fd/) - CAN in Automation
 - [Click here to download more cars](https://djnn.sh/click-here-to-download-more-cars/) - djnn
 ## Conferences
+- [#HITB2016AMS D2T1 - CANsee: An Automobile Intrusion Detection System - Jun Li](https://www.youtube.com/watch?v=XBg8xhK7L0w) - @  Hack In The Box (2016)
+- [#HITB2018AMS D2T1 - Backdooring &amp; Remotely Controlling Cars - Sheila A. Berta &amp; Claudio Carraciolo](https://www.youtube.com/watch?v=1at33wF6fLE) - @  Hack In The Box (2018)
+- [#HITBCyberWeek #CommSec D1 - Adventures in Building a CAN Bus Sniffer](https://www.youtube.com/watch?v=ku2_t9EX-pM) - @  Hack In The Box (2020)
 - [(Pen)Testing Vehicles with CANToolz](https://www.youtube.com/watch?v=-p47IYz-H-k) - Alexey Sintsov @ Black Hat Europe (2016)
+- [Advanced CAN Injection Techniques for Vehicle Networks](https://www.youtube.com/watch?v=4wgEmNlu20c) - @ Black Hat (2016)
 - [All Aboard the CAN Bus or Motorcycle](https://www.youtube.com/watch?v=YSApvBDIVCM) - Derrick @ DEF CON Safe Mode Car Hacking Village (2020)
 - [CAN Bus in Aviation Investigating CAN Bus in Avionics](https://www.youtube.com/watch?v=bydy7lbFyFU) - Patrick Kiley @ DEF CON 27 Aviation Village (2019)
+- [Canspy: A Platform for Auditing Can Devices](https://www.youtube.com/watch?v=1hPRcdwQioc) - @ Black Hat (2016)
 - [CANSPY: Auditing CAN Devices](https://www.youtube.com/watch?v=vTsdxNGS_xc) - Jonathan Christofer Demay, Arnaud Lebrun @ DEF CON 24 (2016)
 - [Cantact: An Open Tool for Automative Exploitation](https://www.youtube.com/watch?v=HzDW8ptMkDk) - Eric Evenchick @ Black Hat Asia (2016)
 - [canTot A CAN Bus Hacking Framework](https://www.youtube.com/watch?v=OBC0v5KDcJg) - Jay Turla @ DEF CON 30 Car Hacking Village (2022)

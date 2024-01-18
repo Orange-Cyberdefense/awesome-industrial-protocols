@@ -62,6 +62,7 @@ or contributions.
 - [ProConOs](#proconos)
 - [Profinet-DCP](#profinet-dcp)
 - [Profinet-IO](#profinet-io)
+- [RTPS](#rtps)
 - [S-Bus](#s-bus)
 - [S7comm](#s7comm)
 - [SECS/GEM](#secsgem)
@@ -121,9 +122,14 @@ or contributions.
 - [CAN-FD - The basic idea](https://www.can-cia.org/can-knowledge/can/can-fd/) - CAN in Automation
 - [Click here to download more cars](https://djnn.sh/click-here-to-download-more-cars/) - djnn
 ### Conferences
+- [#HITB2016AMS D2T1 - CANsee: An Automobile Intrusion Detection System - Jun Li](https://www.youtube.com/watch?v=XBg8xhK7L0w) - @  Hack In The Box (2016)
+- [#HITB2018AMS D2T1 - Backdooring &amp; Remotely Controlling Cars - Sheila A. Berta &amp; Claudio Carraciolo](https://www.youtube.com/watch?v=1at33wF6fLE) - @  Hack In The Box (2018)
+- [#HITBCyberWeek #CommSec D1 - Adventures in Building a CAN Bus Sniffer](https://www.youtube.com/watch?v=ku2_t9EX-pM) - @  Hack In The Box (2020)
 - [(Pen)Testing Vehicles with CANToolz](https://www.youtube.com/watch?v=-p47IYz-H-k) - Alexey Sintsov @ Black Hat Europe (2016)
+- [Advanced CAN Injection Techniques for Vehicle Networks](https://www.youtube.com/watch?v=4wgEmNlu20c) - @ Black Hat (2016)
 - [All Aboard the CAN Bus or Motorcycle](https://www.youtube.com/watch?v=YSApvBDIVCM) - Derrick @ DEF CON Safe Mode Car Hacking Village (2020)
 - [CAN Bus in Aviation Investigating CAN Bus in Avionics](https://www.youtube.com/watch?v=bydy7lbFyFU) - Patrick Kiley @ DEF CON 27 Aviation Village (2019)
+- [Canspy: A Platform for Auditing Can Devices](https://www.youtube.com/watch?v=1hPRcdwQioc) - @ Black Hat (2016)
 - [CANSPY: Auditing CAN Devices](https://www.youtube.com/watch?v=vTsdxNGS_xc) - Jonathan Christofer Demay, Arnaud Lebrun @ DEF CON 24 (2016)
 - [Cantact: An Open Tool for Automative Exploitation](https://www.youtube.com/watch?v=HzDW8ptMkDk) - Eric Evenchick @ Black Hat Asia (2016)
 - [canTot A CAN Bus Hacking Framework](https://www.youtube.com/watch?v=OBC0v5KDcJg) - Jay Turla @ DEF CON 30 Car Hacking Village (2022)
@@ -614,6 +620,9 @@ or contributions.
 - [Articles about Modbus](https://ozeki.hu/p_5841-modbus-protocol.html) - Ozeki
 - [Introduction to Modbus and Modbus Function Codes](https://control.com/technical-articles/introduction-to-modbus-and-modbus-function-codes/) - Shawn Dietrich, Control Automation (2023)
 ### Conferences
+- [#HITBCyberWeek D2T2 - Industrial Protocol Gateways: A Deep-Dive of Moxa MGate 5105-MB-EIP](https://www.youtube.com/watch?v=tRi2te9yBuk) - @  Hack In The Box (2020)
+- [#HITBGSEC 2017 CommSec D2 - Stealing PLC Intellectual Property: A Red Teaming Story - Matteo Beccaro](https://www.youtube.com/watch?v=SWFt9T8sGX0) - @  Hack In The Box (2017)
+- [#HITBLockdown002 D2T1 - Common Flaws in ICS Network Protocols - Mars Cheng &amp; Selmon Yang](https://www.youtube.com/watch?v=Bhq4kC52Qg8) - @  Hack In The Box (2020)
 - [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
 - [Fun with Modbus 0x5a Nothing New Still Relevant?](https://www.youtube.com/watch?v=A_B69Rifu1g) - Arnaud Soullié @ DEF CON 25 ICS Village (2017)
 - [Industrial Control Systems : Pentesting PLCs 101 (Part 1/2)](https://www.youtube.com/watch?v=iGwm6-lyn2Y) - Arnaud Soullie @ Black Hat Europe (2014)
@@ -621,6 +630,7 @@ or contributions.
 - [Industrial Protocol Gateways Under Analysis](https://www.youtube.com/watch?v=Rbkw_jsTBsY) - Marco Balduzzi @ Black Hat USA (2020)
 - [Modbus Enumeration | SANS ICS Concepts](https://www.youtube.com/watch?v=QO99yojavvE) - @ SANS ICS Security (2021)
 - [Modbus Man-In-The-Middle | SANS ICS Concepts](https://www.youtube.com/watch?v=-1WbegoU8i0) - @ SANS ICS Security (2021)
+- [Modbus Traffic Analysis | SANS ICS Concepts](https://www.youtube.com/watch?v=OAsLdXzKQo8) - @ SANS ICS Security (2021)
 - [ModScan: A SCADA MODBUS Network Scanner](https://www.youtube.com/watch?v=O_trNBh31lM) - Mark Bristow @ DEF CON 16 (2013)
 - [Out of Control: Demonstrating SCADA device exploitation](https://www.youtube.com/watch?v=FTzAkEnwx_c) - Eric Forner & Brian Meixell @ Black Hat USA (2013)
 - [The SCADA That Didn't Cry Wolf- Who's Really Attacking Your ICS Devices](https://www.youtube.com/watch?v=0M8nVv0bz6k) - Kyle Wilhoit @ Black Hat USA (2013)
@@ -780,6 +790,19 @@ or contributions.
 - [What Is the Difference Between Profibus and Profinet?](https://control.com/technical-articles/understanding-profibus-vs-profinet/) - Antonio Armenta, Control Automation (2021)
 
 
+## RTPS
+| Name | RTPS |
+|---|---|
+| Description | RTI's Real-Time Publish-Suscribe protocol for Data Distribution Systems (DDS) |
+| Keywords | RTI, DDS |
+| Port | 7412/udp |
+| Wireshark dissector | [packet-rtps.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-rtps.c) |
+| Scapy layer | [rtps](https://github.com/secdev/scapy/tree/master/scapy/contrib/rtps) |
+| Detailed page | [rtps.md](protocols/rtps.md) |
+### Conferences
+- [The Data Distribution Service (DDS) Protocol is Critical: Let's Use it Securely!](https://www.youtube.com/watch?v=7IV49wKxs4c) - Federico Maggi, Erik Boasson @ Black Hat EU 2021
+
+
 ## S-Bus
 | Name | S-Bus |
 |---|---|
@@ -908,6 +931,9 @@ or contributions.
 - [The Unity (UMAS) protocol (Part III)](http://lirasenlared.blogspot.com/2017/08/the-unity-umas-protocol-part-iii.html) - Liras en la red (2017)
 - [The Unity (UMAS) protocol (Part IV)](http://lirasenlared.blogspot.com/2017/08/the-unity-umas-protocol-part-iv.html) - Liras en la red (2017)
 - [The Unity (UMAS) protocol (Part V)](http://lirasenlared.blogspot.com/2017/09/the-unity-umas-protocol-part-v.html) - Liras en la red (2017)
+### Conferences
+- [#HITB2021SIN D1T2 - Going Deeper Into Schneider Modicon PAC Security - Gao Jian](https://www.youtube.com/watch?v=s184S7LDtEg) - @  Hack In The Box (2021)
+- [#HITB2023AMS D1T1 - Nakatomi Space: Lateral Movement As L1 Post-Exploitation In OT - Jos Wetzels](https://www.youtube.com/watch?v=0b87g3tY6bY) - @  Hack In The Box (2023)
 ### Tools
 - [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
 
