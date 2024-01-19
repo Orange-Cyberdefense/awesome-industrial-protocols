@@ -5,7 +5,7 @@ Changelog
 
 ### Added
 
-- New resources for: CAN, Modbus, UMAS
+- New resources for: CAN, Modbus, UMAS, CIP, CODESYS, DICOM, DNP3, Ethernet/IP
 - New protocol : RTPS
 - 2 new YouTube channel to fetch content from
 

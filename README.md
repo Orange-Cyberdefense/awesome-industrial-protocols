@@ -186,6 +186,7 @@ or contributions.
 | Detailed page | [codesys.md](protocols/codesys.md) |
 ### Conferences
 - [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
+- [CoDe16; 16 Zero-Day Vulnerabilities Affecting CODESYS Framework Leading to Remote Code Execution](https://www.youtube.com/watch?v=BuYj7af7LVg) - @ Black Hat (2023)
 
 
 ## CSPv4
@@ -243,6 +244,10 @@ or contributions.
 | Wireshark dissector | [packet-dcm.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-dcm.c) |
 | Detailed page | [dicom.md](protocols/dicom.md) |
 ### Conferences
+- [#HITB2018AMS CommSec D2 - Hacking a Hospital for Fun and Profit - Asaf Cohen &amp; Ofir Kamil](https://www.youtube.com/watch?v=CfgujGY8bSo) - @  Hack In The Box (2018)
+- [#HITBGSEC D1: Understanding, Attacking &amp; Securing Medical Devices - Ajay Pratap Singh](https://www.youtube.com/watch?v=XJ6z-NxMRXM) - @  Hack In The Box (2019)
+- [#HITBLockdown002 - How to Hack Medical Imaging Applications via DICOM - Maria Nedyak](https://www.youtube.com/watch?v=VWo2uGpnJKw) - @  Hack In The Box (2020)
+- [Attack surfaces of smart medical infrastructure by Denis Makrushin (@difezza)](https://www.youtube.com/watch?v=AKZqG_1dg34) - @ Insomni'Hack (2019)
 - [I Am Not a Doctor but I Play One on Your Network](https://www.youtube.com/watch?v=g11BSRfBw2Y) - Tim Elrod & Stefan Morris @ DEF CON 19 (2011)
 ### Tools
 - [DCMTK](https://dcmtk.org/en/) - DICOM ToolKit
@@ -265,6 +270,7 @@ or contributions.
 | Example Pcap(s) | [ICS-pcap DNP3](https://github.com/automayt/ICS-pcap/tree/master/DNP3) |
 | Detailed page | [dnp3.md](protocols/dnp3.md) |
 ### Conferences
+- [#HITBLockdown002 D2T1 - Common Flaws in ICS Network Protocols - Mars Cheng &amp; Selmon Yang](https://www.youtube.com/watch?v=Bhq4kC52Qg8) - @  Hack In The Box (2020)
 - [NSM 101 for ICS](https://www.youtube.com/watch?v=H6AWRziR028) - Chris Sistrunk @ DEF CON 23 101 Track (2015)
 - [SCADA Protocol Implementation Considerations | SANS ICS Concepts](https://www.youtube.com/watch?v=Fi7JhLm4vjY) - @ SANS ICS Security (2022)
 - [Sniffing SCADA](https://www.youtube.com/watch?v=4vPptUmyv4U) - Karl Koscher @ DEF CON 23 Packet Capture Village (2015)
@@ -325,6 +331,7 @@ or contributions.
 ### Articles
 - [Fuzzing and PR’ing: How We Found Bugs in a Popular Third-Party EtherNet/IP Protocol Stack](https://claroty.com/team82/research/opener-enip-stack-vulnerabilities) - Sharon Brizinov, Tal Keren (Claroty, 2021)
 ### Conferences
+- [#HITBLockdown002 D2T1 - Common Flaws in ICS Network Protocols - Mars Cheng &amp; Selmon Yang](https://www.youtube.com/watch?v=Bhq4kC52Qg8) - @  Hack In The Box (2020)
 - [Hunting EtherNet/IP Protocol Stacks](https://www.youtube.com/watch?v=0jftEYDo0ao) - Sharon Brizinov @ SANS ICS Security Summit 2022
 ### Tools
 - [CIPster](https://github.com/liftoff-sr/CIPster) - Ethernet/IP (Common Industrial Protocol) stack in C++
