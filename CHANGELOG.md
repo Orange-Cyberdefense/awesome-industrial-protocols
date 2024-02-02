@@ -1,12 +1,13 @@
 Changelog
 =========
 
-## ????-??-??
+## 2024-02-02
 
 ### Added
 
-- New resources for: CAN, Modbus, UMAS, CIP, CODESYS, DICOM, DNP3, Ethernet/IP
-- New protocol : RTPS
+- New resources for: CAN, Modbus, UMAS, CIP, CODESYS, DICOM, DNP3,
+	Ethernet/IP, FINS, GE-SRTP, OPC-DA, OPC-UA, S-Bus
+- New protocol : RTPS, BSAP, FOCAS, MTConnect, MDLC
 - 2 new YouTube channel to fetch content from
 
 ### Changed

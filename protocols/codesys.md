@@ -9,4 +9,4 @@
 
 ## Conferences
 - [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
-- [CoDe16; 16 Zero-Day Vulnerabilities Affecting CODESYS Framework Leading to Remote Code Execution](https://www.youtube.com/watch?v=BuYj7af7LVg) - @ Black Hat (2023)
+- [CoDe16; 16 Zero-Day Vulnerabilities Affecting CODESYS Framework Leading to Remote Code Execution](https://www.youtube.com/watch?v=BuYj7af7LVg) - Vladimir Eliezer Tokarev @ Black Hat USA (2023)

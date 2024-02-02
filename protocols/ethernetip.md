@@ -24,7 +24,7 @@
 ## Articles
 - [Fuzzing and PR’ing: How We Found Bugs in a Popular Third-Party EtherNet/IP Protocol Stack](https://claroty.com/team82/research/opener-enip-stack-vulnerabilities) - Sharon Brizinov, Tal Keren (Claroty, 2021)
 ## Conferences
-- [#HITBLockdown002 D2T1 - Common Flaws in ICS Network Protocols - Mars Cheng &amp; Selmon Yang](https://www.youtube.com/watch?v=Bhq4kC52Qg8) - @  Hack In The Box (2020)
+- [Common Flaws in ICS Network Protocols](https://www.youtube.com/watch?v=Bhq4kC52Qg8) - Mars Cheng & Selmon Yang @ Hack In The Box (2020)
 - [Hunting EtherNet/IP Protocol Stacks](https://www.youtube.com/watch?v=0jftEYDo0ao) - Sharon Brizinov @ SANS ICS Security Summit 2022
 ## Tools
 - [CIPster](https://github.com/liftoff-sr/CIPster) - Ethernet/IP (Common Industrial Protocol) stack in C++

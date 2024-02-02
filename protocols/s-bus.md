@@ -11,4 +11,5 @@
 | Example Pcap(s) | [ICS-pcap Ether-S-Bus](https://github.com/automayt/ICS-pcap/tree/master/ETHERSBUS/sbus) |
 | Related CVE | [CVE-2022-30319](https://nvd.nist.gov/vuln/detail/CVE-2022-30319), [CVE-2022-30320](https://nvd.nist.gov/vuln/detail/CVE-2022-30320) |
 
-
+## Conferences
+- [ICEFALL - Revisiting A Decade Of OT Insecure-By-Design Practices](https://www.youtube.com/watch?v=OHRgak1fI9k) - Jos Wetzels @ Hack In The Box (2022)
