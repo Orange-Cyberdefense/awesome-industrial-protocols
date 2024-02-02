@@ -16,7 +16,7 @@ from . import FetchException, get_api_json, search_json, get_code_from_github
 # Constants                                                                   #
 #-----------------------------------------------------------------------------#
 
-ERR_BADTREE = "Invalid GitHub tree format."
+ERR_BADTREE = "Invalid GitHub tree for protocol {0} (API limit exceeded?)."
 
 #-----------------------------------------------------------------------------#
 # Wireshark classes                                                           #
@@ -63,9 +63,9 @@ class Wireshark():
 
     def get_dissector(self, protocol: Protocol):
         """Get the dissector corresponding to the protocol."""
-        dissectors = self.__get_dissectors_tree()
+        dissectors = self.__get_dissectors_tree(protocol)
         if "tree" not in dissectors.keys():
-            raise FetchException(ERR_BADTREE)
+            raise FetchException(ERR_BADTREE.format(protocol.name))
         results = []
         for entry in dissectors["tree"]:
             if isinstance(entry, dict) and "path" in entry.keys():
@@ -82,7 +82,7 @@ class Wireshark():
                     return [entry] # This one matches, it's enough
         return results
 
-    def __get_dissectors_tree(self):
+    def __get_dissectors_tree(self, protocol: Protocol):
         """Get the SHA of the dissectors' folder tree.
 
         We have to use the Trees API because the content API only returns the
@@ -95,6 +95,6 @@ class Wireshark():
         dissectors_tree = search_json("name", w.dissectors_folder, "git_url",
                                       epan_tree)
         if not dissectors_tree:
-            raise FetchException("Dissector's tree could not be retrieved.")
+            raise FetchException(ERR_BADTREE.format(protocol.name))
         # Get the tree corresponding to the SHA
         return get_api_json(dissectors_tree)

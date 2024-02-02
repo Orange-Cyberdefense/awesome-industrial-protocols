@@ -8,7 +8,8 @@
 """
 
 from config import packets as p, mongodb
-from . import MongoDB, DBException, Collection, Document, Protocol, search
+from . import MongoDB, DBException, Collection, Document, Protocols, Protocol
+from . import search, exact_search
 
 #-----------------------------------------------------------------------------#
 # Constants                                                                   #
@@ -96,11 +97,13 @@ class Packet(Document):
 
 class Packets(Collection):
     """Interface with database to handle the packets' collection."""
+    protocols = None
 
     def __init__(self):
         super().__init__()
+        self.protocols = Protocols()
 
-    def get(self, protocol: Protocol, name: str = None) -> object:
+    def get(self, protocol: str, name: str = None) -> object:
         """Get a Packet object by its name and protocol.
 
         If the name of the packet is not set, return all the packets matching
@@ -108,15 +111,17 @@ class Packets(Collection):
         """
         match = []
         for packet in self.all_as_objects:
-            if search(protocol.name, packet.protocol):
+            if search(protocol, packet.protocol):
                 if not name:
                     match.append(packet)
+                elif exact_search(name, packet.name):
+                    return packet # Exact match
                 elif search(name, packet.name):
-                    return packet
+                    match.append(packet)
         if match:
-            return match
-        raise DBException(ERR_UNKPACKET.format(name, protocol.name) if name \
-                          else ERR_NOPACKET.format(protocol.name))
+            return "".join(match) if len(match) == 1 else match
+        raise DBException(ERR_UNKPACKET.format(name, protocol) if name \
+                          else ERR_NOPACKET.format(protocol))
 
     def get_id(self, iddb: object) -> Packet:
         """Get a packet object by its ID in database."""
@@ -125,17 +130,18 @@ class Packets(Collection):
                 return Packet(**packet)
         raise DBException(ERR_UNKID.format(iddb))
 
-    def add(self, protocol: Protocol, name: str, description: str = None,
-            scapy_pkt: str = None, raw_pkt: bytes = None):
+    def add(self, packet: Packet):
         """Add a packet to the collection."""
+        # Does the protocol exist? will raise if not
+        protocol = self.protocols.get(packet.protocol)
+        # Otherwise the protocol name is replaced with the main one
+        packet.protocol = protocol.name
         try:
-            self.get(protocol, name)
+            self.get(packet.protocol, packet.name)
         except DBException:
             pass # The packet does not exist, we can continue
         else:
-            raise DBException(ERR_EXIPACKET.format(name, protocol.name))
-        packet = Packet(name=name, protocol=protocol.name,
-                        description=description, scapy_pkt=scapy_pkt, raw_pkt=raw_pkt)
+            raise DBException(ERR_EXIPACKET.format(packet.name, packet.protocol))
         self._db.packets.insert_one(packet.to_dict())
 
     def delete(self, protocol: Protocol, packet: Packet) -> None:
@@ -143,7 +149,6 @@ class Packets(Collection):
         self.get(protocol, packet.name) # Will raise if unknown
         self._db.packets.delete_one({p.name: packet.name,
                                       p.protocol: protocol.name})
-
 
     @property
     def all(self) -> list:

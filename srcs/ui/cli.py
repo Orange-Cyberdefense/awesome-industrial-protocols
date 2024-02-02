@@ -13,12 +13,12 @@ from subprocess import run as subprocess_run, CalledProcessError
 from textwrap import fill
 from bson.objectid import ObjectId
 # Internal
-from config import TOOL_DESCRIPTION, AI_WARNING, protocols as p, packets as pk
+from config import TOOL_DESCRIPTION, protocols as p, packets as pk
 from config import links, types, mongodb, wireshark, scapy
 from db import DBException
 from db import Protocol, Link
 from out import Markdown, MDException
-from fetch import FetchException, AI, Wireshark, Scapy, CVEList, Youtube
+from fetch import FetchException, Wireshark, Scapy, CVEList, Youtube
 from .ui import UI, ERROR
 
 #-----------------------------------------------------------------------------#
@@ -67,7 +67,9 @@ MSG_LINKS_COUNT = "[*] Total number of links: {0}"
 MSG_PACKETS_COUNT = "[*] Total number of packets: {0}"
 MSG_WRITE_ALIST = "Awesome list written to {0}."
 MSG_WRITE_PPAGE = "{0} protocol page written to {1}."
-MSG_MULTIDISSECTOR = "Multiple matching dissectors found: {0}."
+MSG_DISSECTOR_EXISTS = "Dissector {0} already exists for protocol {1}."
+MSG_LAYER_EXISTS = "Layer {0} already exists for protocol {1}."
+MSG_EXISTS = "'{0}' already exists for protocol {1}."
 MSG_MULTILAYER = "Multiple matching layers found: {0}."
 MSG_CVE_WAIT = "Fetching CVEs in NIST's database (it may take some time)."
 
@@ -93,10 +95,11 @@ ERR_BADID = "The ID is invalid (-h for help)."
 ERR_LINKEXISTS = "Link '{0}' already exists."
 ERR_NOFIELD = "Field '{0}' does not exist in any protocol."
 ERR_PACKETEXISTS = "Packet '{0}' already exists for protocol {1}."
-ERR_OPENAI = "OpenAI not found (pip install openai)."
 ERR_FETCHSOURCE = "Fetch source not found. Choose between {0} (-h for help)."
 ERR_NODISSECTOR = "No dissector found for protocol {0}."
 ERR_NOLAYER = "No layer found for protocol {0}."
+ERR_NOCVE = "No CVE found for protocol {0}."
+ERR_NOVID = "No video found for protocol {0}."
 ERR_GOOGLEAPI = "To use Youtube search you need google-api-python-client." \
                 "(pip install google-api-python-client)."
 
@@ -244,7 +247,10 @@ class CLI(UI):
         if not self.__confirm(MSG_CONFIRM_ADD_PROTO.format(protocol),
                               self.options.force):
             return False
-        self.add(protocol)
+        try:
+            self.protocols.add(Protocol(name=protocol))
+        except DBException as dbe:
+            ERROR(str(dbe), will_exit=True)
         self.__cmd_read(protocol)
         return True
 
@@ -330,8 +336,10 @@ class CLI(UI):
             pass
         if self.__confirm(MSG_CONFIRM_ADD_LINK.format(url), self.options.force):
             try:
-                link = self.links.add(name, url, description if description else
-                                      "", type if type else links.DEFAULT_TYPE)
+                description = description if description else ""
+                type = type if type else links.DEFAULT_TYPE
+                link = self.links.add(Link(name=name, url=url,
+                                           description=description, type=type))
                 return link
             except DBException as dbe:
                 ERROR(str(dbe), will_exit=True)
@@ -387,7 +395,6 @@ class CLI(UI):
         """-AP / --add-packet"""
         if self.options.add_packet:
             protocol, name = self.options.add_packet
-        protocol = self.__get_protocol(protocol)
         try:
             # packets.add checks that too but we need to do that before confirmation
             packet = self.packets.get(protocol, name)
@@ -397,7 +404,10 @@ class CLI(UI):
         if self.__confirm(MSG_CONFIRM_ADD_PACKET.format(name, protocol),
                           self.options.force):
             try:
-                self.packets.add(protocol, name, description, scapy_pkt, raw_pkt)
+                protocol = self.__get_protocol(protocol)
+                self.packets.add(Packet(protocol=protocol.name, name=name,
+                                        description=description,
+                                        scapy_pkt=scapy_pkt, raw_pkt=raw_pkt))
             except DBException as dbe:
                 ERROR(str(dbe), will_exit=True)
 
@@ -434,9 +444,9 @@ class CLI(UI):
     def __cmd_delete_packet(self):
         """-DP / --delete-packet"""
         protocol, name = self.options.delete_packet
-        protocol = self.__get_protocol(protocol, noadd=True)
         try:
-            packet = self.packets.get(protocol, name)
+            protocol = self.__get_protocol(protocol, noadd=True)
+            packet = self.packets.get(protocol.name, name)
         except DBException as dbe:
             ERROR(str(dbe), will_exit=True)
         if self.__confirm(MSG_CONFIRM_DELETE_PACKET.format(packet.name,
@@ -489,7 +499,6 @@ class CLI(UI):
     def __cmd_fetch(self, source: str = None, protocol: str = None) -> None:
         """-F / --fetch"""
         sources = {
-            "openai": self.__cmd_fetch_openai,
             "wireshark": self.__cmd_fetch_wireshark,
             "scapy": self.__cmd_fetch_scapy,
             "cve": self.__cmd_fetch_cve,
@@ -505,37 +514,24 @@ class CLI(UI):
                 protocol = self.__get_protocol(protocol)
             if source.lower() == "all":
                 for src in sources:
-                    if src != "openai":
-                        sources[src.lower()](protocol)
+                    sources[src.lower()](protocol)
             elif source.lower() not in sources.keys():
                 ERROR(ERR_FETCHSOURCE.format(", ".join(sources.keys())), will_exit=True)
             else:
                 sources[source.lower()](protocol)
 
-    def __cmd_fetch_openai(self, protocol: Protocol) -> None:
-        """-F openai / --fetch openai"""
-        try:
-            ai = AI()
-            print(AI_WARNING)
-            for q, a in ai.protocol_generator(protocol.name):
-                self.__write_field(protocol, q, a, getattr(protocol, q))
-        except FetchException as se:
-            ERROR(str(se), will_exit=True)
-        except ModuleNotFoundError:
-            ERROR(ERR_OPENAI, will_exit=True)
-
     def __cmd_fetch_wireshark(self, protocol: Protocol) -> None:
         """-F wireshark / --fetch wireshark"""
         try:
             candidates = Wireshark().get_dissector(protocol)
+            current_list = [self.links.get_id(x).url for x in protocol.wireshark]
             if len(candidates) < 1:
                 ERROR(ERR_NODISSECTOR.format(protocol.name))
-            elif len(candidates) > 1:
-                d = ", ".join([x.name for x in candidates])
-                print(MSG_MULTIDISSECTOR.format(d))
-            else:
-                dissector = candidates[0]
-                if self.__confirm(MSG_CONFIRM_ADDDISSECTOR.format(
+                return
+            for dissector in candidates:
+                if dissector.url in current_list:
+                    print(MSG_DISSECTOR_EXISTS.format(dissector.name, protocol.name))
+                elif self.__confirm(MSG_CONFIRM_ADDDISSECTOR.format(
                         dissector.name, protocol.name), self.options.force):
                     description = wireshark.dissector_desc.format(protocol.name)
                     link = self.__cmd_add_link(dissector.name, dissector.url,
@@ -543,20 +539,20 @@ class CLI(UI):
                     if link:
                         protocol.set(p.wireshark, link._id, replace=True)
         except FetchException as se:
-            ERROR(str(se), will_exit=True)
+            ERROR(str(se))
 
     def __cmd_fetch_scapy(self, protocol: Protocol) -> None:
         """-F scapy / --fetch scapy"""
         try:
             candidates = Scapy().get_layer(protocol)
+            current_list = [self.links.get_id(x).url for x in protocol.scapy]
             if len(candidates) < 1:
                 ERROR(ERR_NOLAYER.format(protocol.name))
-            elif len(candidates) > 1:
-                d = ", ".join([x.name for x in candidates])
-                print(MSG_MULTILAYER.format(d))
-            else:
-                layer = candidates[0]
-                if self.__confirm(MSG_CONFIRM_ADDLAYER.format(layer.name,
+                return
+            for layer in candidates:
+                if layer.url in current_list:
+                    print(MSG_LAYER_EXISTS.format(layer.name, protocol.name))
+                elif self.__confirm(MSG_CONFIRM_ADDLAYER.format(layer.name,
                                                               protocol.name),
                                   self.options.force):
                     description = scapy.layer_desc.format(protocol.name)
@@ -565,16 +561,23 @@ class CLI(UI):
                     if link:
                         protocol.set(p.scapy, link._id, replace=True)
         except FetchException as se:
-            ERROR(str(se), will_exit=True)
+            ERROR(str(se))
 
     def __cmd_fetch_cve(self, protocol: Protocol) -> None:
         """-F cve / --fetch cve"""
         try:
-            current_list = [self.links.get_id(x).name for x in protocol.get(p.cve)[1]]
             print(MSG_CVE_WAIT)
             candidates = CVEList().fetch_by_keywords(protocol)
-            for c in candidates:
+            current_list = [self.links.get_id(x).name for x in protocol.get(p.cve)[1]]
+            if not candidates:
+                ERROR(ERR_NOCVE.format(protocol.name))
+        except FetchException as se:
+            ERROR(str(se))
+            return
+        for c in candidates:
+            try:
                 if self.links.has(c.url) and c.id in current_list:
+                    print(MSG_EXISTS.format(c.id, protocol.name))
                     continue # Skipping the ones we already have
                 self.__box_print(c.id, c.url, c.description)
                 if self.__confirm(MSG_CONFIRM_ADDCVE.format(c.id,
@@ -587,14 +590,27 @@ class CLI(UI):
                             protocol.set(p.cve, link._id)
                         except DBException as dbe:
                             ERROR(str(dbe))
-        except FetchException as se:
-            ERROR(str(se), will_exit=True)
+            except FetchException as se:
+                ERROR(str(se))
 
     def __cmd_fetch_youtube(self, protocol: Protocol) -> None:
         """-F youtube / --fetch youtube"""
         try:
             candidates = Youtube().get_videos(protocol)
-            for c in candidates:
+            current_list = [self.links.get_id(x).url for x in protocol.resources]
+            if not candidates:
+                ERROR(ERR_NOVID.format(protocol.name))
+        except FetchException as se:
+            ERROR(str(se))
+            return
+        except ModuleNotFoundError:
+            ERROR(ERR_GOOGLEAPI)
+            return
+        for c in candidates:
+            try:
+                if c.url in current_list:
+                    print(MSG_EXISTS.format(c.title, protocol.name))
+                    continue
                 self.__box_print(str(c), c.url, c.description)
                 if self.__confirm(MSG_CONFIRM_ADDVIDEO.format(c.title,
                                                               protocol.name),
@@ -607,10 +623,8 @@ class CLI(UI):
                             protocol.set(p.resources, link._id)
                         except DBException as dbe:
                             ERROR(str(dbe))
-        except FetchException as se:
-            ERROR(str(se), will_exit=True)
-        except ModuleNotFoundError:
-            ERROR(ERR_GOOGLEAPI, will_exit=True)
+            except FetchException as se:
+                ERROR(str(se))
 
     #-------------------------------------------------------------------------#
     # Notes                                                                   #

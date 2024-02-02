@@ -21,6 +21,7 @@ or contributions.
 ## Contents
 
 - [BACnet/IP](#bacnetip)
+- [BSAP](#bsap)
 - [CAN](#can)
 - [CC-Link IE](#cc-link-ie)
 - [CIP](#cip)
@@ -37,6 +38,7 @@ or contributions.
 - [FF-HSE](#ff-hse)
 - [FINS](#fins)
 - [FL-net](#fl-net)
+- [FOCAS](#focas)
 - [GE-SRTP](#ge-srtp)
 - [HART-IP](#hart-ip)
 - [HICP](#hicp)
@@ -50,9 +52,11 @@ or contributions.
 - [LIS](#lis)
 - [LoRaWAN](#lorawan)
 - [M-Bus](#m-bus)
+- [MDLC](#mdlc)
 - [MELSEC](#melsec)
 - [Modbus](#modbus)
 - [MQTT](#mqtt)
+- [MTConnect](#mtconnect)
 - [Niagara Fox](#niagara-fox)
 - [OPC-DA](#opc-da)
 - [OPC-UA](#opc-ua)
@@ -62,6 +66,7 @@ or contributions.
 - [ProConOs](#proconos)
 - [Profinet-DCP](#profinet-dcp)
 - [Profinet-IO](#profinet-io)
+- [RTPS](#rtps)
 - [S-Bus](#s-bus)
 - [S7comm](#s7comm)
 - [SECS/GEM](#secsgem)
@@ -103,6 +108,20 @@ or contributions.
 - [bacnet-docker](https://github.com/mnp/bacnet-docker) - BACnet Tools in Docker
 
 
+## BSAP
+| Name | BSAP |
+|---|---|
+| Alias | BSAP/IP, BSAP-IP |
+| Description | Emerson's Bristol Synchronous Asynchonous Protocol |
+| Keywords | Emerson, Bristol |
+| Port | 1234/udp |
+| Access | Free |
+| Specifications | [BSAP Communications Application Programmer's Reference](https://www.emerson.com/documents/automation/bsap-communications-application-programmer-s-reference-en-132716.pdf) |
+| Detailed page | [bsap.md](protocols/bsap.md) |
+### Conferences
+- [ICEFALL - Revisiting A Decade Of OT Insecure-By-Design Practices](https://www.youtube.com/watch?v=OHRgak1fI9k) - Jos Wetzels @ Hack In The Box (2022)
+
+
 ## CAN
 | Name | CAN |
 |---|---|
@@ -122,13 +141,18 @@ or contributions.
 - [Click here to download more cars](https://djnn.sh/click-here-to-download-more-cars/) - djnn
 ### Conferences
 - [(Pen)Testing Vehicles with CANToolz](https://www.youtube.com/watch?v=-p47IYz-H-k) - Alexey Sintsov @ Black Hat Europe (2016)
+- [Abusing CAN Bus Spec for DoS in Embedded Systems](https://www.youtube.com/watch?v=okrzUNDLgbo) - Martin Petran @ DEF CON 31 Car Hacking Village (2023)
+- [Advanced CAN Injection Techniques for Vehicle Networks](https://www.youtube.com/watch?v=4wgEmNlu20c) - Charlie Miller & Chris Valasek @ Black Hat USA (2016)
+- [Adventures in Building a CAN Bus Sniffer](https://www.youtube.com/watch?v=ku2_t9EX-pM) - Andrey Voloshin @ Hack In The Box (2020)
 - [All Aboard the CAN Bus or Motorcycle](https://www.youtube.com/watch?v=YSApvBDIVCM) - Derrick @ DEF CON Safe Mode Car Hacking Village (2020)
+- [Backdooring & Remotely Controlling Cars](https://www.youtube.com/watch?v=1at33wF6fLE) - Sheila A. Berta & Claudio Carraciolo @ Hack In The Box (2018)
 - [CAN Bus in Aviation Investigating CAN Bus in Avionics](https://www.youtube.com/watch?v=bydy7lbFyFU) - Patrick Kiley @ DEF CON 27 Aviation Village (2019)
+- [CANsee: An Automobile Intrusion Detection System](https://www.youtube.com/watch?v=XBg8xhK7L0w) - Jun Li @ Hack In The Box (2016)
+- [Canspy: A Platform for Auditing Can Devices](https://www.youtube.com/watch?v=1hPRcdwQioc) - Jonathan-Christofer Demay & Arnaud Lebrun @ Black Hat USA (2016)
 - [CANSPY: Auditing CAN Devices](https://www.youtube.com/watch?v=vTsdxNGS_xc) - Jonathan Christofer Demay, Arnaud Lebrun @ DEF CON 24 (2016)
 - [Cantact: An Open Tool for Automative Exploitation](https://www.youtube.com/watch?v=HzDW8ptMkDk) - Eric Evenchick @ Black Hat Asia (2016)
 - [canTot A CAN Bus Hacking Framework](https://www.youtube.com/watch?v=OBC0v5KDcJg) - Jay Turla @ DEF CON 30 Car Hacking Village (2022)
 - [Deep Learning on CAN BUS](https://www.youtube.com/watch?v=1QSo5sOfXtI) - Jun Li @ DEF CON 24 Car Hacking Village (2016)
-- [DEF CON 31 Car Hacking Village - Abusing CAN Bus Spec for DoS in Embedded Systems  - Martin Petran](https://www.youtube.com/watch?v=okrzUNDLgbo) - @ DEF CON (2023)
 - [Free-Fall: Hacking Tesla from Wireless to CAN Bus](https://www.youtube.com/watch?v=0w8J9bmCI54) - Ling Liu, Sen Nie & Yuefeng Du @ Black Hat USA (2017)
 - [Fuzzing CAN / CAN FD ECU's and Network](https://www.youtube.com/watch?v=IMZ8DD4lTAY) - Samir Bhagwat @ DEF CON 29 Car Hacking Village (2021)
 - [Hopping on the CAN Bus](https://www.youtube.com/watch?v=U1yecKUmnFo) - Eric Evenchick @ Black Hat USA (2015)
@@ -180,6 +204,7 @@ or contributions.
 | Detailed page | [codesys.md](protocols/codesys.md) |
 ### Conferences
 - [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
+- [CoDe16; 16 Zero-Day Vulnerabilities Affecting CODESYS Framework Leading to Remote Code Execution](https://www.youtube.com/watch?v=BuYj7af7LVg) - Vladimir Eliezer Tokarev @ Black Hat USA (2023)
 
 
 ## CSPv4
@@ -237,7 +262,11 @@ or contributions.
 | Wireshark dissector | [packet-dcm.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-dcm.c) |
 | Detailed page | [dicom.md](protocols/dicom.md) |
 ### Conferences
+- [Attack surfaces of smart medical infrastructure](https://www.youtube.com/watch?v=AKZqG_1dg34) - Denis Makrushin (@difezza) @ Insomni'Hack (2019)
+- [Hacking a Hospital for Fun and Profit](https://www.youtube.com/watch?v=CfgujGY8bSo) - Asaf Cohen & Ofir Kamil @ Hack In The Box (2018)
+- [How to Hack Medical Imaging Applications via DICOM](https://www.youtube.com/watch?v=VWo2uGpnJKw) - Maria Nedyak @ Hack In The Box (2020)
 - [I Am Not a Doctor but I Play One on Your Network](https://www.youtube.com/watch?v=g11BSRfBw2Y) - Tim Elrod & Stefan Morris @ DEF CON 19 (2011)
+- [Understanding, Attacking & Securing Medical Devices](https://www.youtube.com/watch?v=XJ6z-NxMRXM) - Ajay Pratap Singh @ Hack In The Box (2019)
 ### Tools
 - [DCMTK](https://dcmtk.org/en/) - DICOM ToolKit
 - [dicom-server](https://github.com/microsoft/dicom-server) - Microsoft's OSS Implementation of DICOMweb standard
@@ -259,6 +288,7 @@ or contributions.
 | Example Pcap(s) | [ICS-pcap DNP3](https://github.com/automayt/ICS-pcap/tree/master/DNP3) |
 | Detailed page | [dnp3.md](protocols/dnp3.md) |
 ### Conferences
+- [Common Flaws in ICS Network Protocols](https://www.youtube.com/watch?v=Bhq4kC52Qg8) - Mars Cheng & Selmon Yang @ Hack In The Box (2020)
 - [NSM 101 for ICS](https://www.youtube.com/watch?v=H6AWRziR028) - Chris Sistrunk @ DEF CON 23 101 Track (2015)
 - [SCADA Protocol Implementation Considerations | SANS ICS Concepts](https://www.youtube.com/watch?v=Fi7JhLm4vjY) - @ SANS ICS Security (2022)
 - [Sniffing SCADA](https://www.youtube.com/watch?v=4vPptUmyv4U) - Karl Koscher @ DEF CON 23 Packet Capture Village (2015)
@@ -319,6 +349,7 @@ or contributions.
 ### Articles
 - [Fuzzing and PR’ing: How We Found Bugs in a Popular Third-Party EtherNet/IP Protocol Stack](https://claroty.com/team82/research/opener-enip-stack-vulnerabilities) - Sharon Brizinov, Tal Keren (Claroty, 2021)
 ### Conferences
+- [Common Flaws in ICS Network Protocols](https://www.youtube.com/watch?v=Bhq4kC52Qg8) - Mars Cheng & Selmon Yang @ Hack In The Box (2020)
 - [Hunting EtherNet/IP Protocol Stacks](https://www.youtube.com/watch?v=0jftEYDo0ao) - Sharon Brizinov @ SANS ICS Security Summit 2022
 ### Tools
 - [CIPster](https://github.com/liftoff-sr/CIPster) - Ethernet/IP (Common Industrial Protocol) stack in C++
@@ -375,9 +406,21 @@ or contributions.
 
 
 
+## FOCAS
+| Name | FOCAS |
+|---|---|
+| Description | Standard protocol for collecting data from Fanuc CNC machines |
+| Keywords | Fanuc, CNC |
+| Port | 8193/tcp |
+| Detailed page | [focas.md](protocols/focas.md) |
+### Articles
+- [Exploring Fanuc FOCAS Connectivity](https://www.machinemetrics.com/connectivity/protocols/focas) - Machine Metrics
+
+
 ## GE-SRTP
 | Name | GE-SRTP |
 |---|---|
+| Alias | Fanuc |
 | Description | General Electric's protocol for communication between GE devices and SCADA |
 | Port | 18245/tcp |
 | Detailed page | [ge-srtp.md](protocols/ge-srtp.md) |
@@ -524,6 +567,7 @@ or contributions.
 - [InSecurity in Building Automation](https://www.youtube.com/watch?v=G9ESeUWfYbs) - Thomas Brandsetter @ DEF CON 25 ICS Village (2017)
 - [Learn how to control every room at a luxury hotel remotely](https://www.youtube.com/watch?v=RX-O4XuCW1Y) - Jesus Molina @ DEF CON 22 (2015)
 - [Learn How to Control Every Room at a Luxury Hotel Remotely](https://www.youtube.com/watch?v=xomtYrcTSgU) - Jesus Nomeames @ Black Hat USA (2014)
+- [Pwning KNX & ZigBee Networks](https://www.youtube.com/watch?v=1Bv_xQ4A9ZQ) - HuiYu Wu, YuXiang Li & Yong Yang @ Hack In The Box (2018)
 - [Sneak into buildings with KNXnet/IP](https://www.youtube.com/watch?v=QofeTV39kQE) - Claire Vacherot @ DEF CON 29 (2021)
 ### Papers
 - [An Overview of Wireless IoT Protocol Security in the Smart Home Domain](https://arxiv.org/abs/1801.07090) - Stefan Marksteiner, Víctor Juan Expósito Jiménez, Heribert Vallant, Herwig Zeiner (2018)
@@ -584,6 +628,16 @@ or contributions.
 
 
 
+## MDLC
+| Name | MDLC |
+|---|---|
+| Description | Motorola Data Link Control protocol |
+| Keywords | Motorola |
+| Detailed page | [mdlc.md](protocols/mdlc.md) |
+### Conferences
+- [ICEFALL - Revisiting A Decade Of OT Insecure-By-Design Practices](https://www.youtube.com/watch?v=OHRgak1fI9k) - Jos Wetzels @ Hack In The Box (2022)
+
+
 ## MELSEC
 | Name | MELSEC |
 |---|---|
@@ -607,19 +661,25 @@ or contributions.
 | Scapy layer | [modbus.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/modbus.py) |
 | Example Pcap(s) | [ICS-pcap Modbus](https://github.com/automayt/ICS-pcap/tree/master/MODBUS) |
 | Detailed page | [modbus.md](protocols/modbus.md) |
+### Documentations
+- [Modbus Mesulog Standard Functions Help](http://www.mesulog.fr/help/modbus/index.html?page=read-device-identification-f43.html) - Description for Modbus standard functions
 ### Articles
 - [Articles about Modbus](https://ozeki.hu/p_5841-modbus-protocol.html) - Ozeki
 - [Introduction to Modbus and Modbus Function Codes](https://control.com/technical-articles/introduction-to-modbus-and-modbus-function-codes/) - Shawn Dietrich, Control Automation (2023)
 ### Conferences
 - [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
+- [Common Flaws in ICS Network Protocols](https://www.youtube.com/watch?v=Bhq4kC52Qg8) - Mars Cheng & Selmon Yang @ Hack In The Box (2020)
 - [Fun with Modbus 0x5a Nothing New Still Relevant?](https://www.youtube.com/watch?v=A_B69Rifu1g) - Arnaud Soullié @ DEF CON 25 ICS Village (2017)
 - [Industrial Control Systems : Pentesting PLCs 101 (Part 1/2)](https://www.youtube.com/watch?v=iGwm6-lyn2Y) - Arnaud Soullie @ Black Hat Europe (2014)
 - [Industrial Control Systems : Pentesting PLCs 101 (Part 2/2)](https://www.youtube.com/watch?v=rP_Jys1_OJk) - Arnaud Soullie @ Black Hat Europe (2014)
 - [Industrial Protocol Gateways Under Analysis](https://www.youtube.com/watch?v=Rbkw_jsTBsY) - Marco Balduzzi @ Black Hat USA (2020)
+- [Industrial Protocol Gateways: A Deep-Dive of Moxa MGate 5105-MB-EIP](https://www.youtube.com/watch?v=tRi2te9yBuk) - Philippe Lin @ Hack In The Box (2020)
 - [Modbus Enumeration | SANS ICS Concepts](https://www.youtube.com/watch?v=QO99yojavvE) - @ SANS ICS Security (2021)
 - [Modbus Man-In-The-Middle | SANS ICS Concepts](https://www.youtube.com/watch?v=-1WbegoU8i0) - @ SANS ICS Security (2021)
+- [Modbus Traffic Analysis | SANS ICS Concepts](https://www.youtube.com/watch?v=OAsLdXzKQo8) - @ SANS ICS Security (2021)
 - [ModScan: A SCADA MODBUS Network Scanner](https://www.youtube.com/watch?v=O_trNBh31lM) - Mark Bristow @ DEF CON 16 (2013)
 - [Out of Control: Demonstrating SCADA device exploitation](https://www.youtube.com/watch?v=FTzAkEnwx_c) - Eric Forner & Brian Meixell @ Black Hat USA (2013)
+- [Stealing PLC Intellectual Property: A Red Teaming Story](https://www.youtube.com/watch?v=SWFt9T8sGX0) - Matteo Beccaro @ Hack In The Box (2017)
 - [The SCADA That Didn't Cry Wolf- Who's Really Attacking Your ICS Devices](https://www.youtube.com/watch?v=0M8nVv0bz6k) - Kyle Wilhoit @ Black Hat USA (2013)
 - [Understanding SCADA's Modbus Protocol](https://www.youtube.com/watch?v=oVDYaG2HInU) - Justin Searle @ Black Hat Asia (2015)
 - [Unraveling SCADA Protocols Using Sulley Fuzzer](https://www.youtube.com/watch?v=UUta_Ord8GI) - Ganesh Devarajan @ DEF CON 15 (2014)
@@ -646,6 +706,23 @@ or contributions.
 - [When Machines Can't Talk](https://www.youtube.com/watch?v=X3fUNWRgeao) - Federico Maggi & Davide Quarta @ Black Hat Europe (2018)
 
 
+## MTConnect
+| Name | MTConnect |
+|---|---|
+| Alias | ANSI/MTC1.4-2018 |
+| Description | Protocol for data exchange between manufacturing equipment, devices, and software applications |
+| Keywords | CNC |
+| Port | 7878/tcp |
+| Detailed page | [mtconnect.md](protocols/mtconnect.md) |
+### Documentations
+- [MTConnect.org](https://www.mtconnect.org/) - MTConnect official website
+### Articles
+- [How to Collect Data Using MTConnect](https://support.machinemetrics.com/hc/en-us/articles/360020875054-How-to-Collect-Data-Using-MTConnect) - Machine Metrics
+### Conferences
+- [Abusing CNC Technologies](https://www.youtube.com/watch?v=jl-wVwk24k8) - Marco Balduzzi @ Black Hat Europe (2022)
+- [An Analysis Of Computer Numerical Control Machines In Industry 4.0](https://www.youtube.com/watch?v=b3k7R8FUdIE) - Marco Balduzzi @ Hack In The Box (2023)
+
+
 ## Niagara Fox
 | Name | Niagara Fox |
 |---|---|
@@ -666,6 +743,9 @@ or contributions.
 | Description | Legacy protocol for real-time data exchange in industrial systems |
 | Scapy layer | [opc_da.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/opc_da.py) |
 | Detailed page | [opc-da.md](protocols/opc-da.md) |
+### Conferences
+- [DEF CON 25 Conference - Jason Staggs - Breaking Wind: Adventures Hacking Wind Farm Control Networks](https://www.youtube.com/watch?v=DfNwWQAOdks) - @ DEF CON (2017)
+- [Open Platform Communications (OPC) | SANS ICS Concepts](https://www.youtube.com/watch?v=KpFM6YS15pU) - @ SANS ICS Security (2021)
 ### Papers
 - [Exploring the OPC attack surface](https://claroty.com/team82/research/white-papers/exploring-the-opc-attack-surface) - Claroty Team82 (2021)
 ### Tools
@@ -692,6 +772,8 @@ or contributions.
 - [A Broken Chain: Discovering OPC UA Attack Surface and Exploiting the Supply Chain](https://www.youtube.com/watch?v=bWJ6DY86hkc) - Eran Jacob @ Black Hat USA (2021)
 - [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
 - [Exploiting OPC UA - Practical Attacks Against OPC UA Architectures](https://www.youtube.com/watch?v=de6kpQVvFL0) - Sharon Brizinov, Noam Moshe @ DEF CON 31 (2023)
+- [Exploiting OPC-UA in Every Possible Way: Practical Attacks Against Modern OPC-UA Architectures](https://www.youtube.com/watch?v=Setiy_a1Ch0) - Sharon Brizinov & Noam Moshe @ Black Hat USA (2023)
+- [Open Platform Communications (OPC) | SANS ICS Concepts](https://www.youtube.com/watch?v=KpFM6YS15pU) - @ SANS ICS Security (2021)
 - [Resting on Feet of Clay: Securely Bootstrapping OPC UA Deployments](https://www.youtube.com/watch?v=8RUVB9eeITQ) - Alessandro Erba & Nils Ole Tippenhauer @ Black Hat Europe (2021)
 ### Papers
 - [Exploring the OPC attack surface](https://claroty.com/team82/research/white-papers/exploring-the-opc-attack-surface) - Claroty Team82 (2021)
@@ -777,6 +859,19 @@ or contributions.
 - [What Is the Difference Between Profibus and Profinet?](https://control.com/technical-articles/understanding-profibus-vs-profinet/) - Antonio Armenta, Control Automation (2021)
 
 
+## RTPS
+| Name | RTPS |
+|---|---|
+| Description | RTI's Real-Time Publish-Suscribe protocol for Data Distribution Systems (DDS) |
+| Keywords | RTI, DDS |
+| Port | 7412/udp |
+| Wireshark dissector | [packet-rtps.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-rtps.c) |
+| Scapy layer | [rtps](https://github.com/secdev/scapy/tree/master/scapy/contrib/rtps) |
+| Detailed page | [rtps.md](protocols/rtps.md) |
+### Conferences
+- [The Data Distribution Service (DDS) Protocol is Critical: Let's Use it Securely!](https://www.youtube.com/watch?v=7IV49wKxs4c) - Federico Maggi, Erik Boasson @ Black Hat EU 2021
+
+
 ## S-Bus
 | Name | S-Bus |
 |---|---|
@@ -787,7 +882,8 @@ or contributions.
 | Wireshark dissector | [packet-sbus.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-sbus.c) |
 | Example Pcap(s) | [ICS-pcap Ether-S-Bus](https://github.com/automayt/ICS-pcap/tree/master/ETHERSBUS/sbus) |
 | Detailed page | [s-bus.md](protocols/s-bus.md) |
-
+### Conferences
+- [ICEFALL - Revisiting A Decade Of OT Insecure-By-Design Practices](https://www.youtube.com/watch?v=OHRgak1fI9k) - Jos Wetzels @ Hack In The Box (2022)
 
 
 ## S7comm
@@ -905,6 +1001,9 @@ or contributions.
 - [The Unity (UMAS) protocol (Part III)](http://lirasenlared.blogspot.com/2017/08/the-unity-umas-protocol-part-iii.html) - Liras en la red (2017)
 - [The Unity (UMAS) protocol (Part IV)](http://lirasenlared.blogspot.com/2017/08/the-unity-umas-protocol-part-iv.html) - Liras en la red (2017)
 - [The Unity (UMAS) protocol (Part V)](http://lirasenlared.blogspot.com/2017/09/the-unity-umas-protocol-part-v.html) - Liras en la red (2017)
+### Conferences
+- [Going Deeper Into Schneider Modicon PAC Security](https://www.youtube.com/watch?v=s184S7LDtEg) - Gao Jian @ Hack In The Box (2021)
+- [Nakatomi Space: Lateral Movement As L1 Post-Exploitation In OT](https://www.youtube.com/watch?v=0b87g3tY6bY) - Jos Wetzels @ Hack In The Box (2023)
 ### Tools
 - [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
 
@@ -938,11 +1037,6 @@ or contributions.
 ### Tools
 - [KillerBee](https://github.com/riverloopsec/killerbee) - IEEE 802.15.4/ZigBee Security Research Toolkit
 - [Mirage](https://github.com/RCayre/mirage) - Framework dedicated to the security analysis of wireless communications
-
-> All unreviewed AI-generated data is marked with `*`.<br>
-AI is used as a search engine with an extra step. It is never used to find
-resources because it does not find them, it invents them. More details
-[here](./srcs/README.md#note-on-ai-generated-content).
 
 **awesome-industrial-protocols** is licensed under
 [CC0](https://creativecommons.org/publicdomain/zero/1.0/). **Turn/IP** is

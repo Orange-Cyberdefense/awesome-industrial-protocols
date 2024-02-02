@@ -21,6 +21,8 @@
 - [A Broken Chain: Discovering OPC UA Attack Surface and Exploiting the Supply Chain](https://www.youtube.com/watch?v=bWJ6DY86hkc) - Eran Jacob @ Black Hat USA (2021)
 - [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
 - [Exploiting OPC UA - Practical Attacks Against OPC UA Architectures](https://www.youtube.com/watch?v=de6kpQVvFL0) - Sharon Brizinov, Noam Moshe @ DEF CON 31 (2023)
+- [Exploiting OPC-UA in Every Possible Way: Practical Attacks Against Modern OPC-UA Architectures](https://www.youtube.com/watch?v=Setiy_a1Ch0) - Sharon Brizinov & Noam Moshe @ Black Hat USA (2023)
+- [Open Platform Communications (OPC) | SANS ICS Concepts](https://www.youtube.com/watch?v=KpFM6YS15pU) - @ SANS ICS Security (2021)
 - [Resting on Feet of Clay: Securely Bootstrapping OPC UA Deployments](https://www.youtube.com/watch?v=8RUVB9eeITQ) - Alessandro Erba & Nils Ole Tippenhauer @ Black Hat Europe (2021)
 ## Papers
 - [Exploring the OPC attack surface](https://claroty.com/team82/research/white-papers/exploring-the-opc-attack-surface) - Claroty Team82 (2021)
@@ -32,5 +34,3 @@
 - [opcua-client-gui](https://github.com/FreeOpcUa/opcua-client-gui) - Simple OPC-UA GUI client
 - [python-opcua](https://github.com/FreeOpcUa/python-opcua) - OPC UA Client and Server in Python
 - [UA-.NETStandard](https://github.com/OPCFoundation/UA-.NETStandard) - Official OPC UA .NET Standard Stack from the OPC Foundation
-
-> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

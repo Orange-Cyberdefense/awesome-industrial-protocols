@@ -16,11 +16,6 @@ from os.path import abspath, dirname, join
 # KEYS                                                                        #
 #-----------------------------------------------------------------------------#
 
-# Used to query OpenAI models to gather information about protocols
-with open("openai_api_key") as fd:
-    key = fd.read().strip()
-OPENAI_API_KEY = key # Insert your OpenAI API key, don't push it.
-
 # Used for fetching videos on Youtube
 with open("google_api_key") as fd:
     key = fd.read().strip()
@@ -101,6 +96,7 @@ mongodb.host = "127.0.0.1"
 mongodb.port = 27017
 mongodb.timeout = 1000
 mongodb.database = "awesome-industrial-protocols"
+mongodb.test_database = "test-aip"
 mongodb.id = "_id"
 mongodb.obj = "_db"
 
@@ -199,24 +195,6 @@ packets.FIELDS = {
 # AUTOMATED FETCH                                                             #
 #-----------------------------------------------------------------------------#
 
-#--- OpenAI-generated data ---------------------------------------------------#
-
-AI_WARNING = "WARNING: AI-generated data is not reliable.\n" \
-"All AI-generated data is marked with *, please double-check it."
-
-ai = SimpleNamespace()
-ai.key = OPENAI_API_KEY
-ai.model = "text-davinci-003"
-ai.temperature = 0.5
-ai.max_tokens = 100
-
-ai.yes_no_question = "{0} {1}? yes or no"
-ai.is_protocol = "is a network protocol"
-ai.description = "description in 10 words"
-ai.default_port = "default port"
-# Documentation
-ai.is_spec_free = "specification is available for free"
-
 #--- Data extracted from Wireshark dissectors --------------------------------#
 
 wireshark = SimpleNamespace()
@@ -250,5 +228,7 @@ youtube.watch_url = "https://www.youtube.com/watch?v="
 youtube.selected_channels = {
     "UC6Om9kAkl32dWlDSNlDS9Iw": "DEF CON",
     "UCJ6q9Ie29ajGqKApbLqfBOg": "Black Hat",
-    "UCcA_TRQ5sLtFC3pAkaVot3Q": "SANS ICS Security"
+    "UCcA_TRQ5sLtFC3pAkaVot3Q": "SANS ICS Security",
+    "UC0BJVNTIEbG8CLG-xVVWJnA": " Hack In The Box",
+    "UCGdJZb8OWZPrRK8PuEeoZuA": "Insomni'Hack"
 }

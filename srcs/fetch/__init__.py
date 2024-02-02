@@ -6,7 +6,6 @@
 """Automatically fetch protocols-related data from various sources."""
 
 from .fetch import *
-from .ai import *
 from .wireshark import *
 from .scapy import *
 from .cve import *

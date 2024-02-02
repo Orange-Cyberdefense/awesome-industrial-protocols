@@ -14,5 +14,3 @@
 ## Tools
 - [abdf1](https://sourceforge.net/projects/abdf1/) - AB DF1 Protocol RS232 driver for Micrologix, SLC500, PLC 5
 - [Df1](https://github.com/leicht/Df1) - Df1 protocol for Allen-Bradley PLC
-
-> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))

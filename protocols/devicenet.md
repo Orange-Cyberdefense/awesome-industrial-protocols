@@ -12,5 +12,3 @@
 - [DeviceNet](https://www.odva.org/technology-standards/key-technologies/devicenet/) - Overview on ODVA.org
 ## Articles
 - [DeviceNet and Ethernet/IP](https://www.rtautomation.com/rtas-blog/devicenet-and-ethernet-ip/) - Blog post on RTAutomation
-
-> All unreviewed AI-generated data is marked with `*`. ([Why?](../srcs/README.md#note-on-ai-generated-content))
