@@ -69,6 +69,7 @@ MSG_WRITE_ALIST = "Awesome list written to {0}."
 MSG_WRITE_PPAGE = "{0} protocol page written to {1}."
 MSG_DISSECTOR_EXISTS = "Dissector {0} already exists for protocol {1}."
 MSG_LAYER_EXISTS = "Layer {0} already exists for protocol {1}."
+MSG_EXISTS = "'{0}' already exists for protocol {1}."
 MSG_MULTILAYER = "Multiple matching layers found: {0}."
 MSG_CVE_WAIT = "Fetching CVEs in NIST's database (it may take some time)."
 
@@ -97,6 +98,8 @@ ERR_PACKETEXISTS = "Packet '{0}' already exists for protocol {1}."
 ERR_FETCHSOURCE = "Fetch source not found. Choose between {0} (-h for help)."
 ERR_NODISSECTOR = "No dissector found for protocol {0}."
 ERR_NOLAYER = "No layer found for protocol {0}."
+ERR_NOCVE = "No CVE found for protocol {0}."
+ERR_NOVID = "No video found for protocol {0}."
 ERR_GOOGLEAPI = "To use Youtube search you need google-api-python-client." \
                 "(pip install google-api-python-client)."
 
@@ -536,7 +539,7 @@ class CLI(UI):
                     if link:
                         protocol.set(p.wireshark, link._id, replace=True)
         except FetchException as se:
-            ERROR(str(se), will_exit=True)
+            ERROR(str(se))
 
     def __cmd_fetch_scapy(self, protocol: Protocol) -> None:
         """-F scapy / --fetch scapy"""
@@ -558,7 +561,7 @@ class CLI(UI):
                     if link:
                         protocol.set(p.scapy, link._id, replace=True)
         except FetchException as se:
-            ERROR(str(se), will_exit=True)
+            ERROR(str(se))
 
     def __cmd_fetch_cve(self, protocol: Protocol) -> None:
         """-F cve / --fetch cve"""
@@ -566,8 +569,15 @@ class CLI(UI):
             print(MSG_CVE_WAIT)
             candidates = CVEList().fetch_by_keywords(protocol)
             current_list = [self.links.get_id(x).name for x in protocol.get(p.cve)[1]]
-            for c in candidates:
+            if not candidates:
+                ERROR(ERR_NOCVE.format(protocol.name))
+        except FetchException as se:
+            ERROR(str(se))
+            return
+        for c in candidates:
+            try:
                 if self.links.has(c.url) and c.id in current_list:
+                    print(MSG_EXISTS.format(c.id, protocol.name))
                     continue # Skipping the ones we already have
                 self.__box_print(c.id, c.url, c.description)
                 if self.__confirm(MSG_CONFIRM_ADDCVE.format(c.id,
@@ -580,16 +590,26 @@ class CLI(UI):
                             protocol.set(p.cve, link._id)
                         except DBException as dbe:
                             ERROR(str(dbe))
-        except FetchException as se:
-            ERROR(str(se), will_exit=True)
+            except FetchException as se:
+                ERROR(str(se))
 
     def __cmd_fetch_youtube(self, protocol: Protocol) -> None:
         """-F youtube / --fetch youtube"""
         try:
             candidates = Youtube().get_videos(protocol)
             current_list = [self.links.get_id(x).url for x in protocol.resources]
-            for c in candidates:
+            if not candidates:
+                ERROR(ERR_NOVID.format(protocol.name))
+        except FetchException as se:
+            ERROR(str(se))
+            return
+        except ModuleNotFoundError:
+            ERROR(ERR_GOOGLEAPI)
+            return
+        for c in candidates:
+            try:
                 if c.url in current_list:
+                    print(MSG_EXISTS.format(c.title, protocol.name))
                     continue
                 self.__box_print(str(c), c.url, c.description)
                 if self.__confirm(MSG_CONFIRM_ADDVIDEO.format(c.title,
@@ -603,10 +623,8 @@ class CLI(UI):
                             protocol.set(p.resources, link._id)
                         except DBException as dbe:
                             ERROR(str(dbe))
-        except FetchException as se:
-            ERROR(str(se), will_exit=True)
-        except ModuleNotFoundError:
-            ERROR(ERR_GOOGLEAPI, will_exit=True)
+            except FetchException as se:
+                ERROR(str(se))
 
     #-------------------------------------------------------------------------#
     # Notes                                                                   #
