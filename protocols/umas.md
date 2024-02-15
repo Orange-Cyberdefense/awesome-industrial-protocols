@@ -20,5 +20,5 @@
 - [Nakatomi Space: Lateral Movement As L1 Post-Exploitation In OT](https://www.youtube.com/watch?v=0b87g3tY6bY) - Jos Wetzels @ Hack In The Box (2023)
 ## Tools
 - [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
-- [Apache PLCPY UMAS Driver](https://github.com/apache/plc4x/tree/develop/sandbox/plc4py) - UMAS protocol implementation in Python including ability to read the data doctionary (2024)
+- [Apache PLC4PY UMAS Driver](https://github.com/apache/plc4x/tree/develop/sandbox/plc4py) - UMAS protocol implementation in Python including ability to read the data doctionary (2024)
   
