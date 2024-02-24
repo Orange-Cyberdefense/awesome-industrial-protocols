@@ -17,7 +17,7 @@
 ## Articles
 - [CAN Injection: keyless car theft](https://kentindell.github.io/2023/04/03/can-injection/) - CANIS Automative Labs CTO blog (2023)
 - [CAN-FD - The basic idea](https://www.can-cia.org/can-knowledge/can/can-fd/) - CAN in Automation
-- [Click here to download more cars](https://djnn.sh/click-here-to-download-more-cars/) - djnn
+- [Click here to download more cars](https://djnn.sh/posts/car_hacking) - djnn
 ## Conferences
 - [(Pen)Testing Vehicles with CANToolz](https://www.youtube.com/watch?v=-p47IYz-H-k) - Alexey Sintsov @ Black Hat Europe (2016)
 - [Abusing CAN Bus Spec for DoS in Embedded Systems](https://www.youtube.com/watch?v=okrzUNDLgbo) - Martin Petran @ DEF CON 31 Car Hacking Village (2023)
