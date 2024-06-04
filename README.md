@@ -41,6 +41,7 @@ or contributions.
 - [FOCAS](#focas)
 - [GE-SRTP](#ge-srtp)
 - [GVCP](#gvcp)
+- [GVSP](#gvsp)
 - [HART-IP](#hart-ip)
 - [HICP](#hicp)
 - [HL7](#hl7)
@@ -432,12 +433,29 @@ or contributions.
 ## GVCP
 | Name | GVCP |
 |---|---|
-| Alias | GigE Vision |
 | Description | GigE Vision communication protocol for industrial cameras |
-| Keywords | Camera, Incentive |
+| Keywords | GigE Vision, Camera |
 | Port | 3956/udp |
+| Specifications | [GigE Vision Standard](https://www.automate.org/vision/vision-standards/download-the-gige-vision-standard) |
+| Wireshark dissector | [packet-gvcp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-gvcp.c) |
 | Detailed page | [gvcp.md](protocols/gvcp.md) |
+### Documentations
+- [GVCP packets](https://aravisproject.github.io/docs/aravis-0.4/aravis-gvcp.html) - Details about GVCP packets from Aravis' documentation
+### Tools
+- [GigeVision](https://github.com/Touseefelahi/GigeVision) - Simple GigeVision implementation with GVSP and GVSP
 
+
+## GVSP
+| Name | GVSP |
+|---|---|
+| Description | GigE Vision stream protocol for industrial cameras |
+| Keywords | GigE Vision, Camera |
+| Port | 20202/udp |
+| Specifications | [GigE Vision Standard](https://www.automate.org/vision/vision-standards/download-the-gige-vision-standard) |
+| Wireshark dissector | [packet-gvsp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-gvsp.c) |
+| Detailed page | [gvsp.md](protocols/gvsp.md) |
+### Tools
+- [GigeVision](https://github.com/Touseefelahi/GigeVision) - Simple GigeVision implementation with GVSP and GVSP
 
 
 ## HART-IP
