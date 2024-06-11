@@ -75,6 +75,7 @@ or contributions.
 - [SERCOS-III](#sercos-iii)
 - [SLMP](#slmp)
 - [SOME/IP](#someip)
+- [TLS4](#tls4)
 - [TriStation](#tristation)
 - [TSAA](#tsaa)
 - [UMAS](#umas)
@@ -204,6 +205,7 @@ or contributions.
 |---|---|
 | Description | Programmable logic controller (PLC) development, communication protocol and runtime environment. |
 | Port | 1200/tcp |
+| Nmap script(s) | [codesys-v2-discover.nse](https://github.com/digitalbond/Redpoint/blob/master/codesys-v2-discover.nse) |
 | Detailed page | [codesys.md](protocols/codesys.md) |
 ### Conferences
 - [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
@@ -297,7 +299,6 @@ or contributions.
 - [Sniffing SCADA](https://www.youtube.com/watch?v=4vPptUmyv4U) - Karl Koscher @ DEF CON 23 Packet Capture Village (2015)
 - [Unraveling SCADA Protocols Using Sulley Fuzzer](https://www.youtube.com/watch?v=UUta_Ord8GI) - Ganesh Devarajan @ DEF CON 15 (2014)
 ### Tools
-- [dnp-info](https://github.com/sjhilt/Nmap-NSEs/blob/master/dnp3-info.nse) - Nmap discovery script for DNP3
 - [dnp3-simulator](https://github.com/dnp3/dnp3-simulator) - .NET DNP3 simulator with GUI 
 - [FreyrSCADA DNP3](https://github.com/FreyrSCADA/DNP3) - DNP3 Protocol - Outstation Server and Client Master Simulator
 - [gec/dnp3](https://github.com/gec/dnp3) - Open source Distributed Network Protocol
@@ -989,6 +990,21 @@ or contributions.
 - [SOME-IP.com](https://some-ip.com/) - Main website with resources about SOME/IP
 ### Conferences
 - [Automotive Ethernet Fuzzing](https://www.youtube.com/watch?v=sJGJqpflEJI) - Jonghyuk Song, Soohwan Oh, Woongjo Choi @ DEF CON 30 (2022)
+
+
+## TLS4
+| Name | TLS4 |
+|---|---|
+| Alias | ATG |
+| Description | Veeder Root's Automatic Tank Gauge (ATG) protocol |
+| Keywords | Gas |
+| Port | 10001/tcp |
+| Nmap script(s) | [atg-info.nse](https://github.com/digitalbond/Redpoint/blob/master/atg-info.nse) |
+| Detailed page | [tls4.md](protocols/tls4.md) |
+### Documentations
+- [Network Router for ATG Applications Installation manual (577014-129)](https://docs.veeder.com/gold/download.cfm?doc_id=123) - Technical network documentation from Veeder Root
+### Articles
+- [Gas Station Nightmare: Are Exposed ATGs Our Next Security Crisis?](https://medium.com/@jacmarab/gas-station-nightmare-are-exposed-atgs-our-next-security-crisis-1ac80a55b405) - Jacob Marabelli (2023)
 
 
 ## TriStation
