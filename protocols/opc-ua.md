@@ -31,6 +31,7 @@
 ## Tools
 - [freeopcua](https://github.com/FreeOpcUa/freeopcua) - Open Source C++ OPC-UA Server and Client Library
 - [OpalOPC](https://opalopc.com) - OPC UA vulnerability and misconfiguration scanner
+- [opcua-asyncio](https://github.com/FreeOpcUa/opcua-asyncio) - Asyncio-based asynchronous OPC UA client and server based on python-opcua
 - [opcua-client-gui](https://github.com/FreeOpcUa/opcua-client-gui) - Simple OPC-UA GUI client
 - [python-opcua](https://github.com/FreeOpcUa/python-opcua) - OPC UA Client and Server in Python
 - [UA-.NETStandard](https://github.com/OPCFoundation/UA-.NETStandard) - Official OPC UA .NET Standard Stack from the OPC Foundation

@@ -20,12 +20,16 @@ or contributions.
 
 ## Contents
 
+
+Currently, there are **63 protocols** with a total of 667 resources.
+- [ATG](#atg)
 - [BACnet/IP](#bacnetip)
 - [BSAP](#bsap)
 - [CAN](#can)
 - [CC-Link IE](#cc-link-ie)
 - [CIP](#cip)
 - [CODESYS](#codesys)
+- [Crimson](#crimson)
 - [CSPv4](#cspv4)
 - [DeviceNet](#devicenet)
 - [DF1](#df1)
@@ -40,6 +44,8 @@ or contributions.
 - [FL-net](#fl-net)
 - [FOCAS](#focas)
 - [GE-SRTP](#ge-srtp)
+- [GVCP](#gvcp)
+- [GVSP](#gvsp)
 - [HART-IP](#hart-ip)
 - [HICP](#hicp)
 - [HL7](#hl7)
@@ -77,8 +83,31 @@ or contributions.
 - [TSAA](#tsaa)
 - [UMAS](#umas)
 - [WITS](#wits)
+- [XCP](#xcp)
 - [ZigBee](#zigbee)
 
+
+
+## ATG
+| Name | ATG |
+|---|---|
+| Alias | TLS4, TLS-350, TLS-450 |
+| Description | Veeder Root's Automatic Tank Gauge (ATG) protocol |
+| Keywords | Gas, Guardian AST |
+| Port | 10001/tcp |
+| Specifications | [Veeder Root serial interface manual for TLS-450](https://nationalpetroleum.net/docs/veeder-root/tls450-serialcommands-manual.pdf), [Veeder Root serial interface manual for TLS-350](https://cdn.chipkin.com/files/liz/576013-635.pdf) |
+| Nmap script(s) | [atg-info.nse](https://github.com/digitalbond/Redpoint/blob/master/atg-info.nse) |
+| Detailed page | [atg.md](protocols/atg.md) |
+### Documentations
+- [Network Router for ATG Applications Installation manual (577014-129)](https://docs.veeder.com/gold/download.cfm?doc_id=123) - Technical network documentation from Veeder Root
+### Articles
+- [Gas Station Nightmare: Are Exposed ATGs Our Next Security Crisis?](https://medium.com/@jacmarab/gas-station-nightmare-are-exposed-atgs-our-next-security-crisis-1ac80a55b405) - Jacob Marabelli (2023)
+### Conferences
+- [The Little Pump Gauge That Could: Attacks Against Gas Pump Monitoring Systems](https://www.youtube.com/watch?v=gorNee0MaoU) - Kyle Wilhoit and Stephen Hilt @ Black Hat USA (2015)
+### Papers
+- [The GasPot Experiment: Unexamined Perils in Using Gas-Tank-Monitoring Systems](https://www.blackhat.com/docs/us-15/materials/us-15-Wilhoit-The-Little-Pump-Gauge-That-Could-Attacks-Against-Gas-Pump-Monitoring-Systems-wp.pdf) - Kyle Wilhoit and Stephen Hilt (Trend Micro, 2015)
+### Tools
+- [GasPot](https://github.com/sjhilt/GasPot) - Honeypot simulating a Veeder Root Guardian AST
 
 
 ## BACnet/IP
@@ -92,6 +121,7 @@ or contributions.
 | Specifications | [BACnet/IP Specification](https://bacnet.org/buy/) |
 | Nmap script(s) | [bacnet-info.nse](https://nmap.org/nsedoc/scripts/bacnet-info.html) |
 | Wireshark dissector | [packet-bacnet.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-bacnet.c) |
+| Example Pcap(s) | [ICS-pcap BACnet](https://github.com/automayt/ICS-pcap/tree/master/BACNET), [S4x15 ICS Village PCAP Files](https://www.netresec.com/?page=DigitalBond_S4) |
 | Detailed page | [bacnetip.md](protocols/bacnetip.md) |
 ### Articles
 - [10 things you should know about BACnet](https://www.rtautomation.com/rtas-blog/10-things-about-bacnet/) - Blog post on RTAutomation
@@ -138,7 +168,7 @@ or contributions.
 ### Articles
 - [CAN Injection: keyless car theft](https://kentindell.github.io/2023/04/03/can-injection/) - CANIS Automative Labs CTO blog (2023)
 - [CAN-FD - The basic idea](https://www.can-cia.org/can-knowledge/can/can-fd/) - CAN in Automation
-- [Click here to download more cars](https://djnn.sh/click-here-to-download-more-cars/) - djnn
+- [Click here to download more cars](https://djnn.sh/posts/car_hacking) - djnn
 ### Conferences
 - [(Pen)Testing Vehicles with CANToolz](https://www.youtube.com/watch?v=-p47IYz-H-k) - Alexey Sintsov @ Black Hat Europe (2016)
 - [Abusing CAN Bus Spec for DoS in Embedded Systems](https://www.youtube.com/watch?v=okrzUNDLgbo) - Martin Petran @ DEF CON 31 Car Hacking Village (2023)
@@ -185,6 +215,7 @@ or contributions.
 | Description | ODVA's protocol suite for industrial automation communication |
 | Keywords | ODVA, Ethernet/IP, DeviceNet, ControlNet, CompoNet |
 | Wireshark dissector | [packet-cip.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-cip.c) |
+| Example Pcap(s) | [S4x15 ICS Village PCAP Files](https://www.netresec.com/?page=DigitalBond_S4) |
 | Detailed page | [cip.md](protocols/cip.md) |
 ### Documentations
 - [Common Industrial Protocol (CIP)](https://www.odva.org/technology-standards/key-technologies/common-industrial-protocol-cip/) - Overview on ODVA.org
@@ -201,10 +232,24 @@ or contributions.
 |---|---|
 | Description | Programmable logic controller (PLC) development, communication protocol and runtime environment. |
 | Port | 1200/tcp |
+| Nmap script(s) | [codesys-v2-discover.nse](https://github.com/digitalbond/Redpoint/blob/master/codesys-v2-discover.nse) |
 | Detailed page | [codesys.md](protocols/codesys.md) |
 ### Conferences
 - [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
 - [CoDe16; 16 Zero-Day Vulnerabilities Affecting CODESYS Framework Leading to Remote Code Execution](https://www.youtube.com/watch?v=BuYj7af7LVg) - Vladimir Eliezer Tokarev @ Black Hat USA (2023)
+
+
+## Crimson
+| Name | Crimson |
+|---|---|
+| Alias | Cr3 |
+| Description | Red Lion's programming protocol |
+| Port | 789/tcp |
+| Nmap script(s) | [cr3-fingerprint.nse](https://github.com/internetofallthethings/cr3-nmap/blob/master/cr3-fingerprint.nse) |
+| Wireshark dissector | [cr3.lua](https://github.com/ITI/ICS-pcap/blob/master/Red%20Lion%20(Crimson%20v3)/cr3.lua) |
+| Detailed page | [crimson.md](protocols/crimson.md) |
+### Articles
+- [Analysing the Attack Surface of an Industrial Data Acquisition Device](https://www.pentestpartners.com/security-blog/analysing-the-attack-surface-of-an-industrial-data-acquisition-device/) - Overview of a Red Lion device using Crimson 3 (Andrew Ramsdale, 2019)
 
 
 ## CSPv4
@@ -294,7 +339,6 @@ or contributions.
 - [Sniffing SCADA](https://www.youtube.com/watch?v=4vPptUmyv4U) - Karl Koscher @ DEF CON 23 Packet Capture Village (2015)
 - [Unraveling SCADA Protocols Using Sulley Fuzzer](https://www.youtube.com/watch?v=UUta_Ord8GI) - Ganesh Devarajan @ DEF CON 15 (2014)
 ### Tools
-- [dnp-info](https://github.com/sjhilt/Nmap-NSEs/blob/master/dnp3-info.nse) - Nmap discovery script for DNP3
 - [dnp3-simulator](https://github.com/dnp3/dnp3-simulator) - .NET DNP3 simulator with GUI 
 - [FreyrSCADA DNP3](https://github.com/FreyrSCADA/DNP3) - DNP3 Protocol - Outstation Server and Client Master Simulator
 - [gec/dnp3](https://github.com/gec/dnp3) - Open source Distributed Network Protocol
@@ -425,6 +469,34 @@ or contributions.
 | Port | 18245/tcp |
 | Detailed page | [ge-srtp.md](protocols/ge-srtp.md) |
 
+
+
+## GVCP
+| Name | GVCP |
+|---|---|
+| Description | GigE Vision communication protocol for industrial cameras |
+| Keywords | GigE Vision, Camera |
+| Port | 3956/udp |
+| Specifications | [GigE Vision Standard](https://www.automate.org/vision/vision-standards/download-the-gige-vision-standard) |
+| Wireshark dissector | [packet-gvcp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-gvcp.c) |
+| Detailed page | [gvcp.md](protocols/gvcp.md) |
+### Documentations
+- [GVCP packets](https://aravisproject.github.io/docs/aravis-0.4/aravis-gvcp.html) - Details about GVCP packets from Aravis' documentation
+### Tools
+- [GigeVision](https://github.com/Touseefelahi/GigeVision) - Simple GigeVision implementation with GVSP and GVSP
+
+
+## GVSP
+| Name | GVSP |
+|---|---|
+| Description | GigE Vision stream protocol for industrial cameras |
+| Keywords | GigE Vision, Camera |
+| Port | 20202/udp |
+| Specifications | [GigE Vision Standard](https://www.automate.org/vision/vision-standards/download-the-gige-vision-standard) |
+| Wireshark dissector | [packet-gvsp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-gvsp.c) |
+| Detailed page | [gvsp.md](protocols/gvsp.md) |
+### Tools
+- [GigeVision](https://github.com/Touseefelahi/GigeVision) - Simple GigeVision implementation with GVSP and GVSP
 
 
 ## HART-IP
@@ -641,9 +713,11 @@ or contributions.
 ## MELSEC
 | Name | MELSEC |
 |---|---|
-| Alias | MEL-SEC |
+| Alias | MEL-SEC, MELSEC-Q |
 | Description | Communication protocol for Mitsubishi Electric's MELSEC series of PLCs |
 | Keywords | Mitsubishi, MELSOFT |
+| Port | 5007/tcp, 5006/udp |
+| Nmap script(s) | [melsecq-discover.nse](https://github.com/Z-0ne/ICS-Discovery-Tools/blob/master/melsecq-discover.nse), [melsecq-discover-udp.nse](https://github.com/Z-0ne/ICS-Discovery-Tools/blob/master/melsecq-discover-udp.nse) |
 | Detailed page | [melsec.md](protocols/melsec.md) |
 ### Conferences
 - [Taking Apart and Taking Over ICS & SCADA Ecosystems](https://www.youtube.com/watch?v=L0w_aE4jRFw) - Mars Cheng & Selmon Yang @ DEF CON 29 (2021)
@@ -659,7 +733,7 @@ or contributions.
 | Nmap script(s) | [modbus-discover.nse](https://nmap.org/nsedoc/scripts/modbus-discover.html), [modicon-info.nse](https://github.com/digitalbond/Redpoint/blob/master/modicon-info.nse) |
 | Wireshark dissector | [packet-mbtcp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-mbtcp.c) |
 | Scapy layer | [modbus.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/modbus.py) |
-| Example Pcap(s) | [ICS-pcap Modbus](https://github.com/automayt/ICS-pcap/tree/master/MODBUS) |
+| Example Pcap(s) | [ICS-pcap Modbus](https://github.com/automayt/ICS-pcap/tree/master/MODBUS), [S4x15 ICS Village PCAP Files](https://www.netresec.com/?page=DigitalBond_S4) |
 | Detailed page | [modbus.md](protocols/modbus.md) |
 ### Documentations
 - [Modbus Mesulog Standard Functions Help](http://www.mesulog.fr/help/modbus/index.html?page=read-device-identification-f43.html) - Description for Modbus standard functions
@@ -686,6 +760,7 @@ or contributions.
 ### Tools
 - [ctmodbus](https://github.com/ControlThings-io/ctmodbus) - A tool to interact with the Modbus protocol
 - [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
+- [mbtget](https://github.com/sourceperl/mbtget) - A simple Modbus/TCP client in Perl
 - [PyModbus](https://github.com/pymodbus-dev/pymodbus) - A full modbus protocol written in python
 
 
@@ -782,6 +857,7 @@ or contributions.
 ### Tools
 - [freeopcua](https://github.com/FreeOpcUa/freeopcua) - Open Source C++ OPC-UA Server and Client Library
 - [OpalOPC](https://opalopc.com) - OPC UA vulnerability and misconfiguration scanner
+- [opcua-asyncio](https://github.com/FreeOpcUa/opcua-asyncio) - Asyncio-based asynchronous OPC UA client and server based on python-opcua
 - [opcua-client-gui](https://github.com/FreeOpcUa/opcua-client-gui) - Simple OPC-UA GUI client
 - [python-opcua](https://github.com/FreeOpcUa/python-opcua) - OPC UA Client and Server in Python
 - [UA-.NETStandard](https://github.com/OPCFoundation/UA-.NETStandard) - Official OPC UA .NET Standard Stack from the OPC Foundation
@@ -817,6 +893,7 @@ or contributions.
 | Description | Real-time Ethernet protocol for industrial automation and control |
 | Port | Ethernet |
 | Wireshark dissector | [packet-epl.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-epl.c) |
+| Example Pcap(s) | [ICS-pcap POWERLINK](https://github.com/automayt/ICS-pcap/tree/master/POWERLINK) |
 | Detailed page | [powerlink.md](protocols/powerlink.md) |
 ### Articles
 - [Quick Start - POWERLINK on Raspberry Pi2](https://web.archive.org/web/20230130182001/https://www.kalycito.com/quick-start-powerlink-on-raspberry-pi2/) - Kalycito, 2018 (Web Archive, domain expired)
@@ -1005,6 +1082,7 @@ or contributions.
 - [Going Deeper Into Schneider Modicon PAC Security](https://www.youtube.com/watch?v=s184S7LDtEg) - Gao Jian @ Hack In The Box (2021)
 - [Nakatomi Space: Lateral Movement As L1 Post-Exploitation In OT](https://www.youtube.com/watch?v=0b87g3tY6bY) - Jos Wetzels @ Hack In The Box (2023)
 ### Tools
+- [Apache PLC4PY UMAS Driver](https://github.com/apache/plc4x/tree/develop/sandbox/plc4py) - UMAS protocol implementation in Python including ability to read the data dictionary (2024)
 - [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
 
 
@@ -1016,6 +1094,26 @@ or contributions.
 | Keywords | Wellsite, Drilling, Geology |
 | Detailed page | [wits.md](protocols/wits.md) |
 
+
+
+## XCP
+| Name | XCP |
+|---|---|
+| Alias | Universal Measurement and Calibration Protocol, ASAM MCD-1 XCP |
+| Description | Interface usually working on top of other protocols (such as USB, CAN/CAN-FD, FlexRay, Ethernet, SXL) to read and write the memory of an ECU |
+| Keywords | CANbus, Automotive, XCP, ASAM MCD-1 XCP |
+| Access | Paid |
+| Specifications | [XCP Book v1.5](https://cdn.vector.com/cms/content/application-areas/ecu-calibration/xcp/XCP_Book_V1.5_EN.pdf), [ASAM MCD-1 XCP specifications](https://www.asam.net/standards/detail/mcd-1-xcp/) |
+| Scapy layer | [automotive/xcp](https://github.com/secdev/scapy/tree/master/scapy/contrib/automotive/xcp) |
+| Detailed page | [xcp.md](protocols/xcp.md) |
+### Documentations
+- [ASAM wiki on XCP standard](https://www.asam.net/standards/detail/mcd-1-xcp/wiki) - Wiki describing protocol history, frame layout, etc.
+- [AutoSAR requirements on XCP](https://www.autosar.org/fileadmin/standards/R21-11/CP/AUTOSAR_SRS_XCP.pdf) - AutoSAR requirements to implement XCP stack in an ECU
+- [The XCP Reference Book](https://www.vector.com/int/en/know-how/protocols/xcp-measurement-and-calibration-protocol/xcp-book/) - Free technical book on XCP protocol and how to use it (Vector)
+### Tools
+- [a2lparser](https://github.com/mrom1/a2lparser) - Python A2L parser and XML exporter
+- [AutoFuze](https://github.com/DanAurea/AutoFuze/tree/master/protocols/xcp) - Automotive Fuzzing tool providing XCP implementation over USB and CAN
+- [xcpdump](https://github.com/christoph2/xcpdump) - ASAM XCP sniffer for SocketCAN
 
 
 ## ZigBee
@@ -1037,6 +1135,10 @@ or contributions.
 ### Tools
 - [KillerBee](https://github.com/riverloopsec/killerbee) - IEEE 802.15.4/ZigBee Security Research Toolkit
 - [Mirage](https://github.com/RCayre/mirage) - Framework dedicated to the security analysis of wireless communications
+
+> Although the resources added to this page are always manually checked, not all
+resources linked here (especially tools) have been tested. Please remain
+careful when using them and don't run untrusted code on your installation.
 
 **awesome-industrial-protocols** is licensed under
 [CC0](https://creativecommons.org/publicdomain/zero/1.0/). **Turn/IP** is

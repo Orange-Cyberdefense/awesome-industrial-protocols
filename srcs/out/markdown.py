@@ -82,6 +82,7 @@ class Markdown():
         """Convert protocols to a nice awesome list in Markdown."""
         self.protocols = protocols.all_as_objects
         self.links = links
+        self.stats = protocols.count
         keywords = {
             m.f_title: self.__f_title,
             m.f_description: self.__f_description,
@@ -140,7 +141,8 @@ class Markdown():
         return IMG(LIST_TITLE, LIST_LOGO)
 
     def __f_toc(self) -> str:
-        toc = [H2(m.t_toc)+"\n"]
+        toc = [H2(m.t_toc) + "\n"]
+        toc += ["\n" + m.t_stats.format(self.stats, self.links.count)]
         for protocol in self.protocols:
             toc.append("- " + INTLINK(protocol.name))
         return "\n".join(toc)

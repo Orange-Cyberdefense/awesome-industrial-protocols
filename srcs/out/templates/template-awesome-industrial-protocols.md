@@ -22,6 +22,10 @@ In this repository:
 
 %content%
 
+> Although the resources added to this page are always manually checked, not all
+  resources linked here (especially tools) have been tested. Please remain
+  careful when using them and don't run untrusted code on your installation.
+
 **awesome-industrial-protocols** is licensed under
 [CC0](https://creativecommons.org/publicdomain/zero/1.0/). **Turn/IP** is
 licensed under [GPL-v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
