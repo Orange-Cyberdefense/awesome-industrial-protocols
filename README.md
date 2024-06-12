@@ -20,6 +20,8 @@ or contributions.
 
 ## Contents
 
+
+Currently, there are **63 protocols** with a total of 667 resources.
 - [ATG](#atg)
 - [BACnet/IP](#bacnetip)
 - [BSAP](#bsap)

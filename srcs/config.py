@@ -53,6 +53,7 @@ markdown.f_resources = "%resources%"
 
 markdown.t_toc = "Contents"
 markdown.t_details = "Detailed page"
+markdown.t_stats = "Currently, there are **{0} protocols** with a total of {1} resources."
 
 #-----------------------------------------------------------------------------#
 # TOOL CONFIGURATION                                                          #
