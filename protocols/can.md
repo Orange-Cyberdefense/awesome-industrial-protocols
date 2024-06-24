@@ -16,7 +16,7 @@
 - [Linux SocketCAN documentation](https://www.kernel.org/doc/html/latest/networking/can.html) - kernel.org
 ## Articles
 - [CAN Injection: keyless car theft](https://kentindell.github.io/2023/04/03/can-injection/) - CANIS Automative Labs CTO blog (2023)
-- [CAN-FD - The basic idea](https://www.can-cia.org/can-knowledge/can/can-fd/) - CAN in Automation
+- [CAN-FD - The basic idea](https://www.can-cia.org/can-knowledge/can-fd-the-basic-idea) - CAN in Automation
 - [Click here to download more cars](https://djnn.sh/posts/car_hacking) - djnn
 ## Conferences
 - [(Pen)Testing Vehicles with CANToolz](https://www.youtube.com/watch?v=-p47IYz-H-k) - Alexey Sintsov @ Black Hat Europe (2016)
@@ -35,7 +35,6 @@
 - [Free-Fall: Hacking Tesla from Wireless to CAN Bus](https://www.youtube.com/watch?v=0w8J9bmCI54) - Ling Liu, Sen Nie & Yuefeng Du @ Black Hat USA (2017)
 - [Fuzzing CAN / CAN FD ECU's and Network](https://www.youtube.com/watch?v=IMZ8DD4lTAY) - Samir Bhagwat @ DEF CON 29 Car Hacking Village (2021)
 - [Hopping on the CAN Bus](https://www.youtube.com/watch?v=U1yecKUmnFo) - Eric Evenchick @ Black Hat USA (2015)
-- [Self-Driving and Connected Cars: Fooling Sensors and Tracking Drivers](https://www.youtube.com/watch?v=C29UGFsIWVI) - Jonathan Petit @ Black Hat Europe (2015)
 ## Papers
 - [A Fuzz Testing Methodology for Cyber-security Assurance of the Automotive CAN Bus](https://pure.coventry.ac.uk/ws/portalfiles/portal/37979533/Fowler_PhD.pdf) - Daniel S. Fowler, Coventry University (2019)
 ## Tools

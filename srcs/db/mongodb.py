@@ -99,7 +99,6 @@ class Collection(ABC):
 
     def check(self) -> None:
         """Check that the content of the Collection is valid."""
-        print("UNLAPIN")
         for obj in self.all_as_objects:
             try:
                 obj.check()

@@ -21,7 +21,7 @@ or contributions.
 ## Contents
 
 
-Currently, there are **63 protocols** with a total of 667 resources.
+Currently, there are **63 protocols** with a total of 665 resources.
 - [ATG](#atg)
 - [BACnet/IP](#bacnetip)
 - [BSAP](#bsap)
@@ -167,7 +167,7 @@ Currently, there are **63 protocols** with a total of 667 resources.
 - [Linux SocketCAN documentation](https://www.kernel.org/doc/html/latest/networking/can.html) - kernel.org
 ### Articles
 - [CAN Injection: keyless car theft](https://kentindell.github.io/2023/04/03/can-injection/) - CANIS Automative Labs CTO blog (2023)
-- [CAN-FD - The basic idea](https://www.can-cia.org/can-knowledge/can/can-fd/) - CAN in Automation
+- [CAN-FD - The basic idea](https://www.can-cia.org/can-knowledge/can-fd-the-basic-idea) - CAN in Automation
 - [Click here to download more cars](https://djnn.sh/posts/car_hacking) - djnn
 ### Conferences
 - [(Pen)Testing Vehicles with CANToolz](https://www.youtube.com/watch?v=-p47IYz-H-k) - Alexey Sintsov @ Black Hat Europe (2016)
@@ -186,7 +186,6 @@ Currently, there are **63 protocols** with a total of 667 resources.
 - [Free-Fall: Hacking Tesla from Wireless to CAN Bus](https://www.youtube.com/watch?v=0w8J9bmCI54) - Ling Liu, Sen Nie & Yuefeng Du @ Black Hat USA (2017)
 - [Fuzzing CAN / CAN FD ECU's and Network](https://www.youtube.com/watch?v=IMZ8DD4lTAY) - Samir Bhagwat @ DEF CON 29 Car Hacking Village (2021)
 - [Hopping on the CAN Bus](https://www.youtube.com/watch?v=U1yecKUmnFo) - Eric Evenchick @ Black Hat USA (2015)
-- [Self-Driving and Connected Cars: Fooling Sensors and Tracking Drivers](https://www.youtube.com/watch?v=C29UGFsIWVI) - Jonathan Petit @ Black Hat Europe (2015)
 ### Papers
 - [A Fuzz Testing Methodology for Cyber-security Assurance of the Automotive CAN Bus](https://pure.coventry.ac.uk/ws/portalfiles/portal/37979533/Fowler_PhD.pdf) - Daniel S. Fowler, Coventry University (2019)
 ### Tools
@@ -288,7 +287,7 @@ Currently, there are **63 protocols** with a total of 667 resources.
 | Specifications | [DF1 specification](https://literature.rockwellautomation.com/idc/groups/literature/documents/rm/1770-rm516_-en-p.pdf) |
 | Detailed page | [df1.md](protocols/df1.md) |
 ### Articles
-- [AB/DF1 Protocol Tips](http://iatips.com/df1_tips.html) - Lynn's Industrial Automation Protocol Tips blog
+- [AB/DF1 Protocol Tips](https://web.archive.org/web/20230610070956/http://iatips.com/df1_tips.html) - Lynn's Industrial Automation Protocol Tips blog
 ### Tools
 - [abdf1](https://sourceforge.net/projects/abdf1/) - AB DF1 Protocol RS232 driver for Micrologix, SLC500, PLC 5
 - [Df1](https://github.com/leicht/Df1) - Df1 protocol for Allen-Bradley PLC
@@ -646,7 +645,7 @@ Currently, there are **63 protocols** with a total of 667 resources.
 ### Tools
 - [BOF](https://github.com/Orange-Cyberdefense/bof) - Testing framework for industrial protocols
 - [calimero](https://calimero-project.github.io/) - Lightweight KNX/IP framework in Java
-- [ETS](https://www.knx.org/knx-en/for-professionals/software/ets-professional/) - Engineering Tool Software for KNXnet/IP (ETS Demo is free)
+- [ETS](https://www.knx.org/knx-en/for-professionals/software/ets6/) - Engineering Tool Software for KNXnet/IP (ETS Demo is free)
 - [KNX Virtual](https://www.knx.org/knx-en/for-professionals/get-started/knx-virtual/index.php) - Windows-based application simulating a KNX installation
 - [knxd](https://github.com/knxd/knxd) - KNXd service
 - [KNXmap](https://github.com/takeshixx/knxmap) - KNXnet/IP scanning and auditing tool
@@ -882,7 +881,7 @@ Currently, there are **63 protocols** with a total of 667 resources.
 | Keywords | Allen-Bradley |
 | Detailed page | [pccc.md](protocols/pccc.md) |
 ### Articles
-- [AB/PCCC Protocol Tips](http://iatips.com/pccc_tips.html) - Lynn's Industrial Automation Protocol Tips blog
+- [AB/PCCC Protocol Tips](https://web.archive.org/web/20230331091311/http://iatips.com/pccc_tips.html) - Lynn's Industrial Automation Protocol Tips blog
 - [Ethernet/IP PCCC Service Codes](https://iatip.blogspot.com/2008/11/ethernetip-pccc-service-codes.html) - Lynn's Industrial protocols over IP blog
 
 
@@ -899,7 +898,6 @@ Currently, there are **63 protocols** with a total of 667 resources.
 - [Quick Start - POWERLINK on Raspberry Pi2](https://web.archive.org/web/20230130182001/https://www.kalycito.com/quick-start-powerlink-on-raspberry-pi2/) - Kalycito, 2018 (Web Archive, domain expired)
 ### Tools
 - [openCONFIGURATOR](https://sourceforge.net/projects/openconf/) - Open-source POWERLINK network configuration toolkit
-- [openPOWERLINK](https://openpowerlink.sourceforge.net/web/) - Open-source POWERLINK protocol stack
 - [openPOWERLINK_V2](https://github.com/OpenAutomationTechnologies/openPOWERLINK_V2) - GitHub page to openPOWERLINK protocol stack release 2
 
 
@@ -1082,7 +1080,7 @@ Currently, there are **63 protocols** with a total of 667 resources.
 - [Going Deeper Into Schneider Modicon PAC Security](https://www.youtube.com/watch?v=s184S7LDtEg) - Gao Jian @ Hack In The Box (2021)
 - [Nakatomi Space: Lateral Movement As L1 Post-Exploitation In OT](https://www.youtube.com/watch?v=0b87g3tY6bY) - Jos Wetzels @ Hack In The Box (2023)
 ### Tools
-- [Apache PLC4PY UMAS Driver](https://github.com/apache/plc4x/tree/develop/sandbox/plc4py) - UMAS protocol implementation in Python including ability to read the data dictionary (2024)
+- [Apache PLC4PY UMAS Driver](https://github.com/apache/plc4x/tree/develop/plc4py/plc4py/drivers/umas) - UMAS protocol implementation in Python including ability to read the data dictionary (2024)
 - [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
 
 

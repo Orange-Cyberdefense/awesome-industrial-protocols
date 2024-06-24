@@ -31,7 +31,7 @@
 ## Tools
 - [BOF](https://github.com/Orange-Cyberdefense/bof) - Testing framework for industrial protocols
 - [calimero](https://calimero-project.github.io/) - Lightweight KNX/IP framework in Java
-- [ETS](https://www.knx.org/knx-en/for-professionals/software/ets-professional/) - Engineering Tool Software for KNXnet/IP (ETS Demo is free)
+- [ETS](https://www.knx.org/knx-en/for-professionals/software/ets6/) - Engineering Tool Software for KNXnet/IP (ETS Demo is free)
 - [KNX Virtual](https://www.knx.org/knx-en/for-professionals/get-started/knx-virtual/index.php) - Windows-based application simulating a KNX installation
 - [knxd](https://github.com/knxd/knxd) - KNXd service
 - [KNXmap](https://github.com/takeshixx/knxmap) - KNXnet/IP scanning and auditing tool
