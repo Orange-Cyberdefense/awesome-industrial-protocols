@@ -21,7 +21,8 @@ or contributions.
 ## Contents
 
 
-Currently, there are **63 protocols** with a total of 665 resources.
+Currently, there are **65 protocols** with a total of 694 resources.
+- [ANSI-C12.22](#ansi-c1222)
 - [ATG](#atg)
 - [BACnet/IP](#bacnetip)
 - [BSAP](#bsap)
@@ -57,6 +58,7 @@ Currently, there are **63 protocols** with a total of 665 resources.
 - [KNXnet/IP](#knxnetip)
 - [LIS](#lis)
 - [LoRaWAN](#lorawan)
+- [LSV/2](#lsv2)
 - [M-Bus](#m-bus)
 - [MDLC](#mdlc)
 - [MELSEC](#melsec)
@@ -86,6 +88,24 @@ Currently, there are **63 protocols** with a total of 665 resources.
 - [XCP](#xcp)
 - [ZigBee](#zigbee)
 
+
+
+## ANSI-C12.22
+| Name | ANSI-C12.22 |
+|---|---|
+| Alias | ANSI-C12.19, C1222 |
+| Description | Protocol to transport ANSI C12.19 tables on electric meter utility networks |
+| Keywords | Smart Grid, Meter |
+| Port | 1153/tcp, 1153/udp |
+| Specifications | [RFC 6142](https://datatracker.ietf.org/doc/html/rfc6142), [ANSI C12.22 specification](https://www.nema.org/standards/view/american-national-standard-for-protocol-specification-for-interfacing-to-data-communication-networks), [ANSI C12.19 Specification](https://www.nema.org/standards/view/american-national-standard-for-utility-industry-end-device-data-tables) |
+| Wireshark dissector | [packet-c1222.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-c1222.c) |
+| Detailed page | [ansi-c1222.md](protocols/ansi-c1222.md) |
+### Documentations
+- [ANSI C12.22 (c1222)](https://wiki.wireshark.org/C12.22) - Description of protocol ANSI C12.22 on Wireshark Wiki
+### Articles
+- [An overview on ANSI C12.22](https://electricenergyonline.com/energy/magazine/138/article/an-overview-of-ansi-c12-22.htm) - Edward Beroset @ Electric Energy Online
+### Conferences
+- [Looking Into The Eye Of The Meter](https://www.youtube.com/watch?v=tAJRHwRr2dk) - Cutaway @ DEF CON 20 (2013)
 
 
 ## ATG
@@ -129,6 +149,7 @@ Currently, there are **63 protocols** with a total of 665 resources.
 - [BACnet data representation](https://www.rtautomation.com/rtas-blog/bacnet-data-representation/) - Blog post on RTAutomation
 ### Conferences
 - [(in)Security in Building Automation: How to Create Dark Buildings with Light Speed](https://www.youtube.com/watch?v=PyOhwYgpGfM) - Thomas Brandstetter @ Black Hat USA (2017)
+- [DEF CON Safe Mode Red Team Village  - Chris Kubecka - Pwn the World](https://www.youtube.com/watch?v=JHrrOGjHiXQ) - @ DEF CON (2020)
 - [HVACking Understand the Delta Between Security and Reality](https://www.youtube.com/watch?v=uJP061PUxgY) - Douglas McKee & Mark Bereza @ DEF CON 27 (2019)
 - [InSecurity in Building Automation](https://www.youtube.com/watch?v=G9ESeUWfYbs) - Thomas Brandsetter @ DEF CON 25 ICS Village (2017)
 - [Mixing industrial protocols with web application security](https://www.youtube.com/watch?v=TFkm0EN3Azk) - Bertin Bervis @ DEF CON 27 IoT Village (2019)
@@ -170,12 +191,15 @@ Currently, there are **63 protocols** with a total of 665 resources.
 - [CAN-FD - The basic idea](https://www.can-cia.org/can-knowledge/can-fd-the-basic-idea) - CAN in Automation
 - [Click here to download more cars](https://djnn.sh/posts/car_hacking) - djnn
 ### Conferences
+- [#HITBCyberWeek D1T2 - Car Hacking: Practical Guide To Automotive Security - Yogesh Ojha](https://www.youtube.com/watch?v=jn0bCFB_q30) - @  Hack In The Box (2020)
+- [#HITBCyberWeek D2T2 - RAMN: Resistant Automotive Miniature Network](https://www.youtube.com/watch?v=5N1ZmWXyws8) - @  Hack In The Box (2020)
 - [(Pen)Testing Vehicles with CANToolz](https://www.youtube.com/watch?v=-p47IYz-H-k) - Alexey Sintsov @ Black Hat Europe (2016)
 - [Abusing CAN Bus Spec for DoS in Embedded Systems](https://www.youtube.com/watch?v=okrzUNDLgbo) - Martin Petran @ DEF CON 31 Car Hacking Village (2023)
 - [Advanced CAN Injection Techniques for Vehicle Networks](https://www.youtube.com/watch?v=4wgEmNlu20c) - Charlie Miller & Chris Valasek @ Black Hat USA (2016)
 - [Adventures in Building a CAN Bus Sniffer](https://www.youtube.com/watch?v=ku2_t9EX-pM) - Andrey Voloshin @ Hack In The Box (2020)
 - [All Aboard the CAN Bus or Motorcycle](https://www.youtube.com/watch?v=YSApvBDIVCM) - Derrick @ DEF CON Safe Mode Car Hacking Village (2020)
 - [Backdooring & Remotely Controlling Cars](https://www.youtube.com/watch?v=1at33wF6fLE) - Sheila A. Berta & Claudio Carraciolo @ Hack In The Box (2018)
+- [Backdooring of Real Time Automotive OS Devices](https://www.youtube.com/watch?v=Z2Dgt7XhHGs) - @ Black Hat (2022)
 - [CAN Bus in Aviation Investigating CAN Bus in Avionics](https://www.youtube.com/watch?v=bydy7lbFyFU) - Patrick Kiley @ DEF CON 27 Aviation Village (2019)
 - [CANsee: An Automobile Intrusion Detection System](https://www.youtube.com/watch?v=XBg8xhK7L0w) - Jun Li @ Hack In The Box (2016)
 - [Canspy: A Platform for Auditing Can Devices](https://www.youtube.com/watch?v=1hPRcdwQioc) - Jonathan-Christofer Demay & Arnaud Lebrun @ Black Hat USA (2016)
@@ -310,6 +334,7 @@ Currently, there are **63 protocols** with a total of 665 resources.
 - [Hacking a Hospital for Fun and Profit](https://www.youtube.com/watch?v=CfgujGY8bSo) - Asaf Cohen & Ofir Kamil @ Hack In The Box (2018)
 - [How to Hack Medical Imaging Applications via DICOM](https://www.youtube.com/watch?v=VWo2uGpnJKw) - Maria Nedyak @ Hack In The Box (2020)
 - [I Am Not a Doctor but I Play One on Your Network](https://www.youtube.com/watch?v=g11BSRfBw2Y) - Tim Elrod & Stefan Morris @ DEF CON 19 (2011)
+- [Millions of Patient Records at Risk: The Perils of Legacy Protocols](https://www.youtube.com/watch?v=CgJIxTP8ydQ) - @ Black Hat (2024)
 - [Understanding, Attacking & Securing Medical Devices](https://www.youtube.com/watch?v=XJ6z-NxMRXM) - Ajay Pratap Singh @ Hack In The Box (2019)
 ### Tools
 - [DCMTK](https://dcmtk.org/en/) - DICOM ToolKit
@@ -688,6 +713,20 @@ Currently, there are **63 protocols** with a total of 665 resources.
 - [lorawan-stack](https://github.com/TheThingsNetwork/lorawan-stack) - Open Source LoRaWAN Network Server
 
 
+## LSV/2
+| Name | LSV/2 |
+|---|---|
+| Alias | LSV2 |
+| Description | Communication protocol for Computer Numerical Control |
+| Keywords | CNC, Heidenhain |
+| Access | Paid |
+| Detailed page | [lsv2.md](protocols/lsv2.md) |
+### Documentations
+- [Collecting Data with the LSV/2 Protocol](https://www.machinemetrics.com/connectivity/protocols/lsv2) - General information about the protocol LSV/2
+### Tools
+- [pyLSV2](https://github.com/drunsinn/pyLSV2) - A pure Python3 implementation of the LSV2 protocol
+
+
 ## M-Bus
 | Name | M-Bus |
 |---|---|
@@ -696,7 +735,8 @@ Currently, there are **63 protocols** with a total of 665 resources.
 | Access | The old specification is free, not the current one |
 | Specifications | [M-Bus specification](https://m-bus.com/documentation) |
 | Detailed page | [m-bus.md](protocols/m-bus.md) |
-
+### Conferences
+- [FuxNet: The New ICS Malware that Targets Critical Infrastructure Sensors](https://www.youtube.com/watch?v=J1v4Ze-MZvs) - Noam Moshe @ SANS ICS Security (2024)
 
 
 ## MDLC
@@ -937,7 +977,7 @@ Currently, there are **63 protocols** with a total of 665 resources.
 ## RTPS
 | Name | RTPS |
 |---|---|
-| Description | RTI's Real-Time Publish-Suscribe protocol for Data Distribution Systems (DDS) |
+| Description | Real-Time Publish-Suscribe protocol for Data Distribution Systems (DDS) |
 | Keywords | RTI, DDS |
 | Port | 7412/udp |
 | Wireshark dissector | [packet-rtps.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-rtps.c) |
@@ -975,10 +1015,13 @@ Currently, there are **63 protocols** with a total of 665 resources.
 - [The Siemens S7 Communication - Part 1 General Structure](http://gmiru.com/article/s7comm/) - On GyM's Personal Blog (2016)
 - [The Siemens S7 Communication - Part 2 Job Requests and Ack Data](http://gmiru.com/article/s7comm-part2/) - On GyM's Personal Blog (2017)
 ### Conferences
+- [#HITB2021AMS COMMSEC D2 - Breaking Siemens SIMATIC S7 PLC Protection Mechanism - Gao Jian](https://www.youtube.com/watch?v=ocOEiNp-8K0) - @  Hack In The Box (2021)
+- [A Decade After Stuxnet: How Siemens S7 is Still an Attacker&#39;s Heaven](https://www.youtube.com/watch?v=4-VoLm2SXao) - @ Black Hat (2024)
 - [Fuzzing and Breaking Security Functions of SIMATIC PLCs](https://www.youtube.com/watch?v=XeSSuWR5PaU) - Gao Jian @ Black Hat Europe (2022)
 - [PLC-Blaster: A worm Living Solely In The PLC](https://www.youtube.com/watch?v=NNAKaAKRUow) - Ralf Spenneberg, Maik Brueggemann & Hendrik Schwartke @ Black Hat Asia (2016)
 - [Rogue7: Rogue Engineering-Station Attacks on S7 Simatic PLCs](https://www.youtube.com/watch?v=dHxsctLBUEI) - Uriel Malin, Sara Bitan, Avishai Wool and Eli Biham @ Black Hat USA (2019)
 - [The spear to break the security wall of S7CommPlus](https://www.youtube.com/watch?v=93lyRgZYxKw) - Cheng Lei @ DEF CON 25 (2017)
+- [The Spear to Break the Security Wall of S7Commplus](https://www.youtube.com/watch?v=JPFSuSLkDO4) - @ Black Hat (2020)
 ### Tools
 - [python-snap7](https://github.com/gijzelaerr/python-snap7) - A Python wrapper for the snap7 PLC communication library
 - [s7-pcaps](https://github.com/gymgit/s7-pcaps) - Traffic captures between STEP7/WinCC and S7-300/S7-400 PLCs

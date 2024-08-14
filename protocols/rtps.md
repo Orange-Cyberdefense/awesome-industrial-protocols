@@ -3,7 +3,7 @@
 | Protocol | RTPS |
 |---|---|
 | Name | RTPS |
-| Description | RTI's Real-Time Publish-Suscribe protocol for Data Distribution Systems (DDS) |
+| Description | Real-Time Publish-Suscribe protocol for Data Distribution Systems (DDS) |
 | Keywords | RTI, DDS |
 | Port(s) | 7412/udp |
 | Wireshark dissector | [packet-rtps.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-rtps.c) |

@@ -19,12 +19,15 @@
 - [CAN-FD - The basic idea](https://www.can-cia.org/can-knowledge/can-fd-the-basic-idea) - CAN in Automation
 - [Click here to download more cars](https://djnn.sh/posts/car_hacking) - djnn
 ## Conferences
+- [#HITBCyberWeek D1T2 - Car Hacking: Practical Guide To Automotive Security - Yogesh Ojha](https://www.youtube.com/watch?v=jn0bCFB_q30) - @  Hack In The Box (2020)
+- [#HITBCyberWeek D2T2 - RAMN: Resistant Automotive Miniature Network](https://www.youtube.com/watch?v=5N1ZmWXyws8) - @  Hack In The Box (2020)
 - [(Pen)Testing Vehicles with CANToolz](https://www.youtube.com/watch?v=-p47IYz-H-k) - Alexey Sintsov @ Black Hat Europe (2016)
 - [Abusing CAN Bus Spec for DoS in Embedded Systems](https://www.youtube.com/watch?v=okrzUNDLgbo) - Martin Petran @ DEF CON 31 Car Hacking Village (2023)
 - [Advanced CAN Injection Techniques for Vehicle Networks](https://www.youtube.com/watch?v=4wgEmNlu20c) - Charlie Miller & Chris Valasek @ Black Hat USA (2016)
 - [Adventures in Building a CAN Bus Sniffer](https://www.youtube.com/watch?v=ku2_t9EX-pM) - Andrey Voloshin @ Hack In The Box (2020)
 - [All Aboard the CAN Bus or Motorcycle](https://www.youtube.com/watch?v=YSApvBDIVCM) - Derrick @ DEF CON Safe Mode Car Hacking Village (2020)
 - [Backdooring & Remotely Controlling Cars](https://www.youtube.com/watch?v=1at33wF6fLE) - Sheila A. Berta & Claudio Carraciolo @ Hack In The Box (2018)
+- [Backdooring of Real Time Automotive OS Devices](https://www.youtube.com/watch?v=Z2Dgt7XhHGs) - @ Black Hat (2022)
 - [CAN Bus in Aviation Investigating CAN Bus in Avionics](https://www.youtube.com/watch?v=bydy7lbFyFU) - Patrick Kiley @ DEF CON 27 Aviation Village (2019)
 - [CANsee: An Automobile Intrusion Detection System](https://www.youtube.com/watch?v=XBg8xhK7L0w) - Jun Li @ Hack In The Box (2016)
 - [Canspy: A Platform for Auditing Can Devices](https://www.youtube.com/watch?v=1hPRcdwQioc) - Jonathan-Christofer Demay & Arnaud Lebrun @ Black Hat USA (2016)
