@@ -11,9 +11,10 @@ try:
     from googleapiclient.discovery import build
     from googleapiclient.errors import HttpError
 except ModuleNotFoundError as mnfe:
+    print("Warning: Google API client import failed.")
     pass
 # Internal
-from config import GOOGLE_API_KEY, youtube as y
+from config import GOOGLE_API_KEY, youtube as y, FETCH_MAXYEAR
 from db import Protocol
 from . import FetchException
 
@@ -97,7 +98,9 @@ class Youtube():
                         part="snippet"
                     ).execute()
                     for item in response["items"]:
-                        if item["snippet"]["title"] not in found_titles:
+                        # We check if the video exist and if it not too old
+                        if item["snippet"]["title"] not in found_titles and \
+                           int(item["snippet"]["publishedAt"][:4]) >= FETCH_MAXYEAR:
                             try:
                                 video = Video(item, self.youtube_api)
                             except FetchException:

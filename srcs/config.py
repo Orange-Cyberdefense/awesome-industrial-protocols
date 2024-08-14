@@ -196,6 +196,8 @@ packets.FIELDS = {
 # AUTOMATED FETCH                                                             #
 #-----------------------------------------------------------------------------#
 
+FETCH_MAXYEAR = 2016
+
 #--- Data extracted from Wireshark dissectors --------------------------------#
 
 wireshark = SimpleNamespace()

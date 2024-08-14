@@ -6,7 +6,7 @@
 """Fetch CVE related to a protocol."""
 
 # Internal
-from config import cvelist as c
+from config import cvelist as c, FETCH_MAXYEAR
 from db import Protocol, search
 from . import FetchException, get_api_json
 
@@ -53,6 +53,9 @@ class CVEList():
             if not cvelist["vulnerabilities"]:
                 continue
             for cve in cvelist["vulnerabilities"]:
+                # If the CVE is too old we skip it
+                if int(cve["cve"]["published"][:4]) < FETCH_MAXYEAR:
+                    continue
                 cve = CVE(cve["cve"])
                 # We check that we don't have it already and that the keyword we
                 # are looking for is in description to avoid false positives.
