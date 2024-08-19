@@ -28,6 +28,7 @@ class CVE():
         self.raw = raw
         self.id = raw["id"]
         self.description = ""
+        self.year = int(raw["published"][:4])
         for descr in raw["descriptions"]:
             if descr["lang"] == "en":
                 self.description = descr["value"].strip()
@@ -62,4 +63,4 @@ class CVEList():
                 if cve.id not in [x.id for x in results] and \
                    search(name, cve.description.split(" "), threshold=1):
                     results.append(cve)
-        return sorted(results, key=lambda x: x.id)
+        return sorted(results, key=lambda x: x.year, reverse=True)

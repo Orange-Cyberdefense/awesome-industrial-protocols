@@ -110,4 +110,4 @@ class Youtube():
                                 found_titles.append(item["snippet"]["title"])
         except HttpError as he:
             raise FetchException(str(he)) from None
-        return sorted(set(candidates), key=lambda x: x.year)
+        return sorted(set(candidates), key=lambda x: x.year, reverse=True)
