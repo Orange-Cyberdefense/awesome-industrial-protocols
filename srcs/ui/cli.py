@@ -81,6 +81,7 @@ MSG_CONFIRM_WRITE = "Do you want to write '{0}: {1}' to '{2}' (previous value: '
 MSG_CONFIRM_APPEND = "Do you want to append '{0}' to field '{1}'?"
 MSG_CONFIRM_DELETE = "Do you really want to delete protocol '{0}'? (ALL DATA WILL BE LOST)"
 MSG_CONFIRM_DELETE_LINK = "Do you really want to delete '{0}'?"
+MSG_CONFIRM_DELETE_LINK_FROM = "Link '{0}' is associated to protocol {1}. Delete?"
 MSG_CONFIRM_DELETE_PACKET = "Do you really want to delete '{0}' ({1})?"
 MSG_CONFIRM_OVERWRITE = "File '{0}' already exists. Overwrite?"
 MSG_CONFIRM_ADDDISSECTOR = "Do you want to set dissector {0} for protocol {1}?"
@@ -376,6 +377,14 @@ class CLI(UI):
             ERROR(str(dbe), will_exit=True)
         links = links if isinstance(links, list) else [links]
         for link in links:
+            # We want to erase all occurrences of this link in protocols
+            for p in self.protocols.list:
+                protocol = self.protocols.get(p)
+                if protocol.has_link(link):
+                    if self.__confirm(MSG_CONFIRM_DELETE_LINK_FROM.format(link.url,
+                                                                          protocol.name),
+                                      self.options.force):
+                        protocol.delete_link(link)
             if self.__confirm(MSG_CONFIRM_DELETE_LINK.format(link.url),
                               self.options.force):
                 self.links.delete(link)

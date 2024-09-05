@@ -64,6 +64,14 @@ class Protocol(Document):
             raise DBException(ERR_MULTIMATCH.format(", ".join(match)))
         raise DBException(ERR_UNKFIELD.format(self.name, field)) from None
 
+    def has_link(self, link):
+        """Check if a specific link is associated to the protocol."""
+        for field in self.fields:
+            if p.TYPE(field) == types.LINKLIST:
+                if link._id in [x for x in self.get(field)[1]]:
+                    return True
+        return False
+    
     def set(self, field: str, value: object, replace: bool = False) -> None:
         """Update existing field in protocol."""
         field, oldvalue = self.get(field)
@@ -104,6 +112,15 @@ class Protocol(Document):
         else:
             raise DBException(ERR_EXIVALUE.format(p.NAME(field)))
 
+    def delete_link(self, link: object) -> None:
+        """Delete a link from all fields."""
+        for field in self.fields:
+            if p.TYPE(field) == types.LINKLIST:
+                linklist = self.get(field)[1]
+                for l in linklist:
+                    if l == link._id: # Finding the link to delete
+                        self.set(field, [x for x in linklist if x != link._id], replace=True)
+        
     def check(self):
         """Check visitor."""
         # Check that all mandatory fields are set.
@@ -112,7 +129,7 @@ class Protocol(Document):
                 getattr(self, attr)
             except AttributeError:
                 raise DBException(ERR_MANDFIELD.format(attr, self.name)) from None
-
+            
     def to_dict(self, exclude_id: bool = True) -> dict:
         """Convert protocol object's content to dictionary."""
         pdict = {}
