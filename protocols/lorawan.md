@@ -12,6 +12,8 @@
 | Related CVE | [CVE-2022-39274](https://nvd.nist.gov/vuln/detail/CVE-2022-39274) |
 
 ## Conferences
+- [#HITB2021AMS D2T2 - Security Analysis And Practical Attacks Of LPWAN - YuXiang Li &amp; Wu HuiYu](https://www.youtube.com/watch?v=mEUCbQL-raM) - @  Hack In The Box (2021)
+- [#HITBCyberWeek D3T1 - LoRaWAN Auditing - E. Martínez Fayó, M. Sequeira and C. Cerrudo](https://www.youtube.com/watch?v=you5tqPVfP8) - @  Hack In The Box (2020)
 - [Can you hear me now DEF CON](https://www.youtube.com/watch?v=lhHM6TX2RrI) - wasabi @ DEF CON 26 Wireless Village (2018)
 - [Lora Smart Water Meter Security Analysis](https://www.youtube.com/watch?v=b7ekygjC3so) - Zeng and Panel @ DEF CON 26 (2018)
 - [Outsmarting the Smart City](https://www.youtube.com/watch?v=Opjb5hPlxtY) - Daniel Crowley, Jennifer Savage and Mauro Paredes @ Black Hat USA (2018)

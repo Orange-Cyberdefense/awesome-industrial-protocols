@@ -18,6 +18,7 @@
 - [Hacking a Hospital for Fun and Profit](https://www.youtube.com/watch?v=CfgujGY8bSo) - Asaf Cohen & Ofir Kamil @ Hack In The Box (2018)
 - [How to Hack Medical Imaging Applications via DICOM](https://www.youtube.com/watch?v=VWo2uGpnJKw) - Maria Nedyak @ Hack In The Box (2020)
 - [I Am Not a Doctor but I Play One on Your Network](https://www.youtube.com/watch?v=g11BSRfBw2Y) - Tim Elrod & Stefan Morris @ DEF CON 19 (2011)
+- [Millions of Patient Records at Risk: The Perils of Legacy Protocols](https://www.youtube.com/watch?v=CgJIxTP8ydQ) - @ Black Hat (2024)
 - [Understanding, Attacking & Securing Medical Devices](https://www.youtube.com/watch?v=XJ6z-NxMRXM) - Ajay Pratap Singh @ Hack In The Box (2019)
 ## Tools
 - [DCMTK](https://dcmtk.org/en/) - DICOM ToolKit
