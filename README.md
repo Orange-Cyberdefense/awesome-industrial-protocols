@@ -21,7 +21,7 @@ or contributions.
 ## Contents
 
 
-Currently, there are **65 protocols** with a total of 694 resources.
+Currently, there are **65 protocols** with a total of 711 resources.
 - [ANSI-C12.22](#ansi-c1222)
 - [ATG](#atg)
 - [BACnet/IP](#bacnetip)
@@ -459,6 +459,7 @@ Currently, there are **65 protocols** with a total of 694 resources.
 | Detailed page | [fins.md](protocols/fins.md) |
 ### Conferences
 - [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
+- [Common Flaws in ICS Network Protocols](https://www.youtube.com/watch?v=Bhq4kC52Qg8) - Mars Cheng & Selmon Yang @ Hack In The Box (2020)
 
 
 ## FL-net
@@ -560,6 +561,8 @@ Currently, there are **65 protocols** with a total of 694 resources.
 | Wireshark dissector | [packet-hl7.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hl7.c) |
 | Detailed page | [hl7.md](protocols/hl7.md) |
 ### Conferences
+- [#HITB2017AMS D2T2 - Hacking Medical Devices And Healthcare Infrastructure - Anirudh Duggal](https://www.youtube.com/watch?v=3S6RQo-OQ24) - @  Hack In The Box (2017)
+- [Healthscare – An Insider&#39;s Biopsy of Healthcare Application Security](https://www.youtube.com/watch?v=33dQhsIcp7U) - @ Black Hat (2021)
 - [HL7Magic Medical Data Hacking Made Easy](https://www.youtube.com/watch?v=YFbAuhnUEQQ) - Katie Inns @ DEF CON 31 (2023)
 - [I Am Not a Doctor but I Play One on Your Network](https://www.youtube.com/watch?v=g11BSRfBw2Y) - Tim Elrod & Stefan Morris @ DEF CON 19 (2011)
 - [Pestilential Protocol: How Unsecure HL7 Messages Threaten Patient Lives](https://www.youtube.com/watch?v=66x3vfac8rA) - Christian Dameff, Jeffrey Tully & Maxwell Bland @ Black Hat USA (2018)
@@ -702,6 +705,8 @@ Currently, there are **65 protocols** with a total of 694 resources.
 | Wireshark dissector | [packet-lorawan.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-lorawan.c) |
 | Detailed page | [lorawan.md](protocols/lorawan.md) |
 ### Conferences
+- [#HITB2021AMS D2T2 - Security Analysis And Practical Attacks Of LPWAN - YuXiang Li &amp; Wu HuiYu](https://www.youtube.com/watch?v=mEUCbQL-raM) - @  Hack In The Box (2021)
+- [#HITBCyberWeek D3T1 - LoRaWAN Auditing - E. Martínez Fayó, M. Sequeira and C. Cerrudo](https://www.youtube.com/watch?v=you5tqPVfP8) - @  Hack In The Box (2020)
 - [Can you hear me now DEF CON](https://www.youtube.com/watch?v=lhHM6TX2RrI) - wasabi @ DEF CON 26 Wireless Village (2018)
 - [Lora Smart Water Meter Security Analysis](https://www.youtube.com/watch?v=b7ekygjC3so) - Zeng and Panel @ DEF CON 26 (2018)
 - [Outsmarting the Smart City](https://www.youtube.com/watch?v=Opjb5hPlxtY) - Daniel Crowley, Jennifer Savage and Mauro Paredes @ Black Hat USA (2018)
@@ -858,6 +863,7 @@ Currently, there are **65 protocols** with a total of 694 resources.
 | Scapy layer | [opc_da.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/opc_da.py) |
 | Detailed page | [opc-da.md](protocols/opc-da.md) |
 ### Conferences
+- [Adventures in Attacking Wind Farm Control Networks](https://www.youtube.com/watch?v=xpj2JLe41k0) - @ Black Hat (2018)
 - [DEF CON 25 Conference - Jason Staggs - Breaking Wind: Adventures Hacking Wind Farm Control Networks](https://www.youtube.com/watch?v=DfNwWQAOdks) - @ DEF CON (2017)
 - [Open Platform Communications (OPC) | SANS ICS Concepts](https://www.youtube.com/watch?v=KpFM6YS15pU) - @ SANS ICS Security (2021)
 ### Papers
@@ -872,6 +878,7 @@ Currently, there are **65 protocols** with a total of 694 resources.
 | Alias | OPCUA |
 | Description | Open communication standard for industrial automation and control |
 | Port | 4840/tcp, 4840/udp, 4843/tcp (TLS) |
+| Specifications | [OPC UA online reference](https://reference.opcfoundation.org/) |
 | Wireshark dissector | [OPC-UA Plugin](https://github.com/wireshark/wireshark/tree/master/plugins/epan/opcua) |
 | Detailed page | [opc-ua.md](protocols/opc-ua.md) |
 ### Articles
@@ -1170,6 +1177,8 @@ Currently, there are **65 protocols** with a total of 694 resources.
 - [Dont Be Silly It's Only a Lightbulb](https://www.youtube.com/watch?v=iMxquCdAMWI) - Eyal Itkin @ DEF CON Safe Mode (2020)
 - [Exploring the 802 15 4 Attack Surface](https://www.youtube.com/watch?v=sU7PlIM-nEE) - FAZ @ DEF CON 26 WIRELESS VILLAGE (2018)
 - [Im A Newbie Yet I Can Hack ZigBee](https://www.youtube.com/watch?v=xgNT05l6Jlw) - Qing Yang @ DEF CON 23 (2015)
+- [Practical Exploitation Of Zigbee Networks With RF Transceivers by Nitin Lakshmanan &amp; Sunil Kumar](https://www.youtube.com/watch?v=PG5xUK6h93w) - @ Insomni'Hack (2022)
+- [Pwning KNX & ZigBee Networks](https://www.youtube.com/watch?v=1Bv_xQ4A9ZQ) - HuiYu Wu, YuXiang Li & Yong Yang @ Hack In The Box (2018)
 - [ZigBee Exploited The Good, The Bad, And The Ugly](https://www.youtube.com/watch?v=9xzXp-zPkjU) - Tobias Zillner & Sebastian Strobl @ Black Hat USA (2015)
 ### Papers
 - [An Overview of Wireless IoT Protocol Security in the Smart Home Domain](https://arxiv.org/abs/1801.07090) - Stefan Marksteiner, Víctor Juan Expósito Jiménez, Heribert Vallant, Herwig Zeiner (2018)
