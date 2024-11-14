@@ -233,5 +233,6 @@ youtube.selected_channels = {
     "UCJ6q9Ie29ajGqKApbLqfBOg": "Black Hat",
     "UCcA_TRQ5sLtFC3pAkaVot3Q": "SANS ICS Security",
     "UC0BJVNTIEbG8CLG-xVVWJnA": " Hack In The Box",
-    "UCGdJZb8OWZPrRK8PuEeoZuA": "Insomni'Hack"
+    "UCGdJZb8OWZPrRK8PuEeoZuA": "Insomni'Hack",
+    "UCI6B0zYvK-7FdM0Vgh3v3Tg": "Conference filmed by Cooper"
 }
