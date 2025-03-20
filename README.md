@@ -21,8 +21,9 @@ or contributions.
 ## Contents
 
 
-Currently, there are **65 protocols** with a total of 710 resources.
+Currently, there are **66 protocols** with a total of 719 resources.
 - [ANSI-C12.22](#ansi-c1222)
+- [ASTM](#astm)
 - [ATG](#atg)
 - [BACnet/IP](#bacnetip)
 - [BSAP](#bsap)
@@ -108,6 +109,16 @@ Currently, there are **65 protocols** with a total of 710 resources.
 - [Looking Into The Eye Of The Meter](https://www.youtube.com/watch?v=tAJRHwRr2dk) - Cutaway @ DEF CON 20 (2013)
 
 
+## ASTM
+| Name | ASTM |
+|---|---|
+| Alias | ASTM E1381, ASTM E1394 |
+| Description | Protocol for laboratory data management |
+| Keywords | Laboratory, LIS |
+| Detailed page | [astm.md](protocols/astm.md) |
+
+
+
 ## ATG
 | Name | ATG |
 |---|---|
@@ -123,6 +134,7 @@ Currently, there are **65 protocols** with a total of 710 resources.
 ### Articles
 - [Gas Station Nightmare: Are Exposed ATGs Our Next Security Crisis?](https://medium.com/@jacmarab/gas-station-nightmare-are-exposed-atgs-our-next-security-crisis-1ac80a55b405) - Jacob Marabelli (2023)
 ### Conferences
+- [Blowing Up Gas Stations For Fun And Profit](https://www.youtube.com/watch?v=AybRhz56NCk) - Pedro Umbelino @ Hack.lu (2024)
 - [The Little Pump Gauge That Could: Attacks Against Gas Pump Monitoring Systems](https://www.youtube.com/watch?v=gorNee0MaoU) - Kyle Wilhoit and Stephen Hilt @ Black Hat USA (2015)
 ### Papers
 - [The GasPot Experiment: Unexamined Perils in Using Gas-Tank-Monitoring Systems](https://www.blackhat.com/docs/us-15/materials/us-15-Wilhoit-The-Little-Pump-Gauge-That-Could-Attacks-Against-Gas-Pump-Monitoring-Systems-wp.pdf) - Kyle Wilhoit and Stephen Hilt (Trend Micro, 2015)
@@ -551,7 +563,8 @@ Currently, there are **65 protocols** with a total of 710 resources.
 | Wireshark dissector | [packet-hicp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hicp.c), [packet-shicp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-shicp.c) |
 | Scapy layer | [hicp.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/hicp.py) |
 | Detailed page | [hicp.md](protocols/hicp.md) |
-
+### Conferences
+- [Trying Gateway Bugs: Breaking Industrial Protocol Translation Devices Before The Research Begins](https://www.youtube.com/watch?v=OGdfAlzvuvg) - Claire Vacherot @ Hack.lu (2024)
 
 
 ## HL7
@@ -1025,6 +1038,7 @@ Currently, there are **65 protocols** with a total of 710 resources.
 - [#HITB2021AMS COMMSEC D2 - Breaking Siemens SIMATIC S7 PLC Protection Mechanism - Gao Jian](https://www.youtube.com/watch?v=ocOEiNp-8K0) - @  Hack In The Box (2021)
 - [A Decade After Stuxnet: How Siemens S7 is Still an Attacker&#39;s Heaven](https://www.youtube.com/watch?v=4-VoLm2SXao) - @ Black Hat (2024)
 - [Fuzzing and Breaking Security Functions of SIMATIC PLCs](https://www.youtube.com/watch?v=XeSSuWR5PaU) - Gao Jian @ Black Hat Europe (2022)
+- [Nope, S7ill Not Secure: Stealing Private Keys From S7 PLCs](https://www.youtube.com/watch?v=9AO24tqksRw) - Nadav Adir and Alon Dankner @ Black Hat USA (2024)
 - [PLC-Blaster: A worm Living Solely In The PLC](https://www.youtube.com/watch?v=NNAKaAKRUow) - Ralf Spenneberg, Maik Brueggemann & Hendrik Schwartke @ Black Hat Asia (2016)
 - [Rogue7: Rogue Engineering-Station Attacks on S7 Simatic PLCs](https://www.youtube.com/watch?v=dHxsctLBUEI) - Uriel Malin, Sara Bitan, Avishai Wool and Eli Biham @ Black Hat USA (2019)
 - [The spear to break the security wall of S7CommPlus](https://www.youtube.com/watch?v=93lyRgZYxKw) - Cheng Lei @ DEF CON 25 (2017)

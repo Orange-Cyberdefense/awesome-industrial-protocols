@@ -15,4 +15,5 @@
 | | Scapy: `HICPModuleScan()`
 | | Raw: `MODULE SCAN\x00` |
 
-
+## Conferences
+- [Trying Gateway Bugs: Breaking Industrial Protocol Translation Devices Before The Research Begins](https://www.youtube.com/watch?v=OGdfAlzvuvg) - Claire Vacherot @ Hack.lu (2024)

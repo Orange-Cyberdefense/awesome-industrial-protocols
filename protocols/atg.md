@@ -15,6 +15,7 @@
 ## Articles
 - [Gas Station Nightmare: Are Exposed ATGs Our Next Security Crisis?](https://medium.com/@jacmarab/gas-station-nightmare-are-exposed-atgs-our-next-security-crisis-1ac80a55b405) - Jacob Marabelli (2023)
 ## Conferences
+- [Blowing Up Gas Stations For Fun And Profit](https://www.youtube.com/watch?v=AybRhz56NCk) - Pedro Umbelino @ Hack.lu (2024)
 - [The Little Pump Gauge That Could: Attacks Against Gas Pump Monitoring Systems](https://www.youtube.com/watch?v=gorNee0MaoU) - Kyle Wilhoit and Stephen Hilt @ Black Hat USA (2015)
 ## Papers
 - [The GasPot Experiment: Unexamined Perils in Using Gas-Tank-Monitoring Systems](https://www.blackhat.com/docs/us-15/materials/us-15-Wilhoit-The-Little-Pump-Gauge-That-Could-Attacks-Against-Gas-Pump-Monitoring-Systems-wp.pdf) - Kyle Wilhoit and Stephen Hilt (Trend Micro, 2015)
