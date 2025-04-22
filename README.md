@@ -21,7 +21,8 @@ or contributions.
 ## Contents
 
 
-Currently, there are **66 protocols** with a total of 719 resources.
+Currently, there are **67 protocols** with a total of 724 resources.
+- [ADS](#ads)
 - [ANSI-C12.22](#ansi-c1222)
 - [ASTM](#astm)
 - [ATG](#atg)
@@ -89,6 +90,23 @@ Currently, there are **66 protocols** with a total of 719 resources.
 - [XCP](#xcp)
 - [ZigBee](#zigbee)
 
+
+
+## ADS
+| Name | ADS |
+|---|---|
+| Alias | TwinCAT ADS, Beckhoff ADS |
+| Description | Beckhoff protocol to communicate with TwinCAT devices |
+| Keywords | Beckhoff, TwinCAT, PLC |
+| Port | 48898/tcp |
+| Access | Free |
+| Specifications | [ADS Interface](https://infosys.beckhoff.com/english.php?content=../content/1033/tc3_ads_intro/index.html) |
+| Wireshark dissector | [packet-ams.c](https://github.com/wireshark/wireshark/blob/master/plugins/epan/ethercat/packet-ams.c) |
+| Detailed page | [ads.md](protocols/ads.md) |
+### Tools
+- [ADS](https://github.com/Beckhoff/ADS) - Official Beckhoff ADS library
+- [ads-client](https://github.com/jisotalo/ads-client) - Node.js client for Beckhoff TwinCAT ADS
+- [pyads](https://github.com/stlehmann/pyads) - Python package for communicating with TwinCAT devices using ADS protocol
 
 
 ## ANSI-C12.22
