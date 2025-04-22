@@ -6,7 +6,7 @@
 """Classes that represent and handle protocols' info from the database.
 """
 
-from config import protocols as p, types, mongodb
+from config import protocols as p, types, mongodb, LEVENSHTEIN_THRESHOLD
 from . import MongoDB, DBException, Collection, Document
 from . import search, exact_search
 
@@ -171,7 +171,7 @@ class Protocols(Collection):
     def __init__(self):
         super().__init__()
 
-    def get(self, protocol_name: str) -> Protocol:
+    def get(self, protocol_name: str, threshold: int=LEVENSHTEIN_THRESHOLD) -> Protocol:
         """Get a protocol by its name. Returns data as a Protocol object.
 
         The research is case-insensitive. The name also be one of the aliases.
@@ -184,7 +184,7 @@ class Protocols(Collection):
             if exact_search(protocol_name, protocol.names):
                 match = [protocol]
                 break # We found the exact match
-            if search(protocol_name, protocol.names):
+            if search(protocol_name, protocol.names, threshold):
                 match.append(protocol)
         if len(match) == 1:
             return match[0]
@@ -196,7 +196,8 @@ class Protocols(Collection):
     def add(self, protocol: Protocol) -> None:
         """Add a new protocol."""
         try:
-            proto = self.get(protocol.name)
+            # We want a closer match here
+            proto = self.get(protocol.name, threshold=1)
         except DBException:
             pass # The protocol does not exist, we can continue
         else:
