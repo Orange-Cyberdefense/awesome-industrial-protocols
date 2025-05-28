@@ -500,7 +500,7 @@ Currently, there are **67 protocols** with a total of 724 resources.
 | Keywords | JEMA |
 | Port | 55000/udp, 55001/udp, 55002/udp, 55003/udp |
 | Access | Free |
-| Specifications | [FL-net specification](https://www.jema-net.or.jp/English/businessfields/standarization/opcn/standard/) |
+| Specifications | [FL-net specification](https://www.jema-net.or.jp/English/businessfields/standardization/flnet/docs.html) |
 | Detailed page | [fl-net.md](protocols/fl-net.md) |
 
 
