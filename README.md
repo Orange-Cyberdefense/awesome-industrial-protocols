@@ -2,21 +2,26 @@
 
 Compilation of industrial network protocols resources focusing on offensive security.
 
-![Awesome Industrial Protocols](srcs/out/templates/logo-awesome-industrial-protocols.png)
+![Awesome Industrial Protocols](logo-awesome-industrial-protocols.png)
 
 In this repository:
 * You are currently viewing the **Awesome Industrial Protocols** page.
 * Detailed pages for protocols are available in `protocols`.
 * All data is stored in MongoDB databases in `db`.
-* **Turn/IP** (in `srcs`) is a handy tool to manipulate this data, generate the
-awesome list and protocol pages, and simplify the research and test process
-on industrial protocols.
+
+**Disclaimer**: All resources provided here are publicly available and
+accessible to anyone. There is no confidential or private information included
+unless it has been accidentally made public by the source. We do not take
+responsibility for any such inadvertent disclosures. Moreover, although the
+resources added to this page are always manually checked, not all resources
+linked here (especially tools) have been tested. Please remain careful when
+using them and don't run untrusted code on your installation.
 
 > Note: Sometimes it is unclear whether a name refers to a protocol, a standard,
 or a complete environment, or if a protocol on a serial link can be accessed
 in any way from the Ethernet link (through a dedicated implementation or a
-gateway). I apologize for any confusion, and of course, I welcome any remarks
-or contributions.
+gateway). We apologize for any confusion, and of course, we welcome any
+remarks or contributions.
 
 ## Contents
 
@@ -1217,10 +1222,11 @@ Currently, there are **67 protocols** with a total of 724 resources.
 - [KillerBee](https://github.com/riverloopsec/killerbee) - IEEE 802.15.4/ZigBee Security Research Toolkit
 - [Mirage](https://github.com/RCayre/mirage) - Framework dedicated to the security analysis of wireless communications
 
-> Although the resources added to this page are always manually checked, not all
-resources linked here (especially tools) have been tested. Please remain
-careful when using them and don't run untrusted code on your installation.
+> If you wish to contribute, you can directly edit the README, and I will import
+the new content into the MongoDB database files (located in `db`). Since the
+pages are generated automatically from the databases using a custom tool,
+there may be some differences between your submission and the final pages that
+include it.
 
 **awesome-industrial-protocols** is licensed under
-[CC0](https://creativecommons.org/publicdomain/zero/1.0/). **Turn/IP** is
-licensed under [GPL-v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
+[CC0](https://creativecommons.org/publicdomain/zero/1.0/).
