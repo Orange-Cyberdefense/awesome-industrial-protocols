@@ -722,3 +722,7 @@
 {"_id":{"$oid":"680760b26c326445a3f754af"},"name":"ADS","url":"https://github.com/Beckhoff/ADS","description":"Official Beckhoff ADS library","type":"tool"}
 {"_id":{"$oid":"68076140dbbf7a615c64309a"},"name":"pyads","url":"https://github.com/stlehmann/pyads","description":"Python package for communicating with TwinCAT devices using ADS protocol","type":"tool"}
 {"_id":{"$oid":"680761810fcbec3d976ff673"},"name":"ads-client","url":"https://github.com/jisotalo/ads-client","description":"Node.js client for Beckhoff TwinCAT ADS","type":"tool"}
+{"_id":{"$oid":"684ace8e6827c456d71ba56f"},"name":"ISOBUS specification","url":"https://www.isobus.net/isobus/","description":"ISOBUS Data Dictionary","type":"documentation"}
+{"_id":{"$oid":"684acf1a3e6b849a0e7cfdde"},"name":"packet-isobus.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-isobus.c","description":"Wireshark dissector for ISOBUS","type":"tool"}
+{"_id":{"$oid":"684ad5b0e33c86df02bd93c2"},"name":"packet-doip.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-doip.c","description":"Wireshark dissector for DoIP","type":"tool"}
+{"_id":{"$oid":"684adf4a96529a191c8ea15c"},"name":"DoIP specification","url":"https://www.autosar.org/fileadmin/standards/R20-11/CP/AUTOSAR_SWS_DiagnosticOverIP.pdf","description":"AUTOSAR Specification of Diagnostic over IP","type":"documentation"}
