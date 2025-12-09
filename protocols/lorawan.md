@@ -9,7 +9,6 @@
 | Access to specs | Free |
 | Specifications | [LoRaWAN specification](https://lora-alliance.org/resource_hub/lorawan-specification-v1-1/) |
 | Wireshark dissector | [packet-lorawan.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-lorawan.c) |
-| Related CVE | [CVE-2022-39274](https://nvd.nist.gov/vuln/detail/CVE-2022-39274) |
 
 ## Conferences
 - [#HITB2021AMS D2T2 - Security Analysis And Practical Attacks Of LPWAN - YuXiang Li &amp; Wu HuiYu](https://www.youtube.com/watch?v=mEUCbQL-raM) - @  Hack In The Box (2021)

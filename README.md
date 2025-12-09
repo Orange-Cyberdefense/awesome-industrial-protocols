@@ -26,7 +26,7 @@ remarks or contributions.
 ## Contents
 
 
-Currently, there are **69 protocols** with a total of 728 resources.
+Currently, there are **71 protocols** with a total of 389 resources.
 - [ADS](#ads)
 - [ANSI-C12.22](#ansi-c1222)
 - [ASTM](#astm)
@@ -49,6 +49,7 @@ Currently, there are **69 protocols** with a total of 728 resources.
 - [Ethernet/IP](#ethernetip)
 - [ETP](#etp)
 - [FF-HSE](#ff-hse)
+- [FHIR](#fhir)
 - [FINS](#fins)
 - [FL-net](#fl-net)
 - [FOCAS](#focas)
@@ -86,6 +87,7 @@ Currently, there are **69 protocols** with a total of 728 resources.
 - [RTPS](#rtps)
 - [S-Bus](#s-bus)
 - [S7comm](#s7comm)
+- [SDC](#sdc)
 - [SECS/GEM](#secsgem)
 - [SERCOS-III](#sercos-iii)
 - [SLMP](#slmp)
@@ -284,6 +286,7 @@ Currently, there are **69 protocols** with a total of 728 resources.
 - [DeviceNet](https://www.odva.org/technology-standards/key-technologies/devicenet/) - Overview on ODVA.org
 - [Ethernet/IP](https://www.odva.org/technology-standards/key-technologies/ethernet-ip/) - Overview on ODVA.org
 ### Conferences
+- [DEF CON 33 - Intro to Common Industrial Protocol Exploitation - Trevor Flynn](https://www.youtube.com/watch?v=S7mPcEPaKHU) - @ DEF CON (2025)
 - [Hunting EtherNet/IP Protocol Stacks](https://www.youtube.com/watch?v=0jftEYDo0ao) - Sharon Brizinov @ SANS ICS Security Summit 2022
 
 
@@ -395,6 +398,7 @@ Currently, there are **69 protocols** with a total of 728 resources.
 | Detailed page | [dnp3.md](protocols/dnp3.md) |
 ### Conferences
 - [Common Flaws in ICS Network Protocols](https://www.youtube.com/watch?v=Bhq4kC52Qg8) - Mars Cheng & Selmon Yang @ Hack In The Box (2020)
+- [DEF CON 33 - There and Back Again: Detecting OT Devices Across Protocol Gateways - Rob King](https://www.youtube.com/watch?v=YBPYYk8FIkc) - @ DEF CON (2025)
 - [NSM 101 for ICS](https://www.youtube.com/watch?v=H6AWRziR028) - Chris Sistrunk @ DEF CON 23 101 Track (2015)
 - [SCADA Protocol Implementation Considerations | SANS ICS Concepts](https://www.youtube.com/watch?v=Fi7JhLm4vjY) - @ SANS ICS Security (2022)
 - [Sniffing SCADA](https://www.youtube.com/watch?v=4vPptUmyv4U) - Karl Koscher @ DEF CON 23 Packet Capture Village (2015)
@@ -468,6 +472,7 @@ Currently, there are **69 protocols** with a total of 728 resources.
 - [Fuzzing and PR’ing: How We Found Bugs in a Popular Third-Party EtherNet/IP Protocol Stack](https://claroty.com/team82/research/opener-enip-stack-vulnerabilities) - Sharon Brizinov, Tal Keren (Claroty, 2021)
 ### Conferences
 - [Common Flaws in ICS Network Protocols](https://www.youtube.com/watch?v=Bhq4kC52Qg8) - Mars Cheng & Selmon Yang @ Hack In The Box (2020)
+- [DEF CON 33 - There and Back Again: Detecting OT Devices Across Protocol Gateways - Rob King](https://www.youtube.com/watch?v=YBPYYk8FIkc) - @ DEF CON (2025)
 - [Hunting EtherNet/IP Protocol Stacks](https://www.youtube.com/watch?v=0jftEYDo0ao) - Sharon Brizinov @ SANS ICS Security Summit 2022
 ### Tools
 - [CIPster](https://github.com/liftoff-sr/CIPster) - Ethernet/IP (Common Industrial Protocol) stack in C++
@@ -496,6 +501,16 @@ Currently, there are **69 protocols** with a total of 728 resources.
 | Wireshark dissector | [packet-ff.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-ff.c) |
 | Detailed page | [ff-hse.md](protocols/ff-hse.md) |
 
+
+
+## FHIR
+| Name | FHIR |
+|---|---|
+| Description | Protocol for health care data exchange |
+| Keywords | Biomedical |
+| Detailed page | [fhir.md](protocols/fhir.md) |
+### Conferences
+- [Playing with FHIR](https://www.youtube.com/watch?v=wrNyd60XPMg) - Alissa Knight, Mitch Parker @ DEF CON 29 Biohacking Village (2021)
 
 
 ## FINS
@@ -851,6 +866,8 @@ Currently, there are **69 protocols** with a total of 728 resources.
 ### Conferences
 - [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
 - [Common Flaws in ICS Network Protocols](https://www.youtube.com/watch?v=Bhq4kC52Qg8) - Mars Cheng & Selmon Yang @ Hack In The Box (2020)
+- [DEF CON 33 - There and Back Again: Detecting OT Devices Across Protocol Gateways - Rob King](https://www.youtube.com/watch?v=YBPYYk8FIkc) - @ DEF CON (2025)
+- [From Pass-the-Hash to Code Execution on Schneider Electric M340 PLCs](https://www.youtube.com/watch?v=RL7vtbm03Os) - @ Black Hat (2025)
 - [Fun with Modbus 0x5a Nothing New Still Relevant?](https://www.youtube.com/watch?v=A_B69Rifu1g) - Arnaud Soullié @ DEF CON 25 ICS Village (2017)
 - [Industrial Control Systems : Pentesting PLCs 101 (Part 1/2)](https://www.youtube.com/watch?v=iGwm6-lyn2Y) - Arnaud Soullie @ Black Hat Europe (2014)
 - [Industrial Control Systems : Pentesting PLCs 101 (Part 2/2)](https://www.youtube.com/watch?v=rP_Jys1_OJk) - Arnaud Soullie @ Black Hat Europe (2014)
@@ -1098,6 +1115,20 @@ Currently, there are **69 protocols** with a total of 728 resources.
 - [s7-pcaps](https://github.com/gymgit/s7-pcaps) - Traffic captures between STEP7/WinCC and S7-300/S7-400 PLCs
 - [s7scan](https://github.com/klsecservices/s7scan) - Scan networks to gather basic information about Siemens PLCs
 - [Snap7](https://snap7.sourceforge.net/) - Step7 Open Source Ethernet Communication Suite
+
+
+## SDC
+| Name | SDC |
+|---|---|
+| Alias | ISO/IEEE 11073 |
+| Description | Standard protocol for interoperability between biomedical devices |
+| Keywords | Biomedical |
+| Detailed page | [sdc.md](protocols/sdc.md) |
+### Documentations
+- [SDC Standards Family](https://ornet.org/?page_id=5940&lang=en) - SDC presentation at OR.NET
+### Tools
+- [sdc11073](https://github.com/Draegerwerk/sdc11073) - ISO/IEEE 11073 SDC implementation in Python by Dräger
+- [sdclib](https://github.com/surgitaix/sdclib) - Library and reference implementation for SDC
 
 
 ## SECS/GEM

@@ -6,7 +6,6 @@
 | Aliases | OPCDA |
 | Description | Legacy protocol for real-time data exchange in industrial systems |
 | Scapy layer | [opc_da.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/opc_da.py) |
-| Related CVE | [CVE-2012-3008](https://nvd.nist.gov/vuln/detail/CVE-2012-3008) |
 
 ## Conferences
 - [Adventures in Attacking Wind Farm Control Networks](https://www.youtube.com/watch?v=xpj2JLe41k0) - @ Black Hat (2018)

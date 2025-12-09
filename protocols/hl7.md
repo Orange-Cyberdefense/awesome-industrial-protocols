@@ -5,7 +5,6 @@
 | Name | HL7 |
 | Description | Standard for healthcare data exchange and interoperability |
 | Wireshark dissector | [packet-hl7.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-hl7.c) |
-| Related CVE | [CVE-2020-27260](https://nvd.nist.gov/vuln/detail/CVE-2020-27260) |
 
 ## Conferences
 - [#HITB2017AMS D2T2 - Hacking Medical Devices And Healthcare Infrastructure - Anirudh Duggal](https://www.youtube.com/watch?v=3S6RQo-OQ24) - @  Hack In The Box (2017)

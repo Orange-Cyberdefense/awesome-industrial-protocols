@@ -9,7 +9,6 @@
 | Nmap script(s) | [s7-info.nse](https://nmap.org/nsedoc/scripts/s7-info.html), [s7-enumerate.nse](https://github.com/digitalbond/Redpoint/blob/master/s7-enumerate.nse) |
 | Wireshark dissector | [packet-s7comm.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-s7comm.c) |
 | Example Pcap(s) | [ICS-pcap S7](https://github.com/automayt/ICS-pcap/tree/master/S7) |
-| Related CVE | [CVE-2018-4850](https://nvd.nist.gov/vuln/detail/CVE-2018-4850), [CVE-2019-10929](https://nvd.nist.gov/vuln/detail/CVE-2019-10929), [CVE-2021-40368](https://nvd.nist.gov/vuln/detail/CVE-2021-40368) |
 
 ## Articles
 - [The Siemens S7 Communication - Part 1 General Structure](http://gmiru.com/article/s7comm/) - On GyM's Personal Blog (2016)

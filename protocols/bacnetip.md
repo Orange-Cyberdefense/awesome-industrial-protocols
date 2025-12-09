@@ -12,7 +12,6 @@
 | Nmap script(s) | [bacnet-info.nse](https://nmap.org/nsedoc/scripts/bacnet-info.html) |
 | Wireshark dissector | [packet-bacnet.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-bacnet.c) |
 | Example Pcap(s) | [ICS-pcap BACnet](https://github.com/automayt/ICS-pcap/tree/master/BACNET), [S4x15 ICS Village PCAP Files](https://www.netresec.com/?page=DigitalBond_S4) |
-| Related CVE | [CVE-2018-10238](https://nvd.nist.gov/vuln/detail/CVE-2018-10238), [CVE-2018-18878](https://nvd.nist.gov/vuln/detail/CVE-2018-18878), [CVE-2019-12480](https://nvd.nist.gov/vuln/detail/CVE-2019-12480), [CVE-2021-41545](https://nvd.nist.gov/vuln/detail/CVE-2021-41545), [CVE-2023-38405](https://nvd.nist.gov/vuln/detail/CVE-2023-38405), [CVE-2023-51773](https://nvd.nist.gov/vuln/detail/CVE-2023-51773) |
 
 ## Articles
 - [10 things you should know about BACnet](https://www.rtautomation.com/rtas-blog/10-things-about-bacnet/) - Blog post on RTAutomation
