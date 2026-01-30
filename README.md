@@ -26,7 +26,7 @@ remarks or contributions.
 ## Contents
 
 
-Currently, there are **71 protocols** with a total of 389 resources.
+Currently, there are **71 protocols** with a total of 390 resources.
 - [ADS](#ads)
 - [ANSI-C12.22](#ansi-c1222)
 - [ASTM](#astm)
