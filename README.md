@@ -707,7 +707,7 @@ Currently, there are **75 protocols** with a total of 400 resources.
 - [Fuzz Testing IEC 61850](https://www.youtube.com/watch?v=QehBHZyy4W4) - Markus Mahrla @ CS3STHLM 2019
 ### Tools
 - [libiec61850](https://github.com/mz-automation/libiec61850) - Open-source library for the IEC 61850 protocols
-- [awtSCADA](https://github.com/larionovavi-stack/bitscada) - Browser-based SCADA/HMI with full IEC 61850 MMS/GOOSE/SV stack, runs from a single HTML file
+- [awtSCADA](https://github.com/larionovavi-stack/awtscada) - Browser-based SCADA/HMI with full IEC 61850 MMS/GOOSE/SV stack, runs from a single HTML file
 
 
 ## IEEE-C37.118
