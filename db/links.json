@@ -400,3 +400,15 @@
 {"_id":{"$oid":"69b29efcac3ee86b93322999"},"name":"packet-osc.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-osc.c","description":"Wireshark dissector for OpenSoundControl","type":"tool"}
 {"_id":{"$oid":"6a2fb586e6625e4dd63c4645"},"name":"aem-modbus-simulator","url":"https://github.com/leaberg69/aem-modbus-simulator","description":"Open-source Modbus RTU/TCP slave simulator for the LRI AEM-60DC8 industrial DC monitor","type":"tool"}
 {"_id":{"$oid":"6a43723e0198b04c19416710"},"name":"modbus-server","url":"https://github.com/cybcon/modbus-server","description":"Lightweight Python Modbus TCP/UDP slave simulator","type":"tool"}
+{"_id":{"$oid":"6a4b5a23cf62d11b99aedc6b"},"name":"modbus-client","url":"https://github.com/cybcon/modbus-client","description":"Modbus client to read and interpret Modbus registers","type":"tool"}
+{"_id":{"$oid":"6a4b5b4bab17de665f3813f8"},"name":"rtsp-url-brute","url":"https://nmap.org/nsedoc/scripts/rtsp-url-brute.html","description":"Nmap URL bruteforce script for RTSP","type":"tool"}
+{"_id":{"$oid":"6a4b5b9a5f058e85170b2243"},"name":"packet-rtsp.c","url":"https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-rtsp.c","description":"Wireshark dissector for RTSP","type":"tool"}
+{"_id":{"$oid":"6a4b5bb95f058e85170b2244"},"name":"rtp.py","url":"https://github.com/secdev/scapy/blob/master/scapy/layers/rtp.py","description":"Scapy layer for RTSP","type":"tool"}
+{"_id":{"$oid":"6a4b5bc15f058e85170b2245"},"name":"rtcp.py","url":"https://github.com/secdev/scapy/blob/master/scapy/contrib/rtcp.py","description":"Scapy layer for RTSP","type":"tool"}
+{"_id":{"$oid":"6a4b5bce5f058e85170b2246"},"name":"rtsp.py","url":"https://github.com/secdev/scapy/blob/master/scapy/contrib/rtsp.py","description":"Scapy layer for RTSP","type":"tool"}
+{"_id":{"$oid":"6a4b5c57e77431eea8024635"},"name":"cameradar","url":"https://github.com/Ullaakut/cameradar","description":"Detect and bruteforce RTSP endpoints","type":"tool"}
+{"_id":{"$oid":"6a4b5ccd605cd9b50daeb894"},"name":"Looping Surveillance Cameras through Live Editing","url":"https://www.youtube.com/watch?v=RoOqznZUClI","description":"Van Albert and Banks @ DEFCON 23 (2016)","type":"conference"}
+{"_id":{"$oid":"6a4b5d5b7e382bd86ab8e179"},"name":"Penetration Tests on Video Surveillance Networks","url":"https://www.youtube.com/watch?v=i_qzFF4LeQ4","description":"Claire Vacherot @ Security Fest (2026)","type":"conference"}
+{"_id":{"$oid":"6a4b5e053a99c7a3bebcb60c"},"name":"RFC 2326","url":"https://www.rfc-editor.org/rfc/rfc2326.html","description":"RFC for Real Time Streaming Protocol (RTSP)","type":"documentation"}
+{"_id":{"$oid":"6a4b5e72dada5714b2e3ac57"},"name":"RFC 3550","url":"https://www.rfc-editor.org/info/rfc3550/","description":"RFC for RTP: A Transport Protocol for Real-Time Applications","type":"documentation"}
+{"_id":{"$oid":"6a4b5fb2ca9d967115e57af7"},"name":"cam-amber","url":"https://github.com/Orange-Cyberdefense/cam-amber","description":"Toolkit for camera discovery and assessment","type":"tool"}

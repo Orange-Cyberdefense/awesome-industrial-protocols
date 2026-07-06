@@ -26,7 +26,7 @@ remarks or contributions.
 ## Contents
 
 
-Currently, there are **75 protocols** with a total of 402 resources.
+Currently, there are **76 protocols** with a total of 414 resources.
 - [ADS](#ads)
 - [ANSI-C12.22](#ansi-c1222)
 - [Art-Net](#art-net)
@@ -88,6 +88,7 @@ Currently, there are **75 protocols** with a total of 402 resources.
 - [Profinet-DCP](#profinet-dcp)
 - [Profinet-IO](#profinet-io)
 - [RTPS](#rtps)
+- [RTSP](#rtsp)
 - [S-Bus](#s-bus)
 - [S7comm](#s7comm)
 - [sACN](#sacn)
@@ -907,6 +908,7 @@ Currently, there are **75 protocols** with a total of 402 resources.
 - [ctmodbus](https://github.com/ControlThings-io/ctmodbus) - A tool to interact with the Modbus protocol
 - [Malmod](https://github.com/mliras/malmod) - Scripts to attack Modicon M340 via UMAS
 - [mbtget](https://github.com/sourceperl/mbtget) - A simple Modbus/TCP client in Perl
+- [modbus-client](https://github.com/cybcon/modbus-client) - Modbus client to read and interpret Modbus registers
 - [modbus-server](https://github.com/cybcon/modbus-server) - Lightweight Python Modbus TCP/UDP slave simulator
 - [PyModbus](https://github.com/pymodbus-dev/pymodbus) - A full modbus protocol written in python
 
@@ -1123,6 +1125,27 @@ Currently, there are **75 protocols** with a total of 402 resources.
 | Detailed page | [rtps.md](protocols/rtps.md) |
 ### Conferences
 - [The Data Distribution Service (DDS) Protocol is Critical: Let's Use it Securely!](https://www.youtube.com/watch?v=7IV49wKxs4c) - Federico Maggi, Erik Boasson @ Black Hat EU 2021
+
+
+## RTSP
+| Name | RTSP |
+|---|---|
+| Alias | RTP, RTCP |
+| Description | Real-Time Streaming Protocol to send video streams |
+| Keywords | Camera, Video, Stream |
+| Port | 554/tcp |
+| Access | Free |
+| Specifications | [RFC 2326](https://www.rfc-editor.org/rfc/rfc2326.html), [RFC 3550](https://www.rfc-editor.org/info/rfc3550/) |
+| Nmap script(s) | [rtsp-url-brute](https://nmap.org/nsedoc/scripts/rtsp-url-brute.html) |
+| Wireshark dissector | [packet-rtsp.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-rtsp.c) |
+| Scapy layer | [rtsp.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/rtsp.py) |
+| Detailed page | [rtsp.md](protocols/rtsp.md) |
+### Conferences
+- [Looping Surveillance Cameras through Live Editing](https://www.youtube.com/watch?v=RoOqznZUClI) - Van Albert and Banks @ DEFCON 23 (2016)
+- [Penetration Tests on Video Surveillance Networks](https://www.youtube.com/watch?v=i_qzFF4LeQ4) - Claire Vacherot @ Security Fest (2026)
+### Tools
+- [cam-amber](https://github.com/Orange-Cyberdefense/cam-amber) - Toolkit for camera discovery and assessment
+- [cameradar](https://github.com/Ullaakut/cameradar) - Detect and bruteforce RTSP endpoints
 
 
 ## S-Bus
