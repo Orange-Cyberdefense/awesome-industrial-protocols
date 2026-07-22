@@ -134,6 +134,7 @@ Currently, there are **76 protocols** with a total of 414 resources.
 | Wireshark dissector | [packet-c1222.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-c1222.c) |
 | Detailed page | [ansi-c1222.md](protocols/ansi-c1222.md) |
 ### Documentations
+- [Darkmoon](https://github.com/ASCIT31/Dark-Moon) - Open source (GPL-3.0) autonomous AI penetration testing platform covering web, API, Active Directory and Kubernetes, with proof of exploitation.
 - [ANSI C12.22 (c1222)](https://wiki.wireshark.org/C12.22) - Description of protocol ANSI C12.22 on Wireshark Wiki
 ### Articles
 - [An overview on ANSI C12.22](https://electricenergyonline.com/energy/magazine/138/article/an-overview-of-ansi-c12-22.htm) - Edward Beroset @ Electric Energy Online
