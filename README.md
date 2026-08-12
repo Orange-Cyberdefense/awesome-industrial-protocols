@@ -215,6 +215,7 @@ Currently, there are **76 protocols** with a total of 414 resources.
 - [BACnet Stack](https://github.com/bacnet-stack/bacnet-stack) - BACnet open source protocol stack
 - [bacnet-docker](https://github.com/mnp/bacnet-docker) - BACnet Tools in Docker
 
+- [MacTools BACnet Explorer](https://voltrus.id/bacnet-explorer/) - Native BACnet/IP device discovery & object browser for macOS
 
 ## BSAP
 | Name | BSAP |
@@ -429,6 +430,7 @@ Currently, there are **76 protocols** with a total of 414 resources.
 - [opendnp3](https://github.com/dnp3/opendnp3) - DNP3 (IEEE-1815) protocol stack. Modern C++ with bindings for .NET and Java
 - [Step Function I/O DNP3](https://github.com/stepfunc/dnp3) - Rust implementation of DNP3 (IEEE 1815) with idiomatic bindings for C, .NET, C++, and Java
 
+- [MacTools DNP3 Explorer](https://voltrus.id/dnp3-explorer/) - DNP3 device browser for macOS
 
 ## DoIP
 | Name | DoIP |
@@ -500,6 +502,7 @@ Currently, there are **76 protocols** with a total of 414 resources.
 - [pycomm3](https://github.com/ottowayi/pycomm3) - A Python Ethernet/IP library for communicating with Allen-Bradley PLCs
 - [scapy-cip-enip](https://github.com/scy-phy/scapy-cip-enip) - Ethernet/IP dissectors for Scapy
 
+- [MacTools EtherNet/IP Explorer](https://voltrus.id/enip-explorer/) - EtherNet/IP CIP browser for macOS
 
 ## ETP
 | Name | ETP |
@@ -912,6 +915,7 @@ Currently, there are **76 protocols** with a total of 414 resources.
 - [modbus-server](https://github.com/cybcon/modbus-server) - Lightweight Python Modbus TCP/UDP slave simulator
 - [PyModbus](https://github.com/pymodbus-dev/pymodbus) - A full modbus protocol written in python
 
+- [MacTools Modbus Poll](https://voltrus.id/modbus-poll/) - Modbus TCP + RTU master & slave simulator for macOS
 
 ## MQTT
 | Name | MQTT |
@@ -928,6 +932,8 @@ Currently, there are **76 protocols** with a total of 414 resources.
 - [Choo Choo, Network Train - The One to Rule Your Perimeter](https://www.youtube.com/watch?v=RpXoVwCSHA0) - Martin Hron @ Black Hat Europe (2022)
 - [Light Weight Protocol: Critical Implications](https://www.youtube.com/watch?v=o7qDVZr0t2c) - Lucas Lundgren, Neal Hindocha @ DEF CON 24 (2016)
 - [When Machines Can't Talk](https://www.youtube.com/watch?v=X3fUNWRgeao) - Federico Maggi & Davide Quarta @ Black Hat Europe (2018)
+### Tools
+- [MacTools MQTT Explorer](https://voltrus.id/mqtt-explorer/) - MQTT broker + client for macOS
 
 
 ## MTConnect
@@ -1013,6 +1019,7 @@ Currently, there are **76 protocols** with a total of 414 resources.
 - [python-opcua](https://github.com/FreeOpcUa/python-opcua) - OPC UA Client and Server in Python
 - [UA-.NETStandard](https://github.com/OPCFoundation/UA-.NETStandard) - Official OPC UA .NET Standard Stack from the OPC Foundation
 
+- [MacTools OPC-UA Explorer](https://voltrus.id/opcua-explorer/) - Native OPC-UA client for macOS
 
 ## OpenSoundControl
 | Name | OpenSoundControl |
@@ -1189,6 +1196,7 @@ Currently, there are **76 protocols** with a total of 414 resources.
 - [s7scan](https://github.com/klsecservices/s7scan) - Scan networks to gather basic information about Siemens PLCs
 - [Snap7](https://snap7.sourceforge.net/) - Step7 Open Source Ethernet Communication Suite
 
+- [MacTools S7 Explorer](https://voltrus.id/s7-explorer/) - Siemens S7-1200 / S7-1500 browser for macOS
 
 ## sACN
 | Name | sACN |
