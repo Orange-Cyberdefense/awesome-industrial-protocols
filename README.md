@@ -467,6 +467,8 @@ Currently, there are **76 protocols** with a total of 414 resources.
 | Detailed page | [ethercat.md](protocols/ethercat.md) |
 ### Articles
 - [Industrial Network Options: EtherCAT Advantages, Challenges, and Specs](https://control.com/technical-articles/introduction-to-ethercat/) - Carlos Aguilar, Control Automation (2023)
+### Tools
+- [iaiops](https://github.com/industrial-aiops/industrial-aiops) - EtherCAT master built on SOEM/pysoem — enumerate slaves, read SDO/PDO and inspect master/slave state machines
 
 
 ## Ethernet/IP
@@ -543,6 +545,8 @@ Currently, there are **76 protocols** with a total of 414 resources.
 ### Conferences
 - [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
 - [Common Flaws in ICS Network Protocols](https://www.youtube.com/watch?v=Bhq4kC52Qg8) - Mars Cheng & Selmon Yang @ Hack In The Box (2020)
+### Tools
+- [iaiops](https://github.com/industrial-aiops/industrial-aiops) - Pure-Python Omron FINS client (CS/CJ/CP/NX) reading CPU status and DM/CIO/work areas
 
 
 ## FL-net
@@ -622,6 +626,8 @@ Currently, there are **76 protocols** with a total of 414 resources.
 - [DTM Components: Shadow Keys to the ICS Kingdom](https://www.youtube.com/watch?v=VeMgbC0a-u8) - Alexander Bolshev and Gleb Cherbov @ Black Hat Europe (2014)
 - [ICSCorsair: How I Will PWN Your ERP Through 4-20 mA Current Loop](https://www.youtube.com/watch?v=T9tahQImuWI) - Alexander Bolshev and Gleb Cherbov @ Black Hat USA (2014)
 - [It WISNt Me Attacking Industrial Wireless Mesh Networks](https://www.youtube.com/watch?v=-WfP2VVhTt0) - Paternotte and van Ommeren @ DEF CON 25 (2018)
+### Tools
+- [iaiops](https://github.com/industrial-aiops/industrial-aiops) - HART-IP client reading device identity, the primary variable and the dynamic variables (PV/SV/TV/QV) through a gateway
 
 
 ## HICP
@@ -865,6 +871,8 @@ Currently, there are **76 protocols** with a total of 414 resources.
 | Detailed page | [melsec.md](protocols/melsec.md) |
 ### Conferences
 - [Taking Apart and Taking Over ICS & SCADA Ecosystems](https://www.youtube.com/watch?v=L0w_aE4jRFw) - Mars Cheng & Selmon Yang @ DEF CON 29 (2021)
+### Tools
+- [iaiops](https://github.com/industrial-aiops/industrial-aiops) - Mitsubishi MC 3E-frame client (Q/L/iQ-R) reading CPU status, words and bits, with CC-Link link diagnostics
 
 
 ## Modbus
@@ -928,6 +936,8 @@ Currently, there are **76 protocols** with a total of 414 resources.
 - [Choo Choo, Network Train - The One to Rule Your Perimeter](https://www.youtube.com/watch?v=RpXoVwCSHA0) - Martin Hron @ Black Hat Europe (2022)
 - [Light Weight Protocol: Critical Implications](https://www.youtube.com/watch?v=o7qDVZr0t2c) - Lucas Lundgren, Neal Hindocha @ DEF CON 24 (2016)
 - [When Machines Can't Talk](https://www.youtube.com/watch?v=X3fUNWRgeao) - Federico Maggi & Davide Quarta @ Black Hat Europe (2018)
+### Tools
+- [iaiops](https://github.com/industrial-aiops/industrial-aiops) - MQTT and Sparkplug B consumer with full payload decode, Unified Namespace topic browsing and schema-drift auditing
 
 
 ## MTConnect
@@ -945,6 +955,8 @@ Currently, there are **76 protocols** with a total of 414 resources.
 ### Conferences
 - [Abusing CNC Technologies](https://www.youtube.com/watch?v=jl-wVwk24k8) - Marco Balduzzi @ Black Hat Europe (2022)
 - [An Analysis Of Computer Numerical Control Machines In Industry 4.0](https://www.youtube.com/watch?v=b3k7R8FUdIE) - Marco Balduzzi @ Hack In The Box (2023)
+### Tools
+- [iaiops](https://github.com/industrial-aiops/industrial-aiops) - MTConnect agent client covering probe, current, sample and assets, with an OEE snapshot
 
 
 ## Niagara Fox
@@ -1099,6 +1111,8 @@ Currently, there are **76 protocols** with a total of 414 resources.
 | Port | Ethernet |
 | Scapy layer | [pnio_dcp.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/pnio_dcp.py) |
 | Detailed page | [profinet-dcp.md](protocols/profinet-dcp.md) |
+### Tools
+- [iaiops](https://github.com/industrial-aiops/industrial-aiops) - PROFINET-DCP layer-2 discovery and station identification for asset inventory
 
 
 
@@ -1226,6 +1240,8 @@ Currently, there are **76 protocols** with a total of 414 resources.
 | Keywords | Semiconductor, MES |
 | Port | 5000/tcp (HSMS) |
 | Detailed page | [secsgem.md](protocols/secsgem.md) |
+### Tools
+- [iaiops](https://github.com/industrial-aiops/industrial-aiops) - SECS/GEM host (SEMI E5 / E30 / E37 HSMS) reading equipment status, status variables, equipment constants and alarms
 
 
 
