@@ -15,3 +15,5 @@
 ## Conferences
 - [Abusing CNC Technologies](https://www.youtube.com/watch?v=jl-wVwk24k8) - Marco Balduzzi @ Black Hat Europe (2022)
 - [An Analysis Of Computer Numerical Control Machines In Industry 4.0](https://www.youtube.com/watch?v=b3k7R8FUdIE) - Marco Balduzzi @ Hack In The Box (2023)
+## Tools
+- [iaiops MTConnect connector](https://github.com/industrial-aiops/industrial-aiops/tree/main/iaiops/connectors/mtconnect) - MTConnect agent client

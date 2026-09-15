@@ -8,4 +8,5 @@
 | Keywords | Semiconductor, MES |
 | Port(s) | 5000/tcp (HSMS) |
 
-
+## Tools
+- [iaiops SECS/GEM connector](https://github.com/industrial-aiops/industrial-aiops/tree/main/iaiops/connectors/secsgem) - SECS/GEM host (SEMI E5 / E30 / E37 HSMS)

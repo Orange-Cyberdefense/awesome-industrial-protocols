@@ -26,7 +26,7 @@ remarks or contributions.
 ## Contents
 
 
-Currently, there are **76 protocols** with a total of 414 resources.
+Currently, there are **76 protocols** with a total of 421 resources.
 - [ADS](#ads)
 - [ANSI-C12.22](#ansi-c1222)
 - [Art-Net](#art-net)
@@ -468,7 +468,7 @@ Currently, there are **76 protocols** with a total of 414 resources.
 ### Articles
 - [Industrial Network Options: EtherCAT Advantages, Challenges, and Specs](https://control.com/technical-articles/introduction-to-ethercat/) - Carlos Aguilar, Control Automation (2023)
 ### Tools
-- [iaiops](https://github.com/industrial-aiops/industrial-aiops) - EtherCAT master built on SOEM/pysoem — enumerate slaves, read SDO/PDO and inspect master/slave state machines
+- [iaiops EtherCAT connector](https://github.com/industrial-aiops/industrial-aiops/tree/main/iaiops/connectors/ethercat) - EtherCAT master built on SOEM/pysoem
 
 
 ## Ethernet/IP
@@ -546,7 +546,7 @@ Currently, there are **76 protocols** with a total of 414 resources.
 - [Analyzing PIPEDREAM - Challenges in Testing an ICS Attack Toolkit](https://www.youtube.com/watch?v=_dz6VNYSSJ0) - Jimmy Wylie @ DEF CON 30 (2022)
 - [Common Flaws in ICS Network Protocols](https://www.youtube.com/watch?v=Bhq4kC52Qg8) - Mars Cheng & Selmon Yang @ Hack In The Box (2020)
 ### Tools
-- [iaiops](https://github.com/industrial-aiops/industrial-aiops) - Pure-Python Omron FINS client (CS/CJ/CP/NX) reading CPU status and DM/CIO/work areas
+- [iaiops FINS connector](https://github.com/industrial-aiops/industrial-aiops/tree/main/iaiops/connectors/fins) - Omron FINS client in Python (CS/CJ/CP/NX)
 
 
 ## FL-net
@@ -627,7 +627,7 @@ Currently, there are **76 protocols** with a total of 414 resources.
 - [ICSCorsair: How I Will PWN Your ERP Through 4-20 mA Current Loop](https://www.youtube.com/watch?v=T9tahQImuWI) - Alexander Bolshev and Gleb Cherbov @ Black Hat USA (2014)
 - [It WISNt Me Attacking Industrial Wireless Mesh Networks](https://www.youtube.com/watch?v=-WfP2VVhTt0) - Paternotte and van Ommeren @ DEF CON 25 (2018)
 ### Tools
-- [iaiops](https://github.com/industrial-aiops/industrial-aiops) - HART-IP client reading device identity, the primary variable and the dynamic variables (PV/SV/TV/QV) through a gateway
+- [iaiops HART-IP connector](https://github.com/industrial-aiops/industrial-aiops/tree/main/iaiops/connectors/hart) - HART-IP client reading data through a gateway
 
 
 ## HICP
@@ -863,7 +863,7 @@ Currently, there are **76 protocols** with a total of 414 resources.
 ## MELSEC
 | Name | MELSEC |
 |---|---|
-| Alias | MEL-SEC, MELSEC-Q |
+| Alias | MEL-SEC, MELSEC-Q, MC-3 |
 | Description | Communication protocol for Mitsubishi Electric's MELSEC series of PLCs |
 | Keywords | Mitsubishi, MELSOFT |
 | Port | 5007/tcp, 5006/udp |
@@ -872,7 +872,7 @@ Currently, there are **76 protocols** with a total of 414 resources.
 ### Conferences
 - [Taking Apart and Taking Over ICS & SCADA Ecosystems](https://www.youtube.com/watch?v=L0w_aE4jRFw) - Mars Cheng & Selmon Yang @ DEF CON 29 (2021)
 ### Tools
-- [iaiops](https://github.com/industrial-aiops/industrial-aiops) - Mitsubishi MC 3E-frame client (Q/L/iQ-R) reading CPU status, words and bits, with CC-Link link diagnostics
+- [iaiops MC connector](https://github.com/industrial-aiops/industrial-aiops/tree/main/iaiops/connectors/mc) - Mitsubishi MC 3E-frame client (Q/L/iQ-R)
 
 
 ## Modbus
@@ -936,8 +936,6 @@ Currently, there are **76 protocols** with a total of 414 resources.
 - [Choo Choo, Network Train - The One to Rule Your Perimeter](https://www.youtube.com/watch?v=RpXoVwCSHA0) - Martin Hron @ Black Hat Europe (2022)
 - [Light Weight Protocol: Critical Implications](https://www.youtube.com/watch?v=o7qDVZr0t2c) - Lucas Lundgren, Neal Hindocha @ DEF CON 24 (2016)
 - [When Machines Can't Talk](https://www.youtube.com/watch?v=X3fUNWRgeao) - Federico Maggi & Davide Quarta @ Black Hat Europe (2018)
-### Tools
-- [iaiops](https://github.com/industrial-aiops/industrial-aiops) - MQTT and Sparkplug B consumer with full payload decode, Unified Namespace topic browsing and schema-drift auditing
 
 
 ## MTConnect
@@ -956,7 +954,7 @@ Currently, there are **76 protocols** with a total of 414 resources.
 - [Abusing CNC Technologies](https://www.youtube.com/watch?v=jl-wVwk24k8) - Marco Balduzzi @ Black Hat Europe (2022)
 - [An Analysis Of Computer Numerical Control Machines In Industry 4.0](https://www.youtube.com/watch?v=b3k7R8FUdIE) - Marco Balduzzi @ Hack In The Box (2023)
 ### Tools
-- [iaiops](https://github.com/industrial-aiops/industrial-aiops) - MTConnect agent client covering probe, current, sample and assets, with an OEE snapshot
+- [iaiops MTConnect connector](https://github.com/industrial-aiops/industrial-aiops/tree/main/iaiops/connectors/mtconnect) - MTConnect agent client
 
 
 ## Niagara Fox
@@ -1112,8 +1110,7 @@ Currently, there are **76 protocols** with a total of 414 resources.
 | Scapy layer | [pnio_dcp.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/pnio_dcp.py) |
 | Detailed page | [profinet-dcp.md](protocols/profinet-dcp.md) |
 ### Tools
-- [iaiops](https://github.com/industrial-aiops/industrial-aiops) - PROFINET-DCP layer-2 discovery and station identification for asset inventory
-
+- [iaiops Profinet DCP connector](https://github.com/industrial-aiops/industrial-aiops/tree/main/iaiops/connectors/profinet) - PROFINET-DCP layer-2 discovery and station identification
 
 
 ## Profinet-IO
@@ -1241,8 +1238,7 @@ Currently, there are **76 protocols** with a total of 414 resources.
 | Port | 5000/tcp (HSMS) |
 | Detailed page | [secsgem.md](protocols/secsgem.md) |
 ### Tools
-- [iaiops](https://github.com/industrial-aiops/industrial-aiops) - SECS/GEM host (SEMI E5 / E30 / E37 HSMS) reading equipment status, status variables, equipment constants and alarms
-
+- [iaiops SECS/GEM connector](https://github.com/industrial-aiops/industrial-aiops/tree/main/iaiops/connectors/secsgem) - SECS/GEM host (SEMI E5 / E30 / E37 HSMS)
 
 
 ## SERCOS-III
@@ -1416,11 +1412,11 @@ README, and we will import the new content into the MongoDB database files
 databases using a custom tool, there may be some differences between your
 submission and the final pages that include it.
 
-We accept submissions of commercial tools as well, provided they are beneficial
-to the community, such as offering valuable features or free access. We do not
-accept or promote commercial tools that require payment or financial
-compensation for inclusion. Sponsorships or paid endorsements are not accepted,
-the list is curated independently to ensure impartiality.
+We only accept submissions of open source tools, unless they are provided
+directly by the official protocol publishers. All tools must offer free access
+to their features. We do not accept or promote commercial tools that require
+payment or financial compensation for inclusion.  Sponsored or paid endorsements
+are not accepted. The list is curated independently to ensure impartiality.
 
 We reserve the right to remove or reject resources that do not adhere to these
 principles or that we consider inappropriate.

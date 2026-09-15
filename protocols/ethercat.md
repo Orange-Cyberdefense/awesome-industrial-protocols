@@ -11,3 +11,5 @@
 
 ## Articles
 - [Industrial Network Options: EtherCAT Advantages, Challenges, and Specs](https://control.com/technical-articles/introduction-to-ethercat/) - Carlos Aguilar, Control Automation (2023)
+## Tools
+- [iaiops EtherCAT connector](https://github.com/industrial-aiops/industrial-aiops/tree/main/iaiops/connectors/ethercat) - EtherCAT master built on SOEM/pysoem
