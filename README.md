@@ -918,6 +918,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 - [mbtget](https://github.com/sourceperl/mbtget) - A simple Modbus/TCP client in Perl
 - [modbus-client](https://github.com/cybcon/modbus-client) - Modbus client to read and interpret Modbus registers
 - [modbus-server](https://github.com/cybcon/modbus-server) - Lightweight Python Modbus TCP/UDP slave simulator
+- [ot-pcap-quicklook](https://github.com/industrial-arch-sales/ot-pcap-quicklook) - Dependency-free CLI for static Modbus TCP PCAP triage, including TCP conversations, function codes, Unit IDs, and potential write commands
 - [PyModbus](https://github.com/pymodbus-dev/pymodbus) - A full modbus protocol written in python
 
 
