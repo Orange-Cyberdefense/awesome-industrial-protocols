@@ -26,7 +26,7 @@ remarks or contributions.
 ## Contents
 
 
-Currently, there are **76 protocols** with a total of 421 resources.
+Currently, there are **78 protocols** with a total of 444 resources.
 - [ADS](#ads)
 - [ANSI-C12.22](#ansi-c1222)
 - [Art-Net](#art-net)
@@ -36,6 +36,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 - [BSAP](#bsap)
 - [CAN](#can)
 - [CC-Link IE](#cc-link-ie)
+- [CoAP](#coap)
 - [CIP](#cip)
 - [CODESYS](#codesys)
 - [Crimson](#crimson)
@@ -79,6 +80,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 - [Niagara Fox](#niagara-fox)
 - [OPC-DA](#opc-da)
 - [OPC-UA](#opc-ua)
+- [OCPP](#ocpp)
 - [OpenSoundControl](#opensoundcontrol)
 - [PC-WORX](#pc-worx)
 - [PCCC](#pccc)
@@ -120,6 +122,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 ### Tools
 - [ADS](https://github.com/Beckhoff/ADS) - Official Beckhoff ADS library
 - [ads-client](https://github.com/jisotalo/ads-client) - Node.js client for Beckhoff TwinCAT ADS
+- [OIDA](https://github.com/f0rw4rd/oida) - TwinCAT/ADS client for PLC device assessment ([docs](https://getoida.dev/protocols/ads/))
 - [pyads](https://github.com/stlehmann/pyads) - Python package for communicating with TwinCAT devices using ADS protocol
 
 
@@ -161,6 +164,8 @@ Currently, there are **76 protocols** with a total of 421 resources.
 | Description | Protocol for laboratory data management |
 | Keywords | Laboratory, LIS |
 | Detailed page | [astm.md](protocols/astm.md) |
+### Tools
+- [OIDA](https://github.com/f0rw4rd/oida) - ASTM client for clinical analyzer and LIS assessment ([docs](https://getoida.dev/protocols/astm/))
 
 
 
@@ -214,6 +219,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 ### Tools
 - [BACnet Stack](https://github.com/bacnet-stack/bacnet-stack) - BACnet open source protocol stack
 - [bacnet-docker](https://github.com/mnp/bacnet-docker) - BACnet Tools in Docker
+- [OIDA](https://github.com/f0rw4rd/oida) - BACnet/IP client for building automation device assessment ([docs](https://getoida.dev/protocols/bacnet/))
 
 
 ## BSAP
@@ -273,6 +279,23 @@ Currently, there are **76 protocols** with a total of 421 resources.
 - [cantools](https://github.com/cantools/cantools) - Python library to play with CAN databases & messages
 - [opendbc](https://github.com/commaai/opendbc) - A list of CAN databases retrieved from reverse-engineered cars
 - [python-can](https://github.com/hardbyte/python-can) - Python library to plug to various CAN connectors
+- [OIDA](https://github.com/f0rw4rd/oida) - CAN client for UDS, OBD-II and CANopen assessment ([docs](https://getoida.dev/protocols/can/))
+
+
+## CoAP
+| Name | CoAP |
+|---|---|
+| Alias | Constrained Application Protocol |
+| Description | Constrained REST protocol for IoT and LwM2M field devices |
+| Keywords | IoT, LwM2M |
+| Port | 5683/udp, 5684/udp (DTLS) |
+| Access | Free |
+| Specifications | [RFC 7252](https://www.rfc-editor.org/rfc/rfc7252.html) |
+| Wireshark dissector | [packet-coap.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-coap.c) |
+| Scapy layer | [coap.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/coap.py) |
+| Detailed page | [coap.md](protocols/coap.md) |
+### Tools
+- [OIDA](https://github.com/f0rw4rd/oida) - CoAP client for IoT and LwM2M device assessment ([docs](https://getoida.dev/protocols/coap/))
 
 
 ## CC-Link IE
@@ -398,6 +421,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 - [DCMTK](https://dcmtk.org/en/) - DICOM ToolKit
 - [dicom-server](https://github.com/microsoft/dicom-server) - Microsoft's OSS Implementation of DICOMweb standard
 - [pydicom](https://github.com/pydicom/pydicom) - Python package to read, modify and write DICOM files
+- [OIDA](https://github.com/f0rw4rd/oida) - DICOM client for PACS and medical imaging assessment ([docs](https://getoida.dev/protocols/dicom/))
 
 
 ## DNP3
@@ -428,6 +452,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 - [gec/dnp3slavesim](https://github.com/gec/dnp3slavesim) - Parallel dnp3 slave simulator
 - [opendnp3](https://github.com/dnp3/opendnp3) - DNP3 (IEEE-1815) protocol stack. Modern C++ with bindings for .NET and Java
 - [Step Function I/O DNP3](https://github.com/stepfunc/dnp3) - Rust implementation of DNP3 (IEEE 1815) with idiomatic bindings for C, .NET, C++, and Java
+- [OIDA](https://github.com/f0rw4rd/oida) - DNP3 client for SCADA outstation assessment ([docs](https://getoida.dev/protocols/dnp3/))
 
 
 ## DoIP
@@ -469,6 +494,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 - [Industrial Network Options: EtherCAT Advantages, Challenges, and Specs](https://control.com/technical-articles/introduction-to-ethercat/) - Carlos Aguilar, Control Automation (2023)
 ### Tools
 - [iaiops EtherCAT connector](https://github.com/industrial-aiops/industrial-aiops/tree/main/iaiops/connectors/ethercat) - EtherCAT master built on SOEM/pysoem
+- [OIDA](https://github.com/f0rw4rd/oida) - EtherCAT client for fieldbus segment assessment ([docs](https://getoida.dev/protocols/ethercat/))
 
 
 ## Ethernet/IP
@@ -501,6 +527,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 - [OpENer](https://github.com/EIPStackGroup/OpENer) - EtherNet/IP stack for I/O adapter devices
 - [pycomm3](https://github.com/ottowayi/pycomm3) - A Python Ethernet/IP library for communicating with Allen-Bradley PLCs
 - [scapy-cip-enip](https://github.com/scy-phy/scapy-cip-enip) - Ethernet/IP dissectors for Scapy
+- [OIDA](https://github.com/f0rw4rd/oida) - EtherNet/IP client for Rockwell/Allen-Bradley device assessment ([docs](https://getoida.dev/protocols/ethernetip/))
 
 
 ## ETP
@@ -531,6 +558,8 @@ Currently, there are **76 protocols** with a total of 421 resources.
 | Detailed page | [fhir.md](protocols/fhir.md) |
 ### Conferences
 - [Playing with FHIR](https://www.youtube.com/watch?v=wrNyd60XPMg) - Alissa Knight, Mitch Parker @ DEF CON 29 Biohacking Village (2021)
+### Tools
+- [OIDA](https://github.com/f0rw4rd/oida) - FHIR client for healthcare API assessment ([docs](https://getoida.dev/protocols/fhir/))
 
 
 ## FINS
@@ -628,6 +657,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 - [It WISNt Me Attacking Industrial Wireless Mesh Networks](https://www.youtube.com/watch?v=-WfP2VVhTt0) - Paternotte and van Ommeren @ DEF CON 25 (2018)
 ### Tools
 - [iaiops HART-IP connector](https://github.com/industrial-aiops/industrial-aiops/tree/main/iaiops/connectors/hart) - HART-IP client reading data through a gateway
+- [OIDA](https://github.com/f0rw4rd/oida) - HART-IP client for field device assessment ([docs](https://getoida.dev/protocols/hart/))
 
 
 ## HICP
@@ -660,6 +690,8 @@ Currently, there are **76 protocols** with a total of 421 resources.
 - [Pestilential Protocol: How Unsecure HL7 Messages Threaten Patient Lives](https://www.youtube.com/watch?v=66x3vfac8rA) - Christian Dameff, Jeffrey Tully & Maxwell Bland @ Black Hat USA (2018)
 - [Playing with FHIR](https://www.youtube.com/watch?v=wrNyd60XPMg) - Alissa Knight, Mitch Parker @ DEF CON 29 Biohacking Village (2021)
 - [Understanding HL7 2.X Standards, Pen Testing, and Defending HL7 2.X Messages](https://www.youtube.com/watch?v=MR7cH44fjrc) - Anirudh Duggal @ Black Hat USA (2016)
+### Tools
+- [OIDA](https://github.com/f0rw4rd/oida) - HL7 v2 client for clinical messaging assessment ([docs](https://getoida.dev/protocols/hl7/))
 
 
 ## ICCP
@@ -674,6 +706,8 @@ Currently, there are **76 protocols** with a total of 421 resources.
 | Detailed page | [iccp.md](protocols/iccp.md) |
 ### Conferences
 - [Unraveling SCADA Protocols Using Sulley Fuzzer](https://www.youtube.com/watch?v=UUta_Ord8GI) - Ganesh Devarajan @ DEF CON 15 (2014)
+### Tools
+- [OIDA](https://github.com/f0rw4rd/oida) - TASE.2/ICCP client for utility control center assessment ([docs](https://getoida.dev/protocols/tase2/))
 
 
 ## IEC-60870-5-104
@@ -697,6 +731,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 ### Tools
 - [FreyrSCADA IEC-60870-5-104](https://github.com/FreyrSCADA/IEC-60870-5-104) - IEC 60870-5-104 Protocol - RTU Server and Master Client Simulator
 - [lib60870](https://github.com/mz-automation/lib60870) - Implementation of the IEC 60870-5-101/104 protocol
+- [OIDA](https://github.com/f0rw4rd/oida) - IEC 104 client for telecontrol and grid assessment ([docs](https://getoida.dev/protocols/iec104/))
 
 
 ## IEC-61850
@@ -714,6 +749,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 - [Fuzz Testing IEC 61850](https://www.youtube.com/watch?v=QehBHZyy4W4) - Markus Mahrla @ CS3STHLM 2019
 ### Tools
 - [libiec61850](https://github.com/mz-automation/libiec61850) - Open-source library for the IEC 61850 protocols
+- [OIDA](https://github.com/f0rw4rd/oida) - IEC 61850 client for substation assessment via MMS and raw-socket GOOSE ([docs](https://getoida.dev/protocols/mms/), [goose](https://getoida.dev/protocols/goose/))
 
 
 ## IEEE-C37.118
@@ -783,6 +819,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 - [KNX Virtual](https://www.knx.org/knx-en/for-professionals/get-started/knx-virtual/index.php) - Windows-based application simulating a KNX installation
 - [knxd](https://github.com/knxd/knxd) - KNXd service
 - [KNXmap](https://github.com/takeshixx/knxmap) - KNXnet/IP scanning and auditing tool
+- [OIDA](https://github.com/f0rw4rd/oida) - KNXnet/IP client for building automation assessment ([docs](https://getoida.dev/protocols/knx/))
 - [Unpwning A Building](https://www.youtube.com/watch?v=PM-iyQPXXXs) - Peter Panholzer @ S4x22 (2022)
 - [XKNX](https://github.com/XKNX/xknx) - A KNX library written in Python
 
@@ -799,6 +836,8 @@ Currently, there are **76 protocols** with a total of 421 resources.
 | Detailed page | [lis.md](protocols/lis.md) |
 
 
+### Tools
+- [OIDA](https://github.com/f0rw4rd/oida) - LIS/ASTM client for clinical analyzer and LIS assessment ([docs](https://getoida.dev/protocols/astm/))
 
 ## LoRaWAN
 | Name | LoRaWAN |
@@ -919,6 +958,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 - [modbus-client](https://github.com/cybcon/modbus-client) - Modbus client to read and interpret Modbus registers
 - [modbus-server](https://github.com/cybcon/modbus-server) - Lightweight Python Modbus TCP/UDP slave simulator
 - [PyModbus](https://github.com/pymodbus-dev/pymodbus) - A full modbus protocol written in python
+- [OIDA](https://github.com/f0rw4rd/oida) - Modbus client for PLC, RTU and field device assessment ([docs](https://getoida.dev/protocols/modbus/))
 
 
 ## MQTT
@@ -937,6 +977,8 @@ Currently, there are **76 protocols** with a total of 421 resources.
 - [Light Weight Protocol: Critical Implications](https://www.youtube.com/watch?v=o7qDVZr0t2c) - Lucas Lundgren, Neal Hindocha @ DEF CON 24 (2016)
 - [When Machines Can't Talk](https://www.youtube.com/watch?v=X3fUNWRgeao) - Federico Maggi & Davide Quarta @ Black Hat Europe (2018)
 
+### Tools
+- [OIDA](https://github.com/f0rw4rd/oida) - MQTT client for IIoT broker assessment ([docs](https://getoida.dev/protocols/mqtt/))
 
 ## MTConnect
 | Name | MTConnect |
@@ -1022,6 +1064,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 - [opcua-client-gui](https://github.com/FreeOpcUa/opcua-client-gui) - Simple OPC-UA GUI client
 - [python-opcua](https://github.com/FreeOpcUa/python-opcua) - OPC UA Client and Server in Python
 - [UA-.NETStandard](https://github.com/OPCFoundation/UA-.NETStandard) - Official OPC UA .NET Standard Stack from the OPC Foundation
+- [OIDA](https://github.com/f0rw4rd/oida) - OPC UA client for industrial automation server assessment ([docs](https://getoida.dev/protocols/opcua/))
 
 
 ## OpenSoundControl
@@ -1035,6 +1078,21 @@ Currently, there are **76 protocols** with a total of 421 resources.
 | Specifications | [OpenSoundControl specification](https://opensoundcontrol.stanford.edu/spec-1_0.html) |
 | Wireshark dissector | [packet-osc.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-osc.c) |
 | Detailed page | [opensoundcontrol.md](protocols/opensoundcontrol.md) |
+
+
+
+## OCPP
+| Name | OCPP |
+|---|---|
+| Alias | Open Charge Point Protocol, OCPP-J |
+| Description | Protocol between charge points and a central system for EV charging infrastructure |
+| Keywords | EV, Charging |
+| Port | 9000/tcp (WebSocket), 443/tcp (wss) |
+| Access | Free |
+| Specifications | [OCPP 2.0.1 specification](https://www.openchargealliance.org/protocols/) |
+| Detailed page | [ocpp.md](protocols/ocpp.md) |
+### Tools
+- [OIDA](https://github.com/f0rw4rd/oida) - OCPP client for EV charge point assessment ([docs](https://getoida.dev/protocols/ocpp/))
 
 
 
@@ -1111,6 +1169,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 | Detailed page | [profinet-dcp.md](protocols/profinet-dcp.md) |
 ### Tools
 - [iaiops Profinet DCP connector](https://github.com/industrial-aiops/industrial-aiops/tree/main/iaiops/connectors/profinet) - PROFINET-DCP layer-2 discovery and station identification
+- [OIDA](https://github.com/f0rw4rd/oida) - PROFINET client for industrial Ethernet device discovery and assessment ([docs](https://getoida.dev/protocols/profinet/))
 
 
 ## Profinet-IO
@@ -1199,6 +1258,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 - [s7-pcaps](https://github.com/gymgit/s7-pcaps) - Traffic captures between STEP7/WinCC and S7-300/S7-400 PLCs
 - [s7scan](https://github.com/klsecservices/s7scan) - Scan networks to gather basic information about Siemens PLCs
 - [Snap7](https://snap7.sourceforge.net/) - Step7 Open Source Ethernet Communication Suite
+- [OIDA](https://github.com/f0rw4rd/oida) - S7comm client for Siemens S7-300/400 PLC assessment ([docs](https://getoida.dev/protocols/snap7/))
 
 
 ## sACN
