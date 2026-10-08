@@ -273,6 +273,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 - [cantools](https://github.com/cantools/cantools) - Python library to play with CAN databases & messages
 - [opendbc](https://github.com/commaai/opendbc) - A list of CAN databases retrieved from reverse-engineered cars
 - [python-can](https://github.com/hardbyte/python-can) - Python library to plug to various CAN connectors
+- [Zelos](https://zeloscloud.io) - Zelos is a data platform for hardware systems.
 
 
 ## CC-Link IE
