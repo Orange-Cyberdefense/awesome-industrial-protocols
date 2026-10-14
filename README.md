@@ -26,7 +26,7 @@ remarks or contributions.
 ## Contents
 
 
-Currently, there are **76 protocols** with a total of 421 resources.
+Currently, there are **76 protocols** with a total of 422 resources.
 - [ADS](#ads)
 - [ANSI-C12.22](#ansi-c1222)
 - [Art-Net](#art-net)
@@ -422,7 +422,7 @@ Currently, there are **76 protocols** with a total of 421 resources.
 - [Sniffing SCADA](https://www.youtube.com/watch?v=4vPptUmyv4U) - Karl Koscher @ DEF CON 23 Packet Capture Village (2015)
 - [Unraveling SCADA Protocols Using Sulley Fuzzer](https://www.youtube.com/watch?v=UUta_Ord8GI) - Ganesh Devarajan @ DEF CON 15 (2014)
 ### Tools
-- [Amenonuboco DNP3 assets](https://github.com/schutzz/ot-range-amenonuboco/tree/main/protocol-images/dnp3) - Containerized DNP3 outstation and master assets for reproducible OT/ICS range traffic, including integrity polls, Direct Operate commands, and tshark-verified field extraction.
+- [Amenonuboco DNP3 assets](https://github.com/schutzz/ot-range-amenonuboco/tree/main/protocol-images/dnp3) - Containerized DNP3 outstation and master assets for training
 - [dnp3-simulator](https://github.com/dnp3/dnp3-simulator) - .NET DNP3 simulator with GUI 
 - [FreyrSCADA DNP3](https://github.com/FreyrSCADA/DNP3) - DNP3 Protocol - Outstation Server and Client Master Simulator
 - [gec/dnp3](https://github.com/gec/dnp3) - Open source Distributed Network Protocol
