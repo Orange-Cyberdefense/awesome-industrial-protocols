@@ -26,7 +26,7 @@ remarks or contributions.
 ## Contents
 
 
-Currently, there are **78 protocols** with a total of 430 resources.
+Currently, there are **78 protocols** with a total of 431 resources.
 - [ADS](#ads)
 - [ANSI-C12.22](#ansi-c1222)
 - [Art-Net](#art-net)
@@ -105,6 +105,8 @@ Currently, there are **78 protocols** with a total of 430 resources.
 - [WITS](#wits)
 - [XCP](#xcp)
 - [ZigBee](#zigbee)
+
+See also: [Multi-protocol tools](#multi-protocol-tools)
 
 
 
@@ -1414,6 +1416,15 @@ Currently, there are **78 protocols** with a total of 430 resources.
 ### Tools
 - [KillerBee](https://github.com/riverloopsec/killerbee) - IEEE 802.15.4/ZigBee Security Research Toolkit
 - [Mirage](https://github.com/RCayre/mirage) - Framework dedicated to the security analysis of wireless communications
+
+
+## Multi-protocol tools
+Tools that cover many of the protocols above through a single interface. They
+are listed once here instead of under every protocol they support.
+
+### Tools
+- [OIDA](https://github.com/f0rw4rd/oida) - NetExec-like CLI for OT/ICS assessments with one command shape across protocols, read-only by default ([docs](https://getoida.dev/protocols/)). Covers [ADS](#ads), [ASTM](#astm), [BACnet/IP](#bacnetip), [CAN](#can), [CoAP](#coap), [DICOM](#dicom), [DNP3](#dnp3), [EtherCAT](#ethercat), [Ethernet/IP](#ethernetip), [FHIR](#fhir), [HART-IP](#hart-ip), [HL7](#hl7), [ICCP](#iccp), [IEC-60870-5-104](#iec-60870-5-104), [IEC-61850](#iec-61850), [KNXnet/IP](#knxnetip), [LIS](#lis), [Modbus](#modbus), [MQTT](#mqtt), [OCPP](#ocpp), [OPC-UA](#opc-ua), [Profinet-DCP](#profinet-dcp), [S7comm](#s7comm)
+
 
 ---
 
