@@ -26,7 +26,7 @@ remarks or contributions.
 ## Contents
 
 
-Currently, there are **76 protocols** with a total of 422 resources.
+Currently, there are **78 protocols** with a total of 430 resources.
 - [ADS](#ads)
 - [ANSI-C12.22](#ansi-c1222)
 - [Art-Net](#art-net)
@@ -37,6 +37,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [CAN](#can)
 - [CC-Link IE](#cc-link-ie)
 - [CIP](#cip)
+- [CoAP](#coap)
 - [CODESYS](#codesys)
 - [Crimson](#crimson)
 - [CSPv4](#cspv4)
@@ -77,6 +78,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [MQTT](#mqtt)
 - [MTConnect](#mtconnect)
 - [Niagara Fox](#niagara-fox)
+- [OCPP](#ocpp)
 - [OPC-DA](#opc-da)
 - [OPC-UA](#opc-ua)
 - [OpenSoundControl](#opensoundcontrol)
@@ -306,6 +308,23 @@ Currently, there are **76 protocols** with a total of 422 resources.
 ### Conferences
 - [DEF CON 33 - Intro to Common Industrial Protocol Exploitation - Trevor Flynn](https://www.youtube.com/watch?v=S7mPcEPaKHU) - @ DEF CON (2025)
 - [Hunting EtherNet/IP Protocol Stacks](https://www.youtube.com/watch?v=0jftEYDo0ao) - Sharon Brizinov @ SANS ICS Security Summit 2022
+
+
+## CoAP
+| Name | CoAP |
+|---|---|
+| Alias | Constrained Application Protocol |
+| Description | Constrained REST protocol for IoT and LwM2M field devices |
+| Keywords | IoT, LwM2M |
+| Port | 5683/udp, 5684/udp (DTLS) |
+| Access | Free |
+| Specifications | [RFC 7252](https://www.rfc-editor.org/rfc/rfc7252.html) |
+| Wireshark dissector | [packet-coap.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-coap.c) |
+| Scapy layer | [coap.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/coap.py) |
+| Detailed page | [coap.md](protocols/coap.md) |
+### Tools
+- [aiocoap](https://github.com/chrysn/aiocoap) - Python CoAP library with client and server command-line tools
+- [libcoap](https://github.com/obgm/libcoap) - C implementation of CoAP (RFC 7252) with client and server examples
 
 
 ## CODESYS
@@ -969,6 +988,21 @@ Currently, there are **76 protocols** with a total of 422 resources.
 | Detailed page | [niagara-fox.md](protocols/niagara-fox.md) |
 ### Tools
 - [foxdissector](https://github.com/MartinoTommasini/foxdissector) - Wireshark dissector for the Niagara Fox protocol in Lua
+
+
+## OCPP
+| Name | OCPP |
+|---|---|
+| Alias | Open Charge Point Protocol, OCPP-J |
+| Description | Protocol between charge points and a central system for EV charging infrastructure |
+| Keywords | EV, Charging |
+| Port | 9000/tcp (WebSocket), 443/tcp (wss) |
+| Access | Free |
+| Specifications | [OCPP 2.0.1 specification](https://www.openchargealliance.org/protocols/) |
+| Detailed page | [ocpp.md](protocols/ocpp.md) |
+### Tools
+- [ocpp](https://github.com/mobilityhouse/ocpp) - Python implementation of OCPP 1.6 and 2.0.1 for charge points and central systems
+- [SteVe](https://github.com/steve-community/steve) - Open source OCPP central system in Java
 
 
 ## OPC-DA
