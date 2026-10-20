@@ -10,3 +10,4 @@
 
 ## Tools
 - [iaiops Profinet DCP connector](https://github.com/industrial-aiops/industrial-aiops/tree/main/iaiops/connectors/profinet) - PROFINET-DCP layer-2 discovery and station identification
+- [Multi-protocol tools](https://github.com/Orange-Cyberdefense/awesome-industrial-protocols#multi-protocol) - Tools covering this protocol among others

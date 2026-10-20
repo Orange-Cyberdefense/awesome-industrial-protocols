@@ -14,4 +14,5 @@
 
 ## Tools
 - [aiocoap](https://github.com/chrysn/aiocoap) - Python CoAP library with client and server command-line tools
-- [libcoap](https://github.com/obgm/libcoap) - C implementation of CoAP (RFC 7252) with client and server examples
+- [libcoap](https://github.com/obgm/libcoap) - C implementation of CoAP with client and server examples
+- [Multi-protocol tools](https://github.com/Orange-Cyberdefense/awesome-industrial-protocols#multi-protocol) - Tools covering this protocol among others

@@ -14,4 +14,5 @@
 ## Tools
 - [ADS](https://github.com/Beckhoff/ADS) - Official Beckhoff ADS library
 - [ads-client](https://github.com/jisotalo/ads-client) - Node.js client for Beckhoff TwinCAT ADS
+- [Multi-protocol tools](https://github.com/Orange-Cyberdefense/awesome-industrial-protocols#multi-protocol) - Tools covering this protocol among others
 - [pyads](https://github.com/stlehmann/pyads) - Python package for communicating with TwinCAT devices using ADS protocol

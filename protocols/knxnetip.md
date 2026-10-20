@@ -34,5 +34,6 @@
 - [KNX Virtual](https://www.knx.org/knx-en/for-professionals/get-started/knx-virtual/index.php) - Windows-based application simulating a KNX installation
 - [knxd](https://github.com/knxd/knxd) - KNXd service
 - [KNXmap](https://github.com/takeshixx/knxmap) - KNXnet/IP scanning and auditing tool
+- [Multi-protocol tools](https://github.com/Orange-Cyberdefense/awesome-industrial-protocols#multi-protocol) - Tools covering this protocol among others
 - [Unpwning A Building](https://www.youtube.com/watch?v=PM-iyQPXXXs) - Peter Panholzer @ S4x22 (2022)
 - [XKNX](https://github.com/XKNX/xknx) - A KNX library written in Python

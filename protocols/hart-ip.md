@@ -17,3 +17,4 @@
 - [It WISNt Me Attacking Industrial Wireless Mesh Networks](https://www.youtube.com/watch?v=-WfP2VVhTt0) - Paternotte and van Ommeren @ DEF CON 25 (2018)
 ## Tools
 - [iaiops HART-IP connector](https://github.com/industrial-aiops/industrial-aiops/tree/main/iaiops/connectors/hart) - HART-IP client reading data through a gateway
+- [Multi-protocol tools](https://github.com/Orange-Cyberdefense/awesome-industrial-protocols#multi-protocol) - Tools covering this protocol among others

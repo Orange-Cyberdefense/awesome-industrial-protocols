@@ -22,4 +22,5 @@
 ## Tools
 - [DCMTK](https://dcmtk.org/en/) - DICOM ToolKit
 - [dicom-server](https://github.com/microsoft/dicom-server) - Microsoft's OSS Implementation of DICOMweb standard
+- [Multi-protocol tools](https://github.com/Orange-Cyberdefense/awesome-industrial-protocols#multi-protocol) - Tools covering this protocol among others
 - [pydicom](https://github.com/pydicom/pydicom) - Python package to read, modify and write DICOM files

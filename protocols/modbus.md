@@ -43,4 +43,6 @@
 - [mbtget](https://github.com/sourceperl/mbtget) - A simple Modbus/TCP client in Perl
 - [modbus-client](https://github.com/cybcon/modbus-client) - Modbus client to read and interpret Modbus registers
 - [modbus-server](https://github.com/cybcon/modbus-server) - Lightweight Python Modbus TCP/UDP slave simulator
+- [Multi-protocol tools](https://github.com/Orange-Cyberdefense/awesome-industrial-protocols#multi-protocol) - Tools covering this protocol among others
+- [ot-pcap-quicklook](https://github.com/industrial-arch-sales/ot-pcap-quicklook) - Dependency-free CLI for static Modbus TCP PCAP triage
 - [PyModbus](https://github.com/pymodbus-dev/pymodbus) - A full modbus protocol written in python

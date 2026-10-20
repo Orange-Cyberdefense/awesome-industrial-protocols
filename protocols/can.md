@@ -41,5 +41,6 @@
 - [A Fuzz Testing Methodology for Cyber-security Assurance of the Automotive CAN Bus](https://pure.coventry.ac.uk/ws/portalfiles/portal/37979533/Fowler_PhD.pdf) - Daniel S. Fowler, Coventry University (2019)
 ## Tools
 - [cantools](https://github.com/cantools/cantools) - Python library to play with CAN databases & messages
+- [Multi-protocol tools](https://github.com/Orange-Cyberdefense/awesome-industrial-protocols#multi-protocol) - Tools covering this protocol among others
 - [opendbc](https://github.com/commaai/opendbc) - A list of CAN databases retrieved from reverse-engineered cars
 - [python-can](https://github.com/hardbyte/python-can) - Python library to plug to various CAN connectors

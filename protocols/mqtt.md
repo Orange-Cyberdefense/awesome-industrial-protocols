@@ -15,3 +15,5 @@
 - [Choo Choo, Network Train - The One to Rule Your Perimeter](https://www.youtube.com/watch?v=RpXoVwCSHA0) - Martin Hron @ Black Hat Europe (2022)
 - [Light Weight Protocol: Critical Implications](https://www.youtube.com/watch?v=o7qDVZr0t2c) - Lucas Lundgren, Neal Hindocha @ DEF CON 24 (2016)
 - [When Machines Can't Talk](https://www.youtube.com/watch?v=X3fUNWRgeao) - Federico Maggi & Davide Quarta @ Black Hat Europe (2018)
+## Tools
+- [Multi-protocol tools](https://github.com/Orange-Cyberdefense/awesome-industrial-protocols#multi-protocol) - Tools covering this protocol among others
