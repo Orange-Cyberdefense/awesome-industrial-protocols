@@ -26,7 +26,7 @@ remarks or contributions.
 ## Contents
 
 
-Currently, there are **76 protocols** with a total of 422 resources.
+Currently, there are **78 protocols** with a total of 431 resources.
 - [ADS](#ads)
 - [ANSI-C12.22](#ansi-c1222)
 - [Art-Net](#art-net)
@@ -37,6 +37,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [CAN](#can)
 - [CC-Link IE](#cc-link-ie)
 - [CIP](#cip)
+- [CoAP](#coap)
 - [CODESYS](#codesys)
 - [Crimson](#crimson)
 - [CSPv4](#cspv4)
@@ -77,6 +78,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [MQTT](#mqtt)
 - [MTConnect](#mtconnect)
 - [Niagara Fox](#niagara-fox)
+- [OCPP](#ocpp)
 - [OPC-DA](#opc-da)
 - [OPC-UA](#opc-ua)
 - [OpenSoundControl](#opensoundcontrol)
@@ -104,6 +106,8 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [XCP](#xcp)
 - [ZigBee](#zigbee)
 
+See also: [Multi-protocol tools](#multi-protocol-tools)
+
 
 
 ## ADS
@@ -121,6 +125,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [ADS](https://github.com/Beckhoff/ADS) - Official Beckhoff ADS library
 - [ads-client](https://github.com/jisotalo/ads-client) - Node.js client for Beckhoff TwinCAT ADS
 - [pyads](https://github.com/stlehmann/pyads) - Python package for communicating with TwinCAT devices using ADS protocol
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## ANSI-C12.22
@@ -161,6 +166,8 @@ Currently, there are **76 protocols** with a total of 422 resources.
 | Description | Protocol for laboratory data management |
 | Keywords | Laboratory, LIS |
 | Detailed page | [astm.md](protocols/astm.md) |
+### Tools
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 
@@ -214,6 +221,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 ### Tools
 - [BACnet Stack](https://github.com/bacnet-stack/bacnet-stack) - BACnet open source protocol stack
 - [bacnet-docker](https://github.com/mnp/bacnet-docker) - BACnet Tools in Docker
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## BSAP
@@ -273,6 +281,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [cantools](https://github.com/cantools/cantools) - Python library to play with CAN databases & messages
 - [opendbc](https://github.com/commaai/opendbc) - A list of CAN databases retrieved from reverse-engineered cars
 - [python-can](https://github.com/hardbyte/python-can) - Python library to plug to various CAN connectors
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## CC-Link IE
@@ -306,6 +315,24 @@ Currently, there are **76 protocols** with a total of 422 resources.
 ### Conferences
 - [DEF CON 33 - Intro to Common Industrial Protocol Exploitation - Trevor Flynn](https://www.youtube.com/watch?v=S7mPcEPaKHU) - @ DEF CON (2025)
 - [Hunting EtherNet/IP Protocol Stacks](https://www.youtube.com/watch?v=0jftEYDo0ao) - Sharon Brizinov @ SANS ICS Security Summit 2022
+
+
+## CoAP
+| Name | CoAP |
+|---|---|
+| Alias | Constrained Application Protocol |
+| Description | Constrained REST protocol for IoT and LwM2M field devices |
+| Keywords | IoT, LwM2M |
+| Port | 5683/udp, 5684/udp (DTLS) |
+| Access | Free |
+| Specifications | [RFC 7252](https://www.rfc-editor.org/rfc/rfc7252.html) |
+| Wireshark dissector | [packet-coap.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-coap.c) |
+| Scapy layer | [coap.py](https://github.com/secdev/scapy/blob/master/scapy/contrib/coap.py) |
+| Detailed page | [coap.md](protocols/coap.md) |
+### Tools
+- [aiocoap](https://github.com/chrysn/aiocoap) - Python CoAP library with client and server command-line tools
+- [libcoap](https://github.com/obgm/libcoap) - C implementation of CoAP (RFC 7252) with client and server examples
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## CODESYS
@@ -398,6 +425,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [DCMTK](https://dcmtk.org/en/) - DICOM ToolKit
 - [dicom-server](https://github.com/microsoft/dicom-server) - Microsoft's OSS Implementation of DICOMweb standard
 - [pydicom](https://github.com/pydicom/pydicom) - Python package to read, modify and write DICOM files
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## DNP3
@@ -429,6 +457,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [gec/dnp3slavesim](https://github.com/gec/dnp3slavesim) - Parallel dnp3 slave simulator
 - [opendnp3](https://github.com/dnp3/opendnp3) - DNP3 (IEEE-1815) protocol stack. Modern C++ with bindings for .NET and Java
 - [Step Function I/O DNP3](https://github.com/stepfunc/dnp3) - Rust implementation of DNP3 (IEEE 1815) with idiomatic bindings for C, .NET, C++, and Java
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## DoIP
@@ -470,6 +499,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [Industrial Network Options: EtherCAT Advantages, Challenges, and Specs](https://control.com/technical-articles/introduction-to-ethercat/) - Carlos Aguilar, Control Automation (2023)
 ### Tools
 - [iaiops EtherCAT connector](https://github.com/industrial-aiops/industrial-aiops/tree/main/iaiops/connectors/ethercat) - EtherCAT master built on SOEM/pysoem
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## Ethernet/IP
@@ -502,6 +532,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [OpENer](https://github.com/EIPStackGroup/OpENer) - EtherNet/IP stack for I/O adapter devices
 - [pycomm3](https://github.com/ottowayi/pycomm3) - A Python Ethernet/IP library for communicating with Allen-Bradley PLCs
 - [scapy-cip-enip](https://github.com/scy-phy/scapy-cip-enip) - Ethernet/IP dissectors for Scapy
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## ETP
@@ -532,6 +563,8 @@ Currently, there are **76 protocols** with a total of 422 resources.
 | Detailed page | [fhir.md](protocols/fhir.md) |
 ### Conferences
 - [Playing with FHIR](https://www.youtube.com/watch?v=wrNyd60XPMg) - Alissa Knight, Mitch Parker @ DEF CON 29 Biohacking Village (2021)
+### Tools
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## FINS
@@ -629,6 +662,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [It WISNt Me Attacking Industrial Wireless Mesh Networks](https://www.youtube.com/watch?v=-WfP2VVhTt0) - Paternotte and van Ommeren @ DEF CON 25 (2018)
 ### Tools
 - [iaiops HART-IP connector](https://github.com/industrial-aiops/industrial-aiops/tree/main/iaiops/connectors/hart) - HART-IP client reading data through a gateway
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## HICP
@@ -661,6 +695,8 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [Pestilential Protocol: How Unsecure HL7 Messages Threaten Patient Lives](https://www.youtube.com/watch?v=66x3vfac8rA) - Christian Dameff, Jeffrey Tully & Maxwell Bland @ Black Hat USA (2018)
 - [Playing with FHIR](https://www.youtube.com/watch?v=wrNyd60XPMg) - Alissa Knight, Mitch Parker @ DEF CON 29 Biohacking Village (2021)
 - [Understanding HL7 2.X Standards, Pen Testing, and Defending HL7 2.X Messages](https://www.youtube.com/watch?v=MR7cH44fjrc) - Anirudh Duggal @ Black Hat USA (2016)
+### Tools
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## ICCP
@@ -675,6 +711,8 @@ Currently, there are **76 protocols** with a total of 422 resources.
 | Detailed page | [iccp.md](protocols/iccp.md) |
 ### Conferences
 - [Unraveling SCADA Protocols Using Sulley Fuzzer](https://www.youtube.com/watch?v=UUta_Ord8GI) - Ganesh Devarajan @ DEF CON 15 (2014)
+### Tools
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## IEC-60870-5-104
@@ -698,6 +736,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 ### Tools
 - [FreyrSCADA IEC-60870-5-104](https://github.com/FreyrSCADA/IEC-60870-5-104) - IEC 60870-5-104 Protocol - RTU Server and Master Client Simulator
 - [lib60870](https://github.com/mz-automation/lib60870) - Implementation of the IEC 60870-5-101/104 protocol
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## IEC-61850
@@ -715,6 +754,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [Fuzz Testing IEC 61850](https://www.youtube.com/watch?v=QehBHZyy4W4) - Markus Mahrla @ CS3STHLM 2019
 ### Tools
 - [libiec61850](https://github.com/mz-automation/libiec61850) - Open-source library for the IEC 61850 protocols
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## IEEE-C37.118
@@ -786,6 +826,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [KNXmap](https://github.com/takeshixx/knxmap) - KNXnet/IP scanning and auditing tool
 - [Unpwning A Building](https://www.youtube.com/watch?v=PM-iyQPXXXs) - Peter Panholzer @ S4x22 (2022)
 - [XKNX](https://github.com/XKNX/xknx) - A KNX library written in Python
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## LIS
@@ -798,6 +839,8 @@ Currently, there are **76 protocols** with a total of 422 resources.
 | Access | Paid |
 | Specifications | [CLSI LIS01-A1 Specifications](https://webstore.ansi.org/standards/clsi/clsilis01a2) |
 | Detailed page | [lis.md](protocols/lis.md) |
+### Tools
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 
@@ -921,6 +964,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [modbus-server](https://github.com/cybcon/modbus-server) - Lightweight Python Modbus TCP/UDP slave simulator
 - [ot-pcap-quicklook](https://github.com/industrial-arch-sales/ot-pcap-quicklook) - Dependency-free CLI for static Modbus TCP PCAP triage, including TCP conversations, function codes, Unit IDs, and potential write commands
 - [PyModbus](https://github.com/pymodbus-dev/pymodbus) - A full modbus protocol written in python
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## MQTT
@@ -938,6 +982,8 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [Choo Choo, Network Train - The One to Rule Your Perimeter](https://www.youtube.com/watch?v=RpXoVwCSHA0) - Martin Hron @ Black Hat Europe (2022)
 - [Light Weight Protocol: Critical Implications](https://www.youtube.com/watch?v=o7qDVZr0t2c) - Lucas Lundgren, Neal Hindocha @ DEF CON 24 (2016)
 - [When Machines Can't Talk](https://www.youtube.com/watch?v=X3fUNWRgeao) - Federico Maggi & Davide Quarta @ Black Hat Europe (2018)
+### Tools
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## MTConnect
@@ -970,6 +1016,22 @@ Currently, there are **76 protocols** with a total of 422 resources.
 | Detailed page | [niagara-fox.md](protocols/niagara-fox.md) |
 ### Tools
 - [foxdissector](https://github.com/MartinoTommasini/foxdissector) - Wireshark dissector for the Niagara Fox protocol in Lua
+
+
+## OCPP
+| Name | OCPP |
+|---|---|
+| Alias | Open Charge Point Protocol, OCPP-J |
+| Description | Protocol between charge points and a central system for EV charging infrastructure |
+| Keywords | EV, Charging |
+| Port | 9000/tcp (WebSocket), 443/tcp (wss) |
+| Access | Free |
+| Specifications | [OCPP 2.0.1 specification](https://www.openchargealliance.org/protocols/) |
+| Detailed page | [ocpp.md](protocols/ocpp.md) |
+### Tools
+- [ocpp](https://github.com/mobilityhouse/ocpp) - Python implementation of OCPP 1.6 and 2.0.1 for charge points and central systems
+- [SteVe](https://github.com/steve-community/steve) - Open source OCPP central system in Java
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## OPC-DA
@@ -1024,6 +1086,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [opcua-client-gui](https://github.com/FreeOpcUa/opcua-client-gui) - Simple OPC-UA GUI client
 - [python-opcua](https://github.com/FreeOpcUa/python-opcua) - OPC UA Client and Server in Python
 - [UA-.NETStandard](https://github.com/OPCFoundation/UA-.NETStandard) - Official OPC UA .NET Standard Stack from the OPC Foundation
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## OpenSoundControl
@@ -1113,6 +1176,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 | Detailed page | [profinet-dcp.md](protocols/profinet-dcp.md) |
 ### Tools
 - [iaiops Profinet DCP connector](https://github.com/industrial-aiops/industrial-aiops/tree/main/iaiops/connectors/profinet) - PROFINET-DCP layer-2 discovery and station identification
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## Profinet-IO
@@ -1201,6 +1265,7 @@ Currently, there are **76 protocols** with a total of 422 resources.
 - [s7-pcaps](https://github.com/gymgit/s7-pcaps) - Traffic captures between STEP7/WinCC and S7-300/S7-400 PLCs
 - [s7scan](https://github.com/klsecservices/s7scan) - Scan networks to gather basic information about Siemens PLCs
 - [Snap7](https://snap7.sourceforge.net/) - Step7 Open Source Ethernet Communication Suite
+- [Multi-protocol tools](#multi-protocol-tools) - Tools covering this protocol among others
 
 
 ## sACN
@@ -1381,6 +1446,15 @@ Currently, there are **76 protocols** with a total of 422 resources.
 ### Tools
 - [KillerBee](https://github.com/riverloopsec/killerbee) - IEEE 802.15.4/ZigBee Security Research Toolkit
 - [Mirage](https://github.com/RCayre/mirage) - Framework dedicated to the security analysis of wireless communications
+
+
+## Multi-protocol tools
+Tools that cover many of the protocols above through a single interface. They
+are listed once here instead of under every protocol they support.
+
+### Tools
+- [OIDA](https://github.com/f0rw4rd/oida) - NetExec-like CLI for OT/ICS assessments with one command shape across protocols, read-only by default ([docs](https://getoida.dev/protocols/)). Covers [ADS](#ads), [ASTM](#astm), [BACnet/IP](#bacnetip), [CAN](#can), [CoAP](#coap), [DICOM](#dicom), [DNP3](#dnp3), [EtherCAT](#ethercat), [Ethernet/IP](#ethernetip), [FHIR](#fhir), [HART-IP](#hart-ip), [HL7](#hl7), [ICCP](#iccp), [IEC-60870-5-104](#iec-60870-5-104), [IEC-61850](#iec-61850), [KNXnet/IP](#knxnetip), [LIS](#lis), [Modbus](#modbus), [MQTT](#mqtt), [OCPP](#ocpp), [OPC-UA](#opc-ua), [Profinet-DCP](#profinet-dcp), [S7comm](#s7comm)
+
 
 ---
 
