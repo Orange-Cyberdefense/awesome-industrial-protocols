@@ -46,3 +46,4 @@
 - [Multi-protocol tools](https://github.com/Orange-Cyberdefense/awesome-industrial-protocols#multi-protocol) - Tools covering this protocol among others
 - [ot-pcap-quicklook](https://github.com/industrial-arch-sales/ot-pcap-quicklook) - Dependency-free CLI for static Modbus TCP PCAP triage
 - [PyModbus](https://github.com/pymodbus-dev/pymodbus) - A full modbus protocol written in python
+- [QTLink](https://github.com/gooduselabs/qtlink) - Lightweight Modbus TCP/RTU edge datalogger with SQLite store-and-forward to FTP/sFTP, MQTT, HTTP and InfluxDB
