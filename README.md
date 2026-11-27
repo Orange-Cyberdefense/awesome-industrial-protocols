@@ -250,6 +250,7 @@ Currently, there are **79 protocols** with a total of 433 resources.
 - [DBC Specification](https://github.com/stefanhoelzl/CANpy) - A description of CAN database layout
 - [Linux SocketCAN documentation](https://www.kernel.org/doc/html/latest/networking/can.html) - kernel.org
 ### Articles
+- [AI CAN Bus Reverse Engineering with Claude Code](https://www.csselectronics.com/pages/can-bus-reverse-engineering-ai-llm-claude) - CSS Electronics (2026)
 - [CAN Injection: keyless car theft](https://kentindell.github.io/2023/04/03/can-injection/) - CANIS Automative Labs CTO blog (2023)
 - [CAN-FD - The basic idea](https://www.can-cia.org/can-knowledge/can-fd-the-basic-idea) - CAN in Automation
 - [Click here to download more cars](https://djnn.sh/posts/car_hacking) - djnn
@@ -787,6 +788,8 @@ Currently, there are **79 protocols** with a total of 433 resources.
 | Specifications | [ISOBUS specification](https://www.isobus.net/isobus/) |
 | Wireshark dissector | [packet-isobus.c](https://github.com/wireshark/wireshark/blob/master/epan/dissectors/packet-isobus.c) |
 | Detailed page | [isobus.md](protocols/isobus.md) |
+### Articles
+- [ISOBUS (ISO 11783) Explained - A Simple Intro](https://www.csselectronics.com/pages/isobus-introduction-tutorial-iso-11783) - CSS Electronics
 
 
 
